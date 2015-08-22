@@ -1,5 +1,8 @@
-body {
-  font: 12px/1.8 "Microsoft YaHei"; }
+body, html {
+  font: 12px/1.8 "Microsoft YaHei";
+  min-height: 100%;
+  background: #000;
+  color: #eee; }
 
 header {
   height: 200px;

@@ -1,6 +1,9 @@
 @charset "UTF-8";
-body{
+body,html{
     font: 12px/1.8 "Microsoft YaHei";
+    min-height: 100%;
+    background: #000;
+    color: #eee;
 }
 header{
     height: 200px;
