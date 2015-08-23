@@ -1,4 +1,6 @@
 @charset "UTF-8";
+@import "normalize";
+
 body,html{
     font: 12px/1.8 "Microsoft YaHei";
     min-height: 100%;
@@ -9,11 +11,15 @@ header{
     height: 200px;
     background: #333;
     h1{
-        font-size: 30px;
+        font: normal 30px "Georgia","Microsoft Yahei","Arial";
         text-align: center;
         color: #FFF;
     }
 }
 .t-c{
     text-align: center;
+}
+.box{
+    margin: 0 auto;
+    width: 1024px;
 }
