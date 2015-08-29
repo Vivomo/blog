@@ -23,3 +23,19 @@ header{
     margin: 0 auto;
     width: 1024px;
 }
+.half-letter{
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+
+    &:before{
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        width: 50%;
+        color: #069;
+        content: attr(data-letter);
+    }
+}
+
