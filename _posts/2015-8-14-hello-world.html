@@ -1,7 +1,54 @@
 ---
-layout: default
+layout: css 样式工具箱
 title: 你好，世界
 ---
+<style>
+    .util-wrap{
+        box-sizing: border-box;
+        border-top: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        overflow: hidden;
+    }
+    .util-wrap{
+        box-sizing: border-box;
+        float: left;
+        width: 25%;
+        height: 256px;
+        overflow: hidden;
+        border-bottom: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+    }
+</style>
+<div class="box">
 <h2>{{ page.title }}</h2>
-<p>我的第一篇文章</p>
+<p>css 样式工具箱</p>
 <p>{{ page.date | date_to_string }}</p>
+
+    <ul class="util-wrap">
+        <li>
+            <h3>超出省略号</h3>
+            <p>eg.</p>
+            <p style="overflow: hidden;    text-overflow: ellipsis;    white-space: nowrap;    word-wrap: normal;">
+                111111111111111111111111111111111111111111111111111111111111</p>
+        </li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
