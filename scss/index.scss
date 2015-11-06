@@ -29,6 +29,16 @@
         }
     }
 }
+#ani-wrap{
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    min-height: 900px;
+    overflow: hidden;
+}
 .ani{
     position: absolute;
     bottom: 0;
