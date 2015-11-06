@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.post-list{
+    border-radius: 4px;
+    background-color: #2F2F31;
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.28);
+    li{
+        border-radius: 4px;
+        transition: all 0.5s;
+        :hover{
+            background-color: #191919;
+            box-shadow: 2px 2px 3px rgba(0,0,0,0.28);
+        }
+    }
+}

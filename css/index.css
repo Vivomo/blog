@@ -1,0 +1,10 @@
+.post-list {
+  border-radius: 4px;
+  background-color: #2F2F31;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28); }
+  .post-list li {
+    border-radius: 4px;
+    transition: all 0.5s; }
+    .post-list li :hover {
+      background-color: #191919;
+      box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28); }
