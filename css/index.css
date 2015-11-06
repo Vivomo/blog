@@ -1,6 +1,9 @@
 .post-list {
+  position: relative;
+  z-index: 10;
   box-sizing: border-box;
   padding: 20px;
+  margin-bottom: 60px;
   border-radius: 4px;
   background-color: #2F2F31;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28); }
@@ -9,9 +12,30 @@
     font-size: 16px;
     line-height: 30px;
     border-radius: 4px;
-    transition: all 0.5s; }
+    transition: all 0.5s;
+    list-style: gujarati inside; }
     .post-list li:hover {
+      padding-left: 10px;
       background-color: #191919;
       box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28); }
     .post-list li a {
+      display: block;
       color: inherit; }
+
+.ani {
+  position: absolute;
+  bottom: 0;
+  word-break: break-all;
+  font-size: 20px;
+  width: 10px;
+  color: #0f0;
+  left: 10px;
+  text-shadow: 2px 2px 2px #0f0;
+  opacity: 0.6;
+  animation: toTop 3s infinite; }
+
+@keyframes toTop {
+  0% {
+    bottom: -100%; }
+  100% {
+    bottom: 150%; } }

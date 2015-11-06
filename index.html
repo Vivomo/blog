@@ -7,6 +7,51 @@ css: index
 
 <ul class="post-list box">
     {% for post in site.posts %}
-    <li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+    <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.date | date_to_string }} {{ post.title }}</a></li>
     {% endfor %}
 </ul>
+<script>
+    (function(){
+        var body = document.body;
+        var w = body.clientWidth;
+
+        function getStyle(){
+            var cssArr = [];
+            //opacity
+            cssArr.push('opacity:'+(0.3+Math.random()*0.8));
+            //transform
+            var r = 0.3+Math.random()*0.8;
+            cssArr.push('transform:matrix('+r+',0,0,'+r+','+w*Math.random()+',0)');
+            //transition
+            cssArr.push('transition: all '+ (1.5+Math.random())+'s');
+            console.log(cssArr)
+            return cssArr.join(';');
+
+        }
+
+        function getText(){
+            var strLen = 5 + ~~(15*Math.random());
+            var tempArr = [];
+            for (var i = 0; i < strLen; i++) {
+                tempArr.push(Math.random() < 0.5? 0 : 1);
+            }
+            return tempArr.join('');
+        }
+
+        function p(){
+            this.elem = document.createElement('p');
+            this.elem.className = 'ani'
+            this.elem.innerText = getText();
+            body.appendChild(this.elem);
+            this.elem.style.cssText = getStyle();
+        }
+
+        for (var i = 0; i < 50; i++) {
+            setTimeout(function(){
+                new p;
+                new p;
+                new p;
+            },i * 100);
+        }
+    })()
+</script>

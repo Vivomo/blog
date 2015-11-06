@@ -8,6 +8,8 @@ body,html{
     color: #eee;
 }
 header{
+    position: relative;
+    z-index: 10;
     height: 200px;
     margin-bottom: 40px;
     background: #333;
