@@ -153,13 +153,15 @@ body, html {
 
 header {
   height: 200px;
+  margin-bottom: 40px;
   background: #333; }
   header h1 {
     font: normal 0 "Georgia","Microsoft Yahei","Arial";
     text-align: center;
     color: #FFF; }
     header h1 span {
-      font-size: 60px; }
+      font-size: 60px;
+      line-height: 2; }
 
 .t-c {
   text-align: center; }

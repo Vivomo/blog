@@ -1,10 +1,17 @@
 .post-list {
+  box-sizing: border-box;
+  padding: 20px;
   border-radius: 4px;
   background-color: #2F2F31;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28); }
   .post-list li {
+    padding: 5px;
+    font-size: 16px;
+    line-height: 30px;
     border-radius: 4px;
     transition: all 0.5s; }
-    .post-list li :hover {
+    .post-list li:hover {
       background-color: #191919;
       box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28); }
+    .post-list li a {
+      color: inherit; }

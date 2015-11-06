@@ -9,6 +9,7 @@ body,html{
 }
 header{
     height: 200px;
+    margin-bottom: 40px;
     background: #333;
     h1{
         font: normal 0 "Georgia","Microsoft Yahei","Arial";
@@ -16,6 +17,7 @@ header{
         color: #FFF;
         span{
             font-size: 60px;
+            line-height: 2;
         }
     }
 }
