@@ -30,6 +30,16 @@ header{
     margin: 0 auto;
     width: 1024px;
 }
+.u-content{
+    position: relative;
+    z-index: 10;
+    box-sizing: border-box;
+    padding: 20px;
+    margin-bottom: 60px;
+    border-radius: 4px;
+    background-color: #2F2F31;
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.28);
+}
 .half-letter{
     position: relative;
     display: inline-block;

@@ -1,26 +1,17 @@
-.post-list {
-  position: relative;
-  z-index: 10;
-  box-sizing: border-box;
-  padding: 20px;
-  margin-bottom: 60px;
+.post-list li {
+  padding: 5px;
+  font-size: 16px;
+  line-height: 30px;
   border-radius: 4px;
-  background-color: #2F2F31;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28); }
-  .post-list li {
-    padding: 5px;
-    font-size: 16px;
-    line-height: 30px;
-    border-radius: 4px;
-    transition: all 0.5s;
-    list-style: gujarati inside; }
-    .post-list li:hover {
-      padding-left: 10px;
-      background-color: #191919;
-      box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28); }
-    .post-list li a {
-      display: block;
-      color: inherit; }
+  transition: all 0.5s;
+  list-style: gujarati inside; }
+  .post-list li:hover {
+    padding-left: 10px;
+    background-color: #191919;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28); }
+  .post-list li a {
+    display: block;
+    color: inherit; }
 
 #ani-wrap {
   position: absolute;

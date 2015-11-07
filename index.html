@@ -1,11 +1,11 @@
 ---
 layout: default
-title: 我的Blog
+title: Vimo's Blog
 css: index
 ---
 
 
-<ul class="post-list box">
+<ul class="post-list box u-content">
     {% for post in site.posts %}
     <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.date | date_to_string }} {{ post.title }}</a></li>
     {% endfor %}
