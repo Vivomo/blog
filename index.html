@@ -18,16 +18,12 @@ css: index
 
         function getStyle(){
             var cssArr = [];
-            //opacity
             cssArr.push('opacity:'+(0.3+Math.random()*0.8));
-            //transform
-            var r = 0.3+Math.random()*0.8;
+            var r = 0.25+Math.random()*0.8;
             cssArr.push('transform:matrix('+r+',0,0,'+r+','+w*Math.random()+',0)');
-            //transition
             cssArr.push('transition: all '+ (1.5+Math.random())+'s');
-            console.log(cssArr)
+            console.log(cssArr);
             return cssArr.join(';');
-
         }
 
         function getText(){
@@ -39,19 +35,21 @@ css: index
             return tempArr.join('');
         }
 
-        function p(){
-            this.elem = document.createElement('p');
-            this.elem.className = 'ani'
-            this.elem.innerText = getText();
-            body.appendChild(this.elem);
-            this.elem.style.cssText = getStyle();
+        function p(num){
+            this.elems = new Array(num||1);
+            for (var i = 0; i < this.elems.length; i++) {
+                var elem = document.createElement('p');
+                elem.className = 'ani';
+                elem.innerText = getText();
+                body.appendChild(elem);
+                elem.style.cssText = getStyle();
+                this.elems[i] = elem;
+            }
         }
 
         for (var i = 0; i < 50; i++) {
             setTimeout(function(){
-                new p;
-                new p;
-                new p;
+                new p(3);
             },i * 100);
         }
     })()
