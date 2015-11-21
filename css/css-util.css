@@ -1,0 +1,29 @@
+.util-wrap {
+  box-sizing: border-box;
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  font-size: 14px;
+  overflow: hidden; }
+  .util-wrap li {
+    box-sizing: border-box;
+    float: left;
+    padding: 10px;
+    width: 25%;
+    height: 256px;
+    overflow: hidden;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd; }
+    .util-wrap li p {
+      line-height: 2; }
+  .util-wrap .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal; }
+  .util-wrap .ellipsis2 {
+    height: 56px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; }

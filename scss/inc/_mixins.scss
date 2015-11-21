@@ -1,0 +1,58 @@
+@charset "UTF-8";
+@mixin css3($key, $value) {
+	-webkit-#{$key}: $value;
+	-moz-#{$key}: $value;
+	-ms-#{$key}: $value;
+	#{$key}: $value;
+}
+
+@mixin clear{
+	content: '';
+	display: block;
+	clear: both;
+}
+@mixin circle($r) {
+	width: $r;
+	height: $r;
+	@include css3(border-radius, 50%);
+}
+@mixin ellipsis($line:1){
+    overflow: hidden;
+    text-overflow: ellipsis;
+	@if $line == 1{
+		white-space: nowrap;
+		word-wrap: normal;
+	} @else {
+		display: -webkit-box;
+		-webkit-line-clamp: $line;
+		-webkit-box-orient: vertical;
+	}
+
+}
+
+@mixin xyCenter{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	@include css3(transform, translate(-50%,-50%));
+}
+
+@mixin vCenter{
+	/* Firefox */
+	display:-moz-box;
+	-moz-box-align:center;
+
+	/* Safari、Opera 以及 Chrome */
+	display:-webkit-box;
+	-webkit-box-align:center;
+
+}
+
+@mixin flexCenter{
+	display: -webkit-flex;
+	display:         flex;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+}

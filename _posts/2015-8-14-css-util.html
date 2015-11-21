@@ -1,37 +1,27 @@
 ---
 layout: default
 title: css 样式工具箱
+css: css-util
 ---
-<style>
-    .util-wrap{
-        box-sizing: border-box;
-        border-top: 1px solid #ddd;
-        border-left: 1px solid #ddd;
-        overflow: hidden;
-    }
-    .util-wrap li{
-        box-sizing: border-box;
-        float: left;
-        width: 25%;
-        height: 256px;
-        overflow: hidden;
-        border-bottom: 1px solid #ddd;
-        border-right: 1px solid #ddd;
-    }
-</style>
+
 <div class="box u-content">
 <h2>{{ page.title }}</h2>
-<p>css 样式工具箱</p>
 <p>{{ page.date | date_to_string }}</p>
 
     <ul class="util-wrap">
         <li>
-            <h3>超出省略号</h3>
+            <h3>超出省略号(单行)</h3>
             <p>eg.</p>
-            <p style="overflow: hidden;    text-overflow: ellipsis;    white-space: nowrap;    word-wrap: normal;">
+            <p class="ellipsis">
                 111111111111111111111111111111111111111111111111111111111111</p>
         </li>
-        <li></li>
+        <li>
+            <h3>超出省略号(多行-webkit-内核)</h3>
+            <p>eg.</p>
+            <p class="ellipsis2">222222222222222222222222222222222222222222222222
+                222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
+            </p>
+        </li>
         <li></li>
         <li></li>
         <li></li>

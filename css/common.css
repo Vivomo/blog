@@ -110,7 +110,6 @@ th, td {
   padding: 0; }
 
 h1, h2, h3, h4, h5, h6 {
-  font-size: inherit;
   font-weight: normal; }
 
 caption, th, b {
@@ -156,7 +155,8 @@ header {
   z-index: 10;
   height: 200px;
   margin-bottom: 40px;
-  background: #333; }
+  background: #333;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28); }
   header h1 {
     font: normal 0 "Georgia","Microsoft Yahei","Arial";
     text-align: center;

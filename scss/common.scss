@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import "normalize";
+@import "inc/normalize";
 
 body,html{
     font: 12px/1.8 "Microsoft YaHei";
@@ -13,6 +13,7 @@ header{
     height: 200px;
     margin-bottom: 40px;
     background: #333;
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.28);
     h1{
         font: normal 0 "Georgia","Microsoft Yahei","Arial";
         text-align: center;
