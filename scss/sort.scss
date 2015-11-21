@@ -1,0 +1,18 @@
+@charset "UTF-8";
+@import "inc/mixins";
+
+.sort-box{
+    position: relative;
+    margin: 0 auto;
+    width: 600px;
+    height: 200px;
+    border: 2px solid #1EEDFF;
+}
+.sort-box > div{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 15px;
+    background-color: #4EA9F3;
+    transition: all 0.2s;
+}
