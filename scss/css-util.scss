@@ -29,6 +29,9 @@
         @include ellipsis(2);
     }
     .nowrap{
+        width: 50%;
+        background-color: #444;
+        padding: 10px;
         white-space: nowrap;
     }
 

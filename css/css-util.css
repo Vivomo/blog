@@ -28,4 +28,7 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical; }
   .util-wrap .nowrap {
+    width: 50%;
+    background-color: #444;
+    padding: 10px;
     white-space: nowrap; }
