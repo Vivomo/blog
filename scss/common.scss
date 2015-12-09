@@ -1,6 +1,7 @@
 @charset "UTF-8";
 @import "inc/normalize";
-
+$theme1 : #1EEDFF;
+$theme2 : #4EA9F3;
 body,html{
     font: 12px/1.8 "Microsoft YaHei";
     min-height: 100%;
@@ -61,5 +62,15 @@ header{
     padding: 5px 10px;
     color: #FFF;
     background-color: #4EA9F3;
+    border-radius: 4px;
+}
+
+.v-input{
+    padding: 0 10px;
+    width: 300px;
+    height: 36px;
+    color: $theme1;
+    background-color: transparent;
+    border: 1px solid $theme1;
     border-radius: 4px;
 }

@@ -36,11 +36,11 @@ img {
     border: 0;
     -ms-interpolation-mode:bicubic
 }
-fieldset {
+/*fieldset {
     border: 1px solid #c0c0c0;
     margin: 0 2px;
     padding: 0.35em 0.625em 0.75em;
-}
+}*/
 button,input,select,textarea {
     font-family: inherit;
     font-size: 100%;
@@ -110,7 +110,7 @@ pre{
 html, body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements */
 dl, dt, dd, ul, ol, li, /* list elements */
 pre, /* text formatting elements */
-form, fieldset, legend, button, input, textarea, /* form elements */
+form,   button, input, textarea, /* form elements  fieldset legend*/
 th, td /* table elements */ {
     margin: 0;
     padding: 0;
@@ -124,8 +124,6 @@ code, kbd, pre, samp { font-family: "Microsoft Yahei","冬青黑体",courier new
 small { font-size: 0.6em; }
 
 
-/** 重置表单元素 **/
-fieldset { border: 0; }
 button, input, select, textarea { font-size: 100%; } /* 使得表单元素在 ie 下能继承字体大小 */
 /* 注：optgroup 无法扶正 */
 

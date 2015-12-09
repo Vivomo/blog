@@ -1,0 +1,70 @@
+@charset "UTF-8";
+@import "inc/mixins";
+$theme2 : #4EA9F3;
+$theme1 : #1EEDFF;
+#hanoi-wrap{
+    box-sizing: border-box;
+    padding: 20px 0;
+    margin: 0 auto;
+    width: 900px;
+    height: 400px;
+    border: 2px solid #1EEDFF;
+
+    .hanoi{
+        float: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        box-sizing: border-box;
+        position: relative;
+        margin: 0 20px;
+        width: 250px;
+        height: 360px;
+        border: 1px solid #4EA9F3;
+
+        &:before{
+            content: '';
+            position: absolute;
+            left: calc(50% - 4px);
+            top: 20px;
+            bottom: 0;
+            width: 8px;
+            background-color: #4EA9F3;
+        }
+
+        @for $i from 1 through 20 {
+            .w#{$i} {
+                margin: 2px auto;
+                width: 10% + $i * 4%;
+                height: 12px;
+                border: 1px solid #4EA9F3;
+            }
+        }
+
+    }
+
+}
+
+.mark{
+    display: flex;
+    justify-content: space-around;
+    font-size: 30px;
+    color: $theme1;
+}
+.opt{
+    padding: 40px;
+    legend{
+        font-size: 20px;
+    }
+}
+.move-wrap{
+    display: flex;
+    justify-content: space-around;
+    font-size: 30px;
+}
+.theme-border{
+    border-color: $theme1;
+}
+.theme{
+    color: $theme1;
+}
