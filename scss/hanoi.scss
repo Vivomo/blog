@@ -59,8 +59,17 @@ $theme1 : #1EEDFF;
 }
 .move-wrap{
     display: flex;
-    justify-content: space-around;
-    font-size: 30px;
+    justify-content: center;
+    font-size: 20px;
+    flex-wrap: wrap;
+
+    .btn{
+        margin: 10px;
+        width: 47%;
+        &:last-child{
+            width: 96%;
+        }
+    }
 }
 .theme-border{
     border-color: $theme1;
