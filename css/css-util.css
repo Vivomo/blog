@@ -32,3 +32,24 @@
     background-color: #444;
     padding: 10px;
     white-space: nowrap; }
+  .util-wrap .triangle-wrap {
+    position: relative;
+    height: 160px; }
+    .util-wrap .triangle-wrap i {
+      position: absolute;
+      border-style: solid; }
+    .util-wrap .triangle-wrap .t1 {
+      top: 0;
+      left: 0;
+      border-width: 20px;
+      border-color: transparent transparent transparent #FFF; }
+    .util-wrap .triangle-wrap .t2 {
+      top: 0;
+      right: 0;
+      border-width: 20px;
+      border-color: transparent transparent #FFF #FFF; }
+    .util-wrap .triangle-wrap .t3 {
+      left: 40px;
+      bottom: 0;
+      border-width: 30px 20px 60px 110px;
+      border-color: #666 #FFF #ccc #999; }
