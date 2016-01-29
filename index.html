@@ -27,12 +27,14 @@ css: index
         }
 
         function getText(){
-            var strLen = 5 + ~~(15*Math.random());
-            var tempArr = [];
-            for (var i = 0; i < strLen; i++) {
-                tempArr.push(Math.random() < 0.5? 0 : 1);
-            }
-            return tempArr.join('');
+//            var strLen = 5 + ~~(15*Math.random());
+//            var tempArr = [];
+//            for (var i = 0; i < strLen; i++) {
+//                tempArr.push(Math.random() < 0.5? 0 : 1);
+//            }
+//            return tempArr.join('');
+
+            return (32 + ~~(Math.random() * 1048576)).toString(2);
         }
 
         function p(num){
