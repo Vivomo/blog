@@ -3,6 +3,9 @@
 $theme2 : #4EA9F3;
 $theme1 : #1EEDFF;
 
+.main-box{
+    height: 1000px;
+}
 .duang-wrap{
     margin: 60px auto;
     width: 300px;
@@ -10,6 +13,7 @@ $theme1 : #1EEDFF;
     border: 2px solid $theme1;
 }
 .duang-content{
+    opacity: 0.8;
     height: 600px;
     background-image: linear-gradient(45deg,
             rgba(255,0,0,0) 0%,
