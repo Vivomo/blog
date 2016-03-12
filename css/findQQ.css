@@ -1,0 +1,38 @@
+.code {
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 2px solid #1EEDFF;
+  color: #0f0; }
+
+.qq-groups {
+  color: #1EEDFF; }
+  .qq-groups li {
+    padding: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #1EEDFF;
+    list-style-position: inside; }
+  .qq-groups input, .qq-groups textarea {
+    display: block;
+    padding: 5px;
+    border: 1px solid #4EA9F3;
+    background-color: transparent;
+    border-radius: 6px;
+    color: #fff; }
+  .qq-groups input {
+    margin-bottom: 10px;
+    height: 20px;
+    width: 600px; }
+  .qq-groups textarea {
+    width: 100%;
+    height: 60px;
+    resize: none; }
+
+.result-list span {
+  display: inline-block;
+  min-width: 120px; }
+.result-list .nickname {
+  color: #f60; }
+.result-list .qq {
+  color: #3DB1FF; }
+.result-list .group {
+  color: #00FFE6; }

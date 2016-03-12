@@ -1,0 +1,125 @@
+---
+layout: default
+css: findQQ
+title: 查找几个QQ 群共存的人
+---
+<div class="box u-content">
+    <section>
+        <h2>找出QQ群里重复的人</h2>
+        <pre>
+            打开 http://qun.qzone.qq.com/group#!/群号/member  (群号需要你是自己qq的)
+            打开chrome 控制台 并复制下面的代码运行, 将log复制到textarea里面, 注意开头和结尾的引号不要一起复制
+            (其实这活丢该爬虫做最合适, 连复制粘贴这部都省了)
+        </pre>
+    </section>
+    <pre class="code">
+        var nicknames = Array.prototype.slice.call(document.querySelectorAll('.members_list .member_name')).map(function(item){
+            return item.innerText;
+        });
+
+        var qq = Array.prototype.slice.call(document.querySelectorAll('.members_list .member_id')).map(function(item){
+            return item.innerText.match(/\d+/)[0];
+        })
+
+        var str = JSON.stringify({
+            nicknames : nicknames,
+            qq : qq
+        });
+        console.log(str)
+    </pre>
+
+
+
+    <ol class="qq-groups">
+        <li>
+            <input type="text" placeholder="QQ群名字, 选填" class="group-name"/>
+            <textarea cols="30" rows="10" placeholder="把str复制进来" class="group-members"></textarea>
+        </li>
+        <li>
+            <input type="text" placeholder="QQ群名字, 选填" class="group-name"/>
+            <textarea cols="30" rows="10" placeholder="把str复制进来" class="group-members"></textarea>
+        </li>
+    </ol>
+
+    <button class="btn" id="add-group">添加群</button>
+    <button class="btn" id="opt" style="float: right">计算结果</button>
+    <ol id="result" class="result-list"></ol>
+
+</div>
+
+<script>
+    Array.prototype.ensure = function(item) {
+        if (this.indexOf(item) == -1) {
+            this.push(item);
+            return true;
+        }
+        return false;
+    };
+
+
+    var Search = {
+        groups : null,
+        groupTemp : null,
+        add : function () {
+            this.groups.appendChild(this.groupTemp.cloneNode(true));
+        },
+        opt : function () {
+            var repeatableMembers = [];
+            var groupNames = Array.prototype.slice.call( document.querySelectorAll('.group-name')).map(function (item) {
+                return item.value;
+            });
+
+            var allMembers =  Array.prototype.slice.call( document.querySelectorAll('.group-members')).map(function (item) {
+                return JSON.parse(item.value);
+            });
+
+            for (var i = 0, groupLength = allMembers.length; i < groupLength - 1; i++) {
+                allMembers[i].qq.forEach(function (item) {
+                    for (var j = i + 1; j < groupLength; j++) {
+                        var compareQQ = allMembers[j].qq,
+                            index = compareQQ.indexOf(item);
+                        if (index != -1) {
+                            var findIndex = -1;
+                            if (repeatableMembers.every(function (member, index) {
+                                        if (member.qq != item) {
+                                            return true;
+                                        } else {
+                                            findIndex = index;
+                                            return false;
+                                        }
+                                    })) {
+                                repeatableMembers.push({
+                                    qq : item,
+                                    nickname : allMembers[j].nicknames[index],
+                                    groupsName : [groupNames[i], groupNames[j]]
+                                })
+                            } else {
+                                repeatableMembers[findIndex].groupsName.ensure(groupNames[j]);
+                            }
+                        }
+
+                    }
+                });
+            }
+            console.log(repeatableMembers);
+            var repeatableMembersHTML = repeatableMembers.sort(function (a, b) {
+                return b.groupsName.length - a.groupsName.length;
+            }).map(function (item) {
+                return '<li><span class="nickname">'+ (item.nickname + ':</span><span class="qq">' + item.qq +
+                        '</span><span class="group">【' + item.groupsName.join('***')) + '】</span>' + '</li>'
+            });
+
+            document.getElementById('result').innerHTML = repeatableMembersHTML.join('');
+            return repeatableMembers;
+
+        },
+        init : function () {
+            this.groupTemp = document.querySelector('.qq-groups li').cloneNode(true);
+            this.groups = document.querySelector('.qq-groups');
+            document.getElementById('add-group').addEventListener('click', Search.add.bind(this), false);
+            document.getElementById('opt').addEventListener('click', Search.opt.bind(this), false);
+        }
+    };
+
+    Search.init();
+</script>
