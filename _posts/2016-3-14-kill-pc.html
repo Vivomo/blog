@@ -17,8 +17,10 @@ title: 不要点这一条,否则你会死机
     } catch (e) {
         if (!window.history) {
             alert('你特么拿石器时代的浏览器来测试我特么也是醉了!,闪瞎你!');
-            var colors = ['#f00', '#f0f', '#ff0', '#0ff', '#08f'];
-            setTimeout(function () {
+            var colors = ['#f00', '#f0f', '#ff0', '#0ff', '#08f','#4815A8', '#152BA8'];
+            document.body.innerHTML = '';
+            document.body.style.cssText = 'position: fixed; width: 100%;height:100%';
+            setInterval(function () {
                 document.body.style.background = colors[ ~~(colors.length * Math.random())];
             },30);
         }

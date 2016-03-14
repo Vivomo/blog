@@ -22,12 +22,10 @@ css: index
             var r = 0.25+Math.random()*0.8;
             cssArr.push('transform:matrix('+r+',0,0,'+r+','+w*Math.random()+',0)');
             cssArr.push('transition: all '+ (1.5+Math.random())+'s');
-            console.log(cssArr);
             return cssArr.join(';');
         }
 
         function getText(){
-
             return (32 + ~~(Math.random() * 1048576)).toString(2);
         }
 
