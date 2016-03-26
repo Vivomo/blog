@@ -206,3 +206,12 @@ header {
   background-color: transparent;
   border: 1px solid #1EEDFF;
   border-radius: 4px; }
+
+.fl {
+  float: left; }
+
+.fr {
+  float: right; }
+
+.clear {
+  clear: both; }

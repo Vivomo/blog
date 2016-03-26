@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../css/common.css"/>
+    <link rel="stylesheet" href="../css/mode-add.css"/>
+</head>
+<body>
+<header>
+    <div class="box">
+        <h2 class="fl">模块添加</h2>
+        <button class="btn fr">保存</button>
+        <ol class="modes-thumb clear" id="modes-thumb">
+           <li class="video-img" data-type="flashImg">
+               <h6>标题</h6>
+               <div class="video child-mode">video</div>
+               <div class="image child-mode">image</div>
+           </li>
+
+            <li class="img-six" data-type="imgSix">
+                <h6>标题</h6>
+
+                <div class="child-mode">img</div>
+                <div class="child-mode">img</div>
+                <div class="child-mode">img</div>
+                <div class="child-mode">img</div>
+                <div class="child-mode">img</div>
+                <div class="child-mode">img</div>
+            </li>
+
+            <li class="img-text-mix" data-type="imgTextMix">
+                <h6>标题</h6>
+
+                <div class="child-mode">
+                    <div class="img"></div>
+                    <div class="text">
+                        <hr/>
+                        <hr/>
+                        <hr/>
+                    </div>
+                </div>
+                <div class="child-mode">
+                    <div class="img"></div>
+                    <div class="text">
+                        <hr/>
+                        <hr/>
+                        <hr/>
+                    </div>
+                </div>
+
+            </li>
+        </ol>
+    </div>
+</header>
+<div class="box u-content main" id="main">
+
+</div>
+<textarea class="html-mode hide" data-type="flashImg">
+    <div class="set-video-img-detail set-mode">
+        <div class="del j-del">×</div>
+        <input type="text" placeholder="请输入标题" class="set-title"/>
+        <div class="video-wrap fl">
+            <iframe src="" frameborder="0" class="video-iframe"></iframe>
+            <input type="text" placeholder="请输入优酷视频连接" class="set-video-url set-link"/>
+
+        </div>
+        <div class="img-wrap fr">
+            <input type="text" class="set-link" placeholder="请输入图片链接(可选)"/>
+        </div>
+    </div>
+</textarea>
+<textarea class="html-mode hide" data-type="imgSix">
+    <div class="set-mode set-img-six-detail">
+        <div class="del j-del">×</div>
+        <input type="text" placeholder="请输入标题" class="set-title"/>
+        <ul class="news-list j-list"></ul>
+        <button class="btn add-img">智能添加</button>
+    </div>
+</textarea>
+<script src="../../js/jquery.js"></script>
+<script src="../js/mode-add.js"></script>
+
+</body>
+</html>

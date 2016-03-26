@@ -1,0 +1,217 @@
+@charset "UTF-8";
+@import "inc/mixins";
+
+$theme2 : #4EA9F3;
+$theme1 : #1EEDFF;
+
+$border1 : 1px solid $theme1;
+$border2 : 1px solid $theme2;
+
+h2{
+    color: $theme1;
+}
+.modes-thumb{
+    padding: 10px;
+    border: $border1;
+    color: $theme2;
+
+    &:after{
+        @include clear;
+    }
+
+    li{
+        float: left;
+        cursor: pointer;
+        margin: 0 20px 10px 10px;
+        padding: 5px;
+        height: 70px;
+        border: $border2;
+        font: bold 14px "Microsoft YaHei";
+
+        h6{
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 20px;
+        }
+    }
+
+    .video-img{
+        .child-mode{
+            float: left;
+            text-align: center;
+            width: 80px;
+            line-height: 48px;
+            border: $border2;
+        }
+    }
+
+    .img-six{
+        width: 105px;
+
+        .child-mode{
+            float: left;
+            width: 30px;
+            height: 20px;
+            border: 1px solid;
+            margin: 0 5px 5px 0;
+            box-sizing: border-box;
+        }
+    }
+
+    .img-text-mix{
+        width: 120px;
+
+        .child-mode{
+            height: 20px;
+            padding: 2px;
+
+            .img{
+                width: 30%;
+                height: 20px;
+                border: 1px solid;
+            }
+
+            .text{
+                height: 20px;
+                width: 60%;
+
+                hr{
+                    margin: 4px 0;
+                    border-color: $theme2;
+                }
+            }
+
+            &:nth-child(odd){
+                .img{
+                    float: left;
+                }
+                .text{
+                    float: right;
+                }
+            }
+
+            &:nth-child(even){
+                .img{
+                    float: right;
+                }
+                .text{
+                    float: left;
+                }
+            }
+        }
+    }
+}
+
+
+.main{
+    .set-mode{
+        position: relative;
+        border: 1px dashed $theme1;
+        padding: 10px;
+        margin-bottom: 100px;
+
+        input{
+            background-color: transparent;
+            color: $theme1;
+            border-bottom: $border1;
+        }
+
+        .del{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            color: $theme1;
+            text-align: center;
+            font-size: 30px;
+            line-height: 1;
+        }
+    }
+
+    .set-title{
+        display: block;
+        width: 90%;
+        margin: 0 auto 10px;
+        height: 40px;
+        font-size: 28px;
+        text-align: center;
+
+    }
+    .set-video-img-detail{
+        height: 300px;
+
+        .img-wrap, .video-wrap{
+            position: relative;
+            height: 240px;
+            width: 48%;
+            border: 1px dashed $theme1;
+
+            .set-link{
+                position: absolute;
+                width: 90%;
+                top: 10%;
+                left: 5%;
+            }
+
+            &:before{
+                position: absolute;
+                color: $theme1;
+                text-align: center;
+                width: 100%;
+            }
+        }
+
+        .img-wrap{
+            &:before{
+                content: '+ 添加图片';
+                font: bold 40px/240px "黑体";
+            }
+        }
+        .video-wrap{
+
+            iframe{
+                position: relative;
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+
+            &:before{
+                content: 'Video';
+                font: bold 100px/240px "黑体";
+            }
+
+        }
+    }
+
+    .set-img-six-detail{
+        .news-list{
+            overflow: hidden;
+            margin-right: -20px;
+
+            li{
+                float: left;
+                margin: 0 20px 20px 0;
+                width: 300px;
+                height: 200px;
+                border: $border1;
+
+                a, img{
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+        }
+    }
+
+
+}
+
+.hide{
+    display: none;
+}
