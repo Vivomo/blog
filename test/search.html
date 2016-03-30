@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../css/common.css"/>
+    <link rel="stylesheet" href="../css/search.css"/>
+</head>
+<body>
+<div class="box u-content">
+    <section>
+        <form action="" id="search-form">
+            <input id="search-word" class="v-input" placeholder="input something" type="text"/>
+            <div class="checkbox-group" id="checkbox-group"></div>
+            <button class="btn" id="submit">submit</button>
+        </form>
+
+    </section>
+
+    <div class="iframe-wrap">
+
+        <iframe src="" id="f-baidu"></iframe>
+        <iframe src="" id="f-google"></iframe>
+        <iframe src="" id="f-bing"></iframe>
+    </div>
+
+</div>
+
+<script>
+    var searchData = [{
+        name : '百度',
+        en : 'baidu',
+        url : 'http://www.baidu.com/#ie=utf-8&wd={{searchWord}}'
+    },{
+        name : '谷歌',
+        en : 'google',
+        url : 'https://www.google.com/search?q={{searchWord}}&ie=UTF-8'
+    },{
+        name : '必应',
+        en : 'bing',
+        url : 'http://cn.bing.com/search?q={{searchWord}}'
+    }];
+
+    var search = {
+        engines : [],
+        initEngines : function () {
+            this.engines = searchData;
+            $('#checkbox-group').innerHTML = this.engines.map(function (item) {
+                return '<input type="checkbox" name="engine" id="engine-name-' + item.en + '"/>' +
+                        '<label for="engine-name-' + item.en + '">' + item.name + '</label>'
+            }).join('');
+        },
+        init : function () {
+            this.initEngines()
+        }
+
+    };
+    search.init();
+    var searchWord = document.getElementById('search-word'),
+        iframe = document.getElementById('iframe');
+    document.getElementById('submit').addEventListener('click', function () {
+        var word = searchWord.value;
+        iframe.src = 'http://www.baidu.com/#ie=utf-8&wd='+word;
+    })
+
+    function $(selector){
+        return document.querySelector(selector);
+    }
+
+    function $$(selector){
+        return document.querySelectorAll(selector);
+    }
+</script>
+</body>
+</html>
