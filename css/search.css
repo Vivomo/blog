@@ -26,6 +26,8 @@
     border: 1px solid #1EEDFF; }
   .frame-box.show {
     transform: translate3d(60px, 0px, 800px) rotateY(0deg) !important; }
+    .frame-box.show .close {
+      display: block; }
   .frame-box .close, .frame-box .front {
     position: absolute;
     top: 10px;
@@ -41,6 +43,7 @@
     -ms-border-radius: 50%;
     border-radius: 50%; }
   .frame-box .close {
+    display: none;
     right: 10px; }
   .frame-box .front {
     min-width: 50px;

@@ -33,6 +33,10 @@
 
     &.show {
         transform: translate3d(60px, 0px, 800px) rotateY(0deg)!important;
+
+        .close{
+            display: block;
+        }
     }
 
     .close, .front{
@@ -46,6 +50,7 @@
         @include circle(30px);
     }
     .close{
+        display: none;
         right: 10px;
     }
     .front{
