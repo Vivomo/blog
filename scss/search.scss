@@ -2,36 +2,66 @@
 @import "inc/mixins";
 @import "inc/theme";
 
+.search-form{
+    margin-bottom: 100px;
+}
 .iframe-wrap {
     position: relative;
     height: 800px;
     perspective: 6000px;
     transform-style: preserve-3d;
-    background-color: rgba(#FFF, 0.4);
 }
-
-iframe {
+.frame-box{
     position: absolute;
     width: 720px;
     height: 800px;
-    right: 0;
-    border: $border1;
-    //transform: translate3d(-260px, 0px, 0px) rotate3d(0, 0, 0, 45deg);
+    left: 0;
+    background-color: rgba($theme1, 0.2);
+    transform: translate3d(-260px, 0px, 0px) rotateY(85deg);
     transition: all 0.5s;
     transform-origin: 140% 50%;
     &:hover {
         box-shadow: 0 0 16px $theme1;
+        right: 80px;
+    }
+    iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: $border1;
+    }
+
+    &.show {
+        transform: translate3d(60px, 0px, 800px) rotateY(0deg)!important;
+    }
+
+    .close, .front{
+        position: absolute;
+        top: 10px;
+        border: $border1;
+        font: bold 20px/1.5 "Microsoft YaHei";
+        color: $theme1;
+        text-align: center;
+        cursor: pointer;
+        @include circle(30px);
+    }
+    .close{
+        right: 10px;
+    }
+    .front{
+        left: 10px;
     }
 }
-@for $i from 1 through 5 {
-    iframe:nth-child(#{$i}){
-        //font-size: $i*2px;
-        transform: translate3d(-260px, 0px, 0px) rotateY($i*15deg);
+
+@for $i from 0 through 6 {
+    .frame-box.init:nth-child(#{$i+1}){
+        transform: translate3d($i*150px - 200, 0px, 0px) rotateY(30deg);
     }
 }
 .checkbox-group{
     position: relative;
     padding: 10px 0;
+    min-height: 26px;
     overflow: hidden;
 
     input[type="checkbox"] {

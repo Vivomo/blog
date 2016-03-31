@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-    <link rel="stylesheet" href="../css/common.css"/>
-    <link rel="stylesheet" href="../css/search.css"/>
-</head>
-<body>
+---
+layout: default
+title: 一键搜索
+css: search
+---
+
 <div class="box u-content">
     <section>
         <form action="" id="search-form" class="search-form">
@@ -22,8 +19,10 @@
     <textarea id="html-mode" style="display: none">
         <div class="frame-box"><div class="front j-front">前</div><div class="close j-close">×</div><iframe></iframe></div>
     </textarea>
+
 </div>
-<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+
+
 <script>
     $.fn.serializeMap = function () {
         var arrayType = ['checkbox'];
@@ -36,7 +35,7 @@
         var map = {};
         this.serializeArray().forEach(function (item) {
             var key = item.name,
-                value = item.value;
+                    value = item.value;
             if (map[key] === undefined) {
                 map[key] = arrayType.indexOf(nameType[key]) == -1 ? value : [value];
             } else {
@@ -92,7 +91,7 @@
         },
         initForm : function () {
             var $wrap = $('#iframe-wrap'),
-                htmlMode = $('#html-mode').val().trim();
+                    htmlMode = $('#html-mode').val().trim();
             $('#search-form').submit(function (event) {
                 event.preventDefault();
                 $wrap.addClass('init');
@@ -103,7 +102,7 @@
                     return true;
                 })() && data.engine.forEach(function (item) {
                     var engine = search.engines[item],
-                        url = engine.url.replace(/\{\{searchWord}}/, word);
+                            url = engine.url.replace(/\{\{searchWord}}/, word);
                     if (search.initComplete.indexOf(item) == -1) {
                         search.initComplete.push(item);
                         if (engine.frameAllow !== false) {
@@ -145,5 +144,3 @@
 
 
 </script>
-</body>
-</html>

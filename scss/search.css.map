@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAIA;MAEM;EACF,MAAM,ECJC,iBAAiB",
-"sources": ["search.scss","inc/_theme.scss"],
-"names": [],
-"file": "search.css"
-}
