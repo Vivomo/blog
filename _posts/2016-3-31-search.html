@@ -49,30 +49,30 @@ css: search
     var engineData = {
         baidu : {
             name : '百度',
-            url : 'http://www.baidu.com/#ie=utf-8&wd={{searchWord}}'
+            url : 'http://www.baidu.com/#ie=utf-8&wd=[[searchWord]]'
         },
         google : {
             name : '谷歌',
-            url : 'https://www.google.com/search?q={{searchWord}}&ie=UTF-8',
+            url : 'https://www.google.com/search?q=[[searchWord]]&ie=UTF-8',
             frameAllow : false
         },
         bing : {
             name : '必应',
-            url : 'http://cn.bing.com/search?q={{searchWord}}'
+            url : 'http://cn.bing.com/search?q=[[searchWord]]'
         },
         zhihu : {
             name : '知乎',
-            url : 'http://www.zhihu.com/search?type=content&q={{searchWord}}',
+            url : 'http://www.zhihu.com/search?type=content&q=[[searchWord]]',
             frameAllow : false
         },
         stackoverflow : {
             name : '爆栈',
-            url : 'http://stackoverflow.com/search?q={{searchWord}}',
+            url : 'http://stackoverflow.com/search?q=[[searchWord]]',
             frameAllow : false
         },
         sougou : {
             name : '搜狗',
-            url : 'http://www.sogou.com/web?ie=utf-8&query={{searchWord}}'
+            url : 'http://www.sogou.com/web?ie=utf-8&query=[[searchWord]]'
         }
     };
 
@@ -102,7 +102,7 @@ css: search
                     return true;
                 })() && data.engine.forEach(function (item) {
                     var engine = search.engines[item],
-                            url = engine.url.replace(/\{\{searchWord}}/, word);
+                            url = engine.url.replace(/\[\[searchWord]]/, word);
                     if (search.initComplete.indexOf(item) == -1) {
                         search.initComplete.push(item);
                         if (engine.frameAllow !== false) {
