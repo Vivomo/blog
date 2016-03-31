@@ -38,9 +38,9 @@
     .close, .front{
         position: absolute;
         top: 10px;
-        border: $border1;
+        border: $border2;
         font: bold 20px/1.5 "Microsoft YaHei";
-        color: $theme1;
+        color: $theme2;
         text-align: center;
         cursor: pointer;
         @include circle(30px);
@@ -49,6 +49,7 @@
         right: 10px;
     }
     .front{
+        min-width: 50px;
         left: 10px;
     }
 }
