@@ -1,0 +1,10 @@
+@charset "UTF-8";
+@import "inc/mixins";
+@import "inc/theme";
+
+canvas{
+    display: block;
+    margin: 50px auto;
+    box-shadow: -2px -2px 2px $theme2, 5px 5px 5px $theme2;
+    background-color: #000;
+}
