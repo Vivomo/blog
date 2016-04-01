@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../css/common.css"/>
+</head>
+<body>
+<div class="box u-content">
+
+</div>
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    $.fn.extend({
+        serializeMap : function () {
+            var arrayType = ['checkbox'];
+            var nameType = {};
+            Array.prototype.slice.call(this[0].elements).forEach(function (item) {
+                if (nameType[item.name] === undefined) {
+                    nameType[item.name] = item.type;
+                }
+            });
+            var map = {};
+            this.serializeArray().forEach(function (item) {
+                var key = item.name,
+                        value = item.value;
+                if (map[key] === undefined) {
+                    map[key] = arrayType.indexOf(nameType[key]) == -1 ? value : [value];
+                } else {
+                    map[key].push(value)
+                }
+            });
+            return map;
+        }
+    })
+
+    var formProxy = function(config){
+        if (typeof config === 'string') {
+            this.form = $(config);
+        } else {
+            this.form = $(config.form);
+        }
+        var noop = function () {};
+        var defaultConfig  = {
+            ruleAttr : 'data-rule',
+            beforeSubmit : noop,
+            success : noop(),
+            error : noop()
+        };
+    };
+</script>
+</body>
+</html>
