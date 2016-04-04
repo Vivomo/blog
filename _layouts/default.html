@@ -23,5 +23,8 @@
 </header>
 {{ content }}
 
+{% if page.js != '' %}
+<script src="{{site.baseurl}}/css/{{page.js}}.js"></script>
+{% endif %}
 </body>
 </html>

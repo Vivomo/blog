@@ -111,15 +111,17 @@ var Gobang = {
             count = this.count, i, j, k;
 
         for (i = 0; i < 15; i++) {
-            AIScore[i] = myScore[i] = [];
+            AIScore[i] = [];
+            myScore[i] = [];
             for (j = 0; j < 15; j++) {
-                myScore[i][j] = AIScore[i][j] = 0;
+                myScore[i][j] = 0;
+                AIScore[i][j] = 0;
             }
         }
 
         for (i = 0; i < 15; i++) {
             for (j = 0; j < 15; j ++) {
-                if (this.chessBoard[i][j] == 0) {
+                if (this.chessBoard[i][j] === undefined) {
                     for (k = 0; k < count; k++) {
                         if (this.wins[i][j][k]) {
                             myScore[i][j] += this.blackValue[this.blackWin[k]];
@@ -136,8 +138,36 @@ var Gobang = {
                             y = j;
                         }
                     }
+                    if (AIScore[i][j] > max) {
+                        max = AIScore[i][j];
+                        x = i;
+                        y = j;
+                    } else if (AIScore[i][j] == max) {
+                        if (myScore[i][j] > myScore[x][y]) {
+                            x = i;
+                            y = j;
+                        }
+                    }
                 }
             }
+        }
+
+        this.oneStep(x, y, false);
+        this.chessBoard[x][y] = 2;
+
+        for (k = 0; k < count; k++) {
+            if (this.wins[x][y][k]) {
+                this.whiteWin[k] ++;
+                this.blackWin[k] = 6;
+                if (this.whiteWin[k] == 5) {
+                    alert('AI win!');
+                    this.over = true;
+                    break;
+                }
+            }
+        }
+        if (!this.over) {
+            this.me = !this.me;
         }
 
     },
