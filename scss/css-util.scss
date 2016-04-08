@@ -1,5 +1,7 @@
 @charset "UTF-8";
 @import "inc/mixins";
+@import "inc/theme";
+
 .util-wrap{
     box-sizing: border-box;
     border-top: 1px solid #ddd;
@@ -71,4 +73,7 @@
         box-shadow: 15px 15px 0 yellow;
     }
 
+    .auto-fill:-webkit-autofill{
+        -webkit-box-shadow: 0 0 0px 1000px $theme1 inset;
+    }
 }
