@@ -74,7 +74,7 @@
     }
 
     //.auto-fill:-webkit-autofill{
-    .auto-fill{
+    .auto-fill, .auto-fill:-webkit-autofill{
         -webkit-box-shadow: 0 1000px 0 $theme1 inset;
     }
 }
