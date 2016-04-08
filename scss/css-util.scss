@@ -73,7 +73,8 @@
         box-shadow: 15px 15px 0 yellow;
     }
 
-    .auto-fill:-webkit-autofill{
-        -webkit-box-shadow: 0 0 0px 1000px $theme1 inset;
+    //.auto-fill:-webkit-autofill{
+    .auto-fill{
+        -webkit-box-shadow: 0 1000px 0 $theme1 inset;
     }
 }
