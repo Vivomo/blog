@@ -1,0 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+h1, h2, h3, h4, h5, h6, p {
+  margin-bottom: 10px; }
+
+ol, ul, dl {
+  list-style-position: inside; }
+
+body {
+  font: 13px 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
+  color: #444;
+  background-color: #888; }
+
+a {
+  text-decoration: none; }
+
+a:link, a:visited {
+  color: inherit; }
+
+a:hover {
+  text-decoration: underline; }
+
+#spa {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  min-width: 500px;
+  min-height: 500px;
+  overflow: hidden;
+  border-radius: 8px 8px 0 8px;
+  background-color: #fff; }
+
+.spa-x-clearfloat {
+  height: 0 !important;
+  float: none !important;
+  visibility: hidden !important;
+  clear: both !important; }
+
+.spa-shell-head, .spa-shell-head-logo, .spa-shell-head-acct, .spa-shell-head-search,
+.spa-shell-main, .spa-shell-main-nav, .spa-shell-main-content, .spa-shell-foot,
+.spa-shell-chat, .spa-shell-modal {
+  position: absolute; }
+
+.spa-shell-head {
+  top: 0;
+  left: 0;
+  width: inherit;
+  height: inherit;
+  right: 0; }
+
+.spa-shell-head-logo {
+  top: 4px;
+  left: 4px;
+  width: 128px;
+  height: 32px;
+  background-color: #ffa500; }
+
+.spa-shell-head-acct {
+  top: 4px;
+  right: 0;
+  width: 64px;
+  height: 32px;
+  background-color: #008000; }
+
+.spa-shell-head-search {
+  top: 4px;
+  right: 64px;
+  width: 248px;
+  height: 32px;
+  background-color: #00f; }
+
+.spa-shell-main {
+  top: 4px;
+  left: 0;
+  right: 0;
+  bottom: 40px; }
+
+.spa-shell-main-content, .spa-shell-main-nav {
+  top: 0;
+  bottom: 0; }
+
+.spa-shell-main-nav {
+  width: 250px;
+  background-color: #eee; }
+
+.spa-x-closed .spa-shell-main-nav {
+  width: 0; }
+.spa-x-closed .spa-shell-main-content {
+  left: 0; }
+
+.spa-shell-main-content {
+  left: 250px;
+  right: 0;
+  background-color: #ddd; }
+
+.spa-shell-foot {
+  top: inherit;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40px; }
+
+.spa-shell-chat {
+  bottom: 0;
+  right: 0;
+  width: 300px;
+  height: 15px;
+  background-color: #f00;
+  z-index: 1; }
+
+.spa-shell-modal {
+  margin-top: -200px;
+  margin-left: -200px;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  background-color: #fff;
+  border-radius: 3px;
+  z-index: 2; }

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>SAP Chapter1 section 1.2.4</title>
+    <style>
+        body{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #777;
+        }
+
+        #spa{
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border-radius: 8px 8px 0 8px;
+            background-color: #fff;
+        }
+
+        .spa-slider{
+            position: absolute;
+            bottom: 0;
+            right: 2px;
+            width: 300px;
+            height: 16px;
+            cursor: pointer;
+            border-radius: 8px 0 0 0;
+            background-color: #f00;
+        }
+    </style>
+</head>
+<body>
+<div id="spa"></div>
+<script src="../../js/jquery.js"></script>
+<script>
+
+    // Module /sap/
+    // Provides chat sliders capability
+    var spa = (function ($){
+
+        //Module scope variables
+        var
+            // Set constants
+            configMap = {
+                extended_height : 434,
+                extended_title : 'Click to retract',
+                retracted_height : 16,
+                retracted_title : 'Click to extend',
+                template_html : '<div class="spa-slider"><\/div>'
+            },
+            //Declare all other module scope variables
+            $chartSlider,
+            toggleSlider, onClickSlider, initModule;
+        // DOM method /toggleSlider/
+        // alternates slider height
+        toggleSlider = function () {
+            var slider_height = $chartSlider.height();
+            if (slider_height === configMap.retracted_height) {
+                $chartSlider.animate({
+                    height : configMap.extended_height
+                }).attr('title', configMap.extended_title);
+
+                return true;
+            } else if (slider_height === configMap.extended_height) {
+                $chartSlider.animate({
+                    height : configMap.retracted_height
+                }).attr('title' , configMap.extended_height);
+                return true;
+            }
+            // don't take action if slider is in transition
+            return false;
+        };
+        //Event handler /onClick Slider/
+        // receives click event and calls toggleSlider
+        //
+        onClickSlider = function (event) {
+            toggleSlider();
+            return false;
+        };
+        //Public method /initModule/
+        //sets initial state and provides feature
+        initModule = function ($container) {
+            // render HTML
+            $container.html(configMap.template_html);
+            $chartSlider = $container.find('.spa-slider');
+            // initialize slider height and title
+            // bind the user click event to the event handler
+            $chartSlider.attr('title', configMap.retracted_title)
+                    .click(onClickSlider);
+            return true;
+        };
+        return {initModule : initModule};
+    })(jQuery);
+    // Start spa once DOM is ready
+
+    $(function () {
+        spa.initModule($('#spa'));
+    })
+
+
+
+</script>
+</body>
+</html>
