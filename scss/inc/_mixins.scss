@@ -57,33 +57,33 @@
 	justify-content: center;
 }
 
-@mixin rect2($top, $left, $w:inherit, $h:inherit) {
+@mixin rect2($top, $left, $w:initail, $h:initail) {
 	top: $top;
 	left: $left;
 	width: $w;
 	height: $h;
 }
 
-@mixin rect2r($top, $right, $w:inherit, $h:inherit) {
+@mixin rect2r($top, $right, $w:initail, $h:initail) {
 	top: $top;
 	right: $right;
 	width: $w;
 	height: $h;
 }
 
-@mixin rect3($top, $left, $right, $w:inherit, $h:inherit){
-	@include rect2($top, $left, $w:inherit, $h:inherit);
+@mixin rect3($top, $left, $right, $w:initail, $h:initail){
+	@include rect2($top, $left, $w, $h);
 	right: $right;
 }
 
-@mixin rect3b($bottom, $left, $right, $h:inherit){
+@mixin rect3b($bottom, $left, $right, $h:initail){
 	left: $left;
 	right: $right;
 	bottom: $bottom;
 	height: $h;
 }
 
-@mixin rect($top,$bottom, $left, $right){
+@mixin rect($top, $bottom, $left, $right){
 	top: $top;
 	left: $left;
 	right: $right;

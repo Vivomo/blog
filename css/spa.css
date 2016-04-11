@@ -50,7 +50,7 @@ a:hover {
   top: 0;
   left: 0;
   width: inherit;
-  height: inherit;
+  height: 40px;
   right: 0; }
 
 .spa-shell-head-logo {
@@ -75,7 +75,7 @@ a:hover {
   background-color: #00f; }
 
 .spa-shell-main {
-  top: 4px;
+  top: 40px;
   left: 0;
   right: 0;
   bottom: 40px; }
