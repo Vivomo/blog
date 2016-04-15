@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/cube.css"/>
+    <script src="../js/avalon.js"></script>
+
+</head>
+
+
+<body>
+<div ms-controller="cube" class="outer-wrap">
+    <div class="outer-box">
+        <div ms-repeat="cubes" class="cubes"
+             ms-attr-id="'id_'+$index"
+             ms-css-transform="style($index)"
+             ms-attr-data-role="role($index)"
+             ms-attr-data-side="side($index)"
+             ms-attr-data-position="position($index)">
+
+            <div class="front face" ms-css-background="bg($index,'front')" ></div>
+            <div class="left face" ms-css-background="bg($index,'left')"></div>
+            <div class="up face" ms-css-background="bg($index,'up')"></div>
+            <div class="right face" ms-css-background="bg($index,'right')"></div>
+            <div class="back face" ms-css-background="bg($index,'back')"></div>
+            <div class="bottom face" ms-css-background="bg($index,'bottom')"></div>
+        </div>
+    </div>
+</div>
+<script>
+
+    Math.radian = function(degree) {
+        return degree * Math.PI / 180;
+    };
+    var cos = function(degree) {
+        return Math.cos(Math.radian(degree));
+    };
+    var sin = function(degree) {
+        return Math.sin(Math.radian(degree));
+    };
+
+    var colorMap = {
+            up : 'yellow',
+            bottom : 'white',
+            left : 'orange',
+            right : 'red',
+            front : 'blue',
+            back : 'green'
+        },
+        cubes = [],
+        up = [],
+        bottom = [],
+        left = [],
+        right = [],
+        front = [],
+        back = [],
+        l = 100;
+
+
+
+    var CubeUtil = {
+        edge : 8,
+        horn : 4,
+        center : 2,
+        core : 1,
+        front : 32, // 100000
+        back : 16, //  010000
+        up : 8,
+        bottom : 4,
+        left : 2,
+        right : 1,
+        hornIndexArr : [0,2,6,8,18,20,24,26], //为了避免方法调用时,总要生成一个新的数组
+        centerIndexArr : [4,10,12,14,16,22], //同上
+        isEdge : function(index) {
+            return index % 2 != 0 && index != 13;
+        },
+        isHorn : function(index) {
+            return CubeUtil.hornIndexArr.indexOf(index) != -1;
+        },
+        isCenter : function(index) {
+            return CubeUtil.centerIndexArr.indexOf(index) != -1;
+        },
+        isCore : function(index) {
+            return index == 13;
+        }
+    };
+
+    var vm = avalon.define({
+        $id: 'cube',
+        cubes: [],
+        up : up,
+        bottom : bottom,
+        left : left,
+        right : right,
+        front : front,
+        back : back,
+        style: function (index, str) {
+            var _x = cubes[index].x,
+                    _y = cubes[index].y,
+                    _z = cubes[index].z + 50;
+            return 'translate3d(' + _x + 'px,' + _y + 'px,' +  _z + 'px)' + (str || '');
+        },
+        /**
+         * 标记方块的角色 二进制标识位
+         * 1000 棱 (8)
+         * 0100 角 (4)
+         * 0010 中心(2)
+         * 0001 核心(1)
+         * @param index
+         */
+        role : function(index){
+            if ( CubeUtil.isEdge(index))
+                return CubeUtil.edge;
+            if ( CubeUtil.isHorn(index))
+                return CubeUtil.horn;
+            if ( CubeUtil.isCenter(index))
+                return CubeUtil.center;
+            if ( CubeUtil.isCore(index))
+                return CubeUtil.core;
+        },
+        /**
+         * 标记方块属于那一个边
+         * 000000  前后上下左右
+         * @param index
+         */
+        side : function(index) {
+            var temp = 0;
+            var cube = cubes[index];
+            if (cube.z == 50)
+                temp |= CubeUtil.back;
+            if (cube.z == 250)
+                temp |= CubeUtil.front;
+            if (cube.x == 0)
+                temp |= CubeUtil.left;
+            if (cube.x == 200)
+                temp |= CubeUtil.right;
+            if (cube.y == 0)
+                temp |= CubeUtil.up;
+            if (cube.y == 200)
+                temp |= CubeUtil.bottom;
+            return temp;
+        },
+        position : function(index) {
+
+        },
+        bg : function (index, key) {
+            var arr = vm[key];
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i].index == index)
+                    return colorMap[key]
+            }
+        }
+    });
+    avalon.scan();
+    vm.cubes = cubes;
+    for (var i = 0; i < 27; i++) {
+        var item = {
+            index : i,
+            x : i % 3 * l,
+            y : ~~(i % 9 / 3) * l,
+            z : ~~(i / 9) * l
+        };
+        cubes.push(item);
+        initCube(item);
+    }
+
+    var arr = document.querySelectorAll('.cubes');
+
+
+    function initCube(){
+        if (item.index < 9) {
+            back.push(item);
+        }
+        if (item.index > 17) {
+            front.push(item);
+        }
+        if (item.x == 0) {
+            left.push(item);
+        }
+        if (item.x == 200) {
+            right.push(item);
+        }
+        if (item.y == 0) {
+            up.push(item);
+        }
+        if (item.y == 200) {
+            bottom.push(item);
+        }
+    }
+
+    function rotateFront(){
+
+    }
+
+    function test(){
+        var li = document.querySelectorAll('.cubes')[18];
+        var transform = li.style.transform;
+        var str = transform.substring( transform.indexOf('(') + 1, transform.lastIndexOf(')'));
+        var arr = str.split(',');
+        var x = parseInt(arr[0]);
+        var y = parseInt(arr[1]);
+        var z = parseInt(arr[2]);
+        var j = 90/24;
+        var start = 0;
+        var i = 0;
+        var r = Math.sqrt(20000);
+
+        var clear = setInterval(function(){
+            start += j;
+            var degree = (180 - start) / 2 - 45;
+            var l = Math.sqrt(2*r*r*(1-cos(start)));
+            console.log(l);
+
+            var _x = l * cos(degree);
+            var _y = l * sin(degree);
+
+            li.style.transform = 'translate3d('+(x+_x)+'px, '+(y-_y)+'px, '+z+'px) ' + 'rotateZ('+start+'deg)';
+            i++;
+            if (i == 24) {
+                clearInterval(clear);
+            }
+        },25);
+    }
+
+</script>
+</body>
+</html>
