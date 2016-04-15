@@ -1,0 +1,47 @@
+html, body, .stage {
+  height: 100%; }
+
+.stage {
+  position: relative;
+  perspective: 3000px; }
+  .stage .square {
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    width: 1000px;
+    height: 800px;
+    border: 1px solid #1EEDFF;
+    background-color: rgba(30, 237, 255, 0.6);
+    transform-style: preserve-3d; }
+  .stage .cubes {
+    position: absolute;
+    transform-style: preserve-3d;
+    width: 100px;
+    height: 100px; }
+  .stage .face {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100px;
+    height: 100px;
+    outline: 1px solid;
+    background: #ccc;
+    transition: all 0.5s;
+    list-style: none;
+    opacity: 0.5;
+    color: #000;
+    font-size: 50px;
+    text-align: center;
+    line-height: 100px; }
+  .stage .front {
+    transform: translate3d(0px, 0px, 50px); }
+  .stage .back {
+    transform: translate3d(0px, 0px, -50px); }
+  .stage .left {
+    transform: translate3d(-25%, 0px, 0px) rotateY(90deg); }
+  .stage .right {
+    transform: translate3d(50%/2, 0px, 0px) rotateY(90deg); }
+  .stage .up {
+    transform: translate3d(0px, -50%/2, 0px) rotateX(90deg); }
+  .stage .bottom {
+    transform: translate3d(0px, 50%/2, 0px) rotateX(90deg); }
