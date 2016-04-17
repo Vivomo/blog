@@ -126,6 +126,9 @@
     </div>
     <script src="../js/avalon.js"></script>
     <script>
+        var $ = function (select) {
+            return document.querySelector(select);
+        };
         var vm = avalon.define({
             $id : 'square',
             w : 100,
@@ -146,7 +149,13 @@
             }]
         });
 
+
         avalon.scan();
+
+        setTimeout(function () {
+            $('.square').className += ' show';
+        }, 100);
+
     </script>
 </body>
 </html>

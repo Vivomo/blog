@@ -20,7 +20,7 @@ html, body, .stage{
         width: $cubeWidth;
         height: $cubeWidth;
         box-sizing: border-box;
-        border: 4px solid $theme1;
+        border: 4px solid $theme2;
     }
 }
 
@@ -35,10 +35,14 @@ html, body, .stage{
         width: 1000px;
         height: 800px;
         border: $border1;
-        transform: translate3d(10px, -10px, -1160px) rotateX(60deg) rotateY(0deg) rotateZ(45deg);
+        transform: translate3d(10px, -10px, -116000px) rotateX(60deg) rotateY(0deg) rotateZ(450deg);
         //background-color: rgba($theme1, 0.4);
         transform-style: preserve-3d;
-        transition: all 0.5s;
+        transition: all 2s;
+
+        &.show{
+            transform: translate3d(10px, -10px, -1160px) rotateX(60deg) rotateY(0deg) rotateZ(45deg);
+        }
     }
 
     .cubes{
@@ -47,6 +51,12 @@ html, body, .stage{
         width: $cubeWidth;
         height: $cubeWidth;
         transition: all 0.5s;
+
+        &:hover{
+            .face{
+                box-shadow: 0 0 36px $theme1;
+            }
+        }
     }
 
 
@@ -56,12 +66,12 @@ html, body, .stage{
         top: 0;
         width: $cubeWidth;
         height: $cubeWidth;
-        outline: 1px solid;
-        background: #ccc;
+        outline: $border1;
+        background: none!important;
         transition: all 0.5s;
         list-style: none;
         opacity: 0.5;
-        color: #000;
+        color: transparent;
         font-size: 50px;
         text-align: center;
         line-height: 100px;
