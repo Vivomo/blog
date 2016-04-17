@@ -3,16 +3,30 @@
 @import "inc/theme";
 
 $cubeWidth : 100px;
+$squareWidth : 1000px;
+$squareHeight : 800px;
 
 html, body, .stage{
     height: 100%;
 
 }
 
+#grids{
+    position: absolute;
+    left: 0;
+    right: 0;
+
+    td{
+        width: $cubeWidth;
+        height: $cubeWidth;
+        box-sizing: border-box;
+        border: 4px solid $theme1;
+    }
+}
+
 .stage{
     position: relative;
     perspective: 3000px;
-
 
     .square{
         position: absolute;
@@ -21,9 +35,10 @@ html, body, .stage{
         width: 1000px;
         height: 800px;
         border: $border1;
-        //transform: translate3d(10px,-10px, -970px) rotateX(70deg) rotateY(0deg) rotateZ(-50deg);
-        background-color: rgba($theme1, 0.6);
+        transform: translate3d(10px, -10px, -1160px) rotateX(60deg) rotateY(0deg) rotateZ(45deg);
+        //background-color: rgba($theme1, 0.4);
         transform-style: preserve-3d;
+        transition: all 0.5s;
     }
 
     .cubes{
@@ -31,6 +46,7 @@ html, body, .stage{
         transform-style: preserve-3d;
         width: $cubeWidth;
         height: $cubeWidth;
+        transition: all 0.5s;
     }
 
 
@@ -52,22 +68,25 @@ html, body, .stage{
 
     }
     .front{
-        transform: translate3d(0px, 0px, $cubeWidth / 2);
+        transform: translate3d(0px, 50%, 0px) rotateX(-90deg);
     }
     .back{
-        transform: translate3d(0px, 0px, -$cubeWidth / 2);;
+        transform: translate3d(0px, -50%, 0px) rotateX(90deg) rotateZ(180deg);
     }
     .left{
-        transform: translate3d(-50% / 2, 0px, 0px) rotateY(90deg);
+        transform: translate3d(-50%, 0px, 0px) rotateY(-90deg) rotateZ(90deg);
     }
     .right{
-        transform: translate3d(50% / 2, 0px, 0px) rotateY(90deg);
+        transform: translate3d(50%, 0px, 0px) rotateY(90deg) rotateZ(-90deg);
     }
     .up{
-        transform: translate3d(0px, -50% / 2, 0px) rotateX(90deg);
+        transform: translate3d(0px, 0px, $cubeWidth / 2);
     }
     .bottom{
-        transform: translate3d(0px, 50% / 2, 0px) rotateX(90deg);
+        transform: translate3d(0px, 0px, -$cubeWidth / 2) rotateY(180deg);
+    }
+    .left, .right, .front, .back{
+        transform-origin: 0 $cubeWidth;
     }
 
 }
