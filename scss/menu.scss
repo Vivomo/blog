@@ -4,23 +4,22 @@
 
 $cubeWidth : 100px;
 $squareWidth : 1000px;
-$squareHeight : 800px;
+$squareHeight : 1000px;
 
 html, body, .stage{
     height: 100%;
 
 }
 
-#grids{
-    position: absolute;
-    left: 0;
-    right: 0;
-
-    td{
-        width: $cubeWidth;
-        height: $cubeWidth;
-        box-sizing: border-box;
-        border: 4px solid $theme2;
+@for $i from 1 through 9 {
+    .row-line:nth-child(#{$i}){
+        transform: translate3d(0, #{$i * $cubeWidth - 1}, 0);
+        transition: all 1s #{$i / 10 + 2}s;
+    }
+    .col-line:nth-child(#{$i+9}){
+        transform: translate3d(#{$i * $cubeWidth - 1}, 0, 0) rotateZ(90deg);
+        transform-origin: 0;
+        transition: all 1s #{$i / 10 + 2}s;
     }
 }
 
@@ -30,18 +29,30 @@ html, body, .stage{
 
     .square{
         position: absolute;
-        left: 100px;
-        top: 100px;
+        left: 50%;
+        top: 70%;
         width: 1000px;
-        height: 800px;
-        border: $border1;
-        transform: translate3d(10px, -10px, -116000px) rotateX(60deg) rotateY(0deg) rotateZ(450deg);
+        height: 1000px;
+        border: 2px solid $theme1;
+        transform: translate3d(-50%, -50%, -116000px) rotateX(60deg) rotateY(0deg) rotateZ(450deg);
         //background-color: rgba($theme1, 0.4);
         transform-style: preserve-3d;
         transition: all 2s;
 
         &.show{
-            transform: translate3d(10px, -10px, -1160px) rotateX(60deg) rotateY(0deg) rotateZ(45deg);
+            transform: translate3d(-50%, -50%, -1160px) rotateX(60deg) rotateY(0deg) rotateZ(45deg);
+            hr{
+                width: 100%;
+            }
+        }
+
+        hr{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            border: 1px solid $theme1;
+            box-sizing: border-box;
         }
     }
 

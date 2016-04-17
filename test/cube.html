@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" href="css/cube.css"/>
+    <link rel="stylesheet" href="../css/cube.css"/>
     <script src="../js/avalon.js"></script>
 
 </head>
@@ -161,7 +161,7 @@
             y : ~~(i % 9 / 3) * l,
             z : ~~(i / 9) * l
         };
-        cubes.push(item);
+        vm.cubes.push(item);
         initCube(item);
     }
 
