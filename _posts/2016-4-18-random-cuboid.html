@@ -26,16 +26,16 @@ js: cuboid
         <hr class="col-line"/>
         <hr class="col-line"/>
 
-        <div class="cubes" ms-repeat="list" ms-css-transform="translate3d({{el.coords.x * w}}px, {{el.coords.y * w}}px, 50px)">
-            <div class="front face" ms-css-height="{{el.height}}px"
-                 ms-css-transform="translate3d(0, 0, {{w * -1.5 + el.height}}px) rotateX(-90deg)">前</div>
-            <div class="left face" ms-css-height="{{el.height}}px"
-                 ms-css-transform="translate3d(0, {{-w}}px, {{w * -1.5 + el.height}}px) rotateY(-90deg) rotateZ(90deg)">左</div>
-            <div class="up face" ms-css-transform="translate3d(0px, 0px, {{-0.5*w+el.height}}px)">上</div>
-            <div class="right face" ms-css-height="{{el.height}}px"
-                 ms-css-transform="translate3d(100%, 0px, {{w * -1.5 + el.height}}px) rotateY(90deg) rotateZ(-90deg)">右</div>
-            <div class="back face" ms-css-height="{{el.height}}px"
-                 ms-css-transform="translate3d({{w}}px, {{-w}}px, {{w * -1.5 + el.height}}px) rotateX(90deg) rotateZ(-180deg)">后</div>
+        <div class="cubes" ms-repeat="list" ms-css-transform="translate3d([[el.coords.x * w]]px, [[el.coords.y * w]]px, 50px)">
+            <div class="front face" ms-css-height="[[el.height]]px"
+                 ms-css-transform="translate3d(0, 0, [[w * -1.5 + el.height]]px) rotateX(-90deg)">前</div>
+            <div class="left face" ms-css-height="[[el.height]]px"
+                 ms-css-transform="translate3d(0, [[-w]]px, [[w * -1.5 + el.height]]px) rotateY(-90deg) rotateZ(90deg)">左</div>
+            <div class="up face" ms-css-transform="translate3d(0px, 0px, [[-0.5*w+el.height]]px)">上</div>
+            <div class="right face" ms-css-height="[[el.height]]px"
+                 ms-css-transform="translate3d(100%, 0px, [[w * -1.5 + el.height]]px) rotateY(90deg) rotateZ(-90deg)">右</div>
+            <div class="back face" ms-css-height="[[el.height]]px"
+                 ms-css-transform="translate3d([[w]]px, [[-w]]px, [[w * -1.5 + el.height]]px) rotateX(90deg) rotateZ(-180deg)">后</div>
             <div class="bottom face">下</div>
         </div>
     </div>
