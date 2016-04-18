@@ -153,7 +153,7 @@
         }
     });
     avalon.scan();
-    vm.cubes = cubes;
+//    vm.cubes = cubes;
     for (var i = 0; i < 27; i++) {
         var item = {
             index : i,
@@ -161,7 +161,7 @@
             y : ~~(i % 9 / 3) * l,
             z : ~~(i / 9) * l
         };
-        cubes.push(item);
+        vm.cubes.push(item);
         initCube(item);
     }
 
