@@ -1,6 +1,6 @@
 (function () {
     avalon.config({
-        interpolate: ["[[","[["]
+        interpolate: ["[[","]]"]
     })
     var vm = avalon.define({
         $id : 'square',
