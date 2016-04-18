@@ -8,7 +8,7 @@ $squareHeight : 1000px;
 
 html, body, .stage{
     height: 100%;
-
+    overflow: hidden;
 }
 
 @for $i from 1 through 9 {
@@ -62,7 +62,6 @@ html, body, .stage{
         width: $cubeWidth;
         height: $cubeWidth;
         transition: all 0.5s;
-
         &:hover{
             .face{
                 box-shadow: 0 0 36px $theme1;
@@ -78,7 +77,8 @@ html, body, .stage{
         width: $cubeWidth;
         height: $cubeWidth;
         outline: $border1;
-        background: none!important;
+        //background: none!important;
+        background: radial-gradient(ellipse at center, #444 0%, #000000 90%);
         transition: all 0.5s;
         list-style: none;
         opacity: 0.5;
