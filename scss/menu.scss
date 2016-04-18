@@ -3,27 +3,57 @@
 @import "inc/theme";
 
 $cubeWidth : 100px;
+$squareWidth : 1000px;
+$squareHeight : 1000px;
 
 html, body, .stage{
     height: 100%;
 
 }
 
+@for $i from 1 through 9 {
+    .row-line:nth-child(#{$i}){
+        transform: translate3d(0, #{$i * $cubeWidth - 1}, 0);
+        transition: all 1s #{$i / 10 + 2}s;
+    }
+    .col-line:nth-child(#{$i+9}){
+        transform: translate3d(#{$i * $cubeWidth - 1}, 0, 0) rotateZ(90deg);
+        transform-origin: 0;
+        transition: all 1s #{$i / 10 + 2}s;
+    }
+}
+
 .stage{
     position: relative;
     perspective: 3000px;
 
-
     .square{
         position: absolute;
-        left: 100px;
-        top: 100px;
+        left: 50%;
+        top: 70%;
         width: 1000px;
-        height: 800px;
-        border: $border1;
-        //transform: translate3d(10px,-10px, -970px) rotateX(70deg) rotateY(0deg) rotateZ(-50deg);
-        background-color: rgba($theme1, 0.6);
+        height: 1000px;
+        border: 2px solid $theme1;
+        transform: translate3d(-50%, -50%, -116000px) rotateX(60deg) rotateY(0deg) rotateZ(450deg);
+        //background-color: rgba($theme1, 0.4);
         transform-style: preserve-3d;
+        transition: all 2s;
+
+        &.show{
+            transform: translate3d(-50%, -50%, -1160px) rotateX(60deg) rotateY(0deg) rotateZ(45deg);
+            hr{
+                width: 100%;
+            }
+        }
+
+        hr{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            border: 1px solid $theme1;
+            box-sizing: border-box;
+        }
     }
 
     .cubes{
@@ -31,6 +61,13 @@ html, body, .stage{
         transform-style: preserve-3d;
         width: $cubeWidth;
         height: $cubeWidth;
+        transition: all 0.5s;
+
+        &:hover{
+            .face{
+                box-shadow: 0 0 36px $theme1;
+            }
+        }
     }
 
 
@@ -40,34 +77,37 @@ html, body, .stage{
         top: 0;
         width: $cubeWidth;
         height: $cubeWidth;
-        outline: 1px solid;
-        background: #ccc;
+        outline: $border1;
+        background: none!important;
         transition: all 0.5s;
         list-style: none;
         opacity: 0.5;
-        color: #000;
+        color: transparent;
         font-size: 50px;
         text-align: center;
         line-height: 100px;
 
     }
     .front{
-        transform: translate3d(0px, 0px, $cubeWidth / 2);
+        transform: translate3d(0px, 50%, 0px) rotateX(-90deg);
     }
     .back{
-        transform: translate3d(0px, 0px, -$cubeWidth / 2);;
+        transform: translate3d(0px, -50%, 0px) rotateX(90deg) rotateZ(180deg);
     }
     .left{
-        transform: translate3d(-50% / 2, 0px, 0px) rotateY(90deg);
+        transform: translate3d(-50%, 0px, 0px) rotateY(-90deg) rotateZ(90deg);
     }
     .right{
-        transform: translate3d(50% / 2, 0px, 0px) rotateY(90deg);
+        transform: translate3d(50%, 0px, 0px) rotateY(90deg) rotateZ(-90deg);
     }
     .up{
-        transform: translate3d(0px, -50% / 2, 0px) rotateX(90deg);
+        transform: translate3d(0px, 0px, $cubeWidth / 2);
     }
     .bottom{
-        transform: translate3d(0px, 50% / 2, 0px) rotateX(90deg);
+        transform: translate3d(0px, 0px, -$cubeWidth / 2) rotateY(180deg);
+    }
+    .left, .right, .front, .back{
+        transform-origin: 0 $cubeWidth;
     }
 
 }
