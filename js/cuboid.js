@@ -25,7 +25,7 @@
                     });
                     setTimeout(function () {
                         vm.list[vm.list.length - 1].height = Math.random() * 500;
-                    }, 10);
+                    }, 50);
                 }, i * 100 + 1000);
             });
         }, 3500);
