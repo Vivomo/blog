@@ -215,3 +215,6 @@ header {
 
 .clear {
   clear: both; }
+
+.turbo {
+  will-change: transform; }
