@@ -35,12 +35,10 @@ html, body, .stage{
         height: 1000px;
         border: 2px solid $theme1;
         transform: translate3d(-50%, -50%, -116000px) rotateX(60deg) rotateY(0deg) rotateZ(450deg);
-        //background-color: rgba($theme1, 0.4);
         transform-style: preserve-3d;
         transition: all 2s;
 
         &.show{
-            transform: translate3d(-50%, -50%, -1160px) rotateX(60deg) rotateY(0deg) rotateZ(45deg);
             hr{
                 width: 100%;
             }

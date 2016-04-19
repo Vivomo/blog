@@ -96,10 +96,8 @@ html, body, .stage {
     transform: translate3d(-50%, -50%, -116000px) rotateX(60deg) rotateY(0deg) rotateZ(450deg);
     transform-style: preserve-3d;
     transition: all 2s; }
-    .stage .square.show {
-      transform: translate3d(-50%, -50%, -1160px) rotateX(60deg) rotateY(0deg) rotateZ(45deg); }
-      .stage .square.show hr {
-        width: 100%; }
+    .stage .square.show hr {
+      width: 100%; }
     .stage .square hr {
       position: absolute;
       left: 0;

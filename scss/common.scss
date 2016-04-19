@@ -87,3 +87,6 @@ header{
 .turbo{
     will-change: transform;
 }
+.no-animate{
+    transition: all 0s!important;
+}
