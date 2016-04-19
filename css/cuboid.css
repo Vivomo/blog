@@ -85,7 +85,8 @@ html, body, .stage {
 
 .stage {
   position: relative;
-  perspective: 3000px; }
+  perspective: 3000px;
+  -webkit-user-select: none; }
   .stage .square {
     position: absolute;
     left: 50%;
@@ -123,11 +124,7 @@ html, body, .stage {
     background: radial-gradient(ellipse at center, #444 0%, #000000 90%);
     transition: all 0.5s;
     list-style: none;
-    opacity: 0.5;
-    color: transparent;
-    font-size: 50px;
-    text-align: center;
-    line-height: 100px; }
+    opacity: 0.5; }
   .stage .front {
     transform: translate3d(0px, 50%, 0px) rotateX(-90deg); }
   .stage .back {

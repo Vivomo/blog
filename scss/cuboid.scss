@@ -9,6 +9,7 @@ $squareHeight : 1000px;
 html, body, .stage{
     height: 100%;
     overflow: hidden;
+
 }
 
 @for $i from 1 through 9 {
@@ -26,6 +27,7 @@ html, body, .stage{
 .stage{
     position: relative;
     perspective: 3000px;
+    -webkit-user-select: none;
 
     .square{
         position: absolute;
@@ -75,15 +77,14 @@ html, body, .stage{
         width: $cubeWidth;
         height: $cubeWidth;
         outline: $border1;
-        //background: none!important;
         background: radial-gradient(ellipse at center, #444 0%, #000000 90%);
         transition: all 0.5s;
         list-style: none;
         opacity: 0.5;
-        color: transparent;
-        font-size: 50px;
-        text-align: center;
-        line-height: 100px;
+        //color: transparent;
+        //font-size: 50px;
+        //text-align: center;
+        //line-height: 100px;
 
     }
     .front{
