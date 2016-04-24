@@ -1,0 +1,51 @@
+@charset "UTF-8";
+@import "inc/mixins";
+@import "inc/theme";
+
+html, body, .stage{
+    height: 100%;
+    overflow: hidden;
+}
+
+.stage {
+    position: relative;
+    perspective: 3000px;
+
+    .ball{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 600px;
+        height: 600px;
+        transform: translate3d(-50%, -50%, 0) rotateX(0deg) rotateY(0deg) rotateY(0deg);
+        transform-style: preserve-3d;
+        animation: roll 30s infinite;
+    }
+    .round{
+        position: absolute;
+        @include circle(600px);
+        border: $border1;
+        box-shadow: 0 0 15px $theme1;
+    }
+
+    @for $i from 1 through 36 {
+        .round:nth-child(#{$i}){
+            transform: rotateX(#{$i*5}deg) rotateY(#{$i*5}deg) rotateY(#{$i*5}deg);
+        }
+    }
+}
+
+@keyframes roll {
+    0% {
+        transform: translate3d(-50%, -50%, 0) rotateX(0deg) rotateY(0deg) rotateY(0deg);
+    }
+    33% {
+        transform: translate3d(-50%, -50%, 0) rotateX(360deg) rotateY(0deg) rotateY(0deg);
+    }
+    66% {
+        transform: translate3d(-50%, -50%, 0) rotateX(360deg) rotateY(360deg) rotateY(0deg);
+    }
+    100% {
+        transform: translate3d(-50%, -50%, 0) rotateX(360deg) rotateY(360deg) rotateY(360deg);
+    }
+}
