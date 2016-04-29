@@ -53,6 +53,11 @@
       bottom: 0;
       border-width: 30px 20px 60px 110px;
       border-color: #666 #FFF #ccc #999; }
+    .util-wrap .triangle-wrap .t4 {
+      left: 40px;
+      top: 0;
+      border-width: 20px 0 20px 20px;
+      border-color: #FFF transparent #FFF; }
   .util-wrap .moon {
     margin: 40px auto;
     width: 100px;
