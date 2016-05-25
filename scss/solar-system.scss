@@ -1,0 +1,147 @@
+@charset "UTF-8";
+@import "inc/mixins";
+@import "inc/theme";
+
+$sideNum : 9;
+$roundNum : 36;
+
+@mixin planet($rotationTime, $revolutionTime, $diameter, $color, $orbit){
+
+    width: $diameter;
+    height: $diameter;
+    color: $color;
+    left: -$orbit;
+    transform-origin: $diameter/2+$orbit $diameter/2;
+    animation : revolution $revolutionTime infinite linear;
+    will-change: transform;
+
+    @at-root #{&}-orbit{
+        left: -$orbit;
+        top: -$orbit;
+        @include circle($orbit * 2);
+        color: $color;
+    }
+
+    .inner{
+        will-change: transform;
+        animation : rotation $rotationTime infinite linear;
+    }
+}
+
+html, body,{
+    height: 100%;
+    overflow: hidden;
+}
+
+.stage {
+    position: absolute;
+    perspective: 5000px;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(0,0,0) rotateX(50deg) rotateY(0deg) rotateZ(20deg);
+    transform-style: preserve-3d;
+
+    .planet{
+        position: absolute;
+        transform-style: preserve-3d;
+    }
+    .planet-orbit{
+        position: absolute;
+        transform-style: preserve-3d;
+        border: 1px solid currentColor;
+        opacity: 0.5;
+        transform: translate3d(0,0,0) rotateX(90deg);
+    }
+
+    .round{
+        position: absolute;
+        @include circle(100%);
+        border: 1px solid currentColor;
+        box-shadow: 0 0 15px currentColor;
+    }
+
+    @for $i from 1 through $roundNum {
+        .round:nth-child(#{$i}){
+            transform: rotateX(#{360 / $roundNum * $i}deg) rotateY(#{360 / $roundNum * $i}deg)
+            rotateY(#{360 / $roundNum * $i}deg);
+        }
+    }
+
+    .inner{
+
+    }
+    .inner, .inner > * {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+    }
+    .side{
+        position: absolute;
+        @include circle(100%);
+        border: 1px solid currentColor;
+        box-shadow: 0 0 15px currentColor;
+    }
+    .x-wrap{
+        transform: rotateX(90deg);
+    }
+    .y-wrap{
+        transform: rotateY(90deg);
+    }
+    .z-wrap{
+        transform: rotateZ(90deg);
+    }
+    @for $i from 1 through $sideNum {
+        .side:nth-child(#{$i}){
+            transform: rotateX(#{360 / $sideNum * $i}deg) ;
+        }
+    }
+}
+
+#sun{
+    @include planet(100s, 100s, 200px, orange, 0);
+}
+
+
+#mercury{
+    @include planet(5s, 3s, 5px, $theme1, 150px)
+}
+#venus{
+    @include planet(6s, 4s, 6px, yellow, 160px)
+}
+#earth{
+    @include planet(10s, 10s, 30px, $theme2, 280px)
+}
+#mars{
+    @include planet(11s, 11s, 28px, red, 320px)
+}
+#jupiter{
+    @include planet(20s, 30s, 100px, #FFA631, 400px)
+}
+#saturn{
+    @include planet(22s, 36s, 90px, #A88462, 450px)
+}
+#uranus{
+    @include planet(40s, 50s, 40px, #4B5CC4, 520px)
+}
+#neptune{
+    @include planet(43s, 60s, 40px, #177CB0, 600px)
+}
+@keyframes rotation {
+    0% {
+        transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateY(0deg);
+    }
+    100% {
+        transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(360deg) rotateY(0deg);
+    }
+}
+
+@keyframes revolution {
+    0% {
+        transform: translate3d(-50%, -50%, 0) rotateX(0deg) rotateY(0deg) rotateY(0deg);
+    }
+    100% {
+        transform: translate3d(-50%, -50%, 0) rotateX(0deg) rotateY(360deg) rotateY(0deg);
+    }
+}
+

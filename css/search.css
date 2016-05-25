@@ -38,9 +38,6 @@
     cursor: pointer;
     width: 30px;
     height: 30px;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
     border-radius: 50%; }
   .frame-box .close {
     display: none;
@@ -96,9 +93,6 @@
       transition: all 0.5s;
       width: 10px;
       height: 10px;
-      -webkit-border-radius: 50%;
-      -moz-border-radius: 50%;
-      -ms-border-radius: 50%;
       border-radius: 50%; }
   .checkbox-group :checked + label:before {
     background-color: #1EEDFF; }
