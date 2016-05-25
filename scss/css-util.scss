@@ -63,6 +63,13 @@
             border-width: 30px 20px 60px 110px;
             border-color: #666 #FFF #ccc #999;
         }
+        .t4{
+            left: 40px;
+            top: 0;
+            border-width: 20px 0 20px 20px;
+            border-color: #FFF transparent #FFF;
+        }
+
     }
 
     .moon{
@@ -76,5 +83,13 @@
     //.auto-fill:-webkit-autofill{
     .auto-fill, .auto-fill:-webkit-autofill{
         -webkit-box-shadow: 0 1000px 0 $theme1 inset;
+    }
+
+    .justify{
+        text-align:justify;
+        text-justify:distribute-all-lines;/*ie6-8*/
+        text-align-last:justify;/* ie9*/
+        -moz-text-align-last:justify;/*ff*/
+        -webkit-text-align-last:justify;/*chrome 20+*/
     }
 }
