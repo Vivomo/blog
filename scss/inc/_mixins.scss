@@ -14,7 +14,7 @@
 @mixin circle($r) {
 	width: $r;
 	height: $r;
-	@include css3(border-radius, 50%);
+	border-radius: 50%;
 }
 @mixin ellipsis($line:1){
     overflow: hidden;

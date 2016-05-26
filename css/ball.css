@@ -18,9 +18,6 @@ html, body, .stage {
     position: absolute;
     width: 600px;
     height: 600px;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
     border-radius: 50%;
     border: 1px solid #1EEDFF;
     box-shadow: 0 0 15px #1EEDFF; }
