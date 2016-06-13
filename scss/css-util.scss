@@ -2,13 +2,13 @@
 @import "inc/mixins";
 @import "inc/theme";
 
-.util-wrap{
+.util-wrap {
     box-sizing: border-box;
     border-top: 1px solid #ddd;
     border-left: 1px solid #ddd;
     font-size: 14px;
     overflow: hidden;
-    li{
+    li {
         box-sizing: border-box;
         float: left;
         padding: 10px;
@@ -18,52 +18,52 @@
         border-bottom: 1px solid #ddd;
         border-right: 1px solid #ddd;
 
-        p{
+        p {
             line-height: 2;
         }
     }
 
-    .ellipsis{
+    .ellipsis {
         @include ellipsis;
     }
-    .ellipsis2{
+    .ellipsis2 {
         height: 56px;
         @include ellipsis(2);
     }
-    .nowrap{
+    .nowrap {
         width: 50%;
         background-color: #444;
         padding: 10px;
         white-space: nowrap;
     }
 
-    .triangle-wrap{
+    .triangle-wrap {
         position: relative;
         height: 160px;
 
-        i{
+        i {
             position: absolute;
             border-style: solid;
         }
-        .t1{
+        .t1 {
             top: 0;
             left: 0;
             border-width: 20px;
             border-color: transparent transparent transparent #FFF;
         }
-        .t2{
+        .t2 {
             top: 0;
             right: 0;
             border-width: 20px;
             border-color: transparent transparent #FFF #FFF;
         }
-        .t3{
+        .t3 {
             left: 40px;
             bottom: 0;
             border-width: 30px 20px 60px 110px;
             border-color: #666 #FFF #ccc #999;
         }
-        .t4{
+        .t4 {
             left: 40px;
             top: 0;
             border-width: 20px 0 20px 20px;
@@ -72,7 +72,7 @@
 
     }
 
-    .moon{
+    .moon {
         margin: 40px auto;
         width: 100px;
         height: 100px;
@@ -81,15 +81,27 @@
     }
 
     //.auto-fill:-webkit-autofill{
-    .auto-fill, .auto-fill:-webkit-autofill{
+    .auto-fill, .auto-fill:-webkit-autofill {
         -webkit-box-shadow: 0 1000px 0 $theme1 inset;
     }
 
-    .justify{
-        text-align:justify;
-        text-justify:distribute-all-lines;/*ie6-8*/
-        text-align-last:justify;/* ie9*/
-        -moz-text-align-last:justify;/*ff*/
-        -webkit-text-align-last:justify;/*chrome 20+*/
+    .justify {
+        text-align: justify;
+        text-justify: distribute-all-lines; /*ie6-8*/
+        text-align-last: justify; /* ie9*/
+        -moz-text-align-last: justify; /*ff*/
+        -webkit-text-align-last: justify; /*chrome 20+*/
+    }
+
+    .filter-gray {
+        filter: grayscale(100%);
+        -webkit-filter: grayscale(100%);
+        -moz-filter: grayscale(100%);
+        -ms-filter: grayscale(100%);
+        -o-filter: grayscale(100%);
+        filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+        -webkit-filter: grayscale(1);
+        filter: gray;
+
     }
 }

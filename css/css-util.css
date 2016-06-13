@@ -76,3 +76,12 @@
     /*ff*/
     -webkit-text-align-last: justify;
     /*chrome 20+*/ }
+  .util-wrap .filter-gray {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+    -webkit-filter: grayscale(1);
+    filter: gray; }
