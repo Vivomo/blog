@@ -151,7 +151,7 @@ header {
   z-index: 10;
   height: 200px;
   margin-bottom: 40px;
-  background: #333;
+  background: rgba(51, 51, 51, 0.8);
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28); }
   header h1 {
     font: normal 0 "Georgia","Microsoft Yahei","Arial";
@@ -175,7 +175,7 @@ header {
   padding: 20px;
   margin-bottom: 60px;
   border-radius: 4px;
-  background-color: #2F2F31;
+  background-color: rgba(47, 47, 49, 0.8);
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28); }
 
 .half-letter {
