@@ -8,6 +8,7 @@
     var colorWrap = $id('canvas-wrap');
     var twoPi = Math.PI * 2;
     var halfPi = Math.PI / 2;
+    var base64Text = $id('base64');
 
     var config = {
         circleCount: 120,
@@ -23,7 +24,8 @@
             return '<canvas data-background="'+col+'"></canvas>';
         }).join('');
 
-        document.querySelectorAll('canvas').forEach(function (canvas) {
+        var canvasList = Array.prototype.slice.call(document.querySelectorAll('canvas'));
+        base64Text.value =canvasList.map(function (canvas) {
             var cxt = canvas.getContext('2d');
             canvas.width =  config.radius * 2 + config.lineWidth;
             canvas.height = canvas.width * (config.circleCount + 1);
@@ -36,7 +38,8 @@
             for (var i = 0; i <= circleCount; i++) {
                 ring.draw(x, x * i * 2 + x, -halfPi, twoPi * (i / config.circleCount) - halfPi)
             }
-        })
+            return canvas.toDataURL('image/png');
+        }).join('###')
     }, false);
 
     function $id(id) {
