@@ -35,7 +35,7 @@
             var x = canvas.width / 2;
             var circleCount = config.circleCount;
             for (var i = 0; i < circleCount; i++) {
-                ring.draw(x, x * i * 2 + x, -halfPi, twoPi * ((i + 1) / config.circleCount) - halfPi)
+                ring.draw(x, x * i * 2 + x, -halfPi, twoPi * ((i + 1) / config.circleCount) - halfPi, i == circleCount - 1);
             }
             return canvas.toDataURL('image/png');
         }).join('###')
@@ -63,14 +63,15 @@
         cxt.lineWidth = config.lineWidth;
     }
 
-    Ring.prototype.draw = function (x, y, start, end) {
+    Ring.prototype.draw = function (x, y, start, end, noBackground) {
         var cxt = this.cxt;
-        cxt.beginPath();
-        cxt.strokeStyle = this.background;
-        cxt.arc(x, y, this.radius, end, start);
-        cxt.stroke();
-        cxt.closePath();
-
+        if (!noBackground) {
+            cxt.beginPath();
+            cxt.strokeStyle = this.background;
+            cxt.arc(x, y, this.radius, end, start);
+            cxt.stroke();
+            cxt.closePath();
+        }
 
         cxt.beginPath();
         cxt.strokeStyle = this.foreground;
