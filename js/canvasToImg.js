@@ -4,7 +4,6 @@
 
 (function () {
     var colors = $id('colors');
-    var colorReg = /[\da-zA-Z]+/;
     var colorWrap = $id('canvas-wrap');
     var twoPi = Math.PI * 2;
     var halfPi = Math.PI / 2;
@@ -12,7 +11,7 @@
 
     var config = {
         circleCount: 120,
-        radius: 15,
+        radius: 22,
         lineWidth: 12,
         foreground: '#fff',
         background: '#648'
@@ -28,15 +27,15 @@
         base64Text.value =canvasList.map(function (canvas) {
             var cxt = canvas.getContext('2d');
             canvas.width =  config.radius * 2 + config.lineWidth;
-            canvas.height = canvas.width * (config.circleCount + 1);
+            canvas.height = canvas.width * config.circleCount;
 
             var cfg = extend({}, config);
             cfg.background = canvas.dataset.background;
             var ring = new Ring(cxt, cfg);
             var x = canvas.width / 2;
             var circleCount = config.circleCount;
-            for (var i = 0; i <= circleCount; i++) {
-                ring.draw(x, x * i * 2 + x, -halfPi, twoPi * (i / config.circleCount) - halfPi)
+            for (var i = 0; i < circleCount; i++) {
+                ring.draw(x, x * i * 2 + x, -halfPi, twoPi * ((i + 1) / config.circleCount) - halfPi)
             }
             return canvas.toDataURL('image/png');
         }).join('###')
@@ -68,7 +67,7 @@
         var cxt = this.cxt;
         cxt.beginPath();
         cxt.strokeStyle = this.background;
-        cxt.arc(x, y, this.radius, 0, twoPi);
+        cxt.arc(x, y, this.radius, end, start);
         cxt.stroke();
         cxt.closePath();
 
