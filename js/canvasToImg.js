@@ -41,6 +41,12 @@
         }).join('###')
     }, false);
 
+    $id('copy').addEventListener('click', function () {
+        base64Text.select();
+        if (!document.execCommand('copy'))
+            alert('你的垃圾浏览器不支持复制');
+    },false);
+
     function $id(id) {
         return document.getElementById(id);
     }
