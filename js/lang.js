@@ -3,6 +3,7 @@
      * location
      */
 
+    var location = root.location;
     location.searchMap = function(search){
         search = search || location.search;
         if (!search){
