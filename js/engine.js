@@ -3,10 +3,3 @@
  */
 
 
-;(function () {
-    var s = setInterval(function () {
-        if (document.body) {
-            var topLink = document
-        }
-    }, 20)
-})();
