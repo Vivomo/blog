@@ -46,4 +46,20 @@
     location.login = function(url){
         location.href = '/m/login'+(url?'?url='+ encodeURIComponent(url) : '');
     };
+
+    /**
+     * Number
+     */
+    Number.prototype.toFixed2 = function (fractionalDigits, notKeepZero) {
+        var fixedNum = this,
+            _fd = fractionalDigits;
+        if (this % 1 && fractionalDigits) {
+            var num = 1;
+            while (fractionalDigits-- > 0) {
+                num *= 10;
+            }
+            fixedNum = Math.round(this * num ) / num;
+        }
+        return notKeepZero ? fixedNum : fixedNum.toFixed(_fd);
+    };
 })(window);
