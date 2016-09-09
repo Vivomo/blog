@@ -1,4 +1,12 @@
 (function (root) {
+
+    function extend(o1, o2){
+        for (var k in o2) {
+            o1[k] = o2[k]
+        }
+    }
+
+
     /****
      * location
      */
@@ -24,10 +32,9 @@
         url = a.pathname;
         var search = [],
             map2 = location.searchMap(a.search), k;
+        extend(map, map2);
         for (k in map)
             map[k] && search.push(k+'='+map[k])
-        for (k in map2)
-            map2[k] && search.push(k+'='+map2[k])
         return url + '?' + search.join('&');
     };
     location.skipUrl = function(url, map) {
