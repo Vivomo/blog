@@ -11,8 +11,9 @@
                     return vt.render(str, item)
                 })
             } else if(obj && (typeof obj == 'object')) {
-                str.replace(/\{\{(.+?)}}/g, function (val, index) {
-                    var result = reg.exec()
+                str.replace(/\{\{(.+?)}}/g, function (s, $1, index) {
+                    var result = reg.exec($1);
+                    
                 })
             }
             return str;
