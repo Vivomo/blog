@@ -20,9 +20,10 @@
                     var result = reg.exec($1);
                     var filter = result[3];
                     var key = result[1];
+                    var args = result[5];
                     if (filter) {
                         if (vt.filters[filter]) {
-                            return new Function(key)
+                            return new Function('return vt.filters[filter](key'+(args === undefined ? '': ',' + args)+')');
                         } else {
                             console.error('The filter of ' + filter + ' is not defined')
                         }
