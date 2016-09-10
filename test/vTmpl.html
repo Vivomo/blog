@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="../js/vTmpl.js"></script>
+
+<script>
+    var str = '{{createTime | date("yyyy-MM-dd")}}';
+    console.log(vTmpl.render(str, {
+        createTime : 1473488359855
+    }));
+</script>
+</body>
+</html>
