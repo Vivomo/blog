@@ -15,7 +15,7 @@ function Print(cfg) {
         return new Print(cfg)
     }
     this.cfg = extend({
-        pauseTime : 400,//ms
+        pauseTime : 40,//ms
         tag : 'span',
         callback : null
     }, cfg);
@@ -43,3 +43,5 @@ Print.prototype = {
     }
 
 };
+
+var p = new Print();
