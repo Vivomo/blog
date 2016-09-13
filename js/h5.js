@@ -2,25 +2,17 @@
  * Created by ui on 2016/9/12.
  */
 
-function extend(o1, o2) {
-    if(o1 && o2)
-        for (var k in o2)
-            o1[k] = o2[k]
-    return o1;
-}
 
 function Printer(cfg) {
 
     if (this.constructor != Printer) {
         return new Printer(cfg)
     }
-    this.cfg = extend({
+    this.cfg = $.extend({
         pauseTime : 40,//ms
         tag : 'span',
         callback : null
     }, cfg);
-
-
 }
 
 Printer.prototype = {
@@ -44,4 +36,7 @@ Printer.prototype = {
 
 };
 
-var p = new Printer();
+(function () {
+    $('#wrap').fullpage();
+
+})();
