@@ -1,0 +1,285 @@
+$imgPath : '../img/h5/';
+@mixin css3($key, $value) {
+    -webkit-#{$key}: $value;
+    #{$key}: $value;
+}
+
+@mixin scale($num) {
+    @include css3(transform, scale($num));
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+.console {
+    position: absolute;
+    font-size: 40px;
+    line-height: 72px;
+    width: 100%;
+    text-align: center;
+    color: #161616;
+    word-break: break-all;
+}
+.cursor {
+    display: none;
+    margin-left: 12px;
+    width: 3px;
+    height: 30px;
+    background-color: #333;
+    vertical-align: middle;
+    animation: cursor 0.5s infinite;
+}
+.abs {
+    position: absolute;
+}
+.section {
+    position: relative;
+    overflow: hidden;
+
+
+    .runner {
+        display: none;
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        bottom: 60px;
+        left: 50%;
+        font-size: 0;
+        @include css3(transform, translate(-50%, 0));
+        @include css3(animation, twinkled 2s infinite);
+
+        .r {
+            position: absolute;
+            top: 0;
+            width: 64px;
+            height: 100%;
+            background: url("#{$imgPath}/runner.png") no-repeat center;
+        }
+        .r1 {
+            left: 0;
+            opacity: 0.2;
+        }
+        .r2 {
+            left: 18px;
+            opacity: 0.4;
+        }
+        .r3 {
+            left: 36px;
+        }
+    }
+
+    &.s1 {
+        .console {
+            top: 48%;
+        }
+        .computer {
+            display: block;
+            width: 100%;
+            visibility: hidden;
+            opacity: 0;
+            @include css3(transform, translate(0, -80%));
+            @include css3(transition, all 0.5s);
+
+            &.show {
+                visibility: visible;
+                opacity: 1;
+                @include css3(transform, translate(0, 0));
+            }
+        }
+
+    }
+
+    &.s2 {
+        .screen1 {
+            .console {
+                top: 70px;
+            }
+        }
+
+        .screen2 {
+            display: none;
+            .console {
+                top: 58%;
+            }
+
+            .road {
+                position: absolute;
+                top: 66%;
+                width: 100%;
+
+                .foot {
+                    display: none;
+                    position: absolute;
+
+                }
+                .f1 {
+                    top: 120px;
+                    left: 140px;
+                    @include scale(0.5);
+                }
+                .f2 {
+                    top: 80px;
+                    left: 160px;
+                    @include scale(0.5);
+                }
+                .f3 {
+                    top: 110px;
+                    left: 320px;
+                    @include scale(0.8);
+                }
+                .f4 {
+                    top: 50px;
+                    left: 300px;
+                    @include scale(0.5);
+                }
+                .f5 {
+                    top: 90px;
+                    left: 520px;
+                }
+                .f6 {
+                    top: 10px;
+                    left: 500px;
+                }
+            }
+        }
+
+        .tl1 {
+            position: absolute;
+            z-index: 3;
+            width: 100%;
+            visibility: hidden;
+            bottom: 100%;
+            @include css3(transition, all 0.8s);
+
+            &.show {
+                visibility: visible;
+                bottom: 0;
+            }
+        }
+        .tl2 {
+            display: block;
+            width: 600px;
+            margin: 0 auto;
+        }
+        .cloud{
+            margin-top: -100%;
+            position: absolute;
+            @include css3(transition, all 0.6s);
+            @include css3(transform, scale(3));
+
+            &.show {
+                margin-top: 0;
+            }
+        }
+        .c1 {
+            top: 48%;
+            left: -10%;
+            @include css3(transform, rotate(-70deg) scale(3));
+        }
+        .c2 {
+            top: 65%;
+            left: -10%;
+            @include css3(transform, rotate(-80deg) scale(3));
+        }
+        .c3 {
+            right: -10%;
+        }
+        .c4 {
+            top: 80%;
+            right: -10%;
+        }
+
+        .bomb {
+            position: absolute;
+            @include css3(transition, all 3s);
+            &.b1 {
+                left: 15%;
+                @include css3(transform, scale(0.5));
+                bottom: 100%;
+            }
+            &.b2 {
+                left: 65%;
+                bottom: 150%;
+            }
+
+            &.show {
+                bottom: -20%;
+            }
+        }
+
+    }
+
+    &.s3 {
+        .console {
+            top: 110px;
+        }
+        .run {
+            position: absolute;
+            width: 400px;
+            top: 36%;
+            left: 10%;
+        }
+
+        .flower {
+            position: absolute;
+            @include css3(animation, flowerDrop 7s infinite);
+            &.f1 {
+                left: 10%;
+                top: -10%;
+            }
+            &.f2 {
+                left: 15%;
+                top: -20%;
+            }
+            &.f3 {
+                top: -30%;
+                right: 20%;
+            }
+        }
+    }
+}
+.bg1 {
+    background: #000 url("#{$imgPath}bg1.jpg") no-repeat center / 100% 100%;
+}
+.bg2 {
+    background: #000 url("#{$imgPath}bg2.jpg") no-repeat center / 100% 100%;
+}
+@-webkit-keyframes twinkled {
+    0% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes twinkled {
+    0% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+@keyframes flowerDrop {
+    0% {
+        @include css3(transform, translate(0, -200px) rotate(0deg));
+    }
+    //20% {
+    //    @include css3(transform, translate(20px, 300px) rotate(20deg));
+    //}
+    //40% {
+    //    @include css3(transform, translate(-30px, 700px) rotate(40deg));
+    //}
+    //60% {
+    //    @include css3(transform, translate(-10px, 900px) rotate(80deg));
+    //}
+    //80% {
+    //    @include css3(transform, translate(40px, 1100px) rotate(150deg));
+    //}
+    100% {
+        @include css3(transform, translate(40px, 2000px) rotate(220deg));
+    }
+}

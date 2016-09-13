@@ -1,0 +1,206 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+.console {
+  position: absolute;
+  font-size: 40px;
+  line-height: 72px;
+  width: 100%;
+  text-align: center;
+  color: #161616;
+  word-break: break-all; }
+
+.cursor {
+  display: none;
+  margin-left: 12px;
+  width: 3px;
+  height: 30px;
+  background-color: #333;
+  vertical-align: middle;
+  animation: cursor 0.5s infinite; }
+
+.abs {
+  position: absolute; }
+
+.section {
+  position: relative;
+  overflow: hidden; }
+  .section .runner {
+    display: none;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    bottom: 60px;
+    left: 50%;
+    font-size: 0;
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    -webkit-animation: twinkled 2s infinite;
+    animation: twinkled 2s infinite; }
+    .section .runner .r {
+      position: absolute;
+      top: 0;
+      width: 64px;
+      height: 100%;
+      background: url("../img/h5//runner.png") no-repeat center; }
+    .section .runner .r1 {
+      left: 0;
+      opacity: 0.2; }
+    .section .runner .r2 {
+      left: 18px;
+      opacity: 0.4; }
+    .section .runner .r3 {
+      left: 36px; }
+  .section.s1 .console {
+    top: 48%; }
+  .section.s1 .computer {
+    display: block;
+    width: 100%;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transform: translate(0, -80%);
+    transform: translate(0, -80%);
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s; }
+    .section.s1 .computer.show {
+      visibility: visible;
+      opacity: 1;
+      -webkit-transform: translate(0, 0);
+      transform: translate(0, 0); }
+  .section.s2 .screen1 .console {
+    top: 70px; }
+  .section.s2 .screen2 {
+    display: none; }
+    .section.s2 .screen2 .console {
+      top: 58%; }
+    .section.s2 .screen2 .road {
+      position: absolute;
+      top: 66%;
+      width: 100%; }
+      .section.s2 .screen2 .road .foot {
+        display: none;
+        position: absolute; }
+      .section.s2 .screen2 .road .f1 {
+        top: 120px;
+        left: 140px;
+        -webkit-transform: scale(0.5);
+        transform: scale(0.5); }
+      .section.s2 .screen2 .road .f2 {
+        top: 80px;
+        left: 160px;
+        -webkit-transform: scale(0.5);
+        transform: scale(0.5); }
+      .section.s2 .screen2 .road .f3 {
+        top: 110px;
+        left: 320px;
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8); }
+      .section.s2 .screen2 .road .f4 {
+        top: 50px;
+        left: 300px;
+        -webkit-transform: scale(0.5);
+        transform: scale(0.5); }
+      .section.s2 .screen2 .road .f5 {
+        top: 90px;
+        left: 520px; }
+      .section.s2 .screen2 .road .f6 {
+        top: 10px;
+        left: 500px; }
+  .section.s2 .tl1 {
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    visibility: hidden;
+    bottom: 100%;
+    -webkit-transition: all 0.8s;
+    transition: all 0.8s; }
+    .section.s2 .tl1.show {
+      visibility: visible;
+      bottom: 0; }
+  .section.s2 .tl2 {
+    display: block;
+    width: 600px;
+    margin: 0 auto; }
+  .section.s2 .cloud {
+    margin-top: -100%;
+    position: absolute;
+    -webkit-transition: all 0.6s;
+    transition: all 0.6s;
+    -webkit-transform: scale(3);
+    transform: scale(3); }
+    .section.s2 .cloud.show {
+      margin-top: 0; }
+  .section.s2 .c1 {
+    top: 48%;
+    left: -10%;
+    -webkit-transform: rotate(-70deg) scale(3);
+    transform: rotate(-70deg) scale(3); }
+  .section.s2 .c2 {
+    top: 65%;
+    left: -10%;
+    -webkit-transform: rotate(-80deg) scale(3);
+    transform: rotate(-80deg) scale(3); }
+  .section.s2 .c3 {
+    right: -10%; }
+  .section.s2 .c4 {
+    top: 80%;
+    right: -10%; }
+  .section.s2 .bomb {
+    position: absolute;
+    -webkit-transition: all 3s;
+    transition: all 3s; }
+    .section.s2 .bomb.b1 {
+      left: 15%;
+      -webkit-transform: scale(0.5);
+      transform: scale(0.5);
+      bottom: 100%; }
+    .section.s2 .bomb.b2 {
+      left: 65%;
+      bottom: 150%; }
+    .section.s2 .bomb.show {
+      bottom: -20%; }
+  .section.s3 .console {
+    top: 110px; }
+  .section.s3 .run {
+    position: absolute;
+    width: 400px;
+    top: 36%;
+    left: 10%; }
+  .section.s3 .flower {
+    position: absolute;
+    -webkit-animation: flowerDrop 7s infinite;
+    animation: flowerDrop 7s infinite; }
+    .section.s3 .flower.f1 {
+      left: 10%;
+      top: -10%; }
+    .section.s3 .flower.f2 {
+      left: 15%;
+      top: -20%; }
+    .section.s3 .flower.f3 {
+      top: -30%;
+      right: 20%; }
+
+.bg1 {
+  background: #000 url("../img/h5/bg1.jpg") no-repeat center/100% 100%; }
+
+.bg2 {
+  background: #000 url("../img/h5/bg2.jpg") no-repeat center/100% 100%; }
+
+@-webkit-keyframes twinkled {
+  0% {
+    opacity: 0.2; }
+  100% {
+    opacity: 1; } }
+@keyframes twinkled {
+  0% {
+    opacity: 0.2; }
+  100% {
+    opacity: 1; } }
+@keyframes flowerDrop {
+  0% {
+    -webkit-transform: translate(0, -200px) rotate(0deg);
+    transform: translate(0, -200px) rotate(0deg); }
+  100% {
+    -webkit-transform: translate(40px, 2000px) rotate(220deg);
+    transform: translate(40px, 2000px) rotate(220deg); } }
