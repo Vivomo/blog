@@ -7,7 +7,7 @@ var config = {
     radius: 15,
     lineWidth: 12,
     foreground: '#fff',
-    background: '#648'
+    background: '#224589'
 }
 
 var canvas = document.getElementById('canvas');
@@ -56,4 +56,5 @@ var circleCount = config.circleCount;
 for (var i = 0; i <= circleCount; i++) {
     ring.draw(x, x * i * 2 + x, -halfPi, twoPi * (i / config.circleCount) - halfPi)
 }
+
 
