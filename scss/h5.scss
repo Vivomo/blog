@@ -211,9 +211,20 @@ $imgPath : '../img/h5/';
     }
 
     &.s3 {
-        .console {
-            top: 110px;
+        .screen1 {
+            .console {
+                top: 110px;
+            }
         }
+
+        .screen2 {
+            .console {
+                top: 100px;
+                font-size: 28px;
+                line-height: 46px;
+            }
+        }
+
         .run {
             position: absolute;
             width: 400px;
@@ -237,6 +248,43 @@ $imgPath : '../img/h5/';
                 right: 20%;
             }
         }
+
+        .time {
+            display: block;
+            margin: 213px auto 0;
+            visibility: hidden;
+            opacity: 0;
+            @include scale(0.5);
+            @include css3(transition, all 0.5s);
+
+            &.show {
+                visibility: visible;
+                opacity: 1;
+                @include scale(1);
+            }
+        }
+
+        .arrow {
+            display: none;
+            position: absolute;
+            top: 145px;
+            right: 125px;
+        }
+
+        .shake-hand {
+            visibility: hidden;
+            position: absolute;
+            width: 480px;
+            bottom: -3%;
+            left: 20%;
+            @include css3(transform-origin, 50% 80%);
+
+            &.shake {
+                visibility: visible;
+                @include css3(animation, shake 0.8s);
+            }
+        }
+
     }
 }
 .bg1 {
@@ -281,5 +329,20 @@ $imgPath : '../img/h5/';
     //}
     100% {
         @include css3(transform, translate(40px, 2000px) rotate(220deg));
+    }
+}
+
+@keyframes shake {
+    0% {
+        @include css3(transform, rotate(0deg));
+    }
+    25% {
+        @include css3(transform, rotate(30deg));
+    }
+    75% {
+        @include css3(transform, rotate(-30deg));
+    }
+    100% {
+        @include css3(transform, rotate(0deg));
     }
 }

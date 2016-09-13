@@ -112,9 +112,30 @@ Printer.prototype = {
                     p.write($cursor[0], $cursor.eq(0).data('word'), function () {
                         p.write($cursor[1], $cursor.eq(1).data('word'), function () {
                             p.write($cursor[2], $cursor.eq(2).data('word'), function () {
+                                $('.s3').addClass('bg1').removeClass('bg2');
+                                toggleScreen_3();
                             })
                         });
                     });
+                    function toggleScreen_3() {
+                        $('.s3 .screen1').fadeOut(300, function () {
+                            $('.s3 .screen2').fadeIn(300, function () {
+                                var $cursor = $(this).find('.cursor');
+                                p.write($cursor[0], $cursor.eq(0).data('word'), function () {
+                                    p.write($cursor[1], $cursor.eq(1).data('word'), function () {
+                                        $('#arrow').show(300, function () {
+                                            $('#time').addClass('show');
+
+                                            setTimeout(function () {
+                                                $('#shake-hand').addClass('shake');
+                                            }, 1000);
+                                        });
+                                    })
+                                });
+                            });
+                        });
+                    }
+
                     break;
             }
             console.log(index)
