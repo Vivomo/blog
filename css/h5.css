@@ -162,10 +162,12 @@
       bottom: -20%; }
   .section.s3 .screen1 .console {
     top: 110px; }
-  .section.s3 .screen2 .console {
-    top: 100px;
-    font-size: 28px;
-    line-height: 46px; }
+  .section.s3 .screen2 {
+    display: none; }
+    .section.s3 .screen2 .console {
+      top: 100px;
+      font-size: 28px;
+      line-height: 46px; }
   .section.s3 .run {
     position: absolute;
     width: 400px;
@@ -215,12 +217,35 @@
       visibility: visible;
       -webkit-animation: shake 0.8s;
       animation: shake 0.8s; }
+  .section.s3 .shadow {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8); }
+  .section.s3 .dialog {
+    position: absolute;
+    box-sizing: border-box;
+    padding-top: 85px;
+    top: 300px;
+    width: 100%;
+    left: 0;
+    height: 316px;
+    font-size: 40px;
+    line-height: 72px;
+    text-align: center;
+    background: url("../img/h5/dialog_bg.png") no-repeat center; }
 
 .bg1 {
   background: #000 url("../img/h5/bg1.jpg") no-repeat center/100% 100%; }
 
 .bg2 {
   background: #000 url("../img/h5/bg2.jpg") no-repeat center/100% 100%; }
+
+.bg3 {
+  background: #000 url("../img/h5/bg3.jpg") no-repeat center/100% 100%; }
 
 @-webkit-keyframes twinkled {
   0% {

@@ -128,6 +128,7 @@ Printer.prototype = {
 
                                             setTimeout(function () {
                                                 $('#shake-hand').addClass('shake');
+                                                listenCallback();
                                             }, 1000);
                                         });
                                     })
@@ -135,6 +136,13 @@ Printer.prototype = {
                             });
                         });
                     }
+
+                    function listenCallback() {
+
+                    }
+
+                    break;
+                case 4:
 
                     break;
             }
