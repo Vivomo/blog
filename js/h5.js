@@ -39,8 +39,15 @@ Printer.prototype = {
 
 (function () {
     var p = new Printer;
+    var cache = {};
     $('#wrap').fullpage({
+        anchors : ['s1', 's2', 's3', 's4', 's5'],
         afterLoad : function (a, index) {
+            if (cache[index])
+                return;
+            else
+                cache[index] = true;
+
             switch (index) {
                 case 1:
                     setTimeout(function () {
@@ -58,8 +65,50 @@ Printer.prototype = {
                     break;
                 case 2:
                     setTimeout(function () {
+                        $('#tl1').addClass('show');
+                        setTimeout(function () {
+                            var $cursor = $('.s2 .cursor');
+                            p.write($cursor[0], $cursor.eq(0).data('word'), function () {
+                                p.write($cursor[1], $cursor.eq(1).data('word'), function () {
+                                    p.write($cursor[2], $cursor.eq(2).data('word'), function () {
+                                        toggleScreen();
+                                    })
+                                });
+                            });
+                            $('.s2 .cloud').each(function (index, item) {
+                                 setTimeout(function () {
+                                     $(item).addClass('show');
+                                 }, index * 100)
+                            });
+                            $('.s2 .bomb').addClass('show');
+                        }, 800);
 
                     }, 100);
+
+
+                    function toggleScreen() {
+                        $('.s2 .screen1').fadeOut(300, function () {
+                            $('.s2 .screen2').fadeIn(300, function () {
+                                var $cursor = $(this).find('.cursor');
+                                p.write($cursor[0], $cursor.data('word'), showFoot);
+                            });
+                        });
+                    }
+
+                    function showFoot() {
+                        var $feet = $('.road .foot');
+                        var i = 0;
+                        var interval = setInterval(function () {
+                            $feet.eq(i++).show(300);
+                            if (i == $feet.length) {
+                                clearInterval(interval);
+                                $('.s2 .runner').show();
+                            }
+                        }, 150);
+                    }
+                    break;
+                case 3:
+
                     break;
             }
             console.log(index)

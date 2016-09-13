@@ -4,6 +4,10 @@ $imgPath : '../img/h5/';
     #{$key}: $value;
 }
 
+@mixin scale($num) {
+    @include css3(transform, scale($num));
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -18,11 +22,11 @@ $imgPath : '../img/h5/';
     word-break: break-all;
 }
 .cursor {
-    display: inline-block;
+    display: none;
     margin-left: 12px;
     width: 3px;
     height: 30px;
-    background-color: #fff;
+    background-color: #333;
     vertical-align: middle;
     animation: cursor 0.5s infinite;
 }
@@ -31,21 +35,8 @@ $imgPath : '../img/h5/';
 }
 .section {
     position: relative;
+    overflow: hidden;
 
-    .computer {
-        display: block;
-        width: 100%;
-        visibility: hidden;
-        opacity: 0;
-        @include css3(transform, translate(0, -80%));
-        @include css3(transition, all 0.5s);
-
-        &.show {
-            visibility: visible;
-            opacity: 1;
-            @include css3(transform, translate(0, 0));
-        }
-    }
 
     .runner {
         display: none;
@@ -82,10 +73,162 @@ $imgPath : '../img/h5/';
         .console {
             top: 48%;
         }
+        .computer {
+            display: block;
+            width: 100%;
+            visibility: hidden;
+            opacity: 0;
+            @include css3(transform, translate(0, -80%));
+            @include css3(transition, all 0.5s);
+
+            &.show {
+                visibility: visible;
+                opacity: 1;
+                @include css3(transform, translate(0, 0));
+            }
+        }
+
+    }
+
+    &.s2 {
+        .screen1 {
+            .console {
+                top: 70px;
+            }
+        }
+
+        .screen2 {
+            display: none;
+            .console {
+                top: 58%;
+            }
+
+            .road {
+                position: absolute;
+                top: 66%;
+                width: 100%;
+
+                .foot {
+                    display: none;
+                    position: absolute;
+
+                }
+                .f1 {
+                    top: 120px;
+                    left: 140px;
+                    @include scale(0.5);
+                }
+                .f2 {
+                    top: 80px;
+                    left: 160px;
+                    @include scale(0.5);
+                }
+                .f3 {
+                    top: 110px;
+                    left: 320px;
+                    @include scale(0.8);
+                }
+                .f4 {
+                    top: 50px;
+                    left: 300px;
+                    @include scale(0.5);
+                }
+                .f5 {
+                    top: 90px;
+                    left: 520px;
+                }
+                .f6 {
+                    top: 10px;
+                    left: 500px;
+                }
+            }
+        }
+
+        .tl1 {
+            position: absolute;
+            z-index: 3;
+            width: 100%;
+            visibility: hidden;
+            bottom: 100%;
+            @include css3(transition, all 0.8s);
+
+            &.show {
+                visibility: visible;
+                bottom: 0;
+            }
+        }
+        .tl2 {
+            display: block;
+            width: 600px;
+            margin: 0 auto;
+        }
+        .cloud{
+            margin-top: -100%;
+            position: absolute;
+            @include css3(transition, all 0.6s);
+            @include css3(transform, scale(3));
+
+            &.show {
+                margin-top: 0;
+            }
+        }
+        .c1 {
+            top: 48%;
+            left: -10%;
+            @include css3(transform, rotate(-70deg) scale(3));
+        }
+        .c2 {
+            top: 65%;
+            left: -10%;
+            @include css3(transform, rotate(-80deg) scale(3));
+        }
+        .c3 {
+            right: -10%;
+        }
+        .c4 {
+            top: 80%;
+            right: -10%;
+        }
+
+        .bomb {
+            position: absolute;
+            @include css3(transition, all 3s);
+            &.b1 {
+                left: 15%;
+                @include css3(transform, scale(0.5));
+                bottom: 100%;
+            }
+            &.b2 {
+                left: 65%;
+                bottom: 150%;
+            }
+
+            &.show {
+                bottom: -20%;
+            }
+        }
+
+    }
+
+    &.s3 {
+        .console {
+            top: 110px;
+        }
+        .run {
+            position: absolute;
+            width: 300px;
+        }
+
+        .flower {
+            
+        }
     }
 }
 .bg1 {
     background: #000 url("#{$imgPath}bg1.jpg") no-repeat center / cover;
+}
+.bg2 {
+    background: #000 url("#{$imgPath}bg2.jpg") no-repeat center / cover;
 }
 @-webkit-keyframes twinkled {
     0% {
