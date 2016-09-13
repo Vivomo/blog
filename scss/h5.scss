@@ -216,19 +216,34 @@ $imgPath : '../img/h5/';
         }
         .run {
             position: absolute;
-            width: 300px;
+            width: 400px;
+            top: 36%;
+            left: 10%;
         }
 
         .flower {
-            
+            position: absolute;
+            @include css3(animation, flowerDrop 7s infinite);
+            &.f1 {
+                left: 10%;
+                top: -10%;
+            }
+            &.f2 {
+                left: 15%;
+                top: -20%;
+            }
+            &.f3 {
+                top: -30%;
+                right: 20%;
+            }
         }
     }
 }
 .bg1 {
-    background: #000 url("#{$imgPath}bg1.jpg") no-repeat center / cover;
+    background: #000 url("#{$imgPath}bg1.jpg") no-repeat center / 100% 100%;
 }
 .bg2 {
-    background: #000 url("#{$imgPath}bg2.jpg") no-repeat center / cover;
+    background: #000 url("#{$imgPath}bg2.jpg") no-repeat center / 100% 100%;
 }
 @-webkit-keyframes twinkled {
     0% {
@@ -244,5 +259,27 @@ $imgPath : '../img/h5/';
     }
     100% {
         opacity: 1;
+    }
+}
+
+
+@keyframes flowerDrop {
+    0% {
+        @include css3(transform, translate(0, -200px) rotate(0deg));
+    }
+    //20% {
+    //    @include css3(transform, translate(20px, 300px) rotate(20deg));
+    //}
+    //40% {
+    //    @include css3(transform, translate(-30px, 700px) rotate(40deg));
+    //}
+    //60% {
+    //    @include css3(transform, translate(-10px, 900px) rotate(80deg));
+    //}
+    //80% {
+    //    @include css3(transform, translate(40px, 1100px) rotate(150deg));
+    //}
+    100% {
+        @include css3(transform, translate(40px, 2000px) rotate(220deg));
     }
 }

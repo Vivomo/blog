@@ -108,7 +108,13 @@ Printer.prototype = {
                     }
                     break;
                 case 3:
-
+                    var $cursor = $('.s3 .cursor');
+                    p.write($cursor[0], $cursor.eq(0).data('word'), function () {
+                        p.write($cursor[1], $cursor.eq(1).data('word'), function () {
+                            p.write($cursor[2], $cursor.eq(2).data('word'), function () {
+                            })
+                        });
+                    });
                     break;
             }
             console.log(index)
