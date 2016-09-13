@@ -9,10 +9,10 @@ function extend(o1, o2) {
     return o1;
 }
 
-function Print(cfg) {
+function Printer(cfg) {
 
-    if (this.constructor != Print) {
-        return new Print(cfg)
+    if (this.constructor != Printer) {
+        return new Printer(cfg)
     }
     this.cfg = extend({
         pauseTime : 40,//ms
@@ -23,8 +23,8 @@ function Print(cfg) {
 
 }
 
-Print.prototype = {
-    constructor : Print,
+Printer.prototype = {
+    constructor : Printer,
     write : function (cursor, word) {
         cursor.style.display = 'inline-block';
         var i = 0;
@@ -44,4 +44,4 @@ Print.prototype = {
 
 };
 
-var p = new Print();
+var p = new Printer();
