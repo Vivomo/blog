@@ -9,7 +9,7 @@ function Printer(cfg) {
         return new Printer(cfg)
     }
     this.cfg = $.extend({
-        pauseTime : 40,//ms
+        pauseTime : 200,//ms
         tag : 'span',
         callback : null
     }, cfg);
@@ -38,24 +38,40 @@ Printer.prototype = {
 };
 
 (function () {
+    var p = new Printer;
     $('#wrap').fullpage({
         afterLoad : function (a, index) {
             switch (index) {
                 case 1:
                     setTimeout(function () {
                         $('.computer').addClass('show');
+                        var $cursor = $('.s1 .cursor');
+                        p.write($cursor[0], $cursor.eq(0).data('word'), function () {
+                            p.write($cursor[1], $cursor.eq(1).data('word'), function () {
+                                p.write($cursor[2], $cursor.eq(2).data('word'), function () {
+                                    $('.s1 .runner').show();
+                                })
+                            });
+                        });
+
+                    }, 100);
+                    break;
+                case 2:
+                    setTimeout(function () {
+
                     }, 100);
                     break;
             }
             console.log(index)
         }
     });
+    var fullpage = $.fn.fullpage;
 
     /**
      * 向下移动
      */
     $('.js-down').one('click', function () {
-
+        fullpage.moveSectionDown();
     });
 
 })();

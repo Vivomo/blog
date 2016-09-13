@@ -64,7 +64,6 @@ $imgPath : '../img/h5/';
             width: 64px;
             height: 100%;
             background: url("#{$imgPath}/runner.png") no-repeat center;
-
         }
         .r1 {
             left: 0;
@@ -76,6 +75,12 @@ $imgPath : '../img/h5/';
         }
         .r3 {
             left: 36px;
+        }
+    }
+
+    &.s1 {
+        .console {
+            top: 48%;
         }
     }
 }

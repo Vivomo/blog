@@ -65,6 +65,8 @@
       opacity: 0.4; }
     .section .runner .r3 {
       left: 36px; }
+  .section.s1 .console {
+    top: 48%; }
 
 .bg1 {
   background: #000 url("../img/h5/bg1.jpg") no-repeat center/cover; }
