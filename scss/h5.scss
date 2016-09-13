@@ -1,13 +1,20 @@
+$imgPath : '../img/h5/';
+@mixin css3($key, $value) {
+    -webkit-#{$key}: $value;
+    #{$key}: $value;
+}
+
 * {
     margin: 0;
     padding: 0;
 }
 .console {
-    background-color: #000;
-    width: 300px;
-    height: 200px;
-    font-size: 20px;
-    color: #fff;
+    position: absolute;
+    font-size: 40px;
+    line-height: 72px;
+    width: 100%;
+    text-align: center;
+    color: #161616;
     word-break: break-all;
 }
 .cursor {
@@ -19,8 +26,71 @@
     vertical-align: middle;
     animation: cursor 0.5s infinite;
 }
+.abs {
+    position: absolute;
+}
+.section {
+    position: relative;
 
-@keyframes cursor {
+    .computer {
+        display: block;
+        width: 100%;
+        visibility: hidden;
+        opacity: 0;
+        @include css3(transform, translate(0, -80%));
+        @include css3(transition, all 0.5s);
+
+        &.show {
+            visibility: visible;
+            opacity: 1;
+            @include css3(transform, translate(0, 0));
+        }
+    }
+
+    .runner {
+        display: none;
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        bottom: 60px;
+        left: 50%;
+        font-size: 0;
+        @include css3(transform, translate(-50%, 0));
+        @include css3(animation, twinkled 2s infinite);
+
+        .r {
+            position: absolute;
+            top: 0;
+            width: 64px;
+            height: 100%;
+            background: url("#{$imgPath}/runner.png") no-repeat center;
+
+        }
+        .r1 {
+            left: 0;
+            opacity: 0.2;
+        }
+        .r2 {
+            left: 18px;
+            opacity: 0.4;
+        }
+        .r3 {
+            left: 36px;
+        }
+    }
+}
+.bg1 {
+    background: #000 url("#{$imgPath}bg1.jpg") no-repeat center / cover;
+}
+@-webkit-keyframes twinkled {
+    0% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes twinkled {
     0% {
         opacity: 0.2;
     }

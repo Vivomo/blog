@@ -17,12 +17,13 @@ function Printer(cfg) {
 
 Printer.prototype = {
     constructor : Printer,
-    write : function (cursor, word) {
+    write : function (cursor, word, callback) {
         cursor.style.display = 'inline-block';
         var i = 0;
         var interval = setInterval(function () {
             if (i >= word.length) {
                 cursor.style.display = 'none';
+                callback && callback();
                 return clearInterval(interval);
             }
             this.pushLetter(cursor, word[i++]);
@@ -37,6 +38,24 @@ Printer.prototype = {
 };
 
 (function () {
-    $('#wrap').fullpage();
+    $('#wrap').fullpage({
+        afterLoad : function (a, index) {
+            switch (index) {
+                case 1:
+                    setTimeout(function () {
+                        $('.computer').addClass('show');
+                    }, 100);
+                    break;
+            }
+            console.log(index)
+        }
+    });
+
+    /**
+     * 向下移动
+     */
+    $('.js-down').one('click', function () {
+
+    });
 
 })();

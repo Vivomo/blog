@@ -3,11 +3,12 @@
   padding: 0; }
 
 .console {
-  background-color: #000;
-  width: 300px;
-  height: 200px;
-  font-size: 20px;
-  color: #fff;
+  position: absolute;
+  font-size: 40px;
+  line-height: 72px;
+  width: 100%;
+  text-align: center;
+  color: #161616;
   word-break: break-all; }
 
 .cursor {
@@ -19,7 +20,61 @@
   vertical-align: middle;
   animation: cursor 0.5s infinite; }
 
-@keyframes cursor {
+.abs {
+  position: absolute; }
+
+.section {
+  position: relative; }
+  .section .computer {
+    display: block;
+    width: 100%;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transform: translate(0, -80%);
+    transform: translate(0, -80%);
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s; }
+    .section .computer.show {
+      visibility: visible;
+      opacity: 1;
+      -webkit-transform: translate(0, 0);
+      transform: translate(0, 0); }
+  .section .runner {
+    display: none;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    bottom: 60px;
+    left: 50%;
+    font-size: 0;
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    -webkit-animation: twinkled 2s infinite;
+    animation: twinkled 2s infinite; }
+    .section .runner .r {
+      position: absolute;
+      top: 0;
+      width: 64px;
+      height: 100%;
+      background: url("../img/h5//runner.png") no-repeat center; }
+    .section .runner .r1 {
+      left: 0;
+      opacity: 0.2; }
+    .section .runner .r2 {
+      left: 18px;
+      opacity: 0.4; }
+    .section .runner .r3 {
+      left: 36px; }
+
+.bg1 {
+  background: #000 url("../img/h5/bg1.jpg") no-repeat center/cover; }
+
+@-webkit-keyframes twinkled {
+  0% {
+    opacity: 0.2; }
+  100% {
+    opacity: 1; } }
+@keyframes twinkled {
   0% {
     opacity: 0.2; }
   100% {
