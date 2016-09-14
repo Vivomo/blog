@@ -92,7 +92,7 @@ Printer.prototype = {
                                 p.write($cursor[0], $cursor.eq(0).data('word'), function () {
                                     p.write($cursor[1], $cursor.eq(1).data('word'), function () {
                                         p.write($cursor[2], $cursor.eq(2).data('word'), function () {
-                                            toggleScreen();
+                                            setTimeout(toggleScreen, 1000);
                                         })
                                     });
                                 });
@@ -133,8 +133,10 @@ Printer.prototype = {
                         p.write($cursor[0], $cursor.eq(0).data('word'), function () {
                             p.write($cursor[1], $cursor.eq(1).data('word'), function () {
                                 p.write($cursor[2], $cursor.eq(2).data('word'), function () {
-                                    $('.s3').addClass('bg1').removeClass('bg2');
-                                    toggleScreen_3();
+                                    setTimeout(function () {
+                                        $('.s3').addClass('bg1').removeClass('bg2');
+                                        toggleScreen_3();
+                                    }, 1000);
                                 })
                             });
                         });
