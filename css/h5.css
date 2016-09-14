@@ -1,9 +1,12 @@
 svg {
   height: 120px;
   width: 120px;
-  margin: 0 2em 2em;
+  position: absolute;
   overflow: visible;
-  /*   border: 1px solid red; */ }
+  top: 50%;
+  left: 50%;
+  margin-top: -60px;
+  margin-left: -60px; }
 
 .g-circles {
   -webkit-transform: scale(0.9) translate(7px, 7px);

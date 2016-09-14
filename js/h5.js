@@ -11,18 +11,28 @@ function Printer(cfg) {
     this.cfg = $.extend({
         pauseTime : 200,//ms
         tag : 'span',
-        callback : null
+        callback : null,
+        audio : true,
+        audioId : 'music-print'
     }, cfg);
+
+    if (this.cfg.audio) {
+        this.audio = document.getElementById(this.cfg.audioId);
+    }
 }
 
 Printer.prototype = {
     constructor : Printer,
     write : function (cursor, word, callback) {
         cursor.style.display = 'inline-block';
+        // music.pause();
+        this.audio && this.audio.play();
         var i = 0;
         var interval = setInterval(function () {
             if (i >= word.length) {
                 cursor.style.display = 'none';
+                this.audio && this.audio.pause();
+                // music.play();
                 callback && callback();
                 return clearInterval(interval);
             }
@@ -213,7 +223,11 @@ Printer.prototype = {
     });
     var fullpage = $.fn.fullpage;
 
+    window.music = $('#music-bg')[0];
+
     $('#loading-wrap').remove();
+
+    music.play();
 
     /**
      * 向下移动
