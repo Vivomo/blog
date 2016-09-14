@@ -225,9 +225,23 @@ Printer.prototype = {
 
     window.music = $('#music-bg')[0];
 
+    //lazyload
+
+    (function () {
+        var src1 = $('.computer')[0].src;
+        var img1 = new Image;
+        img1.onload = function () {
+            var src2 = /\("(.+?)"\)/.exec($('.s1').css('background-image'))[1];
+            var img2 = new Image;
+            img2.onload = function () {
+                $('#loading-wrap').remove();
+            }
+            img2.src = src2;
+        };
+        img1.src = src1;
+    })();
 
 
-    $('#loading-wrap').remove();
 
     music.play();
 
