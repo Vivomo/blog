@@ -48,52 +48,63 @@ Printer.prototype = {
 };
 
 (function () {
-    var p = new Printer;
-    var cache = {};
-    $('#wrap').fullpage({
-        anchors : ['s1', 's2', 's3', 's4', 's5'],
-        afterLoad : function (a, index) {
-            if (cache[index])
-                return;
-            else
-                cache[index] = true;
 
-            switch (index) {
-                case 1:
-                    setTimeout(function () {
-                        $('.computer').addClass('show');
-                        var $cursor = $('.s1 .cursor');
-                        p.write($cursor[0], $cursor.eq(0).data('word'), function () {
-                            p.write($cursor[1], $cursor.eq(1).data('word'), function () {
-                                p.write($cursor[2], $cursor.eq(2).data('word'), function () {
-                                    $('.s1 .runner').show();
-                                })
-                            });
-                        });
+    var hasStart = false;
 
-                    }, 100);
-                    break;
-                case 2:
-                    setTimeout(function () {
-                        $('#tl1').addClass('show');
+    function start() {
+        if (hasStart) {
+            return
+        }
+        hasStart = true;
+
+        $('#loading-wrap').remove();
+
+        var p = new Printer;
+        var cache = {};
+        $('#wrap').fullpage({
+            anchors : ['s1', 's2', 's3', 's4', 's5'],
+            afterLoad : function (a, index) {
+                if (cache[index])
+                    return;
+                else
+                    cache[index] = true;
+
+                switch (index) {
+                    case 1:
                         setTimeout(function () {
-                            var $cursor = $('.s2 .cursor');
+                            $('.computer').addClass('show');
+                            var $cursor = $('.s1 .cursor');
                             p.write($cursor[0], $cursor.eq(0).data('word'), function () {
                                 p.write($cursor[1], $cursor.eq(1).data('word'), function () {
                                     p.write($cursor[2], $cursor.eq(2).data('word'), function () {
-                                        toggleScreen();
+                                        $('.s1 .runner').show();
                                     })
                                 });
                             });
-                            $('.s2 .cloud').each(function (index, item) {
-                                 setTimeout(function () {
-                                     $(item).addClass('show');
-                                 }, index * 100)
-                            });
-                            $('.s2 .bomb').addClass('show');
-                        }, 800);
 
-                    }, 100);
+                        }, 100);
+                        break;
+                    case 2:
+                        setTimeout(function () {
+                            $('#tl1').addClass('show');
+                            setTimeout(function () {
+                                var $cursor = $('.s2 .cursor');
+                                p.write($cursor[0], $cursor.eq(0).data('word'), function () {
+                                    p.write($cursor[1], $cursor.eq(1).data('word'), function () {
+                                        p.write($cursor[2], $cursor.eq(2).data('word'), function () {
+                                            toggleScreen();
+                                        })
+                                    });
+                                });
+                                $('.s2 .cloud').each(function (index, item) {
+                                    setTimeout(function () {
+                                        $(item).addClass('show');
+                                    }, index * 100)
+                                });
+                                $('.s2 .bomb').addClass('show');
+                            }, 800);
+
+                        }, 100);
 
 
                     function toggleScreen() {
@@ -116,17 +127,17 @@ Printer.prototype = {
                             }
                         }, 150);
                     }
-                    break;
-                case 3:
-                    var $cursor = $('.s3 .cursor');
-                    p.write($cursor[0], $cursor.eq(0).data('word'), function () {
-                        p.write($cursor[1], $cursor.eq(1).data('word'), function () {
-                            p.write($cursor[2], $cursor.eq(2).data('word'), function () {
-                                $('.s3').addClass('bg1').removeClass('bg2');
-                                toggleScreen_3();
-                            })
+                        break;
+                    case 3:
+                        var $cursor = $('.s3 .cursor');
+                        p.write($cursor[0], $cursor.eq(0).data('word'), function () {
+                            p.write($cursor[1], $cursor.eq(1).data('word'), function () {
+                                p.write($cursor[2], $cursor.eq(2).data('word'), function () {
+                                    $('.s3').addClass('bg1').removeClass('bg2');
+                                    toggleScreen_3();
+                                })
+                            });
                         });
-                    });
                     function toggleScreen_3() {
                         $('.s3 .screen1').fadeOut(300, function () {
                             $('.s3 .screen2').fadeIn(300, function () {
@@ -204,26 +215,30 @@ Printer.prototype = {
                         }, 3000)
                     }
 
-                    break;
-                case 4:
-                    var $cursor = $('.s4 .cursor');
-                    p.write($cursor[0], $cursor.eq(0).data('word'), function () {
-                        p.write($cursor[1], $cursor.eq(1).data('word'), function () {
-                            p.write($cursor[2], $cursor.eq(2).data('word'), function () {
-                                p.write($cursor[3], $cursor.eq(3).data('word'), function () {
-                                    $('#apply-wrap').addClass('show');
+                        break;
+                    case 4:
+                        var $cursor = $('.s4 .cursor');
+                        p.write($cursor[0], $cursor.eq(0).data('word'), function () {
+                            p.write($cursor[1], $cursor.eq(1).data('word'), function () {
+                                p.write($cursor[2], $cursor.eq(2).data('word'), function () {
+                                    p.write($cursor[3], $cursor.eq(3).data('word'), function () {
+                                        $('#apply-wrap').addClass('show');
+                                    })
                                 })
-                            })
+                            });
                         });
-                    });
-                    break;
+                        break;
+                }
+                console.log(index)
             }
-            console.log(index)
-        }
-    });
-    var fullpage = $.fn.fullpage;
+        });
+        var fullpage = $.fn.fullpage;
 
-    window.music = $('#music-bg')[0];
+        window.music = $('#music-bg')[0];
+
+        music.play();
+    }
+
 
     //lazyload
 
@@ -234,16 +249,17 @@ Printer.prototype = {
             var src2 = /\("(.+?)"\)/.exec($('.s1').css('background-image'))[1];
             var img2 = new Image;
             img2.onload = function () {
-                $('#loading-wrap').remove();
+                start();
             }
             img2.src = src2;
         };
         img1.src = src1;
+
+        setTimeout(start, 6000);
     })();
 
 
 
-    music.play();
 
     /**
      * 向下移动
