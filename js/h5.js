@@ -237,6 +237,13 @@ Printer.prototype = {
         window.music = $('#music-bg')[0];
 
         music.play();
+
+        /**
+         * 向下移动
+         */
+        $('.js-down').one('click', function () {
+            fullpage.moveSectionDown();
+        });
     }
 
 
@@ -261,11 +268,6 @@ Printer.prototype = {
 
 
 
-    /**
-     * 向下移动
-     */
-    $('.js-down').one('click', function () {
-        fullpage.moveSectionDown();
-    });
+
 
 })();
