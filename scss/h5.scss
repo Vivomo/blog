@@ -421,28 +421,37 @@ body {
         opacity: 1;
     }
 }
-
+@-webkit-keyframes flowerDrop {
+    0% {
+        @include css3(transform, translate(0, -200px) rotate(0deg));
+    }
+    100% {
+        @include css3(transform, translate(40px, 2000px) rotate(220deg));
+    }
+}
 @keyframes flowerDrop {
     0% {
         @include css3(transform, translate(0, -200px) rotate(0deg));
     }
-    //20% {
-    //    @include css3(transform, translate(20px, 300px) rotate(20deg));
-    //}
-    //40% {
-    //    @include css3(transform, translate(-30px, 700px) rotate(40deg));
-    //}
-    //60% {
-    //    @include css3(transform, translate(-10px, 900px) rotate(80deg));
-    //}
-    //80% {
-    //    @include css3(transform, translate(40px, 1100px) rotate(150deg));
-    //}
     100% {
         @include css3(transform, translate(40px, 2000px) rotate(220deg));
     }
 }
 
+@-webkit-keyframes shake {
+    0% {
+        @include css3(transform, rotate(0deg));
+    }
+    25% {
+        @include css3(transform, rotate(30deg));
+    }
+    75% {
+        @include css3(transform, rotate(-30deg));
+    }
+    100% {
+        @include css3(transform, rotate(0deg));
+    }
+}
 @keyframes shake {
     0% {
         @include css3(transform, rotate(0deg));
@@ -457,7 +466,14 @@ body {
         @include css3(transform, rotate(0deg));
     }
 }
-
+@-webkit-keyframes rotate {
+    0% {
+        @include css3(transform, rotate(0deg));
+    }
+    100% {
+        @include css3(transform, rotate(360deg));
+    }
+}
 @keyframes rotate {
     0% {
         @include css3(transform, rotate(0deg));

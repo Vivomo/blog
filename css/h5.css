@@ -515,6 +515,13 @@ body {
     opacity: 0.2; }
   100% {
     opacity: 1; } }
+@-webkit-keyframes flowerDrop {
+  0% {
+    -webkit-transform: translate(0, -200px) rotate(0deg);
+    transform: translate(0, -200px) rotate(0deg); }
+  100% {
+    -webkit-transform: translate(40px, 2000px) rotate(220deg);
+    transform: translate(40px, 2000px) rotate(220deg); } }
 @keyframes flowerDrop {
   0% {
     -webkit-transform: translate(0, -200px) rotate(0deg);
@@ -522,6 +529,19 @@ body {
   100% {
     -webkit-transform: translate(40px, 2000px) rotate(220deg);
     transform: translate(40px, 2000px) rotate(220deg); } }
+@-webkit-keyframes shake {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  25% {
+    -webkit-transform: rotate(30deg);
+    transform: rotate(30deg); }
+  75% {
+    -webkit-transform: rotate(-30deg);
+    transform: rotate(-30deg); }
+  100% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); } }
 @keyframes shake {
   0% {
     -webkit-transform: rotate(0deg);
@@ -535,6 +555,13 @@ body {
   100% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg); } }
+@-webkit-keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
 @keyframes rotate {
   0% {
     -webkit-transform: rotate(0deg);

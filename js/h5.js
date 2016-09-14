@@ -62,7 +62,7 @@ Printer.prototype = {
         var p = new Printer;
         var cache = {};
         $('#wrap').fullpage({
-            anchors : ['s1', 's2', 's3', 's4', 's5'],
+            // anchors : ['s1', 's2', 's3', 's4', 's5'],
             afterLoad : function (a, index) {
                 if (cache[index])
                     return;
