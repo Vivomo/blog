@@ -183,7 +183,11 @@ Printer.prototype = {
                         $('#shadow').show();
                         $('#dialog').show().find('.num').text(~~(Math.random() * 27) + 70);
 
-                        window.removeEventListener('devicemotion', deviceMotionHandler, false);
+                        try {
+                            window.removeEventListener('devicemotion', deviceMotionHandler, false);
+                        } catch (e){
+
+                        }
 
                         setTimeout(function () {
                             $.fn.fullpage.moveSectionDown();
@@ -192,13 +196,24 @@ Printer.prototype = {
 
                     break;
                 case 4:
-
+                    var $cursor = $('.s4 .cursor');
+                    p.write($cursor[0], $cursor.eq(0).data('word'), function () {
+                        p.write($cursor[1], $cursor.eq(1).data('word'), function () {
+                            p.write($cursor[2], $cursor.eq(2).data('word'), function () {
+                                p.write($cursor[3], $cursor.eq(3).data('word'), function () {
+                                    $('#apply-wrap').addClass('show');
+                                })
+                            })
+                        });
+                    });
                     break;
             }
             console.log(index)
         }
     });
     var fullpage = $.fn.fullpage;
+
+    $('#loading-wrap').remove();
 
     /**
      * 向下移动
