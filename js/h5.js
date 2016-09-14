@@ -225,6 +225,8 @@ Printer.prototype = {
 
     window.music = $('#music-bg')[0];
 
+
+
     $('#loading-wrap').remove();
 
     music.play();
