@@ -130,6 +130,8 @@ Printer.prototype = {
                         break;
                     case 3:
                         var $cursor = $('.s3 .cursor');
+                        var shakeInterval;
+
                         p.write($cursor[0], $cursor.eq(0).data('word'), function () {
                             p.write($cursor[1], $cursor.eq(1).data('word'), function () {
                                 p.write($cursor[2], $cursor.eq(2).data('word'), function () {
@@ -176,6 +178,7 @@ Printer.prototype = {
                         $('#shake-hand').one('click', shakeCallback);
 
                         // 运动传感器处理
+                        var shakeCount = 0;
                         function deviceMotionHandler(eventData) {
                             var acceleration = eventData.accelerationIncludingGravity; // 获取含重力的加速度
                             var curTime = new Date().getTime();
@@ -193,7 +196,10 @@ Printer.prototype = {
                                 var speed = Math.abs(x + y + z - lastX - lastY - lastZ) / diffTime * 10000;
                                 // 前后x, y, z间的差值的绝对值和时间比率超过了预设的阈值，则判断设备进行了摇晃操作
                                 if (speed > shakeThreshold) {
-                                    shakeCallback();
+                                    shakeCount ++
+                                    if (shakeCount >= 3) {
+                                        shakeCallback();
+                                    }
                                 }
 
                                 lastX = x;
@@ -201,6 +207,11 @@ Printer.prototype = {
                                 lastZ = z;
                             }
                         }
+
+                        shakeInterval = setInterval(function () {
+                            shakeCount--;
+                            shakeCount = Math.max(shakeCount, 0);
+                        }, 1000);
                     }
 
                     function shakeCallback() {
