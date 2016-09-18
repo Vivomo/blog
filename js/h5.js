@@ -143,19 +143,20 @@ Printer.prototype = {
                     function toggleScreen_3() {
                         $('.s3 .screen1').fadeOut(300, function () {
                             $('.s3 .screen2').fadeIn(300, function () {
-                                var $cursor = $(this).find('.cursor');
-                                p.write($cursor[0], $cursor.eq(0).data('word'), function () {
-                                    p.write($cursor[1], $cursor.eq(1).data('word'), function () {
-                                        $('#arrow').show(300, function () {
-                                            $('#time').addClass('show');
+                                $('#arrow').show(300, function () {
+                                    $('#time').addClass('show');
 
-                                            setTimeout(function () {
-                                                $('#shake-hand').addClass('shake');
-                                                listenCallback();
-                                            }, 1000);
-                                        });
-                                    })
+                                    setTimeout(function () {
+                                        $('#shake-hand').addClass('shake');
+                                        listenCallback();
+                                    }, 1000);
                                 });
+                                // var $cursor = $(this).find('.cursor');
+                                // p.write($cursor[0], $cursor.eq(0).data('word'), function () {
+                                //     p.write($cursor[1], $cursor.eq(1).data('word'), function () {
+                                //
+                                //     })
+                                // });
                             });
                         });
                     }
@@ -220,15 +221,16 @@ Printer.prototype = {
                         break;
                     case 4:
                         var $cursor = $('.s4 .cursor');
-                        p.write($cursor[0], $cursor.eq(0).data('word'), function () {
-                            p.write($cursor[1], $cursor.eq(1).data('word'), function () {
-                                p.write($cursor[2], $cursor.eq(2).data('word'), function () {
-                                    p.write($cursor[3], $cursor.eq(3).data('word'), function () {
-                                        $('#apply-wrap').addClass('show');
-                                    })
-                                })
-                            });
-                        });
+                        $('#apply-wrap').addClass('show');
+                        // p.write($cursor[0], $cursor.eq(0).data('word'), function () {
+                        //     p.write($cursor[1], $cursor.eq(1).data('word'), function () {
+                        //         p.write($cursor[2], $cursor.eq(2).data('word'), function () {
+                        //             p.write($cursor[3], $cursor.eq(3).data('word'), function () {
+                        //
+                        //             })
+                        //         })
+                        //     });
+                        // });
                         break;
                 }
                 console.log(index)
