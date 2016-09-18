@@ -25,14 +25,12 @@ Printer.prototype = {
     constructor : Printer,
     write : function (cursor, word, callback) {
         cursor.style.display = 'inline-block';
-        // music.pause();
         this.audio && this.audio.play();
         var i = 0;
         var interval = setInterval(function () {
             if (i >= word.length) {
                 cursor.style.display = 'none';
                 this.audio && this.audio.pause();
-                // music.play();
                 callback && callback();
                 return clearInterval(interval);
             }
@@ -68,6 +66,10 @@ Printer.prototype = {
                     return;
                 else
                     cache[index] = true;
+
+                $('.s'+(index+1)).find('[data-src]').each(function () {
+                    this.src = this.dataset.src
+                });
 
                 switch (index) {
                     case 1:
@@ -249,10 +251,6 @@ Printer.prototype = {
         });
         var fullpage = $.fn.fullpage;
 
-        window.music = $('#music-bg')[0];
-
-        music.play();
-
         /**
          * 向下移动
          */
@@ -268,16 +266,11 @@ Printer.prototype = {
         var src1 = $('.computer')[0].src;
         var img1 = new Image;
         img1.onload = function () {
-            var src2 = /\("(.+?)"\)/.exec($('.s1').css('background-image'))[1];
-            var img2 = new Image;
-            img2.onload = function () {
-                start();
-            }
-            img2.src = src2;
+            start();
         };
         img1.src = src1;
 
-        setTimeout(start, 6000);
+        setTimeout(start, 3000);
     })();
 
 
