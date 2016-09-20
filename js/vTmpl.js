@@ -6,6 +6,9 @@
     var reg = /\s*(\w+)\s*(\|\s*(\w+)(\((.*)\))?)?/;
     var vt = window.vTmpl = {
         render : function (str, obj) {
+            if (str.nodeType) {
+                return str.innerHTML = vt.render(str.innerHTML, obj);
+            }
             if (Array.isArray(obj)) {
                 return obj.map(function (item) {
                     return vt.render(str, item)
