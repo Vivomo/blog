@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>template 语法测试</title>
+</head>
+<body>
+
+<textarea name="" id="temp" cols="30" rows="10">
+    {{each list as o index}}
+    <span>{{index}}{{o.name}}</span>
+    {{/each}}
+</textarea>
+<div id="d"></div>
+<script src="../js/template.js"></script>
+<script>
+    var data = {
+        list : ['A', 'B', {name: 'D'}]
+    };
+    var tmpl = document.getElementById('temp').value;
+    document.getElementById('d').innerHTML = template.render(tmpl, data);
+</script>
+
+</body>
+</html>
