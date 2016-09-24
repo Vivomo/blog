@@ -5,6 +5,7 @@
 
 (function (root) {
     var v = root.V = {};
+    var DOC = document;
 
     /**
      * document.ready 回调
@@ -13,15 +14,15 @@
         if (document.body) {
             fn()
         } else {
-            if(document.addEventListener){
-                document.addEventListener('DOMContentLoaded',function(){
-                    document.removeEventListener('DOMContentLoaded',arguments.callee,false);
+            if(DOC.addEventListener){
+                DOC.addEventListener('DOMContentLoaded',function(){
+                    DOC.removeEventListener('DOMContentLoaded',arguments.callee,false);
                     fn();
                 },false);
-            }else if(document.attachEvent){
-                document.attachEvent('onreadystatechange',function(){
-                    if(document.readyState=='complete'){
-                        document.detachEvent('onreadystatechange',arguments.callee);
+            }else if(DOC.attachEvent){
+                DOC.attachEvent('onreadystatechange',function(){
+                    if(DOC.readyState=='complete'){
+                        DOC.detachEvent('onreadystatechange',arguments.callee);
                         fn();
                     }
                 });
