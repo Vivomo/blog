@@ -24,8 +24,7 @@
 </header>
 {{ content }}
 
-<input type="hidden" id="site_data" data-baseurl="{{site.baseurl}}">
-<textarea name="" id="page_data" cols="30" rows="10" style="display: none">{{page|jsonify}}</textarea>
+<input type="hidden" id="data" data-baseurl="{{site.baseurl}}" data-js="{{page.js}}">
 <script src="{{site.baseurl}}/js/app.js"></script>
 </body>
 </html>

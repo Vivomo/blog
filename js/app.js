@@ -3,10 +3,9 @@
  */
 
 (function () {
-    var pageData = JSON.parse(document.getElementById('page_data').value),
-        siteData = document.getElementById('site_data').dataset;
+    var data = document.getElementById('data').dataset;
 
-    if (pageData.js) {
-        V.loadJS(siteData.baseurl + '/js/' + pageData.js + '.js')
+    if (data.js) {
+        V.loadJS(data.baseurl + '/js/' + data.js + '.js')
     }
 })();
