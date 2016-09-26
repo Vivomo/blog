@@ -27,7 +27,7 @@
 {% if page.js != '' %}
 <script src="{{site.baseurl}}/js/{{page.js}}.js"></script>
 {% endif %}
-<textarea name="" id="site" cols="30" rows="10" style="display: none">{{site}}</textarea>
+<textarea name="" id="site" cols="30" rows="10" style="display: none">{{site|jsonify}}</textarea>
 <textarea name="" id="page" cols="30" rows="10" style="display: none">{{page|jsonify}}</textarea>
 </body>
 </html>
