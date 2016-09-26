@@ -27,5 +27,7 @@
 {% if page.js != '' %}
 <script src="{{site.baseurl}}/js/{{page.js}}.js"></script>
 {% endif %}
+<input type="hidden" id="page" value="{{page}}">
+<input type="hidden" id="page2" value="{{page|jsonify}}">
 </body>
 </html>

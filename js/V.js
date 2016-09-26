@@ -4,6 +4,23 @@
  */
 
 (function (root) {
+    /**
+     * 数组修复
+     */
+    var _ArrayProp = {
+        indexOf : function (item, index) {
+            var n = this.length, i = ~~index;
+            if (i < 0) {
+                i += n;
+            }
+            for (; i < n; i++) {
+                if (this[i] === item) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+    };
     var v = root.V = {};
 
     v.cache = {
@@ -52,6 +69,7 @@
                 callback && callback();
             }
         };
+        document.head.appendChild(script);
         script.src = url;
         v.cache.js.push(url);
     }
