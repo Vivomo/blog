@@ -5,6 +5,10 @@
 
 (function (root) {
     var v = root.V = {};
+
+    v.cache = {
+        js : []
+    };
     var DOC = document;
 
     /**
@@ -36,5 +40,20 @@
     v.isFunction = function (param) {
         return typeof param === 'function';
     };
+
+    v.loadJS = function (url, callback) {
+        if (v.cache.js.indexOf(url) != -1)
+            return;
+        var script = document.createElement('script');
+        var supportLoad = "onload" in script;
+        var onEvent = supportLoad ? "onload" : "onreadystatechange"
+        script[onEvent] = function () {
+            if (supportLoad || /complete|loaded/.test()) {
+                callback && callback();
+            }
+        };
+        script.src = url;
+        v.cache.js.push(url);
+    }
 
 })(window);

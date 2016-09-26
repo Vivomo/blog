@@ -5240,6 +5240,7 @@ new function () {// jshint ignore:line
         var supportLoad = "onload" in node
         var onEvent = supportLoad ? "onload" : "onreadystatechange"
         function onload() {
+            //IE7 及以下 字符串不能用下标取字符
             if (!"1"[0] && !timeID) {
                 return timeID = setTimeout(onload, 150)
             }
