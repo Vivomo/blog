@@ -3,11 +3,10 @@
  */
 
 (function () {
-    var dataElem = document.getElementById('data'),
-        page_data = JSON.parse(dataElem.value),
-        site_data = document.getElementById('site_data').dataset;
+    var pageData = JSON.parse(document.getElementById('page_data').value),
+        siteData = document.getElementById('site_data').dataset;
 
-    if (page_data.js) {
-        V.loadJS(site_data.baseurl + '/js/' + page_data.js + '.js')
+    if (pageData.js) {
+        V.loadJS(siteData.baseurl + '/js/' + pageData.js + '.js')
     }
 })();
