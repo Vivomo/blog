@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>贪吃蛇</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/snake.css">
+</head>
+<body ms-controller="snake">
+    <div id="background">
+        <table>
+            <tr ms-repeat="square">
+                <td ms-repeat-ceil="el" ms-class-food="ceil.isFood">[[ceil.isFood]]</td>
+            </tr>
+        </table>
+        <ol id="snake">
+            <li ms-repeat="body" ms-css-left="[[el.x*ceilWidth]]px" ms-css-top="[[el.y*ceilWidth]]px"></li>
+        </ol>
+    </div>
+    <script src="../js/avalon.js"></script>
+    <script src="../js/snake.js"></script>
+</body>
+</html>
