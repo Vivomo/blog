@@ -3,10 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>scrollbar</title>
+    <style>
+        .scroll-wrap {
+            overflow: hidden;
+            width: 600px;
+            margin: 0 auto;
+            height: 500px;
+            background-color: #ccc;
+
+        }
+
+        .scroll-content {
+            height: 400px;
+            background-color: #999;
+            opacity: 0.5;
+            border: 5px solid;
+        }
+    </style>
 </head>
 <body>
 
-
+<div class="scroll-wrap" id="wrap">
+    <div class="" id="content">
+        <div class="scroll-content"></div>
+        <div class="scroll-content"></div>
+    </div>
+</div>
+<script>
+    var wrap = document.getElementById('wrap');
+    var content = document.getElementById('content');
+</script>
 <script src="../js/jq/jquery.js"></script>
 <script src="../js/scrollbar.js"></script>
 </body>
