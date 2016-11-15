@@ -102,5 +102,6 @@
         }
     }
 
+    new Scrollbar('.scroll-wrap');
 
 })();
