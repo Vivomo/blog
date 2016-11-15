@@ -9,7 +9,11 @@
         } else {
             this.selector = selector;
         }
-        $.extend(this, option);
+        var defaultOption = {
+            barWrap : '.scroll-bar-wrap',
+            bar : '.scroll-bar'
+        };
+        $.extend(this, defaultOption, option);
         this.init();
     };
 
@@ -21,13 +25,18 @@
     Scrollbar.prototype = {
         constructor : Scrollbar,
         noscroll : [],
-        setBarTop : function () {
+        setBarTop : function (top, index) {
+            var $barWrap = this.$barWrap.eq(index),
+                barWrap = this.$barWrap[index],
+                $bar = $barWrap.find(this.bar);
 
+            $barWrap.css('top', top + 'px');
+            $bar.css('top', top * $barWrap.height() / this.$wrap[index]._scrollHeight + 'px');
         },
         initStyle : function () {
 
             var $wrap = this.$wrap = $(this.selector),
-                $bar = this.$bar = $wrap.find(this.bar),
+                $barWrap = this.$barWrap = $wrap.find(this.barWrap),
                 that = this;
             $wrap.css({
                 overflow : 'hidden'
@@ -37,14 +46,15 @@
 
             this.noscroll = new Array($wrap.length);
 
-            $bar.each(function (index) {
+            $barWrap.each(function (index) {
                 var contentHeight = $wrap[index].scrollHeight,
                     wrapHeight = $wrap.eq(index).height(),
                     noscroll = contentHeight == wrapHeight;
 
+                $wrap[index]._scrollHeight = contentHeight;
                 that.noscroll[index] = noscroll;
                 if (!noscroll) {
-                    $bar.eq(index).show().height(100 * wrapHeight / contentHeight + '%');
+                    $barWrap.eq(index).show().find(that.bar).height(100 * wrapHeight / contentHeight + '%');
                 }
             });
         },
@@ -75,8 +85,9 @@
                 var direction = (e.wheelDelta) ? -e.wheelDelta / 120 : (e.detail || 0) / 3;
                 var wrap = this.$wrap[index]
                 if ( (direction == Scrollbar.UP && wrap.scrollTop != 0) ||
-                    (direction == Scrollbar.BOTTOM && wrap.scrollTop + wrap.clientHeight < wrap.scrollHeight)) {
+                    (direction == Scrollbar.BOTTOM && wrap.scrollTop + wrap.clientHeight < wrap._scrollHeight)) {
                     wrap.scrollTop += direction * Scrollbar.step;
+                    this.setBarTop(wrap.scrollTop, index);
                     if (e.preventDefault) {
                         e.preventDefault();
                     } else {
