@@ -12,68 +12,84 @@
         $.extend(this, option);
         this.init();
     };
-    
+
+    Scrollbar.UP = -1;
+    Scrollbar.BOTTOM = 1;
+    Scrollbar.step = 40;
+
+
     Scrollbar.prototype = {
         constructor : Scrollbar,
-        initWrap : function () {
-            var $wrap = this.$wrap = $(this.selector);
-            if ($wrap.css('position') == 'static') {
-                $wrap.css('position', 'relative');
-            }
-            $wrap.css({
-                overflow : 'hidden'
-            })
-        },
-        initBar : function () {
-            var $content = this.$content = this.$wrap.find(this.content),
-                $bar = this.$bar = this.$wrap.find(this.bar),
-                wrapHeight = $wrap.height(),
-                contentHeight = $content.height();
-            if (contentHeight <= wrapHeight) {
-                $bar.hide();
-                this.ended = true;
-            } else {
-                $bar.height(100 * wrapHeight / contentHeight + '%')
-            }
+        noscroll : [],
+        setBarTop : function () {
+
         },
         initStyle : function () {
-            this.initWrap();
-            this.initBar();
+
+            var $wrap = this.$wrap = $(this.selector),
+                $bar = this.$bar = $wrap.find(this.bar),
+                that = this;
+            $wrap.css({
+                overflow : 'hidden'
+            }).filter(function () {
+                return $(this).css('position') == 'static';
+            }).css('position', 'relative');
+
+            this.noscroll = new Array($wrap.length);
+
+            $bar.each(function (index) {
+                var contentHeight = $wrap[index].scrollHeight,
+                    wrapHeight = $wrap.eq(index).height(),
+                    noscroll = contentHeight == wrapHeight;
+
+                that.noscroll[index] = noscroll;
+                if (!noscroll) {
+                    $bar.eq(index).show().height(100 * wrapHeight / contentHeight + '%');
+                }
+            });
         },
         initMouse : function () {
-            if (this.ended) {
-                return false;
-            }
+            var that = this;
             if (window.addEventListener) {
-                this.$wrap.each(function () {
+                this.$wrap.each(function (index) {
                     this.addEventListener("DOMMouseScroll", function(e) {
-                        handleMousewheel(e);
-                    })
+                        that.handleMousewheel(e, index);
+                    },false)
                 })
             }
 
-            this.$wrap.each(function () {
-                this.onmousewheel = handleMousewheel;
+            this.$wrap.each(function (index) {
+                this.onmousewheel = function (e) {
+                    that.handleMousewheel(e, index)
+                };
             });
-
-            function handleMousewheel(e) {
-                e = e || event;
-                if (e.preventDefault) {
-                    e.preventDefault();
-                } else {
-                    window.event.returnValue = false;
-                }
-                var type = e.type;
-                if (type == 'DOMMouseScroll' || type == 'mousewheel') {
-                    // down: 1   up: -1
-                    e.delta = (e.wheelDelta) ? -e.wheelDelta / 120 : (e.detail || 0) / 3;
+        },
+        handleMousewheel : function (e, index) {
+            if (this.noscroll[index]) {
+                return;
+            }
+            e = e || event;
+            var type = e.type;
+            if (type == 'DOMMouseScroll' || type == 'mousewheel') {
+                // down: 1   up: -1
+                var direction = (e.wheelDelta) ? -e.wheelDelta / 120 : (e.detail || 0) / 3;
+                var wrap = this.$wrap[index]
+                if ( (direction == Scrollbar.UP && wrap.scrollTop != 0) ||
+                    (direction == Scrollbar.BOTTOM && wrap.scrollTop + wrap.clientHeight < wrap.scrollHeight)) {
+                    wrap.scrollTop += direction * Scrollbar.step;
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    } else {
+                        window.event.returnValue = false;
+                    }
                 }
             }
         },
         init : function () {
-            this.ended = false;
             this.initStyle();
             this.initMouse();
         }
     }
+
+
 })();
