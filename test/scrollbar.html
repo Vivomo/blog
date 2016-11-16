@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <title>scrollbar</title>
     <style>
-        .scroll-wrap {
-            overflow: hidden;
+        .wrap {
+            position: relative;
             width: 600px;
             margin: 20px auto;
+        }
+        .scroll-wrap {
+            overflow: hidden;
             height: 500px;
             background-color: #ccc;
 
@@ -42,23 +45,30 @@
 </head>
 <body>
 
-<div class="scroll-wrap" id="wrap">
-    <div class="scroll-content"></div>
-    <div class="scroll-content"></div>
-    <div class="scroll-content"></div>
-    <div class="scroll-content"></div>
+<div class="wrap">
+    <ul class="scroll-wrap">
+        <li class="scroll-content"></li>
+        <li class="scroll-content"></li>
+        <li class="scroll-content"></li>
+        <li class="scroll-content"></li>
+    </ul>
 
     <div class="scroll-bar-wrap">
         <div class="scroll-bar"></div>
     </div>
 </div>
-<div class="scroll-wrap" id="wrap2">
-    <div class="scroll-content"></div>
-    <div class="scroll-content"></div>
+
+<div class="wrap">
+
+    <div class="scroll-wrap" id="wrap2">
+        <div class="scroll-content"></div>
+        <div class="scroll-content"></div>
+    </div>
     <div class="scroll-bar-wrap">
         <div class="scroll-bar"></div>
     </div>
 </div>
+
 <script>
     var wrap = document.getElementById('wrap');
     var content = document.getElementById('content');

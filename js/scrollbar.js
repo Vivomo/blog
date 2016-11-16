@@ -10,8 +10,7 @@
             this.selector = selector;
         }
         var defaultOption = {
-            barWrap : '.scroll-bar-wrap',
-            bar : '.scroll-bar'
+            barWrap : '.scroll-bar-wrap'
         };
         $.extend(this, defaultOption, option);
         this.init();
@@ -27,16 +26,14 @@
         noscroll : [],
         setBarTop : function (top, index) {
             var $barWrap = this.$barWrap.eq(index),
-                barWrap = this.$barWrap[index],
-                $bar = $barWrap.find(this.bar);
+                $bar = this.$barWrap.eq(index).children();
 
-            $barWrap.css('top', top + 'px');
             $bar.css('top', top * $barWrap.height() / this.$wrap[index]._scrollHeight + 'px');
         },
         initStyle : function () {
 
             var $wrap = this.$wrap = $(this.selector),
-                $barWrap = this.$barWrap = $wrap.find(this.barWrap),
+                $barWrap = this.$barWrap = $(this.barWrap),
                 that = this;
             $wrap.css({
                 overflow : 'hidden'
@@ -54,7 +51,7 @@
                 $wrap[index]._scrollHeight = contentHeight;
                 that.noscroll[index] = noscroll;
                 if (!noscroll) {
-                    $barWrap.eq(index).show().find(that.bar).height(100 * wrapHeight / contentHeight + '%');
+                    $barWrap.eq(index).show().children().height(100 * wrapHeight / contentHeight + '%');
                 }
             });
         },
