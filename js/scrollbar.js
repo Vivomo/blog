@@ -18,7 +18,7 @@
 
     Scrollbar.UP = -1;
     Scrollbar.BOTTOM = 1;
-    Scrollbar.step = 40;
+    Scrollbar.step = 80;
 
 
     Scrollbar.prototype = {
@@ -28,6 +28,7 @@
             var $barWrap = this.$barWrap.eq(index),
                 $bar = this.$barWrap.eq(index).children();
             $bar.css('top', top * $barWrap.height() / this.$wrap[index]._scrollHeight + 'px');
+            this.onscroll && this.onscroll($bar);
         },
         initStyle : function () {
 
@@ -61,8 +62,8 @@
                 var $this = $(this);
                 var $elem = $(this).find(selector);
                 if ( $this.find(selector).length != 0) {
-                   var elemTop = $elem.offset().top,
-                       wrapTop = $this.offset().top;
+                    var elemTop = $elem.offset().top,
+                        wrapTop = $this.offset().top;
 
                     this.scrollTop += elemTop - wrapTop;
                     that.setBarTop(this.scrollTop, index);
