@@ -27,7 +27,6 @@
         setBarTop : function (top, index) {
             var $barWrap = this.$barWrap.eq(index),
                 $bar = this.$barWrap.eq(index).children();
-
             $bar.css('top', top * $barWrap.height() / this.$wrap[index]._scrollHeight + 'px');
         },
         initStyle : function () {
@@ -55,6 +54,23 @@
                 }
             });
         },
+        anchor : function(selector) {
+
+            var that = this;
+            that.$wrap.each(function (index) {
+                var $this = $(this);
+                var $elem = $(this).find(selector);
+                if ( $this.find(selector).length != 0) {
+                   var elemTop = $elem.offset().top,
+                       wrapTop = $this.offset().top;
+
+                    this.scrollTop += elemTop - wrapTop;
+                    that.setBarTop(this.scrollTop, index);
+                }
+            });
+
+
+        },
         initMouse : function () {
             var that = this;
             if (window.addEventListener) {
@@ -80,7 +96,7 @@
             if (type == 'DOMMouseScroll' || type == 'mousewheel') {
                 // down: 1   up: -1
                 var direction = (e.wheelDelta) ? -e.wheelDelta / 120 : (e.detail || 0) / 3;
-                var wrap = this.$wrap[index]
+                var wrap = this.$wrap[index];
                 if ( (direction == Scrollbar.UP && wrap.scrollTop != 0) ||
                     (direction == Scrollbar.BOTTOM && wrap.scrollTop + wrap.clientHeight < wrap._scrollHeight)) {
                     wrap.scrollTop += direction * Scrollbar.step;
@@ -99,6 +115,6 @@
         }
     }
 
-    new Scrollbar('.scroll-wrap');
+    window.scrollbar = new Scrollbar('.scroll-wrap');
 
 })();
