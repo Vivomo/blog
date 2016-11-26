@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+@import "inc/mixins";
+@import "inc/theme";
+
+$calendarWidth: 700px;
+.calendar-wrap {
+    box-sizing: border-box;
+    width: $calendarWidth + 2px;
+    margin: 50px auto;
+    color: $theme1;
+    border: $border1;
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .calendar-header {
+        height: 80px;
+        font: bold 40px/80px "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+        text-align: center;
+        border-bottom: $border1;
+
+        .prev {
+            float: left;
+        }
+        .next {
+            float: right;
+        }
+
+        .prev, .next {
+            width: 80px;
+            height: 80px;
+            color: $theme1;
+            cursor: pointer;
+            background-color: transparent;
+
+            &[disabled] {
+                color: #ccc;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    .calendar-week {
+
+        li {
+            display: inline-block;
+            font-size: 20px;
+            font-weight: bold;
+            width: $calendarWidth / 7;
+            height: 40px;
+            border: $border1;
+        }
+    }
+
+    .calendar-date {
+        li {
+            display: inline-block;
+            font-size: 20px;
+            font-weight: bold;
+            width: $calendarWidth / 7;
+            height: 80px;
+            border: $border1;
+        }
+        .prev, .next {
+            color: $theme2;
+        }
+    }
+    .lv4 {
+        font-size: 0;
+        text-align: center;
+    }
+
+}
+

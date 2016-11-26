@@ -1,0 +1,45 @@
+.calendar-wrap {
+  box-sizing: border-box;
+  width: 702px;
+  margin: 50px auto;
+  color: #1EEDFF;
+  border: 1px solid #1EEDFF; }
+  .calendar-wrap * {
+    box-sizing: border-box; }
+  .calendar-wrap .calendar-header {
+    height: 80px;
+    font: bold 40px/80px "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+    text-align: center;
+    border-bottom: 1px solid #1EEDFF; }
+    .calendar-wrap .calendar-header .prev {
+      float: left; }
+    .calendar-wrap .calendar-header .next {
+      float: right; }
+    .calendar-wrap .calendar-header .prev, .calendar-wrap .calendar-header .next {
+      width: 80px;
+      height: 80px;
+      color: #1EEDFF;
+      cursor: pointer;
+      background-color: transparent; }
+      .calendar-wrap .calendar-header .prev[disabled], .calendar-wrap .calendar-header .next[disabled] {
+        color: #ccc;
+        cursor: not-allowed; }
+  .calendar-wrap .calendar-week li {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    width: 100px;
+    height: 40px;
+    border: 1px solid #1EEDFF; }
+  .calendar-wrap .calendar-date li {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    width: 100px;
+    height: 80px;
+    border: 1px solid #1EEDFF; }
+  .calendar-wrap .calendar-date .prev, .calendar-wrap .calendar-date .next {
+    color: #4EA9F3; }
+  .calendar-wrap .lv4 {
+    font-size: 0;
+    text-align: center; }

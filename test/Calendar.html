@@ -3,22 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Calendar</title>
+    <link rel="stylesheet" href="../css/common.css"/>
+    <link rel="stylesheet" href="../css/calendar.css"/>
 </head>
 <body>
     <div class="calendar-wrap">
-        <ul class="calendar-week">
-            <li class="sun"></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li class="sat"></li>
-        </ul>
-        <ul class="calendar-date">
+        <div class="calendar-header">
+            <button class="prev">←</button>
+            <button class="next">→</button>
+            <div class="title">2016/11</div>
 
-        </ul>
+        </div>
+        <div class="calendar-body">
+            <div class="lv4 calendar-lv">
+                <ul class="calendar-week"></ul>
+                <ul class="calendar-date"></ul>
+            </div>
+        </div>
+
     </div>
 
+    <script src="../js/jq/jquery.js"></script>
+    <script src="../js/calendar.js"></script>
 </body>
 </html>
