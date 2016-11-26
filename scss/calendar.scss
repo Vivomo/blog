@@ -40,6 +40,10 @@ $calendarWidth: 700px;
                 cursor: not-allowed;
             }
         }
+        .title {
+            margin: 0 120px;
+            cursor: pointer;
+        }
     }
 
     .calendar-week {

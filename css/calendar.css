@@ -24,6 +24,9 @@
       .calendar-wrap .calendar-header .prev[disabled], .calendar-wrap .calendar-header .next[disabled] {
         color: #ccc;
         cursor: not-allowed; }
+    .calendar-wrap .calendar-header .title {
+      margin: 0 120px;
+      cursor: pointer; }
   .calendar-wrap .calendar-week li {
     display: inline-block;
     font-size: 20px;
