@@ -86,9 +86,20 @@
         }
     };
 
+    for (var i = 0; i < 27; i++) {
+        var item = {
+            index : i,
+            x : i % 3 * l,
+            y : ~~(i % 9 / 3) * l,
+            z : ~~(i / 9) * l
+        };
+        cubes.push(item);
+        initCube(item);
+    }
+
     var vm = avalon.define({
         $id: 'cube',
-        cubes: [],
+        cubes: cubes,
         up : up,
         bottom : bottom,
         left : left,
@@ -154,16 +165,7 @@
     });
     avalon.scan();
 //    vm.cubes = cubes;
-    for (var i = 0; i < 27; i++) {
-        var item = {
-            index : i,
-            x : i % 3 * l,
-            y : ~~(i % 9 / 3) * l,
-            z : ~~(i / 9) * l
-        };
-        vm.cubes.push(item);
-        initCube(item);
-    }
+
 
     var arr = document.querySelectorAll('.cubes');
 

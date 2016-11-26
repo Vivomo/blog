@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+
+<input type="text" id="n1"/> +
+<input type="text" id="n2"/> =
+<input type="text" id="sum"/>
+<script>
+
+    var n1 = document.querySelector('#n1');
+    var n2 = document.querySelector('#n2');
+    var sum = document.querySelector('#sum');
+    var o = {
+        set n1(num){
+            this._n1 = num;
+            this.sum = this.n1 + this.n2;
+            n1.value = num;
+        },
+        get n1() {
+            return this._n1 || 0;
+        },
+        set n2(num) {
+            this._n2 = num;
+            this.sum = this.n1 + this.n2;
+            n2.value = num
+        },
+        get n2() {
+            return this._n2 || 0;
+        },
+        set sum(num){
+            this._sum = num;
+            sum.value = num;
+        },
+        get sum(){
+            return this._sum;
+        }
+    }
+
+</script>
+</body>
+</html>
