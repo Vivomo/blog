@@ -3,24 +3,23 @@
  */
 
 ;(function () {
-    var reg = /\s*(\w+)\s*(\|\s*(\w+)(\((.*)\))?)?/;
+    var reg = /\s*(\w+)\s*(?:\|\s*(\w+)(?:\((.*)\))?)?/;
     var vt = window.vTmpl = {
         render : function (str, obj) {
+            if (str.nodeType) {
+                return str.innerHTML = vt.render(str.innerHTML, obj);
+            }
             if (Array.isArray(obj)) {
                 return obj.map(function (item) {
                     return vt.render(str, item)
                 }).join('');
             } else if(obj && (typeof obj == 'object')) {
                 str = str.replace(/\{\{(.+?)}}/g, function (s, $1) {
-                    /**
-                     *  eg. $1 = a | b("YY", 2) => ["a | b("YY", 2)", "a", "| b("YY", 2)", "b", "("YY", 2)", ""YY", 2"]
-                     *  eg. $1 = a | b() => ["a | b()", "a", "| b()", "b", "()", ""]
-                     *  eg. $1 = a | b  => ["a | b", "a", "| b", "b", undefined, undefined]
-                     */
+
                     var result = reg.exec($1);
-                    var filter = result[3];
+                    var filter = result[2];
                     var key = result[1];
-                    var args = result[5];
+                    var args = result[3];
                     if (key in obj) {
                         if (filter) {
                             if (vt.filters[filter]) {

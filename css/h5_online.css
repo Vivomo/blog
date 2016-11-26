@@ -253,7 +253,7 @@ body {
       top: 0;
       width: 64px;
       height: 100%;
-      background: url("../img/h5//runner.png") no-repeat center; }
+      background: url("http://f.saihuitong.com/h5/resource/topic/runner.png") no-repeat center; }
     .section .runner .r1 {
       left: 0;
       opacity: 0.2; }
@@ -447,7 +447,7 @@ body {
     font-size: 40px;
     line-height: 72px;
     text-align: center;
-    background: url("../img/h5/dialog_bg.png") no-repeat center; }
+    background: url("http://f.saihuitong.com/h5/resource/topic/dialog_bg.png") no-repeat center; }
   .section.s4 .circle {
     position: absolute;
     -webkit-animation: rotate 4s infinite;
@@ -468,7 +468,7 @@ body {
     box-sizing: border-box;
     top: 204px;
     height: 356px;
-    background: url("../img/h5/console_bg.png") no-repeat center; }
+    background: url("http://f.saihuitong.com/h5/resource/topic/console_bg.png") no-repeat center; }
   .section.s4 .apply-wrap {
     position: absolute;
     bottom: -40%;
@@ -497,13 +497,13 @@ body {
       box-shadow: 6px 0 20px #000 inset; }
 
 .bg1 {
-  background: #000 url("../img/h5/bg1.jpg") no-repeat center/100% 100%; }
+  background: #000 url("http://f.saihuitong.com/h5/resource/topic/bg1.jpg") no-repeat center/100% 100%; }
 
 .bg2 {
-  background: #000 url("../img/h5/bg2.jpg") no-repeat center/100% 100%; }
+  background: #000 url("http://f.saihuitong.com/h5/resource/topic/bg2.jpg") no-repeat center/100% 100%; }
 
 .bg3 {
-  background: #000 url("../img/h5/bg3.jpg") no-repeat center/100% 100%; }
+  background: #000 url("http://f.saihuitong.com/h5/resource/topic/bg3.jpg") no-repeat center/100% 100%; }
 
 @-webkit-keyframes twinkled {
   0% {

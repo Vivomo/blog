@@ -2308,7 +2308,7 @@ function scanTag(elem, vmodels, node) {
 var rhasHtml = /\|\s*html\s*/,
         r11a = /\|\|/g,
         rlt = /&lt;/g,
-        rgt = /&gt;/g
+        rgt = /&gt;/g,
         rstringLiteral  = /(['"])(\\\1|.)+?\1/g
 function getToken(value) {
     if (value.indexOf("|") > 0) {
@@ -5240,6 +5240,7 @@ new function () {// jshint ignore:line
         var supportLoad = "onload" in node
         var onEvent = supportLoad ? "onload" : "onreadystatechange"
         function onload() {
+            //IE7 及以下 字符串不能用下标取字符
             if (!"1"[0] && !timeID) {
                 return timeID = setTimeout(onload, 150)
             }

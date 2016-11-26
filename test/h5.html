@@ -21,6 +21,25 @@
     </script>
 </head>
 <body>
+    <div id="loading-wrap">
+        <svg viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g id="circle" class="g-circles g-circles--v3">
+                <circle id="12" transform="translate(35, 16.698730) rotate(-30) translate(-35, -16.698730) " cx="35" cy="16.6987298" r="10"></circle>
+                <circle id="11" transform="translate(16.698730, 35) rotate(-60) translate(-16.698730, -35) " cx="16.6987298" cy="35" r="10"></circle>
+                <circle id="10" transform="translate(10, 60) rotate(-90) translate(-10, -60) " cx="10" cy="60" r="10"></circle>
+                <circle id="9" transform="translate(16.698730, 85) rotate(-120) translate(-16.698730, -85) " cx="16.6987298" cy="85" r="10"></circle>
+                <circle id="8" transform="translate(35, 103.301270) rotate(-150) translate(-35, -103.301270) " cx="35" cy="103.30127" r="10"></circle>
+                <circle id="7" cx="60" cy="110" r="10"></circle>
+                <circle id="6" transform="translate(85, 103.301270) rotate(-30) translate(-85, -103.301270) " cx="85" cy="103.30127" r="10"></circle>
+                <circle id="5" transform="translate(103.301270, 85) rotate(-60) translate(-103.301270, -85) " cx="103.30127" cy="85" r="10"></circle>
+                <circle id="4" transform="translate(110, 60) rotate(-90) translate(-110, -60) " cx="110" cy="60" r="10"></circle>
+                <circle id="3" transform="translate(103.301270, 35) rotate(-120) translate(-103.301270, -35) " cx="103.30127" cy="35" r="10"></circle>
+                <circle id="2" transform="translate(85, 16.698730) rotate(-150) translate(-85, -16.698730) " cx="85" cy="16.6987298" r="10"></circle>
+                <circle id="1" cx="60" cy="10" r="10"></circle>
+            </g>
+        </svg>
+    </div>
+
     <div id="wrap">
         <section class="section bg1 s1">
             <img src="../img/h5/computer.gif" alt="" class="computer abs">
@@ -100,7 +119,7 @@
 
             <div class="screen2">
                 <div class="console">
-                    <div class="line1"><span class="cursor" data-word="今年奥运会马拉松记录是"></span></div>
+                    <div class="line1"><span class="cursor" data-word="今年奥运会冠军成绩是2小时8分44秒"></span></div>
                     <div class="line2"><span class="cursor" data-word="图灵的马拉松最好成绩是"></span></div>
                 </div>
 
@@ -114,16 +133,37 @@
 
                 <div id="dialog" class="dialog">
                     恭喜你! <br/>
-                    要的速度超过了 <span class="num"></span>的人
+                    摇的速度超过了<span class="num"></span>%的人
                 </div>
             </div>
 
         </section>
-        <section class="section bg3">
-            
+        <section class="section bg3 s4">
+            <div class="console1 white console">
+                <div class="line1"><span class="cursor" data-word="向计算机之父/跑者——图灵致敬！"></span></div>
+            </div>
+            <div class="console console2 white">
+                <div class="line1"><span class="cursor" data-word="首个DT+AR  RUN"></span></div>
+                <div class="line2"><span class="cursor" data-word="诚邀你参加2016云栖夜跑"></span></div>
+                <div class="line3"><span class="cursor" data-word="TechGO"></span></div>
+            </div>
+            <img src="../img/h5/circles.png" alt="" class="circle c1">
+            <img src="../img/h5/circles.png" alt="" class="circle c2">
+            <img src="../img/h5/circles.png" alt="" class="circle c3">
+
+            <div class="apply-wrap" id="apply-wrap">
+                <p class="msg">
+                    时间：10月14日<br>地点：云栖小镇
+                </p>
+                <a href="http://peinipao.cn/event?id=29101">我要去现场</a>
+                <a href="http://peinipao.cn/event?id=30642">我要线上跑</a>
+            </div>
         </section>
 
     </div>
+
+    <audio src="../src/bg.mp3" id="music-bg" loop="loop"></audio>
+    <audio src="../src/keyboard.mp3" id="music-print" loop="loop"></audio>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.8.6/jquery.fullPage.min.js"></script>
     <script src="../js/h5.js"></script>

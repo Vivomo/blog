@@ -12,8 +12,8 @@
      */
 
     var location = root.location;
-    location.searchMap = function(search){
-        search = search || location.search;
+    location.searchMap = function(){
+        var search = location.search;
         if (!search){
             return {};
         }
@@ -21,8 +21,19 @@
         var hashArr = search.replace('?','').split('&');
         var hashMap = {};
         for (var i = 0; i < hashArr.length; i++) {
-            var tempArr = hashArr[i].split('=');
-            hashMap[decodeURIComponent(tempArr[0])] = decodeURIComponent(tempArr[1]);
+            var tempArr = hashArr[i].split('='),
+                k = tempArr[0],
+                v = tempArr[1];
+            if (hashMap[k]) {
+                if (Array.isArray(hashMap[k])) {
+                    hashMap[k].push(v);
+                } else {
+                    hashMap[k] = [hashMap[k], v];
+                }
+            } else {
+                hashMap[k] = v;
+
+            }
         }
         return hashMap;
     };
@@ -30,11 +41,21 @@
         var a = document.createElement('a');
         a.href = url;
         url = a.pathname;
-        var search = [],
-            map2 = location.searchMap(a.search), k;
-        extend(map, map2);
-        for (k in map)
-            map[k] && search.push(k+'='+map[k])
+        map = extend(location.searchMap(a.search), map);
+
+        var search = [], k;
+        for (k in map) {
+            var v = map[k];
+            if (v) {
+                if (Array.isArray(v)) {
+                    for (var i = 0; i < v.length; i++ ) {
+                        search.push(k+'='+v[i]);
+                    }
+                } else {
+                    search.push(k+'='+v);
+                }
+            }
+        }
         return url + '?' + search.join('&');
     };
     location.skipUrl = function(url, map) {

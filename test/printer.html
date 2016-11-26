@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Printer</title>
+    <style>
+        body {
+            padding: 50px;
+            background-color: #444;
+        }
+
+        .console {
+            width: 1080px;
+            height: 300px;
+            margin: 0 auto;
+            background-color: #121212;
+
+        }
+
+        .console.white {
+            color: #fff; }
+        .console.white .cursor {
+            background-color: #fff; }
+
+        .cursor {
+            display: none;
+            margin-left: 12px;
+            width: 3px;
+            height: 30px;
+            background-color: #333;
+            vertical-align: middle;
+            animation: twinkled 0.5s infinite; }
+        @-webkit-keyframes twinkled {
+            0% {
+                opacity: 0.2; }
+            100% {
+                opacity: 1; } }
+        @keyframes twinkled {
+            0% {
+                opacity: 0.2; }
+            100% {
+                opacity: 1; } }
+
+    </style>
+</head>
+<body>
+    <div class="console white">
+        <span class="cursor"></span>
+    </div>
+
+    <script src="../js/printer.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>scrollbar</title>
+    <style>
+        .wrap {
+            position: relative;
+            width: 600px;
+            margin: 20px auto;
+        }
+        .scroll-wrap {
+            overflow: hidden;
+            height: 500px;
+            background-color: #ccc;
+
+        }
+
+        .scroll-content {
+            height: 400px;
+            background-color: #999;
+            opacity: 0.5;
+            border: 5px solid;
+        }
+
+        .scroll-bar-wrap {
+            display: none;
+            position: absolute;
+            width: 10px;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background-color: #ccc;
+        }
+
+        .scroll-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #999;
+            border-radius: 4px;
+        }
+        #c1 {
+            background-color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrap">
+    <ul class="scroll-wrap">
+        <li class="scroll-content"></li>
+        <li class="scroll-content"></li>
+        <li class="scroll-content" id="c1"></li>
+        <li class="scroll-content"></li>
+    </ul>
+
+    <div class="scroll-bar-wrap">
+        <div class="scroll-bar"></div>
+    </div>
+</div>
+
+<div class="wrap">
+
+    <div class="scroll-wrap" id="wrap2">
+        <div class="scroll-content"></div>
+        <div class="scroll-content"></div>
+    </div>
+    <div class="scroll-bar-wrap">
+        <div class="scroll-bar"></div>
+    </div>
+</div>
+
+<script>
+    var wrap = document.getElementById('wrap');
+    var content = document.getElementById('content');
+</script>
+<script
+        src="http://apps.bdimg.com/libs/jquery/1.11.3/jquery.js"></script>
+<!--<script src="../js/jq/jquery.js"></script>-->
+<script src="../js/scrollbar.js"></script>
+</body>
+</html>

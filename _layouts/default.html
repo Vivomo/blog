@@ -24,8 +24,8 @@
 </header>
 {{ content }}
 
-{% if page.js != '' %}
-<script src="{{site.baseurl}}/js/{{page.js}}.js"></script>
-{% endif %}
+<input type="hidden" id="data" data-baseurl="{{site.baseurl}}" data-js="{{page.js}}">
+<script src="{{site.baseurl}}/js/V.js"></script>
+<script src="{{site.baseurl}}/js/app.js"></script>
 </body>
 </html>

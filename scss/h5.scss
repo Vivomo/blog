@@ -1,3 +1,5 @@
+@import "h5-svg";
+
 $imgPath : '../img/h5/';
 @mixin css3($key, $value) {
     -webkit-#{$key}: $value;
@@ -12,14 +14,33 @@ $imgPath : '../img/h5/';
     margin: 0;
     padding: 0;
 }
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+}
+#loading-wrap {
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,1);
+
+}
 .console {
     position: absolute;
-    font-size: 40px;
-    line-height: 72px;
+    font: 40px/72px  "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
     width: 100%;
     text-align: center;
     color: #161616;
     word-break: break-all;
+    &.white {
+        color: #fff;
+
+        .cursor {
+            background-color: #fff;
+        }
+    }
 }
 .cursor {
     display: none;
@@ -28,7 +49,7 @@ $imgPath : '../img/h5/';
     height: 30px;
     background-color: #333;
     vertical-align: middle;
-    animation: cursor 0.5s infinite;
+    animation: twinkled 0.5s infinite;
 }
 .abs {
     position: absolute;
@@ -285,7 +306,6 @@ $imgPath : '../img/h5/';
                 @include css3(animation, shake 0.8s);
             }
         }
-
         .shadow {
             display: none;
             position: absolute;
@@ -298,6 +318,7 @@ $imgPath : '../img/h5/';
         }
 
         .dialog {
+            display: none;
             position: absolute;
             box-sizing: border-box;
             padding-top: 85px;
@@ -312,6 +333,67 @@ $imgPath : '../img/h5/';
 
         }
 
+    }
+
+
+    &.s4 {
+        .circle {
+            position: absolute;
+            @include css3(animation, rotate 4s infinite);
+            &.c1 {
+                top: 640px;
+                left: 50px;
+            }
+            &.c2 {
+                top: 860px;
+                left: -40px;
+            }
+            &.c3 {
+                top: 950px;
+                left: -15px;
+            }
+        }
+        .console1 {
+            top: 100px;
+        }
+        .console2 {
+            padding-top: 50px;
+            box-sizing: border-box;
+            top: 204px;
+            height: 356px;
+            background: url("#{$imgPath}console_bg.png") no-repeat center;
+        }
+        .apply-wrap {
+            position: absolute;
+            bottom: -40%;
+            right: 0;
+            padding: 0 53px 86px 0;
+            @include css3(transition, all 0.4s);
+            &.show {
+                bottom: 0;
+            }
+
+            .msg {
+                font-size: 30px;
+                text-align: center;
+                color: #fff;
+
+            }
+            a {
+                display: block;
+                width: 300px;
+                height: 100px;
+                font-size: 30px;
+                line-height: 100px;
+                text-align: center;
+                color: #fff;
+                background-color: #008aff;
+                text-decoration: none;
+                margin-top: 35px;
+                border-radius: 50px;
+                box-shadow: 6px 0 20px #000 inset;
+            }
+        }
     }
 }
 .bg1 {
@@ -339,29 +421,37 @@ $imgPath : '../img/h5/';
         opacity: 1;
     }
 }
-
-
+@-webkit-keyframes flowerDrop {
+    0% {
+        @include css3(transform, translate(0, -200px) rotate(0deg));
+    }
+    100% {
+        @include css3(transform, translate(40px, 2000px) rotate(220deg));
+    }
+}
 @keyframes flowerDrop {
     0% {
         @include css3(transform, translate(0, -200px) rotate(0deg));
     }
-    //20% {
-    //    @include css3(transform, translate(20px, 300px) rotate(20deg));
-    //}
-    //40% {
-    //    @include css3(transform, translate(-30px, 700px) rotate(40deg));
-    //}
-    //60% {
-    //    @include css3(transform, translate(-10px, 900px) rotate(80deg));
-    //}
-    //80% {
-    //    @include css3(transform, translate(40px, 1100px) rotate(150deg));
-    //}
     100% {
         @include css3(transform, translate(40px, 2000px) rotate(220deg));
     }
 }
 
+@-webkit-keyframes shake {
+    0% {
+        @include css3(transform, rotate(0deg));
+    }
+    25% {
+        @include css3(transform, rotate(30deg));
+    }
+    75% {
+        @include css3(transform, rotate(-30deg));
+    }
+    100% {
+        @include css3(transform, rotate(0deg));
+    }
+}
 @keyframes shake {
     0% {
         @include css3(transform, rotate(0deg));
@@ -374,5 +464,21 @@ $imgPath : '../img/h5/';
     }
     100% {
         @include css3(transform, rotate(0deg));
+    }
+}
+@-webkit-keyframes rotate {
+    0% {
+        @include css3(transform, rotate(0deg));
+    }
+    100% {
+        @include css3(transform, rotate(360deg));
+    }
+}
+@keyframes rotate {
+    0% {
+        @include css3(transform, rotate(0deg));
+    }
+    100% {
+        @include css3(transform, rotate(360deg));
     }
 }

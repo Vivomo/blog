@@ -1,0 +1,38 @@
+.content, #background table .food:before, #snake li:before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  bottom: 10px; }
+
+#background {
+  position: relative;
+  margin: 100px auto;
+  width: 660px;
+  height: 660px; }
+  #background table td {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #1EEDFF;
+    box-sizing: border-box; }
+  #background table .food:before {
+    background: #4EA9F3; }
+
+#snake li {
+  list-style: none;
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  box-sizing: border-box; }
+  #snake li:before {
+    background: #ccc; }
+  #snake li:first-child {
+    animation: flash 0.5s infinite; }
+
+@keyframes flash {
+  0% {
+    opacity: 0.2; }
+  100% {
+    opacity: 1; } }
