@@ -4,3 +4,29 @@ title: 日历
 css: calendar
 js: calendar
 ---
+
+<div class="calendar-wrap">
+    <div class="calendar-header">
+        <button class="prev">←</button>
+        <button class="next">→</button>
+        <div class="title"></div>
+    </div>
+    <div class="calendar-body">
+        <div class="lv3 calendar-lv">
+            <ul class="calendar-week"></ul>
+            <ul class="calendar-date"></ul>
+        </div>
+        <div class="lv2 calendar-lv">
+            <ul class="calendar-month"></ul>
+        </div>
+        <div class="lv1 calendar-lv">
+            <ul class="calendar-year"></ul>
+        </div>
+    </div>
+</div>
+<script src="{{site.baseurl}}/js/jq/jquery.js"></script>
+<script>
+    window.onload = function () {
+        new Calendar
+    }
+</script>
