@@ -67,16 +67,17 @@ $calendarWidth: 700px;
             height: 80px;
             border: $border1;
         }
+
+    }
+    .calendar-lv {
+        font-size: 0;
+        text-align: center;
         .prev, .next {
             color: $theme2;
             @include opacity(0.5);
         }
     }
-    .calendar-lv {
-        font-size: 0;
-        text-align: center;
-    }
-    .calendar-month {
+    .calendar-month , .calendar-year{
         li {
             width: 25%;
             display: inline-block;

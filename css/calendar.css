@@ -41,18 +41,19 @@
     width: 100px;
     height: 80px;
     border: 1px solid #1EEDFF; }
-  .calendar-wrap .calendar-date .prev, .calendar-wrap .calendar-date .next {
-    color: #4EA9F3;
-    opacity: 0.5;
-    filter: alpha(opacity=50); }
   .calendar-wrap .calendar-lv {
     font-size: 0;
     text-align: center; }
-  .calendar-wrap .calendar-month li {
+    .calendar-wrap .calendar-lv .prev, .calendar-wrap .calendar-lv .next {
+      color: #4EA9F3;
+      opacity: 0.5;
+      filter: alpha(opacity=50); }
+  .calendar-wrap .calendar-month li, .calendar-wrap .calendar-year li {
     width: 25%;
     display: inline-block;
     font-size: 36px;
     font-weight: bold;
     height: 160px;
     line-height: 160px;
-    border: 1px solid #1EEDFF; }
+    border: 1px solid #1EEDFF;
+    cursor: pointer; }

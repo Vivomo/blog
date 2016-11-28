@@ -34,6 +34,12 @@
                 this.refresh();
             }
         },
+        setDecadeYear : function (year, noRefresh) {
+            this.decadeStart = year - year % 10;
+            if (noRefresh !== false) {
+                this.refresh();
+            }
+        },
         setYear : function (year, noRefresh) {
             this.year = year;
             if (noRefresh !== false) {
@@ -49,6 +55,7 @@
                 case 1:
                     break;
                 case 2:
+                    this.setDecadeYear(this.decadeStart - 10);
                     break;
                 case 3:
                     this.setYear(this.year - 1);
@@ -67,6 +74,7 @@
                 case 1:
                     break;
                 case 2:
+                    this.setDecadeYear(this.decadeStart + 10);
                     break;
                 case 3:
                     this.setYear(this.year + 1);
@@ -86,6 +94,8 @@
                 case 1:
                     break;
                 case 2:
+                    title = this.decadeStart + '-' + (this.decadeStart + 9);
+                    this.viewDecadeYear();
                     break;
                 case 3:
                     title = this.year;
@@ -113,7 +123,15 @@
             });
 
             this.$title.click(function () {
+                if (calendar.viewModel == 3) {
+                    calendar.setDecadeYear(calendar.year);
+                }
                 calendar.setViewModel(calendar.viewModel - 1);
+            });
+
+            $elem.find('.calendar-year').on('click', 'li', function () {
+                calendar.setYear($(this).data('year'), false);
+                calendar.setViewModel(3);
             });
 
         },
@@ -144,14 +162,27 @@
             var html = this.createHTMLOfYear();
             this.$elem.find('.calendar-month').html(html);
         },
+        viewDecadeYear : function () {
+            var html = this.createHTMLOfDecadeYear(this.decadeStart);
+            this.$elem.find('.calendar-year').html(html);
+        },
         initDate : function(){
             var date = this.date,
                 year = this.year = date.getFullYear(),
                 month = this.month = date.getMonth(),
                 day = this.day = date.getDate();
 
+            this.decadeStart = year - year % 10;
             this.viewMonth();
             this.createCurrentDateStyle(year, month, day);
+
+        },
+        createHTMLOfDecadeYear : function (decadeStart) {
+            var html = '<li class="prev" data-year="'+(decadeStart-1)+'">'+(decadeStart-1)+'</li>';
+            for (var i = decadeStart; i < decadeStart + 10; i++) {
+                html += '<li data-year="'+i+'">'+i+'</li>';
+            }
+            return html + '<li class="next" data-year="'+(decadeStart+10)+'">'+(decadeStart+10)+'</li>';
 
         },
         createHTMLOfYear : function () {
