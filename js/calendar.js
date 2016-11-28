@@ -173,7 +173,7 @@
                 day = this.day = date.getDate();
 
             this.decadeStart = year - year % 10;
-            this.viewMonth();
+            this.refresh();
             this.createCurrentDateStyle(year, month, day);
 
         },
