@@ -232,7 +232,7 @@
             }
         },
         createCurrentDateStyle : function (year, month, day) {
-            $('head').append(todayStyleTemplate.replace('className', '.date-'+year+'-'+month+'-'+day));
+            $('head').append(todayStyleTemplate.replace('className', 'date-'+year+'-'+month+'-'+day));
         },
         createDateHtml : function (option) {
             var className = (option.className || '') + ' w' + option.w +
