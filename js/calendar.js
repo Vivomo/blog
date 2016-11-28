@@ -161,6 +161,7 @@
         },
         /**
          * 蔡勒公式 公式有所改动, 最后的-1 改为了+6 避免负数
+         * 蔡勒公式中1月用13表示，2月用14表示, 同时年-1
          * https://zh.wikipedia.org/wiki/%E8%94%A1%E5%8B%92%E5%85%AC%E5%BC%8F
          * @param year
          * @param month
@@ -168,9 +169,13 @@
          * @returns {number}
          */
         getWeek : function(year, month, day) {
+            if (month < 3) {
+                month += 12;
+                year -= 1;
+            }
             var century = ~~ (year / 100);
             year = year % 100;
-            return (year + ~~(year/4) + ~~(century/4) - 2 * century + ~~(26 * (month + 1) / 10) + day + 6) % 7;
+            return (year + ~~(year/4) + ~~(century/4) - 2 * century + ~~(26 * (month + 1) / 10) + day - 1) % 7;
         },
         getTotalDayOFMonth : function(year, month) {
             switch (month+1) {
