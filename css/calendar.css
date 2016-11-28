@@ -42,7 +42,9 @@
     height: 80px;
     border: 1px solid #1EEDFF; }
   .calendar-wrap .calendar-date .prev, .calendar-wrap .calendar-date .next {
-    color: #4EA9F3; }
+    color: #4EA9F3;
+    opacity: 0.5;
+    filter: alpha(opacity=50); }
   .calendar-wrap .lv4 {
     font-size: 0;
     text-align: center; }

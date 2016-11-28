@@ -18,16 +18,73 @@
         end : 2099,
         language : 'zh',
         date : new Date(),
-        lv : 4,
+        viewModel : 4, // 世纪, 10年, 年, 月
         selector : '.calendar-wrap',
         prev : function () {
 
+            switch(this.viewModel) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    if (this.month === 0) {
+                        this.year -= 1;
+                    }
+                    this.month = (this.month + 11) % 12;
+                    this.viewMonth();
+                    this.setTitle();
+                    break;
+            }
         },
         next : function () {
+            switch(this.viewModel) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    if (this.month === 11) {
+                        this.year += 1;
+                    }
+                    this.month = (this.month + 1) % 12;
+                    this.viewMonth();
+                    this.setTitle();
+                    break;
+            }
+        },
+        setTitle : function () {
+            switch(this.viewModel) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    this.$title.html(this.year + '/' + (this.month + 1));
+                    break;
+            }
+        },
+        refresh : function () {
 
         },
         initElem : function(){
-            this.$elem = $(this.selector);
+            var $elem = this.$elem = $(this.selector);
+            this.$title = $elem.find('.title');
+            var calendar = this;
+            $elem.find('.prev').click(function () {
+                if (!this.disabled)
+                    calendar.prev();
+            });
+            $elem.find('.next').click(function () {
+                if (!this.disabled)
+                    calendar.next();
+            });
         },
         initWeek : function(){
             var weekHTML  = language[this.language].week.map(function (item, index) {
@@ -35,14 +92,19 @@
             }).join('');
             this.$elem.find('.calendar-week').html(weekHTML);
         },
+        viewMonth : function (year, month) {
+            year = year || this.year;
+            month = month || this.month;
+            var html = this.createHTMLOfMonth(year, month);
+            this.$elem.find('.calendar-date').html(html);
+        },
         initDate : function(){
             var date = this.date,
                 year = this.year = date.getFullYear(),
                 month = this.month = date.getMonth(),
-                day = this.day = date.getDate(),
-                html = this.createHTMLOfMonth(year, month);
+                day = this.day = date.getDate();
 
-            this.$elem.find('.calendar-date').html(html);
+            this.viewMonth();
             this.createCurrentDateStyle(year, month, day);
 
         },
@@ -60,13 +122,14 @@
                 var prevMonthLastDay = this.getTotalDayOFMonth(yearOfPrevMonth, prevMonth);
 
                 var html = '', w = 0, i;
-                for (i = 0; i < weekOFMonth1st; i++) {
+                var prevPatchDay = weekOFMonth1st || 7;
+                for (i = 0; i < prevPatchDay; i++) {
                     html += this.createDateHtml({
                         className : 'prev',
                         w : i,
                         year : yearOfPrevMonth,
                         month : (month + 11) % 12,
-                        date : prevMonthLastDay - weekOFMonth1st + i
+                        date : prevMonthLastDay - prevPatchDay + i
                     });
                     w++;
                 }
@@ -79,8 +142,8 @@
                     });
                 }
 
-                var patchDay = 6 - w % 7 + 1 + (w < 35 ? 7 : 0);
-                for (i = 1; i <= patchDay; i++) {
+                var nextPatchDay = 6 - w % 7 + 1 + (w < 35 ? 7 : 0);
+                for (i = 1; i <= nextPatchDay; i++) {
                     html += this.createDateHtml({
                         className : 'next',
                         w : w++ % 7,
@@ -97,7 +160,7 @@
             $('head').append('<style id="currentDay-style">'+style+'</style>');
         },
         /**
-         * 蔡勒公式
+         * 蔡勒公式 公式有所改动, 最后的-1 改为了+6 避免负数
          * https://zh.wikipedia.org/wiki/%E8%94%A1%E5%8B%92%E5%85%AC%E5%BC%8F
          * @param year
          * @param month
@@ -107,7 +170,7 @@
         getWeek : function(year, month, day) {
             var century = ~~ (year / 100);
             year = year % 100;
-            return (year + ~~(year/4) + ~~(century/4) - 2 * century + ~~(26 * (month + 1) / 10) + day - 1) % 7;
+            return (year + ~~(year/4) + ~~(century/4) - 2 * century + ~~(26 * (month + 1) / 10) + day + 6) % 7;
         },
         getTotalDayOFMonth : function(year, month) {
             switch (month+1) {

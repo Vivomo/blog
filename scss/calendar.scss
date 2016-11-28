@@ -69,6 +69,7 @@ $calendarWidth: 700px;
         }
         .prev, .next {
             color: $theme2;
+            @include opacity(0.5);
         }
     }
     .lv4 {
