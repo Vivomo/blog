@@ -1,12 +1,16 @@
 (function () {
     var language = {
         zh : {
-            week : ['日', '一', '二', '三', '四', '五', '六']
+            week : ['日', '一', '二', '三', '四', '五', '六'],
+            month : ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
         },
         en : {
-            week : ['Sun', 'Mon', 'Tue', 'Wen', 'Tur', 'Fri', 'Sat']
+            week : ['Sun', 'Mon', 'Tue', 'Wen', 'Tur', 'Fri', 'Sat'],
+            month : ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.']
         }
     };
+
+    var monthHTML = '';
     var Calendar = window.Calendar = function (option) {
         $.extend(this, option);
         this.init();
@@ -20,22 +24,39 @@
         date : new Date(),
         viewModel : 4, // 世纪, 10年, 年, 月
         selector : '.calendar-wrap',
-        prev : function () {
 
+        setViewModel : function (num) {
+            if (num > 0 && num < 5) {
+                this.viewModel = num;
+                this.$elem.find('.lv'+num).show().siblings().hide();
+                this.refresh();
+            }
+        },
+        setYear : function (year, noRefresh) {
+            this.year = year;
+            if (noRefresh !== false) {
+                this.refresh();
+            }
+        },
+        setMonth : function (month) {
+            this.month = month;
+            this.refresh();
+        },
+        prev : function () {
             switch(this.viewModel) {
                 case 1:
                     break;
                 case 2:
                     break;
                 case 3:
+                    this.setYear(this.year - 1);
                     break;
                 case 4:
                     if (this.month === 0) {
-                        this.year -= 1;
+                        this.setYear(this.year - 1, false);
                     }
-                    this.month = (this.month + 11) % 12;
+                    this.setMonth((this.month + 11) % 12);
                     this.viewMonth();
-                    this.setTitle();
                     break;
             }
         },
@@ -46,31 +67,34 @@
                 case 2:
                     break;
                 case 3:
+                    this.setYear(this.year + 1);
                     break;
                 case 4:
                     if (this.month === 11) {
-                        this.year += 1;
+                        this.setYear(this.year + 1, false);
                     }
-                    this.month = (this.month + 1) % 12;
-                    this.viewMonth();
-                    this.setTitle();
+                    this.setMonth( (this.month + 1) % 12);
                     break;
             }
         },
-        setTitle : function () {
+
+        refresh : function () {
+            var title = '';
             switch(this.viewModel) {
                 case 1:
                     break;
                 case 2:
                     break;
                 case 3:
+                    title = this.year;
+                    this.viewYear();
                     break;
                 case 4:
-                    this.$title.html(this.year + '/' + (this.month + 1));
+                    title = this.year + '/' + (this.month + 1);
+                    this.viewMonth();
                     break;
             }
-        },
-        refresh : function () {
+            this.$title.html(title);
 
         },
         initElem : function(){
@@ -85,6 +109,23 @@
                 if (!this.disabled)
                     calendar.next();
             });
+
+            this.$title.click(function () {
+                calendar.setViewModel(calendar.viewModel - 1);
+            });
+
+
+        },
+        initMonth : function () {
+            monthHTML = language[this.language].month.map(function (month) {
+                return '<li>'+month+'</li>'
+            }).join('');
+
+            var calendar = this;
+            calendar.$elem.find('.calendar-month').on('click', 'li', function () {
+                calendar.setMonth($(this).index());
+                calendar.setViewModel(4);
+            });
         },
         initWeek : function(){
             var weekHTML  = language[this.language].week.map(function (item, index) {
@@ -98,6 +139,10 @@
             var html = this.createHTMLOfMonth(year, month);
             this.$elem.find('.calendar-date').html(html);
         },
+        viewYear : function () {
+            var html = this.createHTMLOfYear();
+            this.$elem.find('.calendar-month').html(html);
+        },
         initDate : function(){
             var date = this.date,
                 year = this.year = date.getFullYear(),
@@ -107,6 +152,12 @@
             this.viewMonth();
             this.createCurrentDateStyle(year, month, day);
 
+        },
+        createHTMLOfYear : function () {
+            if (!monthHTML) {
+                this.initMonth();
+            }
+            return monthHTML;
         },
         createHTMLOfMonth : function (year, month) {
             var key = year+'-'+month;
@@ -160,8 +211,8 @@
             $('head').append('<style id="currentDay-style">'+style+'</style>');
         },
         /**
-         * 蔡勒公式 公式有所改动, 最后的-1 改为了+6 避免负数
          * 蔡勒公式中1月用13表示，2月用14表示, 同时年-1
+         * (不直接new Date.getDay 为了性能)
          * https://zh.wikipedia.org/wiki/%E8%94%A1%E5%8B%92%E5%85%AC%E5%BC%8F
          * @param year
          * @param month
@@ -175,7 +226,8 @@
             }
             var century = ~~ (year / 100);
             year = year % 100;
-            return (year + ~~(year/4) + ~~(century/4) - 2 * century + ~~(26 * (month + 1) / 10) + day - 1) % 7;
+            return Math.abs( (year + ~~(year/4) + ~~(century/4) - 2 * century + ~~(26 * (month + 1) / 10) + day - 1)
+                % 7);
         },
         getTotalDayOFMonth : function(year, month) {
             switch (month+1) {
