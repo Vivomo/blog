@@ -24,7 +24,7 @@
         end : 2099,
         language : 'zh',
         date : new Date(),
-        viewModel : 4, // 世纪, 10年, 年, 月
+        viewModel : 3, // 年代, 年, 月
         selector : '.calendar-wrap',
 
         setViewModel : function (num) {
@@ -53,14 +53,12 @@
         prev : function () {
             switch(this.viewModel) {
                 case 1:
-                    break;
-                case 2:
                     this.setDecadeYear(this.decadeStart - 10);
                     break;
-                case 3:
+                case 2:
                     this.setYear(this.year - 1);
                     break;
-                case 4:
+                case 3:
                     if (this.month === 0) {
                         this.setYear(this.year - 1, false);
                     }
@@ -72,14 +70,12 @@
         next : function () {
             switch(this.viewModel) {
                 case 1:
-                    break;
-                case 2:
                     this.setDecadeYear(this.decadeStart + 10);
                     break;
-                case 3:
+                case 2:
                     this.setYear(this.year + 1);
                     break;
-                case 4:
+                case 3:
                     if (this.month === 11) {
                         this.setYear(this.year + 1, false);
                     }
@@ -92,16 +88,14 @@
             var title = '';
             switch(this.viewModel) {
                 case 1:
-                    break;
-                case 2:
                     title = this.decadeStart + '-' + (this.decadeStart + 9);
                     this.viewDecadeYear();
                     break;
-                case 3:
+                case 2:
                     title = this.year;
                     this.viewYear();
                     break;
-                case 4:
+                case 3:
                     title = this.year + '/' + (this.month + 1);
                     this.viewMonth();
                     break;
@@ -123,7 +117,7 @@
             });
 
             this.$title.click(function () {
-                if (calendar.viewModel == 3) {
+                if (calendar.viewModel == 2) {
                     calendar.setDecadeYear(calendar.year);
                 }
                 calendar.setViewModel(calendar.viewModel - 1);
@@ -131,7 +125,7 @@
 
             $elem.find('.calendar-year').on('click', 'li', function () {
                 calendar.setYear($(this).data('year'), false);
-                calendar.setViewModel(3);
+                calendar.setViewModel(2);
             });
 
         },
@@ -143,7 +137,7 @@
             var calendar = this;
             calendar.$elem.find('.calendar-month').on('click', 'li', function () {
                 calendar.setMonth($(this).index());
-                calendar.setViewModel(4);
+                calendar.setViewModel(3);
             });
         },
         initWeek : function(){
