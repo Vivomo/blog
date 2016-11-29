@@ -111,6 +111,7 @@
         initElem : function(){
             var $elem = this.$elem = $(this.selector);
             this.$title = $elem.find('.title');
+            this.$dateWraper = $elem.find('.calendar-date')
             var calendar = this;
             $elem.find('.prev').click(function () {
                 if (!this.disabled)
@@ -133,13 +134,17 @@
                 calendar.setViewModel(Model.YEAR);
             });
 
+            this.$dateWraper.on('click', 'li', function () {
+                calendar.onSelectDate && calendar.onSelectDate($(this));
+            })
+
         },
         viewMonth : function () {
             var year = this.year,
                 month = this.month;
             var key = year+'-'+month;
             var html = this.cache[key] || createHTMLOfMonth(year, month, this.cache);
-            this.$elem.find('.calendar-date').html(html);
+            this.$dateWraper.html(html);
             this.onChangeMonth && this.onChangeMonth(year, month);
         },
         viewYear : function () {
@@ -150,15 +155,17 @@
             var html = createHTMLOfDecadeYear(this.decadeStart);
             this.$elem.find('.calendar-year').html(html);
         },
+        updateCache : function () {
+            this.cache[this.year + '-' + this.month] = this.$dateWraper.html();
+        },
         initDate : function(){
             var date = this.date,
-                year = this.year = date.getFullYear(),
-                month = this.month = date.getMonth(),
-                day = this.day = date.getDate();
+                year = this.year = date.getFullYear();
 
+            this.month = date.getMonth();
+            this.day = date.getDate();
             this.decadeStart = year - year % 10;
             this.refresh();
-
         },
         init : function () {
             this.cache = {};
@@ -246,7 +253,7 @@
     function createDateHtml(option) {
         var className = (option.className || '') + ' w' + option.w +
             ' date-'+option.year+'-'+option.month+'-'+option.date;
-        return '<li class="'+className+'"><div class="date">'+option.date+'</div></li>'
+        return '<li class="'+className+'" data-day="'+option.date+'"><div class="date">'+option.date+'</div></li>';
     }
 
      function getTotalDayOFMonth(year, month) {

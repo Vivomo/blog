@@ -34,7 +34,12 @@
     <script src="../js/calendar.js"></script>
     <script>
         new Calendar({
-
+            onChangeMonth : function () {
+                console.log(arguments);
+            },
+            onSelectDate : function ($date) {
+                console.log($date.data());
+            }
         });
     </script>
 </body>
