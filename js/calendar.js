@@ -134,12 +134,13 @@
             });
 
         },
-        viewMonth : function (year, month) {
-            year = year || this.year;
-            month = month || this.month;
+        viewMonth : function () {
+            var year = this.year,
+                month = this.month;
             var key = year+'-'+month;
             var html = this.cache[key] || createHTMLOfMonth(year, month, this.cache);
             this.$elem.find('.calendar-date').html(html);
+            this.onChangeMonth && this.onChangeMonth(year, month);
         },
         viewYear : function () {
             var html = monthHTML || createHTMLOfYear(this);
@@ -169,6 +170,7 @@
     };
 
     function createCurrentDateStyle() {
+        var date = new Date();
         $('head').append(todayStyleTemplate.replace('className', 'date-'+date.getFullYear()+'-'+date.getMonth()+
             '-'+date.getDate()));
     }
@@ -182,14 +184,13 @@
     }
 
     function createHTMLOfYear(calendar) {
-        monthHTML = language[calendar.language].month.map(function (month) {
-            return '<li>'+month+'</li>'
-        }).join('');
-
         calendar.$elem.find('.calendar-month').on('click', 'li', function () {
             calendar.setMonth($(this).index());
             calendar.setViewModel(Model.MONTH);
         });
+        return (monthHTML = language[calendar.language].month.map(function (month) {
+            return '<li>'+month+'</li>'
+        }).join(''));
     }
 
     function createHTMLOfMonth(year, month, cache) {
