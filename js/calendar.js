@@ -134,23 +134,6 @@
             });
 
         },
-        initMonth : function () {
-            monthHTML = language[this.language].month.map(function (month) {
-                return '<li>'+month+'</li>'
-            }).join('');
-
-            var calendar = this;
-            calendar.$elem.find('.calendar-month').on('click', 'li', function () {
-                calendar.setMonth($(this).index());
-                calendar.setViewModel(Model.MONTH);
-            });
-        },
-        initWeek : function(){
-            var weekHTML  = language[this.language].week.map(function (item, index) {
-                return '<li class="w'+index+'">'+item+'</li>'
-            }).join('');
-            this.$elem.find('.calendar-week').html(weekHTML);
-        },
         viewMonth : function (year, month) {
             year = year || this.year;
             month = month || this.month;
@@ -159,7 +142,7 @@
             this.$elem.find('.calendar-date').html(html);
         },
         viewYear : function () {
-            var html = this.createHTMLOfYear();
+            var html = monthHTML || createHTMLOfYear(this);
             this.$elem.find('.calendar-month').html(html);
         },
         viewDecadeYear : function () {
@@ -174,25 +157,20 @@
 
             this.decadeStart = year - year % 10;
             this.refresh();
-            createCurrentDateStyle(year, month, day);
 
-        },
-        createHTMLOfYear : function () {
-            if (!monthHTML) {
-                this.initMonth();
-            }
-            return monthHTML;
         },
         init : function () {
             this.cache = {};
             this.initElem();
-            this.initWeek();
+            createHTMLOfWeek(this);
             this.initDate();
+            createCurrentDateStyle();
         }
     };
 
-    function createCurrentDateStyle(year, month, day) {
-        $('head').append(todayStyleTemplate.replace('className', 'date-'+year+'-'+month+'-'+day));
+    function createCurrentDateStyle() {
+        $('head').append(todayStyleTemplate.replace('className', 'date-'+date.getFullYear()+'-'+date.getMonth()+
+            '-'+date.getDate()));
     }
 
     function createHTMLOfDecadeYear(decadeStart) {
@@ -201,6 +179,17 @@
             html += '<li data-year="'+i+'">'+i+'</li>';
         }
         return html + '<li class="next" data-year="'+(decadeStart+10)+'">'+(decadeStart+10)+'</li>';
+    }
+
+    function createHTMLOfYear(calendar) {
+        monthHTML = language[calendar.language].month.map(function (month) {
+            return '<li>'+month+'</li>'
+        }).join('');
+
+        calendar.$elem.find('.calendar-month').on('click', 'li', function () {
+            calendar.setMonth($(this).index());
+            calendar.setViewModel(Model.MONTH);
+        });
     }
 
     function createHTMLOfMonth(year, month, cache) {
@@ -244,6 +233,13 @@
             });
         }
         return (cache[year + '-' + month] = html);
+    }
+
+    function createHTMLOfWeek(calendar){
+        var weekHTML  = language[calendar.language].week.map(function (item, index) {
+            return '<li class="w'+index+'">'+item+'</li>'
+        }).join('');
+        calendar.$elem.find('.calendar-week').html(weekHTML);
     }
 
     function createDateHtml(option) {
