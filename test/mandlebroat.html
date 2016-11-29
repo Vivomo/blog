@@ -69,8 +69,9 @@
     }
 
     var canvas = document.createElement('canvas');
-    canvas.width = 1080;
-    canvas.height = 800;
+    canvas.style.cssText='display:block; margin: 40px auto';
+    canvas.height = Math.max(960, document.documentElement.clientHeight) - 100;
+    canvas.width= ~~ (canvas.height / 0.75);
 
     document.body.insertBefore(canvas, document.body.childNodes[0]);
 
