@@ -48,14 +48,14 @@
                     var c = 3 * Math.log(i) / Math.log(iterations - 1.0);
 
                     if (c < 1) {
-                        pix[ppos] = 255 * c;
+                        pix[ppos] = 0;
                         pix[ppos + 1] = 0;
-                        pix[ppos + 2] = 0;
+                        pix[ppos + 2] = 255 * c;
                     }
                     else if ( c < 2 ) {
-                        pix[ppos] = 255;
+                        pix[ppos] = 0;
                         pix[ppos + 1] = 255 * (c - 1);
-                        pix[ppos + 2] = 0;
+                        pix[ppos + 2] = 255;
                     } else {
                         pix[ppos] = 255;
                         pix[ppos + 1] = 255;
