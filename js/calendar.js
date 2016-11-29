@@ -18,17 +18,22 @@
         this.init();
     };
 
+    var Model = {
+        MONTH : 3,
+        YEAR : 2,
+        DECADE : 1
+    };
     Calendar.prototype = {
         constructor : Calendar,
-        start : 1990,
-        end : 2099,
+        // start : 1990,
+        // end : 2099,
         language : 'zh',
         date : new Date(),
-        viewModel : 3, // 年代, 年, 月
+        viewModel : Model.MONTH, // 年代, 年, 月
         selector : '.calendar-wrap',
 
         setViewModel : function (num) {
-            if (num > 0 && num < 5) {
+            if (num > 0 && num < 4) {
                 this.viewModel = num;
                 this.$elem.find('.lv'+num).show().siblings().hide();
                 this.refresh();
@@ -125,7 +130,7 @@
 
             $elem.find('.calendar-year').on('click', 'li', function () {
                 calendar.setYear($(this).data('year'), false);
-                calendar.setViewModel(2);
+                calendar.setViewModel(Model.YEAR);
             });
 
         },
@@ -137,7 +142,7 @@
             var calendar = this;
             calendar.$elem.find('.calendar-month').on('click', 'li', function () {
                 calendar.setMonth($(this).index());
-                calendar.setViewModel(3);
+                calendar.setViewModel(Model.MONTH);
             });
         },
         initWeek : function(){
@@ -149,7 +154,8 @@
         viewMonth : function (year, month) {
             year = year || this.year;
             month = month || this.month;
-            var html = this.createHTMLOfMonth(year, month);
+            var key = year+'-'+month;
+            var html = this.cache[key] || createHTMLOfMonth(year, month, this.cache);
             this.$elem.find('.calendar-date').html(html);
         },
         viewYear : function () {
@@ -157,7 +163,7 @@
             this.$elem.find('.calendar-month').html(html);
         },
         viewDecadeYear : function () {
-            var html = this.createHTMLOfDecadeYear(this.decadeStart);
+            var html = createHTMLOfDecadeYear(this.decadeStart);
             this.$elem.find('.calendar-year').html(html);
         },
         initDate : function(){
@@ -168,15 +174,7 @@
 
             this.decadeStart = year - year % 10;
             this.refresh();
-            this.createCurrentDateStyle(year, month, day);
-
-        },
-        createHTMLOfDecadeYear : function (decadeStart) {
-            var html = '<li class="prev" data-year="'+(decadeStart-1)+'">'+(decadeStart-1)+'</li>';
-            for (var i = decadeStart; i < decadeStart + 10; i++) {
-                html += '<li data-year="'+i+'">'+i+'</li>';
-            }
-            return html + '<li class="next" data-year="'+(decadeStart+10)+'">'+(decadeStart+10)+'</li>';
+            createCurrentDateStyle(year, month, day);
 
         },
         createHTMLOfYear : function () {
@@ -185,60 +183,6 @@
             }
             return monthHTML;
         },
-        createHTMLOfMonth : function (year, month) {
-            var key = year+'-'+month;
-            if (this.cache[key]) {
-                return this.cache[key]
-            } else {
-                var yearOfPrevMonth = month == 0 ? year - 1 : year,
-                    yearOfNextMonth = month == 11 ? year + 1 : year,
-                    prevMonth = (month + 11) % 12;
-
-                var weekOFMonth1st = getWeek(year, month + 1, 1);
-                var totalDay = getTotalDayOFMonth(year, month);
-                var prevMonthLastDay = getTotalDayOFMonth(yearOfPrevMonth, prevMonth);
-
-                var html = '', w = 0, i;
-                var prevPatchDay = weekOFMonth1st || 7;
-                for (i = 0; i < prevPatchDay; i++) {
-                    html += this.createDateHtml({
-                        className : 'prev',
-                        w : i,
-                        year : yearOfPrevMonth,
-                        month : (month + 11) % 12,
-                        date : prevMonthLastDay - prevPatchDay + i
-                    });
-                    w++;
-                }
-                for (i = 1; i <= totalDay; i++) {
-                    html += this.createDateHtml({
-                        w : w++ % 7,
-                        year : year,
-                        month : month,
-                        date : i
-                    });
-                }
-                var nextPatchDay = 6 - w % 7 + 1 + (w < 35 ? 7 : 0);
-                for (i = 1; i <= nextPatchDay; i++) {
-                    html += this.createDateHtml({
-                        className : 'next',
-                        w : w++ % 7,
-                        year : yearOfNextMonth,
-                        month : (month + 1) % 12,
-                        date : i
-                    });
-                }
-                return (this.cache[key] = html);
-            }
-        },
-        createCurrentDateStyle : function (year, month, day) {
-            $('head').append(todayStyleTemplate.replace('className', 'date-'+year+'-'+month+'-'+day));
-        },
-        createDateHtml : function (option) {
-            var className = (option.className || '') + ' w' + option.w +
-                ' date-'+option.year+'-'+option.month+'-'+option.date;
-            return '<li class="'+className+'"><div class="date">'+option.date+'</div></li>'
-        },
         init : function () {
             this.cache = {};
             this.initElem();
@@ -246,6 +190,67 @@
             this.initDate();
         }
     };
+
+    function createCurrentDateStyle(year, month, day) {
+        $('head').append(todayStyleTemplate.replace('className', 'date-'+year+'-'+month+'-'+day));
+    }
+
+    function createHTMLOfDecadeYear(decadeStart) {
+        var html = '<li class="prev" data-year="'+(decadeStart-1)+'">'+(decadeStart-1)+'</li>';
+        for (var i = decadeStart; i < decadeStart + 10; i++) {
+            html += '<li data-year="'+i+'">'+i+'</li>';
+        }
+        return html + '<li class="next" data-year="'+(decadeStart+10)+'">'+(decadeStart+10)+'</li>';
+    }
+
+    function createHTMLOfMonth(year, month, cache) {
+
+        var yearOfPrevMonth = month == 0 ? year - 1 : year,
+            yearOfNextMonth = month == 11 ? year + 1 : year,
+            prevMonth = (month + 11) % 12;
+
+        var weekOFMonth1st = getWeek(year, month + 1, 1);
+        var totalDay = getTotalDayOFMonth(year, month);
+        var prevMonthLastDay = getTotalDayOFMonth(yearOfPrevMonth, prevMonth);
+
+        var html = '', w = 0, i;
+        var prevPatchDay = weekOFMonth1st || 7;
+        for (i = 0; i < prevPatchDay; i++) {
+            html += createDateHtml({
+                className : 'prev',
+                w : i,
+                year : yearOfPrevMonth,
+                month : (month + 11) % 12,
+                date : prevMonthLastDay - prevPatchDay + i
+            });
+            w++;
+        }
+        for (i = 1; i <= totalDay; i++) {
+            html += createDateHtml({
+                w : w++ % 7,
+                year : year,
+                month : month,
+                date : i
+            });
+        }
+        var nextPatchDay = 6 - w % 7 + 1 + (w < 35 ? 7 : 0);
+        for (i = 1; i <= nextPatchDay; i++) {
+            html += createDateHtml({
+                className : 'next',
+                w : w++ % 7,
+                year : yearOfNextMonth,
+                month : (month + 1) % 12,
+                date : i
+            });
+        }
+        return (cache[year + '-' + month] = html);
+    }
+
+    function createDateHtml(option) {
+        var className = (option.className || '') + ' w' + option.w +
+            ' date-'+option.year+'-'+option.month+'-'+option.date;
+        return '<li class="'+className+'"><div class="date">'+option.date+'</div></li>'
+    }
 
      function getTotalDayOFMonth(year, month) {
         switch (month+1) {
