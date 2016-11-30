@@ -10,7 +10,26 @@
         }
     };
 
-    var todayStyleTemplate = '<style id="currentDay-style">.className{background:rgba(43, 170, 177, 0.6)}</style>'
+    var todayStyleTemplate = '<style id="currentDay-style">.className{background:rgba(43, 170, 177, 0.6)}</style>';
+    var template = '<div class="calendar-wrap">'+
+                        '<div class="calendar-header">'+
+                            '<button class="prev">←</button>'+
+                            '<button class="next">→</button>'+
+                            '<div class="title"></div>'+
+                        '</div>'+
+                        '<div class="calendar-body">'+
+                            '<div class="lv3 calendar-lv">'+
+                                '<ul class="calendar-week"></ul>'+
+                                '<ul class="calendar-date"></ul>'+
+                            '</div>'+
+                            '<div class="lv2 calendar-lv">'+
+                                '<ul class="calendar-month"></ul>'+
+                            '</div>'+
+                            '<div class="lv1 calendar-lv">'+
+                                '<ul class="calendar-year"></ul>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>';
 
     var monthHTML = '';
     var Calendar = window.Calendar = function (option) {
@@ -28,10 +47,12 @@
         // start : 1990,
         // end : 2099,
         language : 'zh',
+        picker : null,
+
         date : new Date(),
         viewModel : Model.MONTH, // 年代, 年, 月
         selector : '.calendar-wrap',
-
+        hideAfterSelect : true,
         setViewModel : function (num) {
             if (num > 0 && num < 4) {
                 this.viewModel = num;
@@ -109,6 +130,14 @@
 
         },
         initElem : function(){
+            if (this.picker) {
+                var $picker = this.$picker = $(this.picker);
+                $picker.click(function () {
+                    calendar.toggle();
+                });
+                $picker.after(template);
+            }
+
             var $elem = this.$elem = $(this.selector);
             this.$title = $elem.find('.title');
             this.$dateWraper = $elem.find('.calendar-date')
@@ -135,8 +164,15 @@
             });
 
             this.$dateWraper.on('click', 'li', function () {
-                calendar.onSelectDate && calendar.onSelectDate($(this));
-            })
+                if (calendar.onSelectDate) {
+                    var result = calendar.onSelectDate($(this));
+
+                    if (result !== false && calendar.hideAfterSelect) {
+                        calendar.hide();
+                    }
+                }
+            });
+
 
         },
         viewMonth : function () {
@@ -157,6 +193,15 @@
         },
         updateCache : function () {
             this.cache[this.year + '-' + this.month] = this.$dateWraper.html();
+        },
+        hide : function () {
+            this.$elem.hide();
+        },
+        show : function () {
+            this.$elem.show();
+        },
+        toggle : function () {
+            this.$elem.toggle();
         },
         initDate : function(){
             var date = this.date,

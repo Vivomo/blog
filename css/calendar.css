@@ -1,7 +1,22 @@
+.calendar-picker-wrap {
+  position: relative;
+  margin: 0 auto;
+  width: 150px;
+  height: 30px;
+  border: 1px solid #1EEDFF;
+  cursor: pointer; }
+  .calendar-picker-wrap .calendar-picker {
+    text-align: center;
+    line-height: 30px;
+    height: 30px; }
+  .calendar-picker-wrap .calendar-wrap {
+    display: none;
+    position: absolute;
+    top: 100%; }
+
 .calendar-wrap {
   box-sizing: border-box;
   width: 702px;
-  margin: 50px auto;
   color: #1EEDFF;
   border: 1px solid #1EEDFF; }
   .calendar-wrap * {
