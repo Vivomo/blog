@@ -51,8 +51,7 @@
                         pix[ppos] = 0;
                         pix[ppos + 1] = 0;
                         pix[ppos + 2] = 255 * c;
-                    }
-                    else if ( c < 2 ) {
+                    } else if ( c < 2 ) {
                         pix[ppos] = 0;
                         pix[ppos + 1] = 255 * (c - 1);
                         pix[ppos + 2] = 255;
@@ -72,10 +71,12 @@
     canvas.style.cssText='display:block; margin: 40px auto';
     canvas.height = Math.max(960, document.documentElement.clientHeight) - 100;
     canvas.width= ~~ (canvas.height / 0.75);
-
     document.body.insertBefore(canvas, document.body.childNodes[0]);
 
-    mandelbrot(canvas, -2, 1, -1, 1, 1000);
+    mandelbrot(canvas, -2, 1, -1, 1,  canvas.width);
+
+
+
 </script>
 </body>
 </html>
