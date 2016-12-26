@@ -147,9 +147,29 @@ html, body {
 body {
   position: relative;
   font-family: "Microsoft Yahei" , Arial, sans-serif;
-  background: #160026 url("../img/report/bg.jpg") no-repeat center/cover; }
+  background: #160026 url("../img/report/bg.jpg") no-repeat center/cover;
+  color: #fff; }
   body * {
     box-sizing: border-box; }
+
+.cursor {
+  display: none;
+  margin-left: 12px;
+  width: 3px;
+  height: 30px;
+  background-color: #333;
+  vertical-align: middle;
+  -webkit-animation: twinkled 0.5s infinite;
+  -moz-animation: twinkled 0.5s infinite;
+  -ms-animation: twinkled 0.5s infinite;
+  animation: twinkled 0.5s infinite; }
+
+.msg {
+  padding: 0 86px;
+  font-size: 42px;
+  text-align: center; }
+  .msg strong {
+    font-size: 1.2em; }
 
 .animated {
   -webkit-animation-duration: 1s;
@@ -219,77 +239,102 @@ body {
     right: 150px;
     bottom: 300px; }
 
+.technical-support {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: 90px;
+  z-index: 10;
+  font-size: 28px;
+  text-align: center; }
+  .technical-support a {
+    color: #fff; }
+
+.double-arrow {
+  position: absolute;
+  left: 50%;
+  bottom: 30px;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  background: url("../img/report/double_arrow.png");
+  -webkit-transform: translate3d(-50%, 0, 0);
+  -moz-transform: translate3d(-50%, 0, 0);
+  -ms-transform: translate3d(-50%, 0, 0);
+  transform: translate3d(-50%, 0, 0);
+  -webkit-animation: twinkled 1.5s infinite;
+  -moz-animation: twinkled 1.5s infinite;
+  -ms-animation: twinkled 1.5s infinite;
+  animation: twinkled 1.5s infinite; }
+
+footer {
+  display: none; }
+
 .page {
-  /*    position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;*/ }
-  .page.p1 .club-wrap {
-    position: relative;
-    -webkit-transform: translate3d(0, 140px, 0);
-    -moz-transform: translate3d(0, 140px, 0);
-    -ms-transform: translate3d(0, 140px, 0);
-    transform: translate3d(0, 140px, 0); }
-  .page.p1 .dash-circle {
-    margin: auto;
-    border: 4px dashed #877f8e; }
-  .page.p1 .c1 {
-    width: 632px;
-    height: 632px;
-    border-radius: 50%; }
-  .page.p1 .c2 {
-    width: 570px;
-    height: 570px;
-    border-radius: 50%;
-    -webkit-transform: translate3d(0, 27px, 0);
-    -moz-transform: translate3d(0, 27px, 0);
-    -ms-transform: translate3d(0, 27px, 0);
-    transform: translate3d(0, 27px, 0); }
-  .page.p1 .purple-circle {
-    padding-top: 130px;
-    margin: auto;
-    width: 458px;
-    height: 458px;
-    border-radius: 50%;
-    -webkit-transform: translate3d(0, 52px, 0);
-    -moz-transform: translate3d(0, 52px, 0);
-    -ms-transform: translate3d(0, 52px, 0);
-    transform: translate3d(0, 52px, 0);
-    background-image: -webkit-radial-gradient(#63529a, #382067);
-    background-image: radial-gradient(#63529a, #382067);
-    box-shadow: 0 0 60px #9889cc; }
-  .page.p1 h2 {
-    font: bold 68px 'SimHei', 'Microsoft YaHei', 'Arial Black', 'Arial', 'Helvetica';
-    color: #dce3ee;
-    text-align: center; }
-  .page.p1 .annual-summary {
-    margin: 40px auto;
-    width: 314px;
-    height: 75px;
-    background: url("../img/report/annual_summary.png") no-repeat center/cover; }
-  .page.p1 .stars {
-    position: absolute;
-    top: 8px;
-    left: 55px;
-    width: 622px;
-    height: 613px;
-    background: url("../img/report/stars_color.png"); }
-  .page.p1 .start {
-    display: block;
-    margin: 220px auto;
-    width: 420px;
-    height: 100px;
-    font-size: 40px;
-    letter-spacing: 2px;
-    background-color: #6364e9;
-    border-radius: 10px;
-    color: #fff;
-    box-shadow: 0 0 20px #333;
-    -webkit-transform: translate3d(0, 1000px, 0);
-    -moz-transform: translate3d(0, 1000px, 0);
-    -ms-transform: translate3d(0, 1000px, 0);
-    transform: translate3d(0, 1000px, 0); }
+  padding-top: 90px; }
+  .page.p1 {
+    padding-top: 140px; }
+    .page.p1 .club-wrap {
+      position: relative; }
+    .page.p1 .dash-circle {
+      margin: auto;
+      border: 4px dashed #877f8e; }
+    .page.p1 .c1 {
+      width: 632px;
+      height: 632px;
+      border-radius: 50%; }
+    .page.p1 .c2 {
+      width: 570px;
+      height: 570px;
+      border-radius: 50%;
+      -webkit-transform: translate3d(0, 27px, 0);
+      -moz-transform: translate3d(0, 27px, 0);
+      -ms-transform: translate3d(0, 27px, 0);
+      transform: translate3d(0, 27px, 0); }
+    .page.p1 .purple-circle {
+      padding-top: 130px;
+      margin: auto;
+      width: 458px;
+      height: 458px;
+      border-radius: 50%;
+      -webkit-transform: translate3d(0, 52px, 0);
+      -moz-transform: translate3d(0, 52px, 0);
+      -ms-transform: translate3d(0, 52px, 0);
+      transform: translate3d(0, 52px, 0);
+      background-image: -webkit-radial-gradient(#63529a, #382067);
+      background-image: radial-gradient(#63529a, #382067);
+      box-shadow: 0 0 60px #9889cc; }
+    .page.p1 h2 {
+      font: bold 68px 'SimHei', 'Microsoft YaHei', 'Arial Black', 'Arial', 'Helvetica';
+      color: #dce3ee;
+      text-align: center; }
+    .page.p1 .annual-summary {
+      margin: 40px auto;
+      width: 314px;
+      height: 75px;
+      background: url("../img/report/annual_summary.png") no-repeat center/cover; }
+    .page.p1 .stars {
+      position: absolute;
+      top: 8px;
+      left: 55px;
+      width: 622px;
+      height: 613px;
+      background: url("../img/report/stars_color.png"); }
+    .page.p1 .start {
+      display: block;
+      margin: 80px auto;
+      width: 420px;
+      height: 100px;
+      font-size: 40px;
+      letter-spacing: 2px;
+      background-color: #6364e9;
+      border-radius: 10px;
+      color: #fff;
+      box-shadow: 0 0 20px #333;
+      -webkit-transform: translate3d(0, 1000px, 0);
+      -moz-transform: translate3d(0, 1000px, 0);
+      -ms-transform: translate3d(0, 1000px, 0);
+      transform: translate3d(0, 1000px, 0); }
 
 @keyframes meteor {
   0% {
@@ -452,3 +497,14 @@ body {
   backface-visibility: visible;
   -webkit-animation-name: flip;
   animation-name: flip; }
+
+@-webkit-keyframes twinkled {
+  0% {
+    opacity: 0.2; }
+  100% {
+    opacity: 1; } }
+@keyframes twinkled {
+  0% {
+    opacity: 0.2; }
+  100% {
+    opacity: 1; } }
