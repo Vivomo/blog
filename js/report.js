@@ -135,9 +135,20 @@ var Report = (function () {
             }).write('月是活动发布高峰');
         },
         applier : function () {
-
+            var $cursor = $('.p5 .cursor');
+            printer.write($cursor[0], '2016年共有', function () {
+                $cursor.before('<strong>1584</strong>');
+            }).write('人通过网站报名参加活动');
+        },
+        money : function () {
+            var $cursor = $('.p6 .cursor');
+            printer.write($cursor[0], '2016年网站一共成交', function () {
+                $cursor.before('<strong>¥19023</strong>');
+            }).write('交易额');
         },
         end : function () {
+            var $cursor = $('.p7 .cursor');
+            printer.write($cursor[0], '2017\n与您携手共创新的辉煌！');
         },
         initSection : function (name) {
             if (this.initedSections.indexOf(name) == -1) {

@@ -30,6 +30,9 @@ body {
     padding: 0 86px;
     font-size: 42px;
     text-align: center;
+    //noinspection CssInvalidPropertyValue
+    word-break: break-word;
+    white-space: pre;
 
     strong {
         font-size: 1.2em;
