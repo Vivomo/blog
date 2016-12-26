@@ -3,14 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Report</title>
+    <link rel="stylesheet" href="../../css/report.css">
+    <script>
+        (function () {
+            var userScalable = "no";
+            var ins = "";
+            if (window.devicePixelRatio === 1.5) {
+                userScalable = "yes";
+                ins = "initial-scale=0.5 ,"
+            }
+            var text = "<meta content='" + ins +
+                    " target-densitydpi=device-dpi, width=750,shrink-to-fit=no, maximum-scale=2, user-scalable=" +
+                    userScalable + "' name='viewport'>";
+            document.write(text);
+        })();
+    </script>
 </head>
 <body>
-<section class="page" data-name="start"></section>
-<section class="page" data-name="newUser"></section>
-<section class="page" data-name="visitor"></section>
-<section class="page" data-name="event"></section>
-<section class="page" data-name="applier"></section>
-<section class="page" data-name="money"></section>
-<section class="page" data-name="end"></section>
+<div class="meteor m1"></div>
+<div class="meteor m2"></div>
+<div class="meteor m3"></div>
+<div class="meteor m4"></div>
+
+<div class="float f1"></div>
+<div class="float f2"></div>
+<div class="float f3"></div>
+<div class="float f4"></div>
+
+<div id="wrap">
+    <section class="section page p1" data-name="start">
+        <div class="club-wrap">
+            <div class="dash-circle c1">
+                <div class="dash-circle c2">
+                    <div class="purple-circle">
+                        <div class="animated" id="club-name" data-animate="flip">
+                            <h2>飞天俱乐部</h2>
+                            <h3 class="annual-summary" id="annual-summary"></h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="stars"></div>
+        </div>
+
+        <button class="start animated" id="start" data-animate="bounceInUp">点击开始报告</button>
+    </section>
+    <section class="section page" data-name="newUser"></section>
+    <section class="section page" data-name="visitor"></section>
+    <section class="section page" data-name="event"></section>
+    <section class="section page" data-name="applier"></section>
+    <section class="section page" data-name="money"></section>
+    <section class="section page" data-name="end"></section>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.8.6/jquery.fullPage.min.js"></script>
+<script src="../../js/report.js"></script>
 </body>
 </html>
