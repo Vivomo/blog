@@ -118,6 +118,7 @@ var Report = (function () {
             $footer.hide();
         },
         newUser : function () {
+            animated($('#red-ball'));
             var $cursor = $('.p2 .cursor');
             printer.write($cursor[0], '2016年共新增用户', function () {
                 $cursor.before('<strong>100</strong>');
@@ -162,9 +163,10 @@ var Report = (function () {
         },
         init : function () {
             $('#wrap').fullpage({
+                anchors : ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7'],
                 afterLoad : function (a, index) {
                     var _$page = $page.eq(index-1);
-                    Report.initSection([_$page.data('name')]);
+                    Report.initSection(_$page.data('name'));
                     if (index == $page.length) {
                         $next.hide();
                     } else {
