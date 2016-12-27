@@ -98,14 +98,19 @@ var Report = (function () {
         $clubName = $('#club-name'),
         $next = $('#next-page'),
         $footer = $('footer'),
-        $start = $('#start');
+        $start = $('#start'),
+        transform = 'transform' in document.body.style ? 'transform' : 'webKitTransform';
 
     var printer = new Printer({
+        pauseTime : 100,
         cursor : document.querySelector('.cursor')
     });
 
-    function animated($elem) {
+    function animated($elem, callback) {
         $elem.addClass($elem.data('animate'));
+        if (callback) {
+            $elem.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', callback);
+        }
     }
 
     return {
@@ -118,7 +123,22 @@ var Report = (function () {
             $footer.hide();
         },
         newUser : function () {
-            animated($('#red-ball'));
+            animated($('.p2 .purple-circle-wrap'), function () {
+                animated($('#red-ball-robot'), function () {
+                    var deg = 0,
+                        r = 220,
+                        userLength = 9,
+                        intervalDeg = 360 / userLength;
+                    $('.p2 .user-list .item').each(function () {
+                        var radian = (deg + Math.random() * 10 - 5) * Math.PI / 180;
+                        var x = Math.cos(radian) * (r + Math.random() * 20 - 10);
+                        var y = -Math.sin(radian) * (r + Math.random() * 20 - 10);
+                        var scale = 0.8 + Math.random() * 0.4;
+                        $(this).css(transform, 'translate3d('+x+'px, '+y+'px,0) scale('+scale+')');
+                        deg += intervalDeg;
+                    });
+                });
+            });
             var $cursor = $('.p2 .cursor');
             printer.write($cursor[0], '2016年共新增用户', function () {
                 $cursor.before('<strong>100</strong>');
@@ -138,6 +158,21 @@ var Report = (function () {
             }).write('个活动, 其中', function(){
                 $cursor.before('<strong>10</strong>');
             }).write('月是活动发布高峰');
+
+            animated($('.p4 .purple-circle-wrap'), function () {
+                var deg = 0,
+                    r = 220,
+                    eventLength = 8,
+                    intervalDeg = 360 / eventLength;
+                $('.p4 .event-list .item').each(function () {
+                    var radian = (deg + Math.random() * 10 - 5) * Math.PI / 180;
+                    var x = Math.cos(radian) * (r + Math.random() * 20 - 10);
+                    var y = -Math.sin(radian) * (r + Math.random() * 20 - 10);
+                    var scale = 0.8 + Math.random() * 0.4;
+                    $(this).css(transform, 'translate3d('+x+'px, '+y+'px,0) scale('+scale+')');
+                    deg += intervalDeg;
+                });
+            });
         },
         applier : function () {
             var $cursor = $('.p5 .cursor');

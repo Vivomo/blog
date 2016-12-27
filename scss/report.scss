@@ -29,6 +29,7 @@ body {
 .msg {
     padding: 0 86px;
     font-size: 42px;
+    line-height: 72px;
     text-align: center;
     //noinspection CssInvalidPropertyValue
     word-break: break-word;
@@ -39,6 +40,7 @@ body {
 
     strong {
         font-size: 1.2em;
+        vertical-align: bottom;
     }
 }
 .animated {
@@ -137,6 +139,38 @@ footer {
 }
 .page {
     padding-top: 90px;
+    position: relative;
+    overflow: hidden;
+
+    .purple-circle-wrap {
+        position: relative;
+        z-index: 2;
+        margin: 300px auto 0;
+        width: 316px;
+        height: 316px;
+        @include css3(transform, translate3d(0, -1000px, 0));
+
+        .circle {
+            padding: 22px;
+            @include circle(100%);
+            background: rgba(116, 76, 215, 0.25);
+        }
+
+        .ball {
+            position: absolute;
+            z-index: 3;
+            top: 50%;
+            left: 50%;
+            margin-left: -88px;
+            margin-top: -88px;
+            padding-top: 10px;
+            width: 175px;
+            height: 175px;
+            text-align: center;
+        }
+
+
+    }
 
     &.p1 {
         $c1Width : 632px;
@@ -209,34 +243,42 @@ footer {
     }
 
     &.p2 {
-        .circle-wrap {
-            margin: 300px auto 0;
-            width: 316px;
-            height: 316px;
-        }
-        .circle {
-            padding: 22px;
-            @include circle(100%);
-            background: rgba(116, 76, 215, 0.25);
+        .red-ball {
+            background: url("../img/report/red_ball.png");
         }
 
-        .red-ball {
-            position: absolute;
-            top: 510px;
-            left: 50%;
-            margin-left: -88px;
-            padding-top: 10px;
-            width: 175px;
-            height: 175px;
-            text-align: center;
-            background: url("../img/report/red_ball.png");
-            @include css3(transform, translate3d(0, -1000px, 0));
+        .user-list {
+            .item {
+                position: absolute;
+                z-index: 1;
+                top: 50%;
+                left: 50%;
+                margin-left: -39px;
+                margin-top: -39px;
+                @include circle(78px);
+                @include css3(transition, all 0.5s);
+            }
         }
     }
     &.p3 {
 
     }
     &.p4 {
+        .blue-ball {
+            background: url("../img/report/blue_ball.png");
+        }
+        .event-list {
+            .item {
+                position: absolute;
+                z-index: 1;
+                top: 50%;
+                left: 50%;
+                margin-left: -39px;
+                margin-top: -39px;
+                @include circle(78px);
+                @include css3(transition, all 0.5s);
+            }
+        }
     }
 
     .p7 {

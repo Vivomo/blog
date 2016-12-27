@@ -167,12 +167,14 @@ body {
 .msg {
   padding: 0 86px;
   font-size: 42px;
+  line-height: 72px;
   text-align: center;
   word-break: break-word; }
   .msg.pre {
     white-space: pre; }
   .msg strong {
-    font-size: 1.2em; }
+    font-size: 1.2em;
+    vertical-align: bottom; }
 
 .animated {
   -webkit-animation-duration: 1s;
@@ -274,7 +276,36 @@ footer {
   display: none; }
 
 .page {
-  padding-top: 90px; }
+  padding-top: 90px;
+  position: relative;
+  overflow: hidden; }
+  .page .purple-circle-wrap {
+    position: relative;
+    z-index: 2;
+    margin: 300px auto 0;
+    width: 316px;
+    height: 316px;
+    -webkit-transform: translate3d(0, -1000px, 0);
+    -moz-transform: translate3d(0, -1000px, 0);
+    -ms-transform: translate3d(0, -1000px, 0);
+    transform: translate3d(0, -1000px, 0); }
+    .page .purple-circle-wrap .circle {
+      padding: 22px;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: rgba(116, 76, 215, 0.25); }
+    .page .purple-circle-wrap .ball {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      left: 50%;
+      margin-left: -88px;
+      margin-top: -88px;
+      padding-top: 10px;
+      width: 175px;
+      height: 175px;
+      text-align: center; }
   .page.p1 {
     padding-top: 140px; }
     .page.p1 .club-wrap {
@@ -338,26 +369,38 @@ footer {
       -moz-transform: translate3d(0, 1000px, 0);
       -ms-transform: translate3d(0, 1000px, 0);
       transform: translate3d(0, 1000px, 0); }
-  .page.p2 .circle-wrap {
-    margin: 300px auto 0;
-    width: 316px;
-    height: 316px; }
-  .page.p2 .circle {
-    padding: 22px;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: rgba(116, 76, 215, 0.25); }
   .page.p2 .red-ball {
-    position: absolute;
-    top: 510px;
-    left: 50%;
-    margin-left: -88px;
-    padding-top: 10px;
-    width: 175px;
-    height: 175px;
-    text-align: center;
     background: url("../img/report/red_ball.png"); }
+  .page.p2 .user-list .item {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    margin-left: -39px;
+    margin-top: -39px;
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    transition: all 0.5s; }
+  .page.p4 .blue-ball {
+    background: url("../img/report/blue_ball.png"); }
+  .page.p4 .event-list .item {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    margin-left: -39px;
+    margin-top: -39px;
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    transition: all 0.5s; }
   .page .p7 .robot {
     width: 611px;
     height: 599px;
