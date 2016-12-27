@@ -188,7 +188,11 @@ var Report = (function () {
         },
         end : function () {
             var $cursor = $('.p7 .cursor');
-            printer.write($cursor[0], '2017\n与您携手共创新的辉煌！');
+            printer.write($cursor[0], '2017\n与您携手共创新的辉煌！', function () {
+                animated($('.p7 .robot'), function () {
+                    animated($('#new-year'));
+                });
+            });
         },
         initSection : function (name) {
             if (this.initedSections.indexOf(name) == -1) {
