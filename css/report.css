@@ -168,8 +168,9 @@ body {
   padding: 0 86px;
   font-size: 42px;
   text-align: center;
-  word-break: break-word;
-  white-space: pre; }
+  word-break: break-word; }
+  .msg.pre {
+    white-space: pre; }
   .msg strong {
     font-size: 1.2em; }
 
@@ -337,6 +338,10 @@ footer {
       -moz-transform: translate3d(0, 1000px, 0);
       -ms-transform: translate3d(0, 1000px, 0);
       transform: translate3d(0, 1000px, 0); }
+  .page .p7 .robot {
+    width: 611px;
+    height: 599px;
+    background: url("../img/report/robot.png"); }
 
 @keyframes meteor {
   0% {

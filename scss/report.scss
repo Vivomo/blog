@@ -32,7 +32,10 @@ body {
     text-align: center;
     //noinspection CssInvalidPropertyValue
     word-break: break-word;
-    white-space: pre;
+
+    &.pre {
+        white-space: pre;
+    }
 
     strong {
         font-size: 1.2em;
@@ -211,6 +214,14 @@ footer {
     &.p3 {
     }
     &.p4 {
+    }
+
+    .p7 {
+        .robot {
+            width: 611px;
+            height: 599px;
+            background: url("../img/report/robot.png");
+        }
     }
 }
 @keyframes meteor{

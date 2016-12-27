@@ -118,6 +118,10 @@ var Report = (function () {
             $footer.hide();
         },
         newUser : function () {
+            var $cursor = $('.p2 .cursor');
+            printer.write($cursor[0], '2016年共新增用户', function () {
+                $cursor.before('<strong>100</strong>');
+            }).write('名');
             $footer.show();
         },
         visitor : function () {
