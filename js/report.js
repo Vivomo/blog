@@ -181,6 +181,8 @@ var Report = (function () {
             printer.write($cursor[0], '2016年共有', function () {
                 $cursor.before('<strong>1584</strong>');
             }).write('人通过网站报名参加活动');
+
+            $('.p5 .user-list').addClass('show');
         },
         money : function () {
             var $cursor = $('.p6 .cursor');

@@ -308,6 +308,12 @@ footer {
       width: 175px;
       height: 175px;
       text-align: center; }
+  .page .user-list .item, .page .event-list .item {
+    position: absolute;
+    z-index: 1;
+    width: 78px;
+    height: 78px;
+    border-radius: 50%; }
   .page.p1 {
     padding-top: 140px; }
     .page.p1 .club-wrap {
@@ -374,15 +380,10 @@ footer {
   .page.p2 .red-ball {
     background: url("../img/report/red_ball.png"); }
   .page.p2 .user-list .item {
-    position: absolute;
-    z-index: 1;
     top: 50%;
     left: 50%;
     margin-left: -39px;
     margin-top: -39px;
-    width: 78px;
-    height: 78px;
-    border-radius: 50%;
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     -ms-transition: all 0.5s;
@@ -462,19 +463,83 @@ footer {
   .page.p4 .blue-ball {
     background: url("../img/report/blue_ball.png"); }
   .page.p4 .event-list .item {
-    position: absolute;
-    z-index: 1;
     top: 50%;
     left: 50%;
     margin-left: -39px;
     margin-top: -39px;
-    width: 78px;
-    height: 78px;
-    border-radius: 50%;
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     -ms-transition: all 0.5s;
     transition: all 0.5s; }
+  .page.p5 .map {
+    position: absolute;
+    top: 350px;
+    left: 45px;
+    width: 657px;
+    height: 484px;
+    background: url("../img/report/map.png"); }
+  .page.p5 .user-list .item {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0); }
+  .page.p5 .user-list :nth-child(1) .item {
+    left: 156px;
+    top: 170px;
+    -webkit-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.76s;
+    -moz-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.76s;
+    -ms-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.76s;
+    transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.76s; }
+  .page.p5 .user-list :nth-child(2) .item {
+    left: 425px;
+    top: 190px;
+    -webkit-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.53s;
+    -moz-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.53s;
+    -ms-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.53s;
+    transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.53s; }
+  .page.p5 .user-list :nth-child(3) .item {
+    left: 584px;
+    top: 100px;
+    -webkit-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.83s;
+    -moz-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.83s;
+    -ms-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.83s;
+    transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.83s; }
+  .page.p5 .user-list :nth-child(4) .item {
+    left: 120px;
+    top: 270px;
+    -webkit-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.88s;
+    -moz-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.88s;
+    -ms-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.88s;
+    transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.88s; }
+  .page.p5 .user-list :nth-child(5) .item {
+    left: 286px;
+    top: 308px;
+    -webkit-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.15s;
+    -moz-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.15s;
+    -ms-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.15s;
+    transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.15s; }
+  .page.p5 .user-list :nth-child(6) .item {
+    left: 393px;
+    top: 320px;
+    -webkit-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.56s;
+    -moz-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.56s;
+    -ms-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.56s;
+    transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.56s; }
+  .page.p5 .user-list :nth-child(7) .item {
+    left: 477px;
+    top: 308px;
+    -webkit-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.98s;
+    -moz-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.98s;
+    -ms-transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.98s;
+    transition: all 0.6s cubic-bezier(0, 0, 0.56, 1.51) 0.98s; }
+  .page.p5 .user-list.show .item {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1); }
   .page.p6 .gold .item {
     position: absolute;
     top: -100px;
