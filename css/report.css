@@ -280,9 +280,11 @@ footer {
   position: relative;
   overflow: hidden; }
   .page .purple-circle-wrap {
-    position: relative;
+    position: absolute;
+    top: 480px;
+    left: 50%;
+    margin-left: -158px;
     z-index: 2;
-    margin: 300px auto 0;
     width: 316px;
     height: 316px;
     -webkit-transform: translate3d(0, -1000px, 0);
@@ -385,6 +387,78 @@ footer {
     -moz-transition: all 0.5s;
     -ms-transition: all 0.5s;
     transition: all 0.5s; }
+  .page.p3 .road {
+    position: absolute;
+    top: 420px;
+    right: -6px;
+    padding-top: 80px;
+    width: 719px;
+    height: 381px;
+    background: url("../img/report/road.png"); }
+    .page.p3 .road .club-name {
+      font-size: 30px;
+      width: 150px;
+      margin-left: 234px; }
+  .page.p3 .user-list .item {
+    position: absolute;
+    -webkit-transform: translate3d(0, -1000px, 0);
+    -moz-transform: translate3d(0, -1000px, 0);
+    -ms-transform: translate3d(0, -1000px, 0);
+    transform: translate3d(0, -1000px, 0); }
+  .page.p3 .user-list.show .item {
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+  .page.p3 .user-list :nth-child(1) .item {
+    left: 85px;
+    top: 57px;
+    -webkit-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.76s;
+    -moz-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.76s;
+    -ms-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.76s;
+    transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.76s; }
+  .page.p3 .user-list :nth-child(2) .item {
+    left: 445px;
+    top: 57px;
+    -webkit-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.53s;
+    -moz-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.53s;
+    -ms-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.53s;
+    transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.53s; }
+  .page.p3 .user-list :nth-child(3) .item {
+    left: 580px;
+    top: 57px;
+    -webkit-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.83s;
+    -moz-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.83s;
+    -ms-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.83s;
+    transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.83s; }
+  .page.p3 .user-list :nth-child(4) .item {
+    left: 117px;
+    top: 280px;
+    -webkit-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.88s;
+    -moz-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.88s;
+    -ms-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.88s;
+    transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.88s; }
+  .page.p3 .user-list :nth-child(5) .item {
+    left: 272px;
+    top: 280px;
+    -webkit-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.15s;
+    -moz-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.15s;
+    -ms-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.15s;
+    transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.15s; }
+  .page.p3 .user-list :nth-child(6) .item {
+    left: 430px;
+    top: 280px;
+    -webkit-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.56s;
+    -moz-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.56s;
+    -ms-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.56s;
+    transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.56s; }
+  .page.p3 .user-list :nth-child(7) .item {
+    left: 582px;
+    top: 280px;
+    -webkit-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.98s;
+    -moz-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.98s;
+    -ms-transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.98s;
+    transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.98s; }
   .page.p4 .blue-ball {
     background: url("../img/report/blue_ball.png"); }
   .page.p4 .event-list .item {

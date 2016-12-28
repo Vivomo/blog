@@ -150,6 +150,8 @@ var Report = (function () {
             printer.write($cursor[0], '2016年共', function () {
                 $cursor.before('<strong>100</strong>');
             }).write('名用户访问了俱乐部');
+
+            $('.p3 .user-list').addClass('show');
         },
         event : function () {
             var $cursor = $('.p4 .cursor');
