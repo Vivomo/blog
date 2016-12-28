@@ -1,0 +1,172 @@
+---
+layout: empty
+title: 2016Report
+js: report
+---
+<head>
+    <meta charset="UTF-8">
+    <title>Report</title>
+    <link rel="stylesheet" href="{{site.baseurl}}/css/report.css">
+    <script>
+        (function () {
+            var userScalable = "no";
+            var ins = "";
+            if (window.devicePixelRatio === 1.5) {
+                userScalable = "yes";
+                ins = "initial-scale=0.5 ,"
+            }
+            var text = "<meta content='" + ins +
+                    " target-densitydpi=device-dpi, width=750,shrink-to-fit=no, maximum-scale=2, user-scalable=" +
+                    userScalable + "' name='viewport'>";
+            document.write(text);
+        })();
+    </script>
+</head>
+<body>
+<div class="meteor m1"></div>
+<div class="meteor m2"></div>
+<div class="meteor m3"></div>
+<div class="meteor m4"></div>
+
+<div class="float f1"></div>
+<div class="float f2"></div>
+<div class="float f3"></div>
+<div class="float f4"></div>
+
+
+<div id="wrap">
+    <section class="section page p1" data-name="start" data-anchor="p1">
+        <div class="club-wrap">
+            <div class="dash-circle c1">
+                <div class="dash-circle c2">
+                    <div class="purple-circle">
+                        <div class="animated" id="club-name" data-animate="flip">
+                            <h2>赛会通俱乐部</h2>
+                            <h3 class="annual-summary" id="annual-summary"></h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="stars"></div>
+        </div>
+
+        <button class="start animated" id="start" data-animate="bounceInUp">点击开始报告</button>
+    </section>
+    <section class="section page p2" data-name="newUser" data-anchor="p2">
+        <h4 class="msg"><span class="cursor"></span></h4>
+        <div class="purple-circle-wrap animated" data-animate="bounceInDown">
+            <div class="circle c1">
+                <div class="circle c2">
+                    <div class="circle c3">
+                        <div class="circle c4"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="red-ball ball" id="red-ball">
+                <img src="{{site.baseurl}}/img/report/red_ball_robot.png" class="robot animated" data-animate="bounce"
+                     width="84" height="124" id="red-ball-robot">
+            </div>
+            <ul class="user-list">
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+            </ul>
+        </div>
+
+    </section>
+    <section class="section page p3" data-name="visitor" data-anchor="p3">
+        <h4 class="msg"><span class="cursor"></span></h4>
+        <div class="road">
+            <h5 class="club-name">赛会通俱乐部</h5>
+            <ul class="user-list">
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+            </ul>
+        </div>
+    </section>
+    <section class="section page p4" data-name="event" data-anchor="p4">
+        <h4 class="msg"><span class="cursor"></span></h4>
+        <div class="purple-circle-wrap animated" data-animate="bounceInDown">
+            <div class="circle c1">
+                <div class="circle c2">
+                    <div class="circle c3">
+                        <div class="circle c4"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="blue-ball ball" id="blue-ball"></div>
+            <ul class="event-list">
+                <li><img src="{{site.baseurl}}/img/report/event.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/event.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/event.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/event.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/event.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/event.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/event.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/event.png" class="item"></li>
+            </ul>
+        </div>
+    </section>
+    <section class="section page p5" data-name="applier" data-anchor="p5">
+        <h4 class="msg"><span class="cursor"></span></h4>
+        <div class="map">
+            <ul class="user-list">
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+                <li><img src="{{site.baseurl}}/img/report/avatar.png" class="item"></li>
+            </ul>
+        </div>
+    </section>
+    <section class="section page p6" data-name="money" data-anchor="p6">
+        <h4 class="msg"><span class="cursor"></span></h4>
+        <div class="planet animated" data-animate="bounceInUp" id="planet"></div>
+        <ul class="gold">
+            <li><img src="{{site.baseurl}}/img/report/money.png" class="item"></li>
+            <li><img src="{{site.baseurl}}/img/report/money.png" class="item"></li>
+            <li><img src="{{site.baseurl}}/img/report/money.png" class="item"></li>
+            <li><img src="{{site.baseurl}}/img/report/money.png" class="item"></li>
+            <li><img src="{{site.baseurl}}/img/report/money.png" class="item"></li>
+            <li><img src="{{site.baseurl}}/img/report/money.png" class="item"></li>
+            <li><img src="{{site.baseurl}}/img/report/money.png" class="item"></li>
+            <li><img src="{{site.baseurl}}/img/report/money.png" class="item"></li>
+            <li><img src="{{site.baseurl}}/img/report/money.png" class="item"></li>
+            <li><img src="{{site.baseurl}}/img/report/money.png" class="item"></li>
+            <li><img src="{{site.baseurl}}/img/report/money.png" class="item"></li>
+            <li><img src="{{site.baseurl}}/img/report/money.png" class="item"></li>
+        </ul>
+    </section>
+    <section class="section page p7" data-name="end" data-anchor="p7">
+        <h4 class="msg pre"><span class="cursor"></span></h4>
+        <div class="robot animated" data-animate="slideInUp">
+            <h4 class="msg">赛会通俱乐部</h4>
+            <h4 class="msg new-year animated" data-animate="zoomInDown" id="new-year">新年快乐</h4>
+        </div>
+    </section>
+</div>
+
+<footer>
+    <div class="technical-support">
+        技术支持: <a href="http://www.saihuitong.com">赛会通</a>
+    </div>
+    <button class="double-arrow" id="next-page"></button>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.8.6/jquery.fullPage.min.js"></script>
+<script src="{{site.baseurl}}/js/report.js"></script>
+</body>
