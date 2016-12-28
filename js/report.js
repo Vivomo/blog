@@ -189,6 +189,8 @@ var Report = (function () {
             printer.write($cursor[0], '2016年网站一共成交', function () {
                 $cursor.before('<strong>¥19023</strong>');
             }).write('交易额');
+
+            animated($('#planet'));
         },
         end : function () {
             var $cursor = $('.p7 .cursor');
@@ -206,7 +208,7 @@ var Report = (function () {
         },
         init : function () {
             $('#wrap').fullpage({
-                anchors : ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7'],
+                // anchors : ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7'],
                 afterLoad : function (a, index) {
                     var _$page = $page.eq(index-1);
                     Report.initSection(_$page.data('name'));

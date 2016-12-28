@@ -362,12 +362,32 @@ footer {
     }
 
     &.p6 {
+        .planet {
+            position: absolute;
+            top: 360px;
+            left: 60px;
+            width: 641px;
+            height: 279px;
+            background: url("../img/report/planet.png");
+            @include css3(transform, translate3d(0, 1000px, 0));
+        }
         .gold {
+            $left : (17, 26, 25, 58, 12, 27, 86, 22, 60);
+            $zoom : (0.83, 0.81, 0.66, 1.29, 0.58, 0.58, 1.08, 1.45, 1.46);
+            $delay : (0.8, 0.99, 2.01, 1.85, 2.2, 1.44, 2.98, 1.75, 1.81);
             .item {
                 position: absolute;
                 top: -100px;
-                @include css3(animation, drop 5s infinite);
 
+            }
+
+            @for $i from 1 through length($left) {
+
+                :nth-child(#{$i}) .item{
+                    left: nth($left,$i) * 1%;
+                    @include css3(transform, scale(nth($zoom, $i)));
+                    @include css3(animation, drop 3s infinite #{nth($delay, $i)}s);
+                }
             }
 
         }
@@ -845,4 +865,14 @@ footer {
 .zoomInDown {
     -webkit-animation-name: zoomInDown;
     animation-name: zoomInDown
+}
+
+@keyframes drop {
+    0% {
+        top: -100px;
+    }
+
+    100% {
+        top: 2200px;
+    }
 }

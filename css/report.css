@@ -540,13 +540,110 @@ footer {
     -moz-transform: scale(1);
     -ms-transform: scale(1);
     transform: scale(1); }
+  .page.p6 .planet {
+    position: absolute;
+    top: 360px;
+    left: 60px;
+    width: 641px;
+    height: 279px;
+    background: url("../img/report/planet.png");
+    -webkit-transform: translate3d(0, 1000px, 0);
+    -moz-transform: translate3d(0, 1000px, 0);
+    -ms-transform: translate3d(0, 1000px, 0);
+    transform: translate3d(0, 1000px, 0); }
   .page.p6 .gold .item {
     position: absolute;
-    top: -100px;
-    -webkit-animation: drop 5s infinite;
-    -moz-animation: drop 5s infinite;
-    -ms-animation: drop 5s infinite;
-    animation: drop 5s infinite; }
+    top: -100px; }
+  .page.p6 .gold :nth-child(1) .item {
+    left: 17%;
+    -webkit-transform: scale(0.83);
+    -moz-transform: scale(0.83);
+    -ms-transform: scale(0.83);
+    transform: scale(0.83);
+    -webkit-animation: drop 3s infinite 0.8s;
+    -moz-animation: drop 3s infinite 0.8s;
+    -ms-animation: drop 3s infinite 0.8s;
+    animation: drop 3s infinite 0.8s; }
+  .page.p6 .gold :nth-child(2) .item {
+    left: 26%;
+    -webkit-transform: scale(0.81);
+    -moz-transform: scale(0.81);
+    -ms-transform: scale(0.81);
+    transform: scale(0.81);
+    -webkit-animation: drop 3s infinite 0.99s;
+    -moz-animation: drop 3s infinite 0.99s;
+    -ms-animation: drop 3s infinite 0.99s;
+    animation: drop 3s infinite 0.99s; }
+  .page.p6 .gold :nth-child(3) .item {
+    left: 25%;
+    -webkit-transform: scale(0.66);
+    -moz-transform: scale(0.66);
+    -ms-transform: scale(0.66);
+    transform: scale(0.66);
+    -webkit-animation: drop 3s infinite 2.01s;
+    -moz-animation: drop 3s infinite 2.01s;
+    -ms-animation: drop 3s infinite 2.01s;
+    animation: drop 3s infinite 2.01s; }
+  .page.p6 .gold :nth-child(4) .item {
+    left: 58%;
+    -webkit-transform: scale(1.29);
+    -moz-transform: scale(1.29);
+    -ms-transform: scale(1.29);
+    transform: scale(1.29);
+    -webkit-animation: drop 3s infinite 1.85s;
+    -moz-animation: drop 3s infinite 1.85s;
+    -ms-animation: drop 3s infinite 1.85s;
+    animation: drop 3s infinite 1.85s; }
+  .page.p6 .gold :nth-child(5) .item {
+    left: 12%;
+    -webkit-transform: scale(0.58);
+    -moz-transform: scale(0.58);
+    -ms-transform: scale(0.58);
+    transform: scale(0.58);
+    -webkit-animation: drop 3s infinite 2.2s;
+    -moz-animation: drop 3s infinite 2.2s;
+    -ms-animation: drop 3s infinite 2.2s;
+    animation: drop 3s infinite 2.2s; }
+  .page.p6 .gold :nth-child(6) .item {
+    left: 27%;
+    -webkit-transform: scale(0.58);
+    -moz-transform: scale(0.58);
+    -ms-transform: scale(0.58);
+    transform: scale(0.58);
+    -webkit-animation: drop 3s infinite 1.44s;
+    -moz-animation: drop 3s infinite 1.44s;
+    -ms-animation: drop 3s infinite 1.44s;
+    animation: drop 3s infinite 1.44s; }
+  .page.p6 .gold :nth-child(7) .item {
+    left: 86%;
+    -webkit-transform: scale(1.08);
+    -moz-transform: scale(1.08);
+    -ms-transform: scale(1.08);
+    transform: scale(1.08);
+    -webkit-animation: drop 3s infinite 2.98s;
+    -moz-animation: drop 3s infinite 2.98s;
+    -ms-animation: drop 3s infinite 2.98s;
+    animation: drop 3s infinite 2.98s; }
+  .page.p6 .gold :nth-child(8) .item {
+    left: 22%;
+    -webkit-transform: scale(1.45);
+    -moz-transform: scale(1.45);
+    -ms-transform: scale(1.45);
+    transform: scale(1.45);
+    -webkit-animation: drop 3s infinite 1.75s;
+    -moz-animation: drop 3s infinite 1.75s;
+    -ms-animation: drop 3s infinite 1.75s;
+    animation: drop 3s infinite 1.75s; }
+  .page.p6 .gold :nth-child(9) .item {
+    left: 60%;
+    -webkit-transform: scale(1.46);
+    -moz-transform: scale(1.46);
+    -ms-transform: scale(1.46);
+    transform: scale(1.46);
+    -webkit-animation: drop 3s infinite 1.81s;
+    -moz-animation: drop 3s infinite 1.81s;
+    -ms-animation: drop 3s infinite 1.81s;
+    animation: drop 3s infinite 1.81s; }
   .page.p7 .robot {
     overflow: hidden;
     padding-top: 240px;
@@ -901,3 +998,9 @@ footer {
 .zoomInDown {
   -webkit-animation-name: zoomInDown;
   animation-name: zoomInDown; }
+
+@keyframes drop {
+  0% {
+    top: -100px; }
+  100% {
+    top: 2200px; } }
