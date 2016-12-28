@@ -902,6 +902,16 @@ footer {
     animation-name: zoomInDown
 }
 
+@-webkit-keyframes drop {
+    0% {
+        top: -100px;
+    }
+
+    100% {
+        top: 2200px;
+    }
+}
+
 @keyframes drop {
     0% {
         top: -100px;
