@@ -341,7 +341,7 @@ footer {
             $delay : (0.76,0.53,0.83,0.88,0.15,0.56,0.98);
             .item {
                 @include circle(38px);
-                @include css3(transform, scale(0));
+                @include css3(transform, scale3d(0, 0, 0));
 
             }
 
@@ -356,7 +356,7 @@ footer {
             }
 
             &.show .item{
-                @include css3(transform, scale(1));
+                @include css3(transform, scale3d(1, 1, 1));
             }
         }
     }
@@ -385,7 +385,7 @@ footer {
 
                 :nth-child(#{$i}) .item{
                     left: nth($left,$i) * 1%;
-                    @include css3(transform, scale(nth($zoom, $i)));
+                    @include css3(transform, scale3d(nth($zoom, $i), nth($zoom, $i), nth($zoom, $i)));
                     @include css3(animation, drop 3s infinite #{nth($delay, $i)}s);
                 }
             }
@@ -415,41 +415,41 @@ footer {
 }
 @keyframes meteor{
     0% {
-        @include css3(transform, scale(2) translate3d(0, 0, 0));
+        @include css3(transform, scale3d(2, 2, 2) translate3d(0, 0, 0));
     }
 
     100% {
-        @include css3(transform, scale(2) translate3d(-2150px, 4000px, 0));
+        @include css3(transform, scale3d(2, 2, 2) translate3d(-2150px, 4000px, 0));
     }
 }
 
 @keyframes float {
     0% {
-        @include css3(transform, translate3d(0, 0, 0) rotateZ(0deg));
+        @include css3(transform, translate3d(0, 0, 0) rotate3d(0, 0, 0, 10deg));
     }
 
     25% {
-        @include css3(transform, translate3d(0, 20%, 0) rotateZ(0deg));
+        @include css3(transform, translate3d(0, 20%, 0) rotate3d(0, 0, 0, 10deg));
     }
 
     30% {
-        @include css3(transform, translate3d(0, 20%, 0) rotateZ(10deg));
+        @include css3(transform, translate3d(0, 20%, 0) rotate3d(0, 0, 1, 10deg));
     }
 
     40% {
-        @include css3(transform, translate3d(0, 20%, 0) rotateZ(-10deg));
+        @include css3(transform, translate3d(0, 20%, 0) rotate3d(0, 0, -1, 10deg));
     }
 
     50% {
-        @include css3(transform, translate3d(0, 20%, 0) rotateZ(0deg));
+        @include css3(transform, translate3d(0, 20%, 0) rotate3d(0, 0, 0, 10deg));
     }
     
     75% {
-        @include css3(transform, translate3d(0, -20%, 0) rotateZ(-5deg));
+        @include css3(transform, translate3d(0, -20%, 0) rotate3d(0, 0, -1, 10deg));
     }
 
     100% {
-        @include css3(transform, translate3d(0, 0, 0)  rotateZ(0deg));
+        @include css3(transform, translate3d(0, 0, 0)  rotate3d(0, 0, 0, 10deg));
     }
 }
 
