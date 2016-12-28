@@ -187,38 +187,38 @@ body {
   top: -1333px;
   width: 31px;
   height: 52px;
-  background: url("../img/report/meteor.png"); }
+  background: url("data:image/png;base64,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\a"); }
   .meteor.m1 {
     left: 160%;
-    -webkit-animation: meteor 4s 3s infinite;
-    -moz-animation: meteor 4s 3s infinite;
-    -ms-animation: meteor 4s 3s infinite;
-    animation: meteor 4s 3s infinite; }
+    -webkit-animation: meteor 6s 3s infinite;
+    -moz-animation: meteor 6s 3s infinite;
+    -ms-animation: meteor 6s 3s infinite;
+    animation: meteor 6s 3s infinite; }
   .meteor.m2 {
     left: 180%;
-    -webkit-animation: meteor 6s 4s infinite;
-    -moz-animation: meteor 6s 4s infinite;
-    -ms-animation: meteor 6s 4s infinite;
-    animation: meteor 6s 4s infinite; }
+    -webkit-animation: meteor 7s 4s infinite;
+    -moz-animation: meteor 7s 4s infinite;
+    -ms-animation: meteor 7s 4s infinite;
+    animation: meteor 7s 4s infinite; }
   .meteor.m3 {
     left: 210%;
-    -webkit-animation: meteor 5s 5s infinite;
-    -moz-animation: meteor 5s 5s infinite;
-    -ms-animation: meteor 5s 5s infinite;
-    animation: meteor 5s 5s infinite; }
+    -webkit-animation: meteor 6s 5s infinite;
+    -moz-animation: meteor 6s 5s infinite;
+    -ms-animation: meteor 6s 5s infinite;
+    animation: meteor 6s 5s infinite; }
   .meteor.m4 {
     left: 240%;
-    -webkit-animation: meteor 4s 7s infinite;
-    -moz-animation: meteor 4s 7s infinite;
-    -ms-animation: meteor 4s 7s infinite;
-    animation: meteor 4s 7s infinite; }
+    -webkit-animation: meteor 8s 7s infinite;
+    -moz-animation: meteor 8s 7s infinite;
+    -ms-animation: meteor 8s 7s infinite;
+    animation: meteor 8s 7s infinite; }
 
 .float {
   position: absolute; }
   .float.f1, .float.f2 {
     width: 35px;
     height: 61px;
-    background: url("../img/report/float_triangle.png");
+    background: url("data:image/png;base64,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\a");
     -webkit-animation: float 15s infinite alternate;
     -moz-animation: float 15s infinite alternate;
     -ms-animation: float 15s infinite alternate;
@@ -232,7 +232,7 @@ body {
   .float.f3, .float.f4 {
     width: 29px;
     height: 44px;
-    background: url("../img/report/float_triangle2.png");
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAsCAYAAACZtbMHAAAAAXNSR0IArs4c6QAABKBJREFUWAm9V81vG1UQn/d2vbaT4MRJSpumJXEIl1Zt/oBKSPwTPfTGiQOIE0ICNcIHDvRAU+JGoq2KxAFUySBAQqqQErCdLygqgkMPCIHcpG2SFnvXHyF1bO9jZp3neuO11x9pnpTMe/N+M7+dNzvz1uzChS/GTHOXwSENn28A1FxuaxUnI4fByRgX/S/4V7meWf+4VCocBiccHR4Uwf7Be1zl/deMzP0cgHiuxEeGg3BkeJRzVZtXksnY7ujxqSAwfs6r9T0X4qFgP4wcHbN8+5j3bU4zRfFGcrmNUrH434GTBgcCcPzYuOW3bJbX3g2f3rRIE4nL6wLEV2k9CUIc3DEPBHrhxEioGoiqKj/QwiKlicLYTKm0A5nsA1p2PQJ9PXBydNLmh5k8Tooq6eJi5A5jbHl7+zEUCvhedTH6evwwdvKVeg+amiBllZQWgsEMSd1IgmmWadr26PX7YfwlB0Jhrl+8eGadHNpIR4+9+i3qkuXyLhiZtbYJe/xeCI1NAp5YnS3nfEEqbaTR6Pkywj+hzZ2dtPUngW7S79OsCLHrOEJNVsknbdYhAgH+GQDL0iZFS1G7DZ9XgxAeqcKVhlAPKAm5WUd6+3Yki9HeJADlVTfuS6yj1DxE+DLWuuq4v6d8+F747D8SUEdKGx6POotpsd6kQiEL+fxjibdJTfPAxNgEqKpm0+9f4InHanWOpLHYlSS2iG8kMJt7AMXijlxaUvOoGOEEPqDXpndc7NWn3HMktTYVuCxB1KWojOSl4FFVrMMQaB6fhDSXHp6oBTQkXYnPreIR/yLB1Jez2Ud4lEQ4Dj5vj9xqKhmwrenpqT9rQQ1JLRBnVrOQBrn8Jrw4FAS/r1eq3CUT8f2gpqQePvw1FvparVE2l6pdus6xbtsjjcXCJbzbI7We08ZG7dJ1zsCeTzJoGikB/P7eG5jbPM1p6PoWmMKsLFz+Y72n3v/g7L39MFfS+flLGSwf7FKVUSoX8fr7Vy6bSrRLYHrqLmhXUsurxmexNVbDS+utHTEebV0+yV9LpCs/Rv7GI/5OhpXWH8lpUylUlnACtERqGSrPykc3nrjft4wZ0+bUH12RLscji5ifu+TENEt4Azn3Y0nCQCyx8LOUSD3J1iNFML6N1daY1jdr/dTNnepTgtoiPXXqTBQNH5JxyjWvzvkk27ZIr19/o8gZu0qGRuYJlPGYHQdj+XMw9ZvjHirbIq046buGud0W2CB0Y8vZrxDLr4VZgyfqgHRp6SMdq/1zYkulneu1UX3KJ+wgUgCV8yvoQDSqV/xySUgCJ9kRaSIx+xc2i+/pximV7B9u+IbvTJrar05kUtcRqWWsKDP0RZHGC8A2GKyeD5+2P4kN0EFOpf1yfPYnjOr3/VcdvmRxiWkkO48UPWIDmEmlrbKt+hfQuD4lqCvSkZGhW/ltY2O3+NTyh99DhRMw8LN03kh2RRqNhnexfOb0vZaIv3HvvB4OVZ6gESPquyIlv36v+BS7k2FxtJBPwnVNurAwlxKi/A45U7h7Pg+ElJx8eevNm3gFrWk9fIXWhzY+DN99q1Wyro9XEgUGAzfk3E3+DxWydSzhPdkCAAAAAElFTkSuQmCC\a");
     -webkit-animation: float 10s infinite alternate;
     -moz-animation: float 10s infinite alternate;
     -ms-animation: float 10s infinite alternate;
@@ -313,7 +313,16 @@ footer {
     z-index: 1;
     width: 78px;
     height: 78px;
-    border-radius: 50%; }
+    border-radius: 50%;
+    -webkit-transition: all 0.5s cubic-bezier(0, 0, 0.56, 1.51);
+    -moz-transition: all 0.5s cubic-bezier(0, 0, 0.56, 1.51);
+    -ms-transition: all 0.5s cubic-bezier(0, 0, 0.56, 1.51);
+    transition: all 0.5s cubic-bezier(0, 0, 0.56, 1.51); }
+  .page.p2 .item, .page.p4 .item {
+    top: 50%;
+    left: 50%;
+    margin-left: -39px;
+    margin-top: -39px; }
   .page.p1 {
     padding-top: 140px; }
     .page.p1 .club-wrap {
@@ -379,15 +388,6 @@ footer {
       transform: translate3d(0, 1000px, 0); }
   .page.p2 .red-ball {
     background: url("../img/report/red_ball.png"); }
-  .page.p2 .user-list .item {
-    top: 50%;
-    left: 50%;
-    margin-left: -39px;
-    margin-top: -39px;
-    -webkit-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    transition: all 0.5s; }
   .page.p3 .road {
     position: absolute;
     top: 420px;
@@ -462,15 +462,6 @@ footer {
     transition: all 0.6s cubic-bezier(0, 0, 0.65, 1.31) 0.98s; }
   .page.p4 .blue-ball {
     background: url("../img/report/blue_ball.png"); }
-  .page.p4 .event-list .item {
-    top: 50%;
-    left: 50%;
-    margin-left: -39px;
-    margin-top: -39px;
-    -webkit-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    -ms-transition: all 0.5s;
-    transition: all 0.5s; }
   .page.p5 .map {
     position: absolute;
     top: 350px;
@@ -553,8 +544,11 @@ footer {
     transform: translate3d(0, 1000px, 0); }
   .page.p6 .gold .item {
     position: absolute;
-    top: -100px; }
-  .page.p6 .gold :nth-child(1) .item {
+    top: -100px;
+    width: 43px;
+    height: 43px;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACsAAAArCAYAAADhXXHAAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABwVJREFUeNrUWUtsG1UUve/Nm/E4Hsd2HCeuE9I0aQpSSxcV/xZUpIIQFWkRH8EOdQdiw4oFQoAQgh2sQLBAYgWiIEqghLaiHygIhADxCSpNE0JTmk/rxPF37Pk87kxie2bstkmwU3jSi5U3d2bO3HfvuZ9HYBWDc07UEz07DDD3Es77gcA1nIBMmT8lBqIF5m8jALQb17uBQx4IPwucTOKtYwDkAGz69CQhhK/0vWQlwoWTfT1cU59AYI9yDj3WGqXslNgan2OB6DYEJi/vreQsfvK7ILDXSf8nZxsKdvpQZ0DPwxBq6A4Eyaw1QaBzsZ7eUeaP3AyrHzkE/gIM3PQqIc/r/xps8lDirnzO2G8YPFRek/3S+c7+LWGgpAUaM34BKj5GBoZ+WjXYwrHunQYxh3B7g4u7RzQx2HlCVDp3LQdBKTUJpl5EHH6QQl1X0lsGbWqQDHx6/FIS9JL782XXbpPw4SpQMKXguu/qATW1AhTnJqBw4ZTn6cKiQxqaa9koZvCP4XXbIAoO89O7d69Is1ND8afVkvkyAiWLQhza4u0jwY7ezfXk1eQ4As6DGGgHMRi/vAJNE/IzI/bX+8LXgCCHvBIaCHAP2Th89IpgcyfbE6mkMMpNqNijKIt/dPRdf+2lucxcehpdloFaO6GlpxBoEFggVk/kPATkraT7o6RzkdWI6b43Qq28pcoyZLJl3ZaE62WlnL2VFS0uE2TFOtCGfdG+y4kkIK++jb97LmmzuROJfUj4g841ua03jWiCFSWiVtS5cTDUNDRqcKMEWmbWijaORRjko7v31QV74eP2YFHlL5U0DuUJIH1Hfa0uOzU0FRUpga9tQ8PAWoxRykwh4GmvfT/L+fOsBmwJhDfn5vX43JwO5claO4LeB7OWCPg7rgUiiA0DK/iCILZEQS/Mey/1wpnvH3E5mBXrU0cSYyaHiroooRPh9Vt7YS2HaVTozkEBIzDw2fVWLmFrVj2+frsokg0+CelkaQai8XMuv8slwSxmmwvWC3TRdjfD+OD2ihlkC9rj+QLy39JUiybH7Glj1QE0KC2cAwNZoOkDaZDrqnvNMO+ugs0aD6TTBpRnocAxrRMq7G6UMov26g83Hauen8NIeNryOucX2GAZP9YbzphF5kwumRT4GX9uq/wvR4DG/ECYr+lgLQ5GH0JqzICAzrw0buB/7g0zlWrbKKrReYOkhLkn/7QfshaDSgE7bLvex7mAUWgbW0ibu0zuxhYLSQpcxVE3QzNJJ9M144ai5lGkKFQjlk3Y03bSsdKw2tBBEGxblP2AidBdLpJm/lDVuXJI1imQMA9YC5utMAKGYMIcVZLJOyk3SaQ2pLCwMy8jdq4irJkStdxFKMyOeoNDhC1k9X7DYwaBuJ5Cgo6WmUCIBdDy2dpGMjC9wWGe4VrG4F7ZQopSJVpmAiL61tQ8rTyXe5we4/8MC4ek/SY37ndHDFgA8er5EkUykryExPkMJcScqa08CgWXDWUvIEkvwFUdlM+wYk77az7PLa1XSpyAOrOuo69ablhAdbQjf2291BQmKFfEDtoyQJB+pOF7Z8ckkc76JArlidKK24ZCi8kF581ngswMqBdHvV/wPdlwIGW7eDjE3kLVPuuIrjEkuulyMmOFP+ZrtS80PZFBThd83gBKj1SyLsqFw5bSyhODBNGyyTFnbrBWjMAC0dpyXqCHq5XC+w8JE+RE3jC4VL6O5pDt3rxNqVMwrS3neisF8vB+Q5Hpa0FFgPKUJFBMLevqPVmOlp/5vfkVgwssfaXcHq1kJu3Kdc8oCp0IBCgsTgGKqXMZd2Gn2IVicWGywQl3EvLTI1ZJ4r00ARtvfK+muiV3HtdR5S+6OyfFO8xieqT6lQLIkT4QlY7GRdZSAUqpc4tURTz5B6UvOluhNe6d/Hzd17rBb6sKkPlY/1aG2xFsCq1idqVj4iIqcQuc01aHyKbhPZftIhqm/mQuZ5iZjAHWTGf0yNSZX5P138RBxXpJy0zZFLKCroZjsyQQWxNuoFavq0Xet6wuYvqLxH3IVh9iBSGWheRw/Fv8+lu8ssX5v2xutJoUUrj7CsFJs3u2Vn1lybKWaN24sOwuorM/ixnZBxgs5Gp/NvENU2I7aruCebulRARWadyV0n9bLolJeyfQJZI3ixnLae0qWVQ6vdq00GCYpA+STQcPrrjznTuaGExnDczKQFoSNuVg6LdIV//Wy+9yAbSFabQSA0HF6vVgV9X5vmL8nD0YfziXN98pa9gaiiJPxvq2RPHu/86ZQsXWju1kOXL6KaTm55CdA0sh+LTctj4p+EK3/guQjT2tcY7/xTlYLWNxon7Zc7vB7RPGPnx5DwcuI7HPi/6oyloiSM9Cl+OEcRK4BRDGce0ADBz8ajUnjP8IMAA3ywg9yuJiNgAAAABJRU5ErkJggg==\a") no-repeat center; }
+  .page.p6 .gold .item:nth-child(1) {
     left: 17%;
     -webkit-transform: scale3d(0.83, 0.83, 0.83);
     -moz-transform: scale3d(0.83, 0.83, 0.83);
@@ -564,7 +558,7 @@ footer {
     -moz-animation: drop 3s infinite 0.8s;
     -ms-animation: drop 3s infinite 0.8s;
     animation: drop 3s infinite 0.8s; }
-  .page.p6 .gold :nth-child(2) .item {
+  .page.p6 .gold .item:nth-child(2) {
     left: 26%;
     -webkit-transform: scale3d(0.81, 0.81, 0.81);
     -moz-transform: scale3d(0.81, 0.81, 0.81);
@@ -574,7 +568,7 @@ footer {
     -moz-animation: drop 3s infinite 0.99s;
     -ms-animation: drop 3s infinite 0.99s;
     animation: drop 3s infinite 0.99s; }
-  .page.p6 .gold :nth-child(3) .item {
+  .page.p6 .gold .item:nth-child(3) {
     left: 25%;
     -webkit-transform: scale3d(0.66, 0.66, 0.66);
     -moz-transform: scale3d(0.66, 0.66, 0.66);
@@ -584,7 +578,7 @@ footer {
     -moz-animation: drop 3s infinite 2.01s;
     -ms-animation: drop 3s infinite 2.01s;
     animation: drop 3s infinite 2.01s; }
-  .page.p6 .gold :nth-child(4) .item {
+  .page.p6 .gold .item:nth-child(4) {
     left: 58%;
     -webkit-transform: scale3d(1.29, 1.29, 1.29);
     -moz-transform: scale3d(1.29, 1.29, 1.29);
@@ -594,7 +588,7 @@ footer {
     -moz-animation: drop 3s infinite 1.85s;
     -ms-animation: drop 3s infinite 1.85s;
     animation: drop 3s infinite 1.85s; }
-  .page.p6 .gold :nth-child(5) .item {
+  .page.p6 .gold .item:nth-child(5) {
     left: 12%;
     -webkit-transform: scale3d(0.58, 0.58, 0.58);
     -moz-transform: scale3d(0.58, 0.58, 0.58);
@@ -604,7 +598,7 @@ footer {
     -moz-animation: drop 3s infinite 2.2s;
     -ms-animation: drop 3s infinite 2.2s;
     animation: drop 3s infinite 2.2s; }
-  .page.p6 .gold :nth-child(6) .item {
+  .page.p6 .gold .item:nth-child(6) {
     left: 27%;
     -webkit-transform: scale3d(0.58, 0.58, 0.58);
     -moz-transform: scale3d(0.58, 0.58, 0.58);
@@ -614,7 +608,7 @@ footer {
     -moz-animation: drop 3s infinite 1.44s;
     -ms-animation: drop 3s infinite 1.44s;
     animation: drop 3s infinite 1.44s; }
-  .page.p6 .gold :nth-child(7) .item {
+  .page.p6 .gold .item:nth-child(7) {
     left: 86%;
     -webkit-transform: scale3d(1.08, 1.08, 1.08);
     -moz-transform: scale3d(1.08, 1.08, 1.08);
@@ -624,7 +618,7 @@ footer {
     -moz-animation: drop 3s infinite 2.98s;
     -ms-animation: drop 3s infinite 2.98s;
     animation: drop 3s infinite 2.98s; }
-  .page.p6 .gold :nth-child(8) .item {
+  .page.p6 .gold .item:nth-child(8) {
     left: 22%;
     -webkit-transform: scale3d(1.45, 1.45, 1.45);
     -moz-transform: scale3d(1.45, 1.45, 1.45);
@@ -634,7 +628,7 @@ footer {
     -moz-animation: drop 3s infinite 1.75s;
     -ms-animation: drop 3s infinite 1.75s;
     animation: drop 3s infinite 1.75s; }
-  .page.p6 .gold :nth-child(9) .item {
+  .page.p6 .gold .item:nth-child(9) {
     left: 60%;
     -webkit-transform: scale3d(1.46, 1.46, 1.46);
     -moz-transform: scale3d(1.46, 1.46, 1.46);
@@ -822,7 +816,6 @@ footer {
     animation-timing-function: ease-in; } }
 .animated.flip {
   -webkit-backface-visibility: visible;
-  -ms-backface-visibility: visible;
   backface-visibility: visible;
   -webkit-animation-name: flip;
   animation-name: flip; }
