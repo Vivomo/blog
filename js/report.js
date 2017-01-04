@@ -207,6 +207,7 @@ var Report = (function () {
             }
         },
         init : function () {
+
             $('#wrap').fullpage({
                 // anchors : ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7'],
                 afterLoad : function (a, index) {
@@ -219,6 +220,7 @@ var Report = (function () {
                     }
                 }
             });
+            $('#loading-wrap').remove();
 
 
             var fullpage = $.fn.fullpage;
