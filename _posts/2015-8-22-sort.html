@@ -24,14 +24,15 @@ css: sort
 <script>
     (function(){
         function Rect(left, height){
-            if (this === window) {
-                throw "This is a class, not function!"
+            if (this.constructor != Rect) {
+                return new Rect(left, height)
             }
             this.elem = document.createElement('div');
             this.left = left;
             this.height = height;
         }
         Rect.prototype = {
+            constructor : Rect,
             set left(num){
                 this._left = num;
                 this.elem.style.transform = 'translateX('+ num+'px)';
@@ -45,6 +46,9 @@ css: sort
             },
             get height(){
                 return this._height;
+            },
+            toString : function () {
+                return '<div style="transformX('+this.left+'px); height:'+this.height+'px"></div>';
             }
 
         };
@@ -62,9 +66,17 @@ css: sort
             rectArr[num2] = tempRect;
         }
 
-        var rectNum = 20;
         var bubbleSortBtn = document.querySelector('#toBubbleSort');
         bubbleSortBtn.addEventListener('click',bubbleSort);
+
+        function randomRect(num) {
+            var rectArr = [];
+            for (var i = 0; i < num; i++) {
+                var h = ~~(Math.random() * 100);
+                var r = new Rect(i*30+10, h);
+                rectArr.push(r);
+            }
+        }
 
         function bubbleSort(){
             if (bubbleSortBtn.dataset.run == 1) {
@@ -72,18 +84,13 @@ css: sort
             }
             bubbleSortBtn.dataset.run = 1;
             var box = document.querySelector('#bubble-sort');
-            box.innerHTML = "";
 
-            var rectArr = [];
-            var data = [];
             var queen = [];
-            for (var i = 0; i < rectNum; i++) {
-                var h = ~~(Math.random() * 100);
-                var r = new Rect(i*30+10, h);
-                rectArr.push(r);
-                data.push(h);
-                box.appendChild(r.elem)
-            }
+            var rectArr = randomRect(20);
+            var data = rectArr.map(function (item) {
+                return item.height;
+            });
+            box.innerHTML = rectArr.join('');
 
             for (var i = 0, len = data.length; i < len; i++) {
                 for (var j = len - 1; j > i; j--) {
