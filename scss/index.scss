@@ -1,14 +1,14 @@
 @charset "UTF-8";
 
 .post-list{
-
+    padding-left: 40px;
     li{
         padding: 5px;
         font-size: 16px;
         line-height: 30px;
         border-radius: 4px;
         transition: all 0.5s;
-        list-style: gujarati inside;
+        list-style-type: gujarati;
 
         &:hover{
             padding-left: 10px;
