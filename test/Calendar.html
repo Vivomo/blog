@@ -7,22 +7,30 @@
     <link rel="stylesheet" href="../css/calendar.css"/>
 </head>
 <body>
-    <div class="calendar-wrap">
-        <div class="calendar-header">
-            <button class="prev">←</button>
-            <button class="next">→</button>
-            <div class="title">2016/11</div>
-        </div>
-        <div class="calendar-body">
-            <div class="lv4 calendar-lv">
-                <ul class="calendar-week"></ul>
-                <ul class="calendar-date"></ul>
-            </div>
-        </div>
 
+    <div class="calendar-picker-wrap">
+        <div class="calendar-picker" id="calendar-picker"></div>
     </div>
 
-    <script src="../js/jq/jquery.js"></script>
+
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+    <!--[if IE 8]>
+    <script src="../js/ES5.js"></script>
+    <![endif]-->
     <script src="../js/calendar.js"></script>
+    <script>
+
+        var $calendarData = $('#calendar-picker');
+
+        new Calendar({
+            picker : '.calendar-picker',
+            onChangeMonth : function () {
+                console.log(arguments);
+            },
+            onSelectDate : function ($date) {
+                $calendarData.text(this.year + '-' + this.month + '-' + $date.data().day);
+            }
+        });
+    </script>
 </body>
 </html>

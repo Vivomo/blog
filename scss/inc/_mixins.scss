@@ -89,3 +89,14 @@
 	right: $right;
 	bottom: $bottom;
 }
+
+@mixin opacity($num) {
+	@if $num < 1 {
+		opacity: $num;
+		filter: alpha(opacity=100*$num);
+	} @else {
+		opacity: $num / 100;
+		filter: alpha(opacity=$num);
+	}
+
+}

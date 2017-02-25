@@ -3,11 +3,30 @@
 @import "inc/mixins";
 @import "inc/theme";
 
+.calendar-picker-wrap {
+    position: relative;
+    margin: 0 auto;
+    width: 150px;
+    height: 30px;
+    border: $border1;
+    cursor: pointer;
+
+    .calendar-picker {
+        text-align: center;
+        line-height: 30px;
+        height: 30px;
+    }
+
+    .calendar-wrap {
+        display: none;
+        position: absolute;
+        top: 100%;
+    }
+}
 $calendarWidth: 700px;
 .calendar-wrap {
     box-sizing: border-box;
     width: $calendarWidth + 2px;
-    margin: 50px auto;
     color: $theme1;
     border: $border1;
 
@@ -67,13 +86,27 @@ $calendarWidth: 700px;
             height: 80px;
             border: $border1;
         }
-        .prev, .next {
-            color: $theme2;
-        }
+
     }
-    .lv4 {
+    .calendar-lv {
         font-size: 0;
         text-align: center;
+        .prev, .next {
+            color: $theme2;
+            @include opacity(0.5);
+        }
+    }
+    .calendar-month , .calendar-year{
+        li {
+            width: 25%;
+            display: inline-block;
+            font-size: 36px;
+            font-weight: bold;
+            height: 160px;
+            line-height: 160px;
+            border: $border1;
+            cursor: pointer;
+        }
     }
 
 }

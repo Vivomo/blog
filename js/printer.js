@@ -68,7 +68,9 @@ Printer.prototype = {
     switchCursor : function (cursor) {
         this.cursor.style.display = 'none';
         this.cursor = cursor;
+        this.parent = cursor.parentNode;
         this.cursor.style.display = 'inline-block';
+        return this;
     },
     write : function (cursor, word, callback) {
         var queue = [];

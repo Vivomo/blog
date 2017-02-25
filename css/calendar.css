@@ -1,7 +1,22 @@
+.calendar-picker-wrap {
+  position: relative;
+  margin: 0 auto;
+  width: 150px;
+  height: 30px;
+  border: 1px solid #1EEDFF;
+  cursor: pointer; }
+  .calendar-picker-wrap .calendar-picker {
+    text-align: center;
+    line-height: 30px;
+    height: 30px; }
+  .calendar-picker-wrap .calendar-wrap {
+    display: none;
+    position: absolute;
+    top: 100%; }
+
 .calendar-wrap {
   box-sizing: border-box;
   width: 702px;
-  margin: 50px auto;
   color: #1EEDFF;
   border: 1px solid #1EEDFF; }
   .calendar-wrap * {
@@ -41,8 +56,19 @@
     width: 100px;
     height: 80px;
     border: 1px solid #1EEDFF; }
-  .calendar-wrap .calendar-date .prev, .calendar-wrap .calendar-date .next {
-    color: #4EA9F3; }
-  .calendar-wrap .lv4 {
+  .calendar-wrap .calendar-lv {
     font-size: 0;
     text-align: center; }
+    .calendar-wrap .calendar-lv .prev, .calendar-wrap .calendar-lv .next {
+      color: #4EA9F3;
+      opacity: 0.5;
+      filter: alpha(opacity=50); }
+  .calendar-wrap .calendar-month li, .calendar-wrap .calendar-year li {
+    width: 25%;
+    display: inline-block;
+    font-size: 36px;
+    font-weight: bold;
+    height: 160px;
+    line-height: 160px;
+    border: 1px solid #1EEDFF;
+    cursor: pointer; }

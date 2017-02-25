@@ -5,11 +5,11 @@ css: index
 ---
 
 
-<ul class="post-list box u-content">
+<ol class="post-list box u-content">
     {% for post in site.posts %}
     <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.date | date_to_string }} {{ post.title }}</a></li>
     {% endfor %}
-</ul>
+</ol>
 <div id="ani-wrap"></div>
 <script>
     (function(){

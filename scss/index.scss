@@ -1,14 +1,14 @@
 @charset "UTF-8";
 
 .post-list{
-
+    padding-left: 40px;
     li{
         padding: 5px;
         font-size: 16px;
         line-height: 30px;
         border-radius: 4px;
         transition: all 0.5s;
-        list-style: gujarati inside;
+        list-style-type: gujarati;
 
         &:hover{
             padding-left: 10px;
@@ -23,13 +23,14 @@
     }
 }
 #ani-wrap{
-    position: absolute;
+    position: fixed;
     z-index: 0;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     min-height: 900px;
+    pointer-events: none;
     overflow: hidden;
 }
 .ani{
