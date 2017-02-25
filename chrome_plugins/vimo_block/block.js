@@ -3,7 +3,7 @@
     var block = {
         "coding.imooc.com" : function (){
             var style = document.createElement('style');
-            style.innerText =  ' .video-js .vjs-tech{ z-index:10000;} ';
+            style.innerText =  ' .video-js .vjs-tech{ z-index:1000;} ';
             document.head.appendChild(style);
         }
     };
