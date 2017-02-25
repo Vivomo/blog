@@ -1,0 +1,15 @@
+{
+  "name" : "Vimo Block",
+  "version" : "1.0.0",
+  "manifest_version": 2,
+  "description": "Disable what I don't want to see",
+  "icons": {
+    "48": "icon48.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*"],
+      "js": ["block.js"]
+    }
+  ]
+}
