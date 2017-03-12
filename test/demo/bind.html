@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+
+<script>
+    Function.prototype.bind = function (oThis) {
+        if (typeof this != 'function') {
+            throw error('Function.prototype.bind - what is trying to be bound is not callable')
+        }
+        var args = Array.prototype.slice.call(arguments, 1),
+            fToBind = this,
+            noop = function () {},
+            fBound = function(){
+                return fToBind.apply(this instanceof noop ?
+                    this : oThis || this, args.concat(Array.prototype.slice.call(arguments)))
+
+            }
+
+        noop.prototype = this.prototype;
+        fBound.prototype = new noop();
+        return fBound;
+    }
+
+    var func = function (c) {
+        return this.a + this.b + c
+    }
+
+    console.log(func.bind({
+        a : 1,
+        b: 2
+    }, 3)());
+    console.log(func.apply({
+        a : 1,
+        b: 2
+    }, [3]))
+</script>
+</body>
+</html>

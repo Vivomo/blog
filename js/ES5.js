@@ -1,14 +1,15 @@
 (function(_window){
+    var arrProp = Array.prototype;
     //数组新增某些方法
     //forEach方法从头到尾遍历数组，为每个数组元素调用指定函数并提供当前元素，当前索引与数组当做参数传给函数
-    Array.prototype.forEach||(Array.prototype.forEach=function(fun){
+    arrProp.forEach||(arrProp.forEach=function(fun){
         var length=this.length;
         for(var i=0;i<length;i++){
             fun(this[i],i,this);
         }
     })
     //map方法遍历数组并调用指定函数，最后返回一个数组，数组由所有函数返回值组成
-    Array.prototype.map||(Array.prototype.map=function(fun){
+    arrProp.map||(arrProp.map=function(fun){
         var length=this.length;
         var returnArray=[];
         for(var i=0;i<length;i++){
@@ -17,7 +18,7 @@
         return returnArray;
     })
     //filter相当一个数组的帅选器，遍历数组并调用指定函数，并返回一个新数组，如果函数返回true则添加返回的数组。
-    Array.prototype.filter||(Array.prototype.filter=function(fun){
+    arrProp.filter||(arrProp.filter=function(fun){
         var length=this.length;
         var returnArray=[];
         for(var i=0;i<length;i++){
@@ -28,7 +29,7 @@
         return returnArray;
     })
     //every 遍历数组调用指定函数，当所有函数都返回true 则every返回true否则返回false。
-    Array.prototype.every||(Array.prototype.every=function(fun){
+    arrProp.every||(arrProp.every=function(fun){
         var length=this.length;
         if(length==0) return true;
         //every应该尽早结束循环
@@ -40,7 +41,7 @@
         return true;
     })
     //some 遍历数组调用指定函数，当有一个函数返回true就返回true,当所有函数都返回false就返回false
-    Array.prototype.some||(Array.prototype.some=function(fun){
+    arrProp.some||(arrProp.some=function(fun){
         var length=this.length;
         if(length==0) return false;
         //some应该尽早结束循环
@@ -53,7 +54,7 @@
     })
     //reduce 遍历数组调用指定函数(函数需要2个参数)，每次把调用函数的返回值与下一个元素当做函数参数继续调用。
     //对数组进行求和等操作很实用
-    Array.prototype.reduce||(Array.prototype.reduce=function(fun,initval){
+    arrProp.reduce||(arrProp.reduce=function(fun,initval){
         var length=this.length;
         if(length==0) return "";
         if(length==1){
@@ -70,7 +71,7 @@
         return val;
     })
     //reduceRight 与reduce一样 只是从右到左遍历数组
-    Array.prototype.reduceRight||(Array.prototype.reduceRight=function(fun,initval){
+    arrProp.reduceRight||(arrProp.reduceRight=function(fun,initval){
         var length=this.length;
         if(length==0) return "";
         if(length==1){
@@ -86,7 +87,7 @@
         }
         return val;
     })
-    Array.prototype.indexOf||(Array.prototype.indexOf=function(val){
+    arrProp.indexOf||(arrProp.indexOf=function(val){
         var length=this.length;
         if(!length){
             return -1;
@@ -98,7 +99,7 @@
         }
         return -1;
     })
-    Array.prototype.lastIndexOf||(Array.prototype.lastIndexOf=function(val){
+    arrProp.lastIndexOf||(arrProp.lastIndexOf=function(val){
         var length=this.length;
         if(!length){
             return -1;
@@ -111,7 +112,11 @@
         }
         return -1;
     })
-    Array.prototype.isArray||(Array.prototype.isArray=function(){
+    arrProp.isArray||(arrProp.isArray=function(){
         return Object.prototype.toString.call(this)==="[object Array]";
     })
+
+
+    //bind
+
 })(window);
