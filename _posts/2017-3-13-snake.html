@@ -1,0 +1,21 @@
+---
+layout: blank
+css: snake
+js: snake
+title: 贪吃蛇(自动寻路AI还在思考中....)
+---
+<div ms-controller="snake">
+    <h1 class="t-c" >[[body.size()-4]]</h1>
+    <h2 class="t-c game-tip" ms-text="tip"></h2>
+    <div id="background">
+        <table>
+            <tr ms-repeat-row="square">
+                <td ms-repeat-ceil="row" ms-class-food="ceil.isFood"></td>
+            </tr>
+        </table>
+        <ol id="snake">
+            <li ms-repeat="body" ms-css-left="[[el.x*ceilWidth]]px" ms-css-top="[[el.y*ceilWidth]]px"></li>
+        </ol>
+    </div>
+</div>
+<script src="../js/avalon.js"></script>

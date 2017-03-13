@@ -25,10 +25,24 @@
         }
     }
 
+    function directionKeyBind(e){
+        if (e.keyCode < 37 || e.keyCode > 40) {
+            return
+        }
+        var direction = e.keyCode - 37;
+        if (Math.abs(direction - snake.direction) != 2) {
+            snake.direction = direction;
+            snake.stop();
+            snake.move();
+            snake.start();
+        }
+    }
+
 
 
     var snake = window.snake = avalon.define({
         $id : 'snake',
+        tip: '',
         ceilLength: 11,
         body: [],
         square: [],
@@ -39,8 +53,9 @@
 
             var head = snake.body[0];
             var ceil = nextSquare(head, snake.direction);
-            if (snake.isOutOfIndex(ceil)) {
-                console.log('game over!');
+            if (snake.isOutOfIndex(ceil) || snake.isOnBody(ceil)) {
+                snake.tip = 'Game Over!';
+                document.removeEventListener('keydown', directionKeyBind);
                 snake.stop();
                 return;
             }
@@ -78,6 +93,11 @@
         isOutOfIndex: function (ceil) {
             return ceil.x < 0 || ceil.x >= snake.ceilLength || ceil.y < 0 || ceil.y >= snake.ceilLength
         },
+        isOnBody: function (ceil) {
+            return snake.body.some(function (item) {
+                return item.x == ceil.x && item.y == ceil.y
+            })
+        },
         isFood: function (ceil) {
             return snake.square[ceil.y][ceil.x].isFood;
         },
@@ -86,11 +106,10 @@
                 var x = ~~ (Math.random() * snake.ceilLength);
                 var y = ~~ (Math.random() * snake.ceilLength);
 
-                var effective = snake.body.every(function (ceil) {
-                    return ceil.x != x || ceil.y != y;
-                });
-
-                if (effective) {
+                if (!snake.isOnBody({
+                        x: x,
+                        y: y
+                    })) {
                     snake.square[y][x].isFood = true;
                     break;
                 }
@@ -121,18 +140,7 @@
             }
             snake.square = square;
 
-            document.addEventListener('keydown', function (e) {
-                if (e.keyCode < 37 || e.keyCode > 40) {
-                    return
-                }
-                var direction = e.keyCode - 37;
-                if (Math.abs(direction - snake.direction) != 2) {
-                    snake.direction = direction;
-                    snake.stop();
-                    snake.move();
-                    snake.start();
-                }
-            });
+            document.addEventListener('keydown', directionKeyBind);
 
             snake.makeFood();
             snake.start();
@@ -148,7 +156,7 @@
     });
 
 
-    //snake.init();
+    snake.init();
 
     avalon.scan();
 

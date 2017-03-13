@@ -6,6 +6,10 @@ $length: 11;
 $width: 11;
 $ceilWidth: 60px;
 
+.game-tip{
+    height: 60px;
+}
+
 .content {
     content: '';
     position: absolute;
@@ -16,7 +20,7 @@ $ceilWidth: 60px;
 }
 #background{
     position: relative;
-    margin: 100px auto;
+    margin: 10px auto;
     width: $width * $ceilWidth;
     height: $length * $ceilWidth;
     table {

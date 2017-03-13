@@ -1,3 +1,6 @@
+.game-tip {
+  height: 60px; }
+
 .content, #background table .food:before, #snake li:before {
   content: '';
   position: absolute;
@@ -8,7 +11,7 @@
 
 #background {
   position: relative;
-  margin: 100px auto;
+  margin: 10px auto;
   width: 660px;
   height: 660px; }
   #background table td {
