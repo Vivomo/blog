@@ -1,0 +1,57 @@
+html, body, .stage {
+  height: 100%;
+  overflow: hidden; }
+
+.stage {
+  position: relative;
+  perspective: 3000px;
+  -webkit-user-select: none; }
+  .stage .square {
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    width: 800px;
+    height: 120px;
+    transform: translate3d(-50%, -50%, 0) rotateX(60deg) rotateY(0deg) rotateZ(0deg);
+    transform-style: preserve-3d;
+    transition: all 2s; }
+    .stage .square table {
+      border: 1px solid #1EEDFF; }
+      .stage .square table td {
+        width: 40px;
+        height: 40px; }
+  .stage .cubes {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-style: preserve-3d;
+    width: 40px;
+    height: 40px;
+    transition: all 0.5s; }
+    .stage .cubes:hover .face {
+      box-shadow: 0 0 36px #1EEDFF; }
+  .stage .face {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    outline: 1px solid #1EEDFF;
+    background: radial-gradient(ellipse at center, #444 0%, #000000 90%);
+    transition: all 0.5s;
+    list-style: none;
+    opacity: 0.5; }
+  .stage .front {
+    transform: translate3d(0px, 50%, 0px) rotateX(-90deg); }
+  .stage .back {
+    transform: translate3d(0px, -50%, 0px) rotateX(90deg) rotateZ(180deg); }
+  .stage .left {
+    transform: translate3d(-50%, 0px, 0px) rotateY(-90deg) rotateZ(90deg); }
+  .stage .right {
+    transform: translate3d(50%, 0px, 0px) rotateY(90deg) rotateZ(-90deg); }
+  .stage .up {
+    transform: translate3d(0px, 0px, 20px); }
+  .stage .bottom {
+    transform: translate3d(0px, 0px, -20px) rotateY(180deg); }
+  .stage .left, .stage .right, .stage .front, .stage .back {
+    transform-origin: 0 40px; }
