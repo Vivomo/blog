@@ -12,7 +12,7 @@ html, body, .stage {
     top: 70%;
     width: 800px;
     height: 120px;
-    transform: translate3d(-50%, -50%, 0) rotateX(60deg) rotateY(0deg) rotateZ(0deg);
+    transform: translate3d(-50%, -50%, 0) rotateX(60deg) rotateY(0deg) rotateZ(12deg);
     transform-style: preserve-3d;
     transition: all 2s; }
     .stage .square table {
