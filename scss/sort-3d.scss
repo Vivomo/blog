@@ -35,6 +35,15 @@ html, body, .stage{
             td {
                 width: $cubeWidth;
                 height: $cubeWidth;
+                font-size: 20px;
+                text-align: center;
+            }
+            tr:nth-child(3){
+                @for $i from 0 through 19{
+                    td:nth-child(#{$i+1}):before {
+                        content: '#{$i}';
+                    }
+                }
             }
         }
     }

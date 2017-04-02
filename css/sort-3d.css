@@ -19,7 +19,49 @@ html, body, .stage {
       border: 1px solid #1EEDFF; }
       .stage .square table td {
         width: 40px;
-        height: 40px; }
+        height: 40px;
+        font-size: 20px;
+        text-align: center; }
+      .stage .square table tr:nth-child(3) td:nth-child(1):before {
+        content: "0"; }
+      .stage .square table tr:nth-child(3) td:nth-child(2):before {
+        content: "1"; }
+      .stage .square table tr:nth-child(3) td:nth-child(3):before {
+        content: "2"; }
+      .stage .square table tr:nth-child(3) td:nth-child(4):before {
+        content: "3"; }
+      .stage .square table tr:nth-child(3) td:nth-child(5):before {
+        content: "4"; }
+      .stage .square table tr:nth-child(3) td:nth-child(6):before {
+        content: "5"; }
+      .stage .square table tr:nth-child(3) td:nth-child(7):before {
+        content: "6"; }
+      .stage .square table tr:nth-child(3) td:nth-child(8):before {
+        content: "7"; }
+      .stage .square table tr:nth-child(3) td:nth-child(9):before {
+        content: "8"; }
+      .stage .square table tr:nth-child(3) td:nth-child(10):before {
+        content: "9"; }
+      .stage .square table tr:nth-child(3) td:nth-child(11):before {
+        content: "10"; }
+      .stage .square table tr:nth-child(3) td:nth-child(12):before {
+        content: "11"; }
+      .stage .square table tr:nth-child(3) td:nth-child(13):before {
+        content: "12"; }
+      .stage .square table tr:nth-child(3) td:nth-child(14):before {
+        content: "13"; }
+      .stage .square table tr:nth-child(3) td:nth-child(15):before {
+        content: "14"; }
+      .stage .square table tr:nth-child(3) td:nth-child(16):before {
+        content: "15"; }
+      .stage .square table tr:nth-child(3) td:nth-child(17):before {
+        content: "16"; }
+      .stage .square table tr:nth-child(3) td:nth-child(18):before {
+        content: "17"; }
+      .stage .square table tr:nth-child(3) td:nth-child(19):before {
+        content: "18"; }
+      .stage .square table tr:nth-child(3) td:nth-child(20):before {
+        content: "19"; }
   .stage .cubes {
     position: absolute;
     left: 0;
