@@ -69,8 +69,8 @@ html, body, .stage {
     transform-style: preserve-3d;
     width: 40px;
     height: 40px;
-    transition: all 0.5s; }
-    .stage .cubes:hover .face {
+    transition: all 0.3s; }
+    .stage .cubes.active .face {
       box-shadow: 0 0 36px #1EEDFF; }
   .stage .face {
     position: absolute;

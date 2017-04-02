@@ -55,8 +55,8 @@ html, body, .stage{
         transform-style: preserve-3d;
         width: $cubeWidth;
         height: $cubeWidth;
-        transition: all 0.5s;
-        &:hover{
+        transition: all 0.3s;
+        &.active{
             .face{
                 box-shadow: 0 0 36px $theme1;
             }

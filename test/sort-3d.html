@@ -80,7 +80,8 @@
             </tr>
         </table>
 
-        <div class="cubes turbo" ms-repeat="list" ms-css-transform="translate3d([[el.index * w]]px, [[w]]px, [[w/2]]px)">
+        <div class="cubes turbo" ms-class-active="el.comparing" ms-repeat="list"
+             ms-css-transform="translate3d([[el.index * w]]px, [[w]]px, [[w/2]]px)">
             <div class="front face turbo" ms-css-height="[[el.height]]px"
                  ms-css-transform="translate3d(0, 0, [[w * -1.5 + el.height]]px) rotateX(-90deg)"></div>
             <div class="left face turbo" ms-css-height="[[el.height]]px"
