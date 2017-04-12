@@ -1,4 +1,4 @@
-//(function () {
+(function () {
     avalon.config({
         interpolate: ["[[", "]]"]
     });
@@ -166,4 +166,4 @@
 
 
 
-//})();
+})();
