@@ -9,8 +9,28 @@
 
 </head>
 <body>
-<div class="stage">
-    <div class="square turbo" ms-controller="square">
+<div class="stage" ms-controller="square">
+
+    <form id="sort-form" class="box sort-form">
+        <fieldset>
+            <legend>3D排序动画演示</legend>
+            <div class="form-line">
+                <input type="radio" name="type" value="bubble" id="bubble" checked/><label for="bubble">冒泡</label>
+                <input type="radio" name="type" value="quick" id="quick"/><label for="quick">快速排序</label>
+                <input type="radio" name="type" value="merge" id="merge" disabled/><label for="merge">归并排序(TODO)</label>
+            </div>
+     <!--       <div class="form-line">
+                <input type="number" class="v-input" min="200" max="3000" ms-duplex-number="time"
+                       placeholder="动画间隔(200ms-3000ms)"/>
+            </div>-->
+
+            <button class="btn submit" ms-disabled="sorting">演示</button>
+            <span class="disabled-msg">排序中....</span>
+        </fieldset>
+    </form>
+
+
+    <div class="square turbo" >
         <table border="#1EEDFF">
             <tr>
                 <td></td>
@@ -80,7 +100,7 @@
             </tr>
         </table>
 
-        <div class="cubes turbo" ms-class-active="el.comparing" ms-repeat="list"
+        <div class="cubes turbo" ms-class-active="el.comparing" ms-class-complete="el.complete" ms-repeat="list"
              ms-css-transform="translate3d([[el.index * w]]px, [[w]]px, [[w/2]]px)">
             <div class="front face turbo" ms-css-height="[[el.height]]px"
                  ms-css-transform="translate3d(0, 0, [[w * -1.5 + el.height]]px) rotateX(-90deg)"></div>

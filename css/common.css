@@ -140,6 +140,47 @@ h1, h2, h3, h4, h5, h6, li, div, p, pre, span, a, td {
   word-break: break-all;
   word-wrap: break-word; }
 
+.btn {
+  padding: 5px 10px;
+  color: #FFF;
+  background-color: #4EA9F3;
+  border-radius: 4px; }
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed; }
+
+.disabled-msg {
+  display: none; }
+
+button[disabled] + .disabled-msg {
+  display: inline-block; }
+
+.v-input {
+  padding: 0 10px;
+  width: 300px;
+  height: 36px;
+  color: #1EEDFF;
+  background-color: transparent;
+  border: 1px solid #1EEDFF;
+  border-radius: 4px; }
+
+.form-line {
+  padding: 12px 0; }
+
+input[type="checkbox"], input[type="radio"] {
+  vertical-align: middle; }
+
+input[type="checkbox"] + label, input[type="radio"] + label {
+  display: inline-block;
+  margin-right: 12px; }
+
+legend {
+  font-size: 20px; }
+
+fieldset {
+  border-color: #1EEDFF; }
+
 body, html {
   font: 12px/1.8 "Microsoft YaHei";
   min-height: 100%;
@@ -191,21 +232,6 @@ header {
     color: red;
     overflow: hidden;
     content: attr(data-letter); }
-
-.btn {
-  padding: 5px 10px;
-  color: #FFF;
-  background-color: #4EA9F3;
-  border-radius: 4px; }
-
-.v-input {
-  padding: 0 10px;
-  width: 300px;
-  height: 36px;
-  color: #1EEDFF;
-  background-color: transparent;
-  border: 1px solid #1EEDFF;
-  border-radius: 4px; }
 
 .fl {
   float: left; }

@@ -10,6 +10,7 @@
             row: row,
             col: col,
             list: [],
+            sorting: false,
             flash: function (item, time) {
                 time = time || 250;
                 vm.light(item);
@@ -20,8 +21,17 @@
             light: function(item) {
                 item.comparing = true;
             },
-            off: function (item) {
-                item.comparing = false;
+            off: function(item, time) {
+                if (time) {
+                    setTimeout(function () {
+                        item.comparing = false;
+                    }, time);
+                } else {
+                    item.comparing = false;
+                }
+            },
+            complete: function(item) {
+                item.complete = true;
             }
         }),
         square = document.querySelector('.square');
@@ -35,6 +45,7 @@
                     return {
                         index: index,
                         comparing: false,
+                        complete: false,
                         height: ~~(Math.random() * maxHeight)
                     }
                 });
@@ -64,17 +75,13 @@
                 return false;
 
             },
-            flash: function(){
-
-            },
-
             bubble: function (arr, key) {
                 key = key || defaultKey;
                 var lastIndex = arr.length - 1;
                 var i = 0,
                     j = lastIndex;
                 var interval = setInterval(function () {
-                    vm.flash(arr[i]);
+                    vm.flash(arr[j - 1]);
                     vm.flash(arr[j]);
                     this.swap(arr, j - 1, j, key);
                     j --;
@@ -83,7 +90,8 @@
                         j = lastIndex;
                     }
                     if (i >= lastIndex) {
-                        clearInterval(interval)
+                        clearInterval(interval);
+                        vm.sorting = false;
                     }
 
                 }.bind(this), 500);
@@ -124,7 +132,8 @@
                         i ++;
                         if (i > end) {
                             _start = start + movedStep;
-                            vm.off(arr[_start]);
+                            vm.off(arr[_start], 250);
+                            vm.complete(arr[_start]);
                             if (movedStep > 1) {
                                 task.push([start, _start - 1]);
                             }
@@ -135,6 +144,7 @@
                                 sort(task.shift())
                             } else {
                                 console.log('Quick sort finish');
+                                vm.sorting = false;
                             }
 
                             clearInterval(interval);
@@ -146,37 +156,13 @@
         }
     })();
 
-    cube.init();
 
-
-    function quickSort(array){
-        function sort(prev, numsize){
-            var nonius = prev;
-            var j = numsize -1;
-            var flag = array[prev];
-            if ((numsize - prev) > 1) {
-                while(nonius < j){
-                    for(; nonius < j; j--){
-                        if (array[j] < flag) {
-                            array[nonius++] = array[j];　//a[i] = a[j]; i += 1;
-                            break;
-                        }
-                    }
-                    for( ; nonius < j; nonius++){
-                        if (array[nonius] > flag){
-                            array[j--] = array[nonius];
-                            break;
-                        }
-                    }
-                }
-                array[nonius] = flag;
-                sort(0, nonius);
-                sort(nonius + 1, numsize);
-            }
-        }
-        sort(0, array.length);
-        return array;
-    }
+    document.querySelector('#sort-form').addEventListener('submit', function (event) {
+        cube.init();
+        vm.sorting = true;
+        Sort[this.type.value](vm.list);
+        event.preventDefault();
+    });
 
 
 

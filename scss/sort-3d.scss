@@ -21,10 +21,10 @@ html, body, .stage{
     .square{
         position: absolute;
         left: 50%;
-        top: 70%;
+        bottom: 100px;
         width: $squareWidth;
         height: $squareHeight;
-        transform: translate3d(-50%, -50%, 0) rotateX(60deg) rotateY(0deg) rotateZ(12deg);
+        transform: translate3d(-50%, 0, 0) rotateX(60deg) rotateY(0deg) rotateZ(12deg);
         transform-style: preserve-3d;
         transition: all 2s;
 
@@ -59,6 +59,11 @@ html, body, .stage{
         &.active{
             .face{
                 box-shadow: 0 0 36px $theme1;
+            }
+        }
+        &.complete{
+            .up {
+                background: radial-gradient(ellipse at center, #444 0%, $theme1 90%);
             }
         }
     }
@@ -98,4 +103,13 @@ html, body, .stage{
         transform-origin: 0 $cubeWidth;
     }
 
+}
+
+.sort-form {
+    margin-top: 40px;
+
+    .submit {
+        margin-right: 30px;
+        font-size: 20px;
+    }
 }
