@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body > * {
+            /*float: left;*/
+        }
+    </style>
+</head>
+<body>
+<div></div>
+<span></span>
+<input type="text"/>
+
+<script>
+    [].slice.call(document.querySelectorAll('body > *')).forEach(function (item) {
+        console.log(item.tagName+':'+css(item, 'display'));
+    });
+
+    function css(elem, attr){
+        return getComputedStyle(elem)[attr];
+    }
+</script>
+</body>
+</html>
