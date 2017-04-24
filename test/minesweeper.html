@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="../css/minesweeper.css">
 </head>
 <body ms-controller="minesweeper">
-<table id="minesweeper" border="#1EEDFF">
+<table id="minesweeper">
     <tr ms-repeat-r="map">
-        <td ms-repeat-c="r" ms-click="check(c)">{{c|mines}}</td>
+        <td ms-repeat-c="r" ms-attr-class="getClass(c)" ms-click="check(c, $outer.$index, $index)" ms-text="getContent(c)"></td>
     </tr>
 </table>
 
