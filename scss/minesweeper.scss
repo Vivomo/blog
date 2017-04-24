@@ -1,0 +1,20 @@
+@charset "UTF-8";
+@import "inc/mixins";
+@import "inc/theme";
+
+$w: 30px;
+
+#minesweeper {
+    display: block;
+    width: 31 * $w;
+    margin: 100px auto;
+    border: 1px solid $theme1;
+    text-align: center;
+    td {
+        width: $w;
+        height: $w;
+        cursor: pointer;
+        user-select: none;
+        background: radial-gradient(ellipse, #fff, $theme1)
+    }
+}

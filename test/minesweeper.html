@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/minesweeper.css">
+</head>
+<body ms-controller="minesweeper">
+<table id="minesweeper" border="#1EEDFF">
+    <tr ms-repeat-r="map">
+        <td ms-repeat-c="r" ms-click="check(c)">{{c|mines}}</td>
+    </tr>
+</table>
+
+<script src="../js/avalon.js"></script>
+<script src="../js/minesweeper.js"></script>
+</body>
+</html>

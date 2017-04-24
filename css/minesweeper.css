@@ -1,0 +1,12 @@
+#minesweeper {
+  display: block;
+  width: 930px;
+  margin: 100px auto;
+  border: 1px solid #1EEDFF;
+  text-align: center; }
+  #minesweeper td {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    user-select: none;
+    background: radial-gradient(ellipse, #fff, #1EEDFF); }
