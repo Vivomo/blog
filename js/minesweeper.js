@@ -8,7 +8,7 @@ var Minesweeper = (function () {
     return {
         row: 16,
         col: 30,
-        minesNum: 60,
+        minesNum: 30,
         init: function () {
             this.createMap();
             this.createMines();
@@ -49,6 +49,8 @@ var Minesweeper = (function () {
                         obj.marked = !obj.marked;
                         if (obj.marked) {
                             vm.minesNum --
+                        } else {
+                            vm.minesNum ++
                         }
                     }
 
