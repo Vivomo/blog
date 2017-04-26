@@ -8,7 +8,7 @@ var Minesweeper = (function () {
     return {
         row: 16,
         col: 30,
-        minesNum: 30,
+        minesNum: 60,
         init: function () {
             this.createMap();
             this.createMines();
