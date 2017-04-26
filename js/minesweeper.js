@@ -1,9 +1,14 @@
 var Minesweeper = (function () {
 
+    document.getElementById('minesweeper').oncontextmenu = function (e) {
+        e.preventDefault();
+    };
+
+
     return {
         row: 16,
         col: 30,
-        minesNum: 99,
+        minesNum: 60,
         init: function () {
             this.createMap();
             this.createMines();
@@ -16,22 +21,42 @@ var Minesweeper = (function () {
                 minesNum: this.minesNum,
                 started: false,
                 gameOver: false,
-                check: function (obj, i, j) {
+                win: false,
+                check: function (obj, i, j, event) {
+
+                    if (obj.checked) {
+                        return;
+                    }
                     if (!vm.started) {
                         Minesweeper.countdown();
                         vm.started = true;
                     }
-                    if (obj.isMines) {
-                        Minesweeper.blow();
-                        vm.gameOver = true;
-                        clearInterval(Minesweeper.interval);
+                    if (event.button == 0) {
+                        if (obj.marked) {
+                            obj.marked = false;
+                            vm.minesNum ++;
+                        }
+                        if (obj.isMines) {
+                            Minesweeper.blow();
+                            vm.gameOver = true;
+                            clearInterval(Minesweeper.interval);
+                            obj.checked = true;
+                        } else if (obj.num === 0) {
+                            Minesweeper.activeBlank(i, j);
+                        }
                         obj.checked = true;
-                    } else if (obj.num === 0) {
-                        Minesweeper.activeBlank(i, j);
+                    } else if (event.button == 2) {
+                        obj.marked = !obj.marked;
+                        if (obj.marked) {
+                            vm.minesNum --
+                        }
                     }
-                    obj.checked = true;
+
                 },
                 getContent: function (obj) {
+                    if (obj.marked) {
+                        return '☠';
+                    }
                     if (!obj.checked) {
                         return '';
                     }
@@ -53,12 +78,35 @@ var Minesweeper = (function () {
                     return vm.gameOver ? '☹' : '☺';
                 },
                 restart: function () {
-                    if (vm.gameOver) {
+                    if (vm.gameOver || vm.win) {
                         Minesweeper.restart();
                     }
                 }
             });
             avalon.scan();
+
+            vm.$watch('minesNum', function (now) {
+                if (now == 0) {
+                    Minesweeper.checkOver();
+                }
+            })
+        },
+        checkOver: function () {
+            var map = this.vm.map;
+            var allRight = true;
+            this.loop(function (i, j) {
+                if (map[i][j].isMines && !map[i][j].marked) {
+                    return allRight = false;
+                }
+            });
+            if (allRight) {
+                this.win();
+            }
+        },
+        win: function () {
+            clearInterval(this.interval);
+            this.vm.win = true;
+            alert('Nice!');
         },
         restart: function () {
             clearInterval(this.interval);
@@ -103,7 +151,9 @@ var Minesweeper = (function () {
                 col = this.col;
             for (var i = 0; i < row; i++) {
                 for (var j = 0; j < col; j++) {
-                    callback(i, j);
+                    if(callback(i, j) === false) {
+                        return;
+                    }
                 }
             }
         },
@@ -113,13 +163,18 @@ var Minesweeper = (function () {
                     return {
                         isMines: false,
                         num: 0,
-                        checked: false
+                        checked: false,
+                        marked: false
                     }
                 })
             }.bind(this));
         },
-        createMines: function (num) {
-            num = num || this.minesNum;
+        createMines: function () {
+            var pattern = /\d+/.exec(location.hash),
+                num = this.minesNum;
+            if (pattern) {
+                this.minesNum = num = Math.max(1,Math.min(~~ pattern[0], 300));
+            }
             for (var i = 0; i < num; i++) {
                 do {
                     var randomRow = ~~ (Math.random() * this.row),
@@ -133,6 +188,7 @@ var Minesweeper = (function () {
             this.loop(function (i, j) {
                 if (map[i][j].isMines) {
                     map[i][j].checked = true;
+                    map[i][j].marked = false;
                 }
             })
         },

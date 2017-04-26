@@ -58,6 +58,9 @@ $w: 30px;
             box-shadow: none;
             background: #f00;
         }
+        &.marked {
+            color: #f00;
+        }
     }
 
     th {
