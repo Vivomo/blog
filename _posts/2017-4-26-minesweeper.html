@@ -1,0 +1,25 @@
+---
+layout: blank
+title: 扫雷
+css: minesweeper
+js: minesweeper
+---
+<div ms-controller="minesweeper">
+<table id="minesweeper">
+    <thead>
+    <tr>
+        <th colspan="99">
+            <span class="num fl" ms-text="minesNum"></span>
+            <button ms-text="getGameState()" ms-click="restart"></button>
+            <time class="num fr" ms-text="time"></time>
+        </th>
+    </tr>
+
+    </thead>
+    <tr ms-repeat-r="map">
+        <td ms-repeat-c="r" ms-class-marked="c.marked" ms-attr-class="getClass(c)"
+            ms-mousedown="check(c, $outer.$index, $index, $event)" ms-text="getContent(c)"></td>
+    </tr>
+</table>
+</div>
+<script src="{{site.baseurl}}/js/avalon.js"></script>
