@@ -3,17 +3,28 @@ var Minesweeper = (function () {
     return {
         row: 16,
         col: 30,
+        minesNum: 99,
         init: function () {
             this.createMap();
             this.createMines();
             this.updateNum();
 
-            this.vm = avalon.define({
+            var vm = this.vm = avalon.define({
                 $id: 'minesweeper',
                 map: this.map,
+                time: 0,
+                minesNum: this.minesNum,
+                started: false,
+                gameOver: false,
                 check: function (obj, i, j) {
+                    if (!vm.started) {
+                        Minesweeper.countdown();
+                        vm.started = true;
+                    }
                     if (obj.isMines) {
                         Minesweeper.blow();
+                        vm.gameOver = true;
+                        clearInterval(Minesweeper.interval);
                         obj.checked = true;
                     } else if (obj.num === 0) {
                         Minesweeper.activeBlank(i, j);
@@ -37,9 +48,37 @@ var Minesweeper = (function () {
                         return 'mines'
                     }
                     return 'num' + obj.num;
+                },
+                getGameState: function () {
+                    return vm.gameOver ? '☹' : '☺';
+                },
+                restart: function () {
+                    if (vm.gameOver) {
+                        Minesweeper.restart();
+                    }
                 }
             });
             avalon.scan();
+        },
+        restart: function () {
+            clearInterval(this.interval);
+            this.createMap();
+            this.createMines();
+            this.updateNum();
+            this.initVm();
+        },
+        initVm: function () {
+            var vm = this.vm;
+            vm.map = this.map;
+            vm.minesNum = this.minesNum;
+            vm.time = 0;
+            vm.gameOver = vm.started = false;
+
+        },
+        countdown: function () {
+            this.interval = setInterval(function () {
+                this.vm.time ++;
+            }.bind(this), 1000);
         },
         updateNum: function () {
             var row = this.row,
@@ -80,7 +119,7 @@ var Minesweeper = (function () {
             }.bind(this));
         },
         createMines: function (num) {
-            num = num || 99;
+            num = num || this.minesNum;
             for (var i = 0; i < num; i++) {
                 do {
                     var randomRow = ~~ (Math.random() * this.row),

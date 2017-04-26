@@ -8,15 +8,17 @@ $w: 30px;
     display: block;
     width: 30 * $w;
     margin: 100px auto;
+    font-size: 14px;
+
     text-align: center;
     border: 4px solid #ccc;
+    background: #999;
+
     td {
         width: $w;
         height: $w;
-        font-size: 14px;
         cursor: pointer;
         user-select: none;
-        background: #999;
         border: 0;
         box-shadow: 3px 3px 3px #fff inset, -3px -3px 3px #666 inset;
 
@@ -56,6 +58,23 @@ $w: 30px;
             box-shadow: none;
             background: #f00;
         }
+    }
 
+    th {
+        position: relative;
+        height: $w * 2;
+        font-size: 2em;
+
+        .num {
+            padding: 0 10px;
+            color: #f00;
+            background: #000;
+        }
+
+        button {
+            width: 36px;
+            height: 36px;
+            box-shadow: 3px 3px 3px #fff inset, -3px -3px 3px #666 inset;
+        }
     }
 }
