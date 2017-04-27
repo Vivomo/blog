@@ -88,7 +88,7 @@
         eat: function (food) {
             snake.body.unshift(food);
             snake.square[food.y][food.x].isFood = false;
-            snake.makeFood();
+            snake.createFood();
         },
         isOutOfIndex: function (ceil) {
             return ceil.x < 0 || ceil.x >= snake.ceilLength || ceil.y < 0 || ceil.y >= snake.ceilLength
@@ -101,7 +101,7 @@
         isFood: function (ceil) {
             return snake.square[ceil.y][ceil.x].isFood;
         },
-        makeFood : function () {
+        createFood : function () {
             while (true) {
                 var x = ~~ (Math.random() * snake.ceilLength);
                 var y = ~~ (Math.random() * snake.ceilLength);
@@ -142,7 +142,7 @@
 
             document.addEventListener('keydown', directionKeyBind);
 
-            snake.makeFood();
+            snake.createFood();
             snake.start();
         },
         stop : function () {

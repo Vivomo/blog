@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eval</title>
+</head>
+<body>
+<!--IETester 测试-->
+<textarea id="content" cols="30" rows="10"></textarea>
+<button id="eval">Eval</button>
+
+<script>
+    var contentElem = document.getElementById('content');
+    document.getElementById('eval').onclick = function () {
+        alert(eval(contentElem.value))
+    }
+</script>
+</body>
+</html>
