@@ -8,6 +8,8 @@ html, body {
 }
 body {
     padding: $bodyPadding;
+    font-size: 13px;
+    color: #a6a6a6;
 }
 
 $navWidth: 200px;
@@ -19,11 +21,11 @@ $navWidth: 200px;
     height: calc(100% - 40px);
     max-height: calc(100% - 40px);
     font-size: 16px;
-    border: $border1;
+    border: $border3;
 
     ol {
         list-style-position: inside;
-        color: $theme2;
+        color: #00aa00;
     }
 
     li {
@@ -37,5 +39,20 @@ $navWidth: 200px;
 #article {
     margin-left: $navWidth + 40px;
     padding: 10px;
-    border: $border1;
+    border: $border3;
+
+    h1 {
+        color: $theme1;
+    }
+
+    .eg-error {
+        color: #a80000;
+    }
+
+    ol, ul {
+        list-style-position: inside;
+    }
+    ul {
+        list-style-type: disc;
+    }
 }

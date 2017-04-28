@@ -3,7 +3,9 @@ html, body {
   box-sizing: border-box; }
 
 body {
-  padding: 20px; }
+  padding: 20px;
+  font-size: 13px;
+  color: #a6a6a6; }
 
 #catalog {
   float: left;
@@ -12,10 +14,10 @@ body {
   height: calc(100% - 40px);
   max-height: calc(100% - 40px);
   font-size: 16px;
-  border: 1px solid #1EEDFF; }
+  border: 1px solid #4eeaea; }
   #catalog ol {
     list-style-position: inside;
-    color: #4EA9F3; }
+    color: #00aa00; }
   #catalog li {
     margin-bottom: 10px; }
   #catalog a {
@@ -24,4 +26,12 @@ body {
 #article {
   margin-left: 240px;
   padding: 10px;
-  border: 1px solid #1EEDFF; }
+  border: 1px solid #4eeaea; }
+  #article h1 {
+    color: #1EEDFF; }
+  #article .eg-error {
+    color: #a80000; }
+  #article ol, #article ul {
+    list-style-position: inside; }
+  #article ul {
+    list-style-type: disc; }
