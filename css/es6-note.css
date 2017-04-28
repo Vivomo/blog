@@ -1,0 +1,27 @@
+html, body {
+  height: 100%;
+  box-sizing: border-box; }
+
+body {
+  padding: 20px; }
+
+#catalog {
+  float: left;
+  padding: 10px;
+  width: 200px;
+  height: calc(100% - 40px);
+  max-height: calc(100% - 40px);
+  font-size: 16px;
+  border: 1px solid #1EEDFF; }
+  #catalog ol {
+    list-style-position: inside;
+    color: #4EA9F3; }
+  #catalog li {
+    margin-bottom: 10px; }
+  #catalog a {
+    color: inherit; }
+
+#article {
+  margin-left: 240px;
+  padding: 10px;
+  border: 1px solid #1EEDFF; }

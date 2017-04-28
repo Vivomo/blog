@@ -1,0 +1,41 @@
+@import "inc/theme";
+
+$bodyPadding: 20px;
+
+html, body {
+    height: 100%;
+    box-sizing: border-box;
+}
+body {
+    padding: $bodyPadding;
+}
+
+$navWidth: 200px;
+
+#catalog {
+    float: left;
+    padding: 10px;
+    width: $navWidth;
+    height: calc(100% - 40px);
+    max-height: calc(100% - 40px);
+    font-size: 16px;
+    border: $border1;
+
+    ol {
+        list-style-position: inside;
+        color: $theme2;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+    a {
+        color: inherit;
+    }
+}
+
+#article {
+    margin-left: $navWidth + 40px;
+    padding: 10px;
+    border: $border1;
+}
