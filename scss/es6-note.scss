@@ -14,14 +14,26 @@ body {
 
 $navWidth: 200px;
 
-#catalog {
-    float: left;
+.scroll {
     padding: 10px;
-    width: $navWidth;
     height: calc(100% - 40px);
     max-height: calc(100% - 40px);
-    font-size: 16px;
+    overflow-x: hidden;
     border: $border3;
+}
+.scroll::-webkit-scrollbar{
+    width: 6px;
+}
+.scroll::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background: rgba($theme1, 0.6);
+}
+
+#catalog {
+    float: left;
+    width: $navWidth;
+    font-size: 16px;
+    @extend .scroll;
 
     ol {
         list-style-position: inside;
@@ -36,10 +48,11 @@ $navWidth: 200px;
     }
 }
 
+
+
 #article {
     margin-left: $navWidth + 40px;
-    padding: 10px;
-    border: $border3;
+    @extend .scroll;
 
     h1 {
         color: $theme1;
@@ -54,5 +67,12 @@ $navWidth: 200px;
     }
     ul {
         list-style-type: disc;
+    }
+
+    pre.code {
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 8px;
+        background: #333;
     }
 }

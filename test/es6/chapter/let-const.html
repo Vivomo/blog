@@ -25,7 +25,7 @@
         只要块级作用域内存在let命令，它所声明的变量就“绑定”（binding）这个区域，不再受外部的影响,
         “暂时性死区”也意味着typeof不再是一个百分之百安全的操作。</dt>
     <dd>
-        <pre>
+        <pre class="code">
 var tmp = 123;
 if (true) {
     tmp = 'abc'; // ReferenceError
@@ -40,15 +40,17 @@ let x;
 <dl>
     <dt class="eg-error">比较隐蔽的"死区"</dt>
     <dd>
-        <pre>
+        <pre class="code">
 function bar(x = y, y = 2) {
   return [x, y];
 }
 
 bar(); // 报错
-上面代码中，调用bar函数之所以报错（某些实现可能不报错），是因为参数x默认值等于另一个参数y，而此时y还没有声明，属于”死区“。如果y的默认值是x，就不会报错，因为此时x已经声明了。
-
-
+</pre>
+<p>
+    上面代码中，调用bar函数之所以报错（某些实现可能不报错），是因为参数x默认值等于另一个参数y，而此时y还没有声明，属于”死区“。如果y的默认值是x，就不会报错，因为此时x已经声明了。
+</p>
+<pre class="code">
 // 不报错
 var x = x;
 

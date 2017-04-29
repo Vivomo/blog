@@ -7,14 +7,24 @@ body {
   font-size: 13px;
   color: #a6a6a6; }
 
-#catalog {
-  float: left;
+.scroll, #catalog, #article {
   padding: 10px;
-  width: 200px;
   height: calc(100% - 40px);
   max-height: calc(100% - 40px);
-  font-size: 16px;
+  overflow-x: hidden;
   border: 1px solid #4eeaea; }
+
+.scroll::-webkit-scrollbar, #catalog::-webkit-scrollbar, #article::-webkit-scrollbar {
+  width: 6px; }
+
+.scroll::-webkit-scrollbar-thumb, #catalog::-webkit-scrollbar-thumb, #article::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background: rgba(30, 237, 255, 0.6); }
+
+#catalog {
+  float: left;
+  width: 200px;
+  font-size: 16px; }
   #catalog ol {
     list-style-position: inside;
     color: #00aa00; }
@@ -24,9 +34,7 @@ body {
     color: inherit; }
 
 #article {
-  margin-left: 240px;
-  padding: 10px;
-  border: 1px solid #4eeaea; }
+  margin-left: 240px; }
   #article h1 {
     color: #1EEDFF; }
   #article .eg-error {
@@ -35,3 +43,8 @@ body {
     list-style-position: inside; }
   #article ul {
     list-style-type: disc; }
+  #article pre.code {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 8px;
+    background: #333; }
