@@ -3,7 +3,7 @@
     var block = {
         "coding.imooc.com" : function (){
             var style = document.createElement('style');
-            style.innerText =  ' .next-mask.in, #video-container-mocoplayer-hls-video > [class]{ z-index:1000;} ';
+            style.innerText =  ' .next-mask.in, #video-container-mocoplayer-hls-video > [class]{ z-index:1000;background:#000} ';
             document.head.appendChild(style);
         }
     };

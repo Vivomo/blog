@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>text-shadow</title>
+    <style>
+        #box {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+
+        #d1 {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            z-index: 2;
+            background: green;
+        }
+        span {
+            position: absolute;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<div id="box">
+    <div id="d1"></div>
+    <span>123</span>
+</div>
+</body>
+</html>
