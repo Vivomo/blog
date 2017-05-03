@@ -94,16 +94,17 @@
     /**
      * Number.
      *  isFinite
-     *  isNaN
-     *  parseInt
-     *  parseFloat
      *  isInteger
      *  isSafeInteger
      *  EPSILON //2.220446049250313e-16 极小的常量
      *  MAX_SAFE_INTEGER
      *  MIN_SAFE_INTEGER
      */
-
+    Number.isNaN && Number.isNaN = function(num){
+        return num != num;
+    }
+    Number.parseInt && (Number.parseInt = parseInt);
+    Number.parseFloat && (Number.parseFloat = parseFloat);
     /**
      * Math.
      *  trunc //去除小数部分
