@@ -1909,7 +1909,7 @@ var tagHooks = {
 tagHooks.th = tagHooks.td
 tagHooks.optgroup = tagHooks.option
 tagHooks.tbody = tagHooks.tfoot = tagHooks.colgroup = tagHooks.caption = tagHooks.thead
-String("circle,defs,ellipse,image,line,path,polygon,polyline,rect,symbol,text,use").replace(rword, function (tag) {
+String("circle,defs,ellipse,images,line,path,polygon,polyline,rect,symbol,text,use").replace(rword, function (tag) {
     tagHooks[tag] = tagHooks.g //处理SVG
 })
 var rtagName = /<([\w:]+)/  //取得其tagName

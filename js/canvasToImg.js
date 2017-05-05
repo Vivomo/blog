@@ -37,7 +37,7 @@
             for (var i = 0; i < circleCount; i++) {
                 ring.draw(x, x * i * 2 + x, -halfPi, twoPi * ((i + 1) / config.circleCount) - halfPi, i == circleCount - 1);
             }
-            return canvas.toDataURL('image/png');
+            return canvas.toDataURL('images/png');
         }).join('###')
     }, false);
 

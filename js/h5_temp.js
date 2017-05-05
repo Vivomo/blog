@@ -266,7 +266,7 @@ Printer.prototype = {
         var src1 = $('.computer')[0].src;
         var img1 = new Image;
         img1.onload = function () {
-            var src2 = /\("(.+?)"\)/.exec($('.s1').css('background-image'))[1];
+            var src2 = /\("(.+?)"\)/.exec($('.s1').css('background-images'))[1];
             var img2 = new Image;
             img2.onload = function () {
                 start();
