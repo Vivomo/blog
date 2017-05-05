@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>本地图片预览</title>
+</head>
+<body>
+<form action="#">
+    <input type="file" name="image" id="file">
+</form>
+<img src="" alt="" id="preview">
+
+
+<script>
+    var preview = $id('preview');
+    $id('file').onchange = function (e) {
+        preview.src = window.URL.createObjectURL(this.files[0])
+    };
+
+
+    function $id(id) {
+        return document.getElementById(id)
+    }
+
+</script>
+</body>
+</html>
