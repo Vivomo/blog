@@ -8,13 +8,15 @@
 
 </head>
 
+<!--
+             ms-css-transform="style($index)"
 
+-->
 <body>
 <div ms-controller="cube" class="outer-wrap">
     <div class="outer-box">
         <div ms-repeat="cubes" class="cubes"
              ms-attr-id="'id_'+$index"
-             ms-css-transform="style($index)"
              ms-attr-data-role="role($index)"
              ms-attr-data-side="side($index)"
              ms-attr-data-position="position($index)">
@@ -27,20 +29,38 @@
             <div class="bottom face" ms-css-background="bg($index,'bottom')"></div>
         </div>
     </div>
+
+    <div class="outer-box">
+        <div ms-repeat="cubes" class="cubes"
+             ms-attr-id="'id_'+$index"
+             ms-css-transform="style($index)"
+             ms-attr-data-role="role($index)"
+             ms-attr-data-side="side($index)"
+             ms-attr-data-position="position($index)">
+            {{$index}}
+            <div class="front face" ms-css-background="bg($index,'front')" ></div>
+            <div class="left face" ms-css-background="bg($index,'left')"></div>
+            <div class="up face" ms-css-background="bg($index,'up')"></div>
+            <div class="right face" ms-css-background="bg($index,'right')"></div>
+            <div class="back face" ms-css-background="bg($index,'back')"></div>
+            <div class="bottom face" ms-css-background="bg($index,'bottom')"></div>
+        </div>
+    </div>
+
 </div>
 <script>
 
     Math.radian = function(degree) {
         return degree * Math.PI / 180;
     };
-    var cos = function(degree) {
+    let cos = function(degree) {
         return Math.cos(Math.radian(degree));
     };
-    var sin = function(degree) {
+    let sin = function(degree) {
         return Math.sin(Math.radian(degree));
     };
 
-    var colorMap = {
+    let colorMap = {
             up : 'yellow',
             bottom : 'white',
             left : 'orange',
@@ -59,7 +79,7 @@
 
 
 
-    var CubeUtil = {
+    let CubeUtil = {
         edge : 8,
         horn : 4,
         center : 2,
@@ -86,8 +106,10 @@
         }
     };
 
-    for (var i = 0; i < 27; i++) {
-        var item = {
+
+
+    for (let i = 0; i < 27; i++) {
+        let item = {
             index : i,
             x : i % 3 * l,
             y : ~~(i % 9 / 3) * l,
@@ -97,7 +119,7 @@
         initCube(item);
     }
 
-    var vm = avalon.define({
+    let vm = avalon.define({
         $id: 'cube',
         cubes: cubes,
         up : up,
@@ -106,8 +128,9 @@
         right : right,
         front : front,
         back : back,
+
         style: function (index, str) {
-            var _x = cubes[index].x,
+            let _x = cubes[index].x,
                     _y = cubes[index].y,
                     _z = cubes[index].z + 50;
             return 'translate3d(' + _x + 'px,' + _y + 'px,' +  _z + 'px)' + (str || '');
@@ -136,8 +159,8 @@
          * @param index
          */
         side : function(index) {
-            var temp = 0;
-            var cube = cubes[index];
+            let temp = 0;
+            let cube = cubes[index];
             if (cube.z == 50)
                 temp |= CubeUtil.back;
             if (cube.z == 250)
@@ -156,21 +179,19 @@
 
         },
         bg : function (index, key) {
-            var arr = vm[key];
-            for (var i = 0; i < arr.length; i++) {
+            let arr = vm[key];
+            for (let i = 0; i < arr.length; i++) {
                 if (arr[i].index == index)
                     return colorMap[key]
             }
         }
     });
     avalon.scan();
-//    vm.cubes = cubes;
 
 
-    var arr = document.querySelectorAll('.cubes');
 
 
-    function initCube(){
+    function initCube(item){
         if (item.index < 9) {
             back.push(item);
         }
@@ -191,31 +212,29 @@
         }
     }
 
-    function rotateFront(){
 
-    }
 
     function test(){
-        var li = document.querySelectorAll('.cubes')[18];
-        var transform = li.style.transform;
-        var str = transform.substring( transform.indexOf('(') + 1, transform.lastIndexOf(')'));
-        var arr = str.split(',');
-        var x = parseInt(arr[0]);
-        var y = parseInt(arr[1]);
-        var z = parseInt(arr[2]);
-        var j = 90/24;
-        var start = 0;
-        var i = 0;
-        var r = Math.sqrt(20000);
+        let li = document.querySelectorAll('.cubes')[18];
+        let transform = li.style.transform;
+        let str = transform.substring( transform.indexOf('(') + 1, transform.lastIndexOf(')'));
+        let arr = str.split(',');
+        let x = parseInt(arr[0]);
+        let y = parseInt(arr[1]);
+        let z = parseInt(arr[2]);
+        let j = 90/24;
+        let start = 0;
+        let i = 0;
+        let r = Math.sqrt(20000);
 
-        var clear = setInterval(function(){
+        let clear = setInterval(function(){
             start += j;
-            var degree = (180 - start) / 2 - 45;
-            var l = Math.sqrt(2*r*r*(1-cos(start)));
+            let degree = (180 - start) / 2 - 45;
+            let l = Math.sqrt(2*r*r*(1-cos(start)));
             console.log(l);
 
-            var _x = l * cos(degree);
-            var _y = l * sin(degree);
+            let _x = l * cos(degree);
+            let _y = l * sin(degree);
 
             li.style.transform = 'translate3d('+(x+_x)+'px, '+(y-_y)+'px, '+z+'px) ' + 'rotateZ('+start+'deg)';
             i++;
