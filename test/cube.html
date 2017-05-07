@@ -19,7 +19,9 @@
              ms-attr-id="'id_'+$index"
              ms-attr-data-role="role($index)"
              ms-attr-data-side="side($index)"
-             ms-attr-data-position="position($index)">
+             ms-attr-data-position="position($index)"
+             ms-css-transform="getTransform($index)"
+        >
 
             <div class="front face" ms-css-background="bg($index,'front')" ></div>
             <div class="left face" ms-css-background="bg($index,'left')"></div>
@@ -128,7 +130,12 @@
         right : right,
         front : front,
         back : back,
-
+        transform: avalon.range(0, 27).map(function () {
+            return 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
+        }),
+        getTransform: function (index) {
+            return vm.transform[index];
+        },
         style: function (index, str) {
             let _x = cubes[index].x,
                     _y = cubes[index].y,

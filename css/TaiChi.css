@@ -1,0 +1,51 @@
+#TaiChi {
+  margin: 100px auto;
+  font-size: 0;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  overflow: hidden;
+  animation: rotate 3s linear infinite; }
+  #TaiChi > * {
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    width: 50%; }
+    #TaiChi > *:before, #TaiChi > *:after {
+      position: absolute;
+      content: ''; }
+    #TaiChi > *:before {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      z-index: 2; }
+    #TaiChi > *:after {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      z-index: 1; }
+  #TaiChi #black {
+    background: #000; }
+    #TaiChi #black:before {
+      top: 87.5px;
+      right: -12.5px;
+      background: #fff; }
+    #TaiChi #black:after {
+      left: 100px;
+      background: #000; }
+  #TaiChi #white {
+    background: #fff; }
+    #TaiChi #white:before {
+      background: #000;
+      left: -12.5px;
+      bottom: 87.5px; }
+    #TaiChi #white:after {
+      bottom: 0;
+      right: 100px;
+      background: #fff; }
+
+@keyframes rotate {
+  0% {
+    transform: rotateZ(0); }
+  100% {
+    transform: rotateZ(360deg); } }
