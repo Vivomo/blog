@@ -1,3 +1,7 @@
 博客计划
 js中的正则表达式 (包含es6)
 js中的数字
+
+开源计划
+Python3+Django =>博客
+Python => phabricator

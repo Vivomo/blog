@@ -81,7 +81,16 @@
         }
     }
     if (!strPro.repeat) {
-
+        strPro.repeat = function (num) {
+            if (typeof num != 'number' || Number.isNaN(num) || num < 1) {
+                return ''
+            } else if (num === 1) {
+                return this;
+            } else {
+                var half = num / 2;
+                return this.repeat(Math.floor(half)) + this.repeat(Math.ceil(half))
+            }
+        }
     }
     /**
      * padStart
@@ -100,9 +109,9 @@
      *  MAX_SAFE_INTEGER
      *  MIN_SAFE_INTEGER
      */
-    Number.isNaN && Number.isNaN = function(num){
+    Number.isNaN && (Number.isNaN = function(num){
         return num != num;
-    }
+    })
     Number.parseInt && (Number.parseInt = parseInt);
     Number.parseFloat && (Number.parseFloat = parseFloat);
     /**
