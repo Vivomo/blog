@@ -138,6 +138,11 @@
      *  Math.acosh(x) 返回x的反双曲余弦（inverse hyperbolic cosine）
      *  Math.atanh(x) 返回x的反双曲正切（inverse hyperbolic tangent）
      */
+    if (!Math.trunc) {
+        Math.trunc = function (num) {
+            return ~~num;
+        }
+    }
 
     /**
      * Array.
