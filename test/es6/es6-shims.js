@@ -109,9 +109,12 @@
      *  MAX_SAFE_INTEGER
      *  MIN_SAFE_INTEGER
      */
-    Number.isNaN && (Number.isNaN = function(num){
-        return num != num;
-    })
+    if (!Number.isNaN) {
+        Number.isNaN = function(num){
+            return num != num;
+        }
+    }
+ 
     Number.parseInt && (Number.parseInt = parseInt);
     Number.parseFloat && (Number.parseFloat = parseFloat);
     /**
@@ -150,7 +153,7 @@
      *  values
      *  includes
      */
-
+    var arrPro = Array.prototype;
 
     /**
      * function.
@@ -160,9 +163,20 @@
     /**
      * Object.
      *  is
-     *  assign
      *  values
      *  entries
      *
      */
+    if (!Object.assign) {
+        Object.assign = function () {
+            var target = arguments[0],
+                sources = arrPro.slice.call(arguments).slice(1);
+            sources.forEach(function (item) {
+                for (var k in item) {
+                    target[k] = item[k]
+                }
+            })
+            return target;
+        }
+    }
 })();
