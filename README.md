@@ -1,6 +1,6 @@
 # 自己的个人博客
 
-访问地址(http://vivomo.github.io/blog/)
+访问地址(http://www.weimu.me)
 
 ## 博客的内容
 * 偶尔灵光一现的想法 <br>
