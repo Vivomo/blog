@@ -11,7 +11,7 @@
 
 {{ content }}
 
-{% if page.js != '' %}
+{% if page.js != null %}
 <script src="{{site.baseurl}}js/{{page.js}}.js"></script>
 {% endif %}
 </body>
