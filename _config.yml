@@ -1,1 +1,2 @@
 baseurl: /
+exclude: ["build", "scss", "eg_build", "chrome_plugins", "doc", "SPA", "test", "README.md"]
