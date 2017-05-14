@@ -3,16 +3,16 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>{{ page.title }}</title>
-    <link rel="stylesheet" href="{{site.baseurl}}/css/common.css"/>
-    <link rel="stylesheet" href="{{site.baseurl}}/css/{{page.css}}.css"/>
-    <link rel="shortcut icon" href="{{site.baseurl}}/img/favicon.ico">
+    <link rel="stylesheet" href="{{site.baseurl}}css/common.css"/>
+    <link rel="stylesheet" href="{{site.baseurl}}css/{{page.css}}.css"/>
+    <link rel="shortcut icon" href="{{site.baseurl}}img/favicon.ico">
 </head>
 <body>
 
 {{ content }}
 
 {% if page.js != '' %}
-<script src="{{site.baseurl}}/js/{{page.js}}.js"></script>
+<script src="{{site.baseurl}}js/{{page.js}}.js"></script>
 {% endif %}
 </body>
 </html>
