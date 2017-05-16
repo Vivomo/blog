@@ -30,7 +30,7 @@ d3.csv("../../src/flare.csv", function(error, data) {
         .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
 
     node.append("circle")
-        .attr("r", 3.5);
+        .attr("r", 5);
 
     node.append("text")
         .attr("dy", 3)
