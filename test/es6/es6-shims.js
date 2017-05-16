@@ -153,12 +153,21 @@
      *  find
      *  findIndex
      *  fill
-     *  findIndex
      *  keys
      *  values
      *  includes
      */
     var arrPro = Array.prototype;
+    if (!Array.from) {
+        Array.from = function () {
+
+        }
+    }
+    if (!arrPro.findIndex) {
+        arrPro.findIndex = function () {
+            // TODO
+        }
+    }
 
     /**
      * function.
