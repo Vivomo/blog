@@ -3,5 +3,8 @@ js中的正则表达式 (包含es6)
 js中的数字
 
 开源计划
-Python3+Django =>博客
+Python3+Django =>博客 0.5
 Python => phabricator
+
+小程序
+Python 翻译 GitHub上的md文档
