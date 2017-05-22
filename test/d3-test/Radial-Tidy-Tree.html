@@ -60,6 +60,8 @@
             var link = g.selectAll(".link")
                 .data(root.links())
                 .enter().append("path")
+                .transition()
+                .duration(2000)
                 .attr("class", "link")
                 .attr("d", d3.linkRadial()
                     .angle(function (d) {
@@ -72,10 +74,6 @@
             var node = g.selectAll(".node")
                 .data(root.descendants())
                 .enter().append("g")
-                .on("click", function (d) {
-                    toggle(d);
-                    redraw(d);
-                })
                 .attr("class", function (d) {
                     return "node" + (d.children ? " node--internal" : " node--leaf");
                 })
@@ -84,9 +82,7 @@
                 });
 
             node.append("circle")
-                .attr("r", 5);
-
-            node.enter()
+                .attr("r", 5)
                 .on("click", function (d) {
                     toggle(d);
                     redraw(d);
