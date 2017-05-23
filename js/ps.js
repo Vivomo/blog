@@ -2,10 +2,12 @@
 const Canvas = (function () {
 
     var loadFile = document.getElementById('loadFile'),
-        canvas = document.getElementById('canvas');
+        canvas = document.getElementById('canvas'),
+        loadText = document.getElementById('loadText');
     return {
         loadFile,
         canvas,
+        loadText,
         pen: canvas.getContext('2d'),
         drawImgOnCanvas: function(src){
             let img = new Image,
@@ -22,6 +24,10 @@ const Canvas = (function () {
             this.loadFile.onchange = function () {
                 this.drawImgOnCanvas(URL.createObjectURL(this.loadFile.files[0]))
             }.bind(this)
+
+            this.loadText.onchange = function () {
+
+            }
         }
     }
 })();
