@@ -1,5 +1,5 @@
 /**
- * 一个轻量级的文件上传
+ * 一个轻量级的文件上传, 暂时未添加自动上传的逻辑, 因为ant中有自动上传的组件, 这只是它功能的补全
  * 配置参数:
  *  url: 上传路径
  *  uploadBtn:上传按钮 selector 或 HTMLElement
@@ -11,8 +11,7 @@
  *  onError: 上传失败时触发
  */
 export default class Uploader {
-    requiredParams = ['uploadBtn', 'url', 'uploadFile'];
-    autoStart = false;
+    requiredParams = ['url', 'uploadFile'];
     /**
      *
      * @param cfg
@@ -33,11 +32,7 @@ export default class Uploader {
             }
         });
 
-        if (this.autoStart) {
-            this.uploadFile.onchange = () => {
-                this.triggerUpload();
-            };
-        } else {
+        if (this.uploadBtn) {
             this.uploadBtn.addEventListener('click', () => {
                 if (this.uploadFile.files.length > 0) {
                     this.triggerUpload();
@@ -46,9 +41,16 @@ export default class Uploader {
         }
     }
 
-    triggerUpload = () => {
+    getFiles = () => {
+        return this.uploadFile.files;
+    }
+
+    triggerUpload = (data = {}) => {
         const formData = new FormData();
         formData.append('file', this.uploadFile.files[0]);
+        Object.entries(data).forEach((entry) => {
+            formData.append(entry[0], entry[1]);
+        });
         this.upload(formData);
     }
 
@@ -92,8 +94,19 @@ export default class Uploader {
             };
         }
 
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                this.success && this.success(xhr.responseText);
+            }
+            console.log(`${xhr.readyState}--${xhr.status}`);
+        };
+
         xhr.open('POST', this.url, true);
         xhr.send(formData);
+    }
+
+    submit = (data = {}) => {
+        this.triggerUpload(data);
     }
 
 }
