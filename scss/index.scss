@@ -19,6 +19,10 @@
         a{
             display: block;
             color: inherit;
+            &[data-type="css"]:after {
+                content: 'css';
+                background: #08801d;
+            }
         }
     }
 }

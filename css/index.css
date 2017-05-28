@@ -14,6 +14,9 @@
     .post-list li a {
       display: block;
       color: inherit; }
+      .post-list li a[data-type="css"]:after {
+        content: 'css';
+        background: #08801d; }
 
 #ani-wrap {
   position: fixed;
