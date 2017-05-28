@@ -2,7 +2,7 @@ body {
     font-family: Helvetica, arial, sans-serif;
     font-size: 14px;
     line-height: 1.6;
-    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAKTUlEQ…KkZs6at3/r17yKJ4byJygy4UMXcpBJzkY2z+0Kwc0Ro5z2/190nmJH+YHjAAAAAElFTkSuQmCC");
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAKTUlEQVRYCU2YaY/cuBGGX1LU0ddM2/7k//+vEmSBLHYTe72Zw9OHbgZPUTVjAmpRZB1vHSySHf76z7+yttY0jVJKmqZJy7KoqiqFEDQMg2KMRpVz1rqu4s280xyPR43jaA/8tLZt1fe9yXCeuq613+9tHrnocTqXiU4a3+H5x+8ZIh4fRBhEgKXPgzDAIBzG2+1mNHyjAHDQ0OeBZ55nAxhDMtnoQC4gMZg+MvmGFxnwMYYM9CR+drudKUSgA3PPMN91nSngh3GEM44w6F/+92TzJnRedBsvNmeyu07T8uFtdLgeZPFgrMuCB68DFgclkDNJWFDMIJZC4AJ4YwQ0MGMxYKDzEEKDIchjHBreKJwmooPHomIs3iwGSvOMkZWBhud43Jse5EBr1IDBEwikodwtRfG6RFMSY6N5HZXXSqnqdL+9qb/PZuDDw1ExdWpjo7QBy2FRP07KoeTTu+cUdL/dDPzj46NinVTXhLpS39+ksGp/aIrx3/74Z2ZxAPB+v5sH8ARjeAdL9ruj9c/ns3n49fXV6Mk/vI9iaHnDh7cxDIOZd4OLV6K6pnnPWegUo3kcWpOZZ/38+dNkJcAwgXtpuN4bygi7KwUY358+fXoPg+cn4JHjRgEKPpeJA/x7layPTsbXUFLscr0U7+2Oejidbe59FWOJEW8lBMGM8aAY4SSz5xVAsRavuYHwew7Sx1jmzUuSyXfA5HqbilMu94tyLlXjer0qVY0wmJxPl8vFFJGHKEcwyhHKN0S8EYjFzHk48R5jCGWMvoMmRPBZuBXMiDV8RAejbkNJobatVVVl4WGQ8kfNjShmEMUo8DAx5h4NqjSNi66Xu8Zh1un4aFY+P71q6CetrK0c7Q3dPK2Cp06tPazStt3puDtq1x3U1J3yGoyOGplSWQPPz8+mExxEC2yWg4QFMOSNe8RzkdCi7O3tTewWzL+8vJh3oIeXt5cgFhpeZHUSFTzZ1rUpQ0dlthQPESWiQG4jAyOXOet+fzV553BWYBVDRIggIiQoRRECaXXavech44Bxb3vil7r2sQMREaJBmIfb3QB6VNp9kcdct99pmWblXLY8K9p5NuAYGOvQap6kpt5rHFbdrqOUk6qIRclqIIpQCAiMwUOAZwwlGAZg+l5TCQ/zeKndtxrmQXOeVTWVFGYt66BYrYqB/CjbKTKqVBYLMtGXxqlX03UKIduDJeuazaIYC4hxLN5lHBCAa5qSu3j+9fVZX7580el0sFR4evrbgB0OB4tICKWcoBDFIZZtEsPx6uFwtIixYEMsUSPs0Icff/yWKZRYSuiwmoe+hxhCB4YHCauPoQRa+J2PFKGPF5knd+EHDN/sFL82FgzACW+3KwuGSKAr4v6spTDBGFazECsZn5fRvhnne82zjS3rZONNm3Q87a1PeB4ej9ofune6WMkUYyxGAJIHI3noA4bGvDvF3wmLUoiqFLRkKWZZP1SpeElBwzSJcOEVr3lYh0BCzDiKyCErDVv+0cczl7dSMpgnfzEWHoDB17V7M4KoYCTgwIXXUz9MqgMLgMGy1XE2pXZVFaHPGqbF6laIldUwhFL7Msctq5GsQqm/jzbOKYStCgXTOBlows43VSLE+L7jGOBczoZ4dF2RVY5ngIxYQg4xCHIe+kzypmE55YUHISjxZgokA+GWMwcvD152b/MNSB5oGT+dTuZl3l5n4Uc/+mLTdFYc8QQVnqeKtXkML/HgETy6LFnjSKKTL2V7ot91nLKD+p4TMQeBznig97Me4QYsYcWb3rzP23cPgAPQHPb0/c/MB8wgxjt8wwAhS7/bA2Y7TGxHKPKWhlco5NDBx9mOsWDpUSpDWEaLAuNEC68TOY8IwPhGR9XUFiVkk0qRIllVHFYpFeVNLaTOURu7rtE4DKpJeMuRUlYyNbJOWlRWe9vV6g6dUqJ4T1pnSpa027UWfgD4g3KMwZuAYwGqippzkc3CAywLLMHkaHEpFtK8BHiu4FHzzLZn/8pjtKy67YBBFBhD9jBt9WzbiQi1LZRtGzWddtrAmJLbRINGTsZ+KEfsVMeyzdRR1C5qHrWQOsi5Lc+L1qmc7Uw54UDZfq+325uVDops3VTGR51ERlOXYxvh8gXii5LFRxrx0HACRpECYc3qrzclGPEMRPRhwv30AYJQth36zOF+5tN2cYKX5pHwb/gsJ6kSm4egmddFc39XvWwHXbGRRdNPyAHfVEnXqbccTRxx7rdB8ZBsNWOxclm9rGaesCv7IzkCABRP3GG3y/3p4WwnEk+DlD6M9KKMERhJSOH3Rv9yvVq5YYyFk2O5DfJtOwnWIhxmPOR5iEWMnR/PlsyMe/7Qhw/A8JLUeJgxl1dR645H9VPxunvX38imwYc8FiNzfLNApmFU4qSLFdSxui63LWod1nKfpd49PT8bEzmH52iWl7GUEeiogZYiVbJw5bmUFE7g7a4caOEDgHuQ0AKShcNYyxWC/lT2Z+CH57//m/NalrvXOmfEM5aH23ZFKaBR1KHhvou3qlwuRFhOiADqKxLPcAWAznMNQHwDCoDNofz1Qcowx5hFaJwU+9vVrGKRUJPcIgRQn1DmgN31COYKABgE3vpeGUUcxTgipWR3XQph4FaYZzvhHI47sbpv94umebDxYSx3cTyLHhqOwkBbzS8//syUEhoEbpkTA4ASwzjFGQO4N2BhVZeaxpEd47xkYIB5bqsKRAFD3WMuG1A8/Xg33fGXnCQHOVklVhmMELoXLZe2xMUawCF03f7CYAylnBBZSIfDTj8vr7r1i+J2XJqWUfMyq+lqq6tTPxhootBU5UJPuQAT8mjgcAeBh+00fP/9H7nZfdxvUQwDHqDP+W8eym4AnQFdSu5Ny2x03GsRDj0Kfk0L6NlhAMYcaQEtzmAO2mb7I4ocdGcRKc6oiTspaPGEW2Lot5VlgBVsflzKbYubv1tKCthhkBxCKIfW7fjvYeV+TG2FrtRWiftwUBBXEK+ftmq3yxgYmLe9+N6XRGXvcwsBBiPntGa3K9Zvdaqpy9kRD5RFFe00A2j43DNEwWhiMlkAxiC8CR+tiknj/eMfXDxo42ylsVL4/u/fcqi3ZO17c72HmESlWS6wOFQWBzuXKYjlcFvlss/Ch4FEgxAChrF+DrYqAcsczedLSpTTC6lASnm61LFS2j+UuwX/ANA8VyBCAe/r/f5uNd8csGIsVwKq4jw1ymHVzOF1f9busP0Xw57OWMvWOdjfJf39TSgellFTjAZ8rRvlBblR509fNPQ3y23OhoE/0bHs8+fP+vbtm1nw9etXCymgqUfMEy6sx3N4llCSJxa2LSeZw0Do8QzzeJBaxzdzFvZcbno44OHhQeNa5OAgeNkPoMcZ7wARDhj2Ys5j5B4C3LMOCgWEAbCMUcy5lcHnOQYo+tCihFLmwAG9b8tfxfTJ8+54MlowAKxra+MHR4IRIpDT3EMQMu6eYhyBgCZ/6AMCsMiw62KkZs6at3/r17yKJ4byJygy4UMXcpBJzkY2z+0Kwc0Ro5z2/190nmJH+YHjAAAAAElFTkSuQmCC");
     padding: 30px;
 
 }
@@ -44,7 +44,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
-    background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;
+    /*background: url("../../images/modules/styleguide/para.png") no-repeat 10px center;*/
     text-decoration: none;
 }
 
@@ -105,7 +105,7 @@ p, blockquote, ul, ol, dl, li, table, pre {
 }
 
 hr {
-    background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
+    /*background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;*/
     border: 0 none;
     color: #cccccc;
     height: 4px;
