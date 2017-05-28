@@ -1,6 +1,7 @@
 ---
 layout: blog
 title: markdown语法
+css: github
 ---
 # 原地址
 https://github.com/younghz/Markdown/blob/master/README.md
