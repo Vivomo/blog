@@ -115,7 +115,23 @@ var a = 1;
 const a = 2; //Uncaught SyntaxError: Identifier 'a' has already been declared
 ```
 
-
+## 关于项目中使用
+目前国内浏览器的占比还是不能肆意妄为的使用ES6的特性的, 不过有类似Babel之类的转换器,可以让我们写代码时可以用ES6的一些新特性,兼容问题交给转换器来做。
+不过我们要明白一点，转换器不是真正意义上的做到完美，他能做得是一些语法糖的兼容，JS引擎的跨度不是全都能由代码补丁解决的，举个例子，ES5新增对象属性劫持
+是没办法在IE8以下实现的，（PS：司徒正美用IE独自支持的VBScript在avalon.js中实现了, VBScript不算JS）。
+如果项目中配了Babel，只是让我们的代码更规范，减少错误，我们代码中的用到的`let`,`const`在Babel中都会变成`var`, 类似这样的语法糖兼容起来要么是无法做到的,
+要么兼容起来需要极大量代码的,最后折中处理了。
+这里说一个在不支持let的环境里模拟其作用域特性的代码
+```js
+// 模拟 let a = 1;
+try {
+    throw 1;
+} catch (a) {
+    console.log(a); // 1
+}
+console.log(a); // Uncaught ReferenceError: a is not defined
+```
+代价就是这么大, ┑(￣Д ￣)┍
 
 
 
