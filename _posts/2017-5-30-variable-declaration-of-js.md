@@ -65,6 +65,56 @@ var a;
 console.log(a);
 a = 1;
 ```
+##### 全局作用域下声明变量会绑定在全局对象上(window)
+node.js 未测试
+```js
+var a = 1;
+console.log(window.a); // 1;
+```
+#### 2.let
+`let`是`var`的兄弟，在ES6中引入的新关键字，把变量隐式地劫持在了其作用域（通常是`{...}`中）,如:
+```js
+if (true) {
+    let a = 1;
+}
+console.log(a); // ReferenceError
+```
+##### let循环
+`for`循环是`let`发挥优势的典型例子, 这里相对于`var`减少了副作用,如:
+```js
+for (var i = 0; i < 10; i++) {
+}
+console.log(i); // 10
+
+for (let j = 0; j < 10; j++) {
+}
+console.log(j); // ReferenceError
+```
+
+##### let不存在var一样的变量提升
+这个特性是需要稍微注意的
+```js
+console.log(a); //ReferenceError
+let a = 1;
+```
+##### 全局作用域下声明不变量会绑定在全局对象上(window)
+```js
+let a = 1;
+console.log(window.a); // undefined;
+```
+#### 3.const
+`const`也是ES6引入的新关键词, 它除了拥有`let`上面介绍的特性外,还有两条特性:
+>1.`const`声明的变量是不可修改的。
+>2.`const`声明的变量必须是其作用域内未定义过的
+```js
+const a = 1;
+a = 2; //Uncaught TypeError: Assignment to constant variable.
+```
+```js
+var a = 1;
+const a = 2; //Uncaught SyntaxError: Identifier 'a' has already been declared
+```
+
 
 
 
