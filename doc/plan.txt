@@ -1,7 +1,8 @@
 博客计划
+基础系列抽取成专栏
 js中的正则表达式 (包含es6)
 js中的数字
-js let var const
+js let var const -- done
 
 开源计划
 Python3+Django =>博客 0.5
