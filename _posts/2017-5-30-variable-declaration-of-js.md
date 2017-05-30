@@ -66,10 +66,17 @@ console.log(a);
 a = 1;
 ```
 ##### 全局作用域下声明变量会绑定在全局对象上(window)
-node.js 未测试
+未测试node.js
 ```js
 var a = 1;
 console.log(window.a); // 1;
+```
+顺便提一下, 带有id的DOM元素为将其绑定在window上,key为id,如
+```html
+<div id="testID"></div>
+<script >
+console.log(window.testID === document.getElementById('testID')); // true
+</script>
 ```
 #### 2.let
 `let`是`var`的兄弟，在ES6中引入的新关键字，把变量隐式地劫持在了其作用域（通常是`{...}`中）,如:
