@@ -1,7 +1,7 @@
 ---
 layout: blog
 title: 基础——重中之重之JS的变量的声明
-description: 本文着重讲解JavaScript中的变量声明-var,let,const的各个特性
+description: JavaScript中的变量声明-var,let,const的各个特性
 keywords: JavaScript变量声明 var let const的特性
 ---
 
