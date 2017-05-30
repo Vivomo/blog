@@ -1,19 +1,11 @@
-/**
- * Created by ui on 2016/9/29.
- */
-function extend(o1, o2) {
-    for (var k in o2) {
-        o1[k] = o2[k]
-    }
-    return o1;
-}
+
 function Printer(cfg) {
 
     if (this.constructor != Printer) {
         return new Printer(cfg)
     }
 
-    extend(this, cfg);
+    Object.assign(this, cfg);
 
     this.queue = [];
     this.parent = this.cursor.parentNode;
