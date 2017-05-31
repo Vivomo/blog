@@ -22,7 +22,7 @@ console.log(a); // 1
 console.log(window.a) // 1
 ```
 这种情况,会创建一个全局变量, 在严格模式(严格模式是ES5出的, IE10之前不支持)下会报错,项目中极其不推荐这样做,很容易导致变量覆盖引发不可预知的Bug,
-目前前端的IED多数会自动检测(如WebStorm),给予一个弱警告,推荐配置ESLint
+目前前端的IDE多数会自动检测(如WebStorm),给予一个弱警告,推荐配置ESLint
 
 #### 1.var
 JS是弱类型语言,`var`声明的变量无需指定类型, 也可以只声明不赋值,如果只声明会保存一个特殊的值——`undefined`,如下:
@@ -104,7 +104,7 @@ console.log(j); // ReferenceError
 console.log(a); //ReferenceError
 let a = 1;
 ```
-##### 全局作用域下声明不变量会绑定在全局对象上(window)
+##### 全局作用域下声明变量不会绑定在全局对象上(window)
 ```js
 let a = 1;
 console.log(window.a); // undefined;
