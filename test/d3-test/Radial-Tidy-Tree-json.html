@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <title>API Test</title>
     <style>
+        html, body {
+            height: 100%;
+        }
         .node circle {
             fill: #999;
         }
 
         .node text {
-            font: 10px sans-serif;
+            font: 12px Arial;
         }
 
         .node--internal circle {
@@ -30,16 +33,27 @@
     </style>
 </head>
 <body>
-<svg width="960" height="1060"></svg>
+<svg width="960" height="1060" id="svg" ></svg>
 <script src="../../js/d3/d3.js"></script>
 <script>
+    var svgElem = document.getElementById('svg');
     var svg = d3.select("svg"),
-        width = +svg.attr("width"),
-        height = +svg.attr("height"),
-        g = svg.append("g").attr("transform", "translate(" + (width / 2 + 40) + "," + (height / 2 + 90) + ")");
+        width = svgElem.clientWidth,
+        height = svgElem.clientHeight,
+        view = svg.append('g')
+            .attr('class', 'view'),
+        g = view.append("g")
+            .attr("transform", "translate(" + (width / 2 + 40) + "," + (height / 2 + 90) + ")");
+
+    var zoom = d3.zoom()
+        .scaleExtent([-3, 3])
+        .translateExtent([[-500, -500], [width + 500, height + 500]])
+        .on("zoom", zoomed);
+
+    svg.call(zoom);
 
 
-    var treemap = d3.tree()
+    var tree = d3.tree()
         .size([2 * Math.PI, 500])
         .separation(function (a, b) {
             return (a.parent === b.parent ? 1 : 2) / a.depth;
@@ -48,15 +62,13 @@
     d3.json("../../src/Radial-Tidy-Tree.json", function (error, data) {
         if (error) throw error;
 
-        var root = d3.hierarchy(data, function (d) {
+        var root = tree(d3.hierarchy(data, function (d) {
             return d.children;
-        });
+        }));
 
-        var treeData = treemap(root);
-        var nodes = treeData.descendants();
-
+        console.log(root);
         var link = g.selectAll(".link")
-            .data(treeData.links())
+            .data(root.links())
             .enter().append("path")
             .transition()
             .duration(2000)
@@ -70,7 +82,7 @@
                 }));
 
         var node = g.selectAll(".node")
-            .data(nodes)
+            .data(root.descendants())
             .enter().append("g")
             .attr("class", function (d) {
                 return "node" + (d.children ? " node--internal" : " node--leaf");
@@ -102,6 +114,10 @@
     function radialPoint(x, y) {
         return [(y = +y) * Math.cos(x -= Math.PI / 2), y * Math.sin(x)];
     }
+    function zoomed() {
+        view.attr("transform", d3.event.transform);
+    }
+
 </script>
 </body>
 </html>

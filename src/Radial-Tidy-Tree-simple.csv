@@ -1,0 +1,16 @@
+id,value
+flare,
+flare.analytics,
+flare.analytics.cluster,
+flare.analytics.cluster.AgglomerativeCluster,3938
+flare.analytics.cluster.CommunityStructure,3812
+flare.analytics.cluster.HierarchicalCluster,6714
+flare.analytics.cluster.MergeEdge,743
+flare.analytics.graph,
+flare.analytics.graph.BetweennessCentrality,3534
+flare.analytics.graph.LinkDistance,5731
+flare.analytics.graph.MaxFlowMinCut,7840
+flare.analytics.graph.ShortestPaths,5914
+flare.analytics.graph.SpanningTree,3416
+flare.analytics.optimization,
+flare.analytics.optimization.AspectRatioBanker,7074

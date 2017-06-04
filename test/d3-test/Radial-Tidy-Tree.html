@@ -9,7 +9,7 @@
         }
 
         .node text {
-            font: 10px sans-serif;
+            font: 12px Arial;
         }
 
         .node--internal circle {
@@ -49,11 +49,12 @@
             return (a.parent == b.parent ? 1 : 2) / a.depth;
         });
 
-    d3.csv("../../src/Radial-Tidy-Tree.csv", function (error, data) {
+    d3.csv("../../src/Radial-Tidy-Tree-simple.csv", function (error, data) {
         if (error) throw error;
 
         var root = tree(stratify(data));
 
+        console.log(root);
         var link = g.selectAll(".link")
             .data(root.links())
             .enter().append("path")
