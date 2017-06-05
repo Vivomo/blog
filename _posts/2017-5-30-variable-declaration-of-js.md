@@ -104,6 +104,15 @@ console.log(j); // ReferenceError
 console.log(a); //ReferenceError
 let a = 1;
 ```
+##### `typeof` 不再是绝对安全的操作
+以前我们判断一个变量存不存在会用到 `typeof`, 因为即使变量不存在也不会报错, 但如果用了let就不一样了, 如:
+```js
+console.log(typeof a); // undefined
+console.log(typeof b); //Uncaught ReferenceError: b is not defined
+let b;
+```
+这个属于暂时性死区(TDZ), 即只要进入当前块级作用域，所使用的变量已经存在了，但在声明之前都属于死区，不可进行操作。
+
 ##### 全局作用域下声明变量不会绑定在全局对象上(window)
 ```js
 let a = 1;
