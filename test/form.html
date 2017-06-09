@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form submit test</title>
+</head>
+<body>
+<form action="#" id="form">
+    <input type="text" required>
+    <button>submit</button>
+</form>
+<button id="trigger-submit"> trigger submit</button>
+
+<script>
+    /**
+     * 事实证明 触发的提交事件不会触发自身的校验
+     */
+    document.getElementById('trigger-submit').addEventListener('click', function () {
+        document.getElementById('form').submit();
+    });
+</script>
+</body>
+</html>
