@@ -7,16 +7,18 @@
 <body>
 <form action="#" id="form">
     <input type="text" required>
-    <button>submit</button>
+    <button id="submit">submit</button>
 </form>
 <button id="trigger-submit"> trigger submit</button>
 
 <script>
     /**
-     * 事实证明 触发的提交事件不会触发自身的校验
+     * 事实证明 直接触发的表单提交事件不会触发自身的校验
+     * 但触发提交按钮的点击事件则可以
      */
     document.getElementById('trigger-submit').addEventListener('click', function () {
-        document.getElementById('form').submit();
+//        document.getElementById('form').submit();
+        document.getElementById('submit').click();
     });
 </script>
 </body>
