@@ -11,23 +11,20 @@
             fill: #999;
         }
 
+        .node circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 3px;
+        }
+
         .node text {
             font: 12px Arial;
         }
 
-        .node--internal circle {
-            fill: #555;
-        }
-
-        .node--internal text {
-            text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
-        }
-
         .link {
             fill: none;
-            stroke: #555;
-            stroke-opacity: 0.4;
-            stroke-width: 1.5px;
+            stroke: #ccc;
+            stroke-width: 2px;
         }
 
         svg {
@@ -47,6 +44,8 @@
     var svg = d3.select("svg"),
         width = svgElem.clientWidth,
         height = svgElem.clientHeight,
+        i = 0,
+        duration = 750,
         view = svg.append('g').attr('class', 'view'),
         g = view.append("g").attr("transform", "translate(" + (width / 2 + 40) + "," + (height / 2 + 90) + ")");
 
@@ -62,55 +61,156 @@
     d3.json("../../src/Radial-Tidy-Tree.json", function (error, data) {
         if (error) throw error;
 
-        var root = tree(d3.hierarchy(data, function (d) {
+        var root = d3.hierarchy(data, function (d) {
             return d.children;
-        }));
+        });
+        root.x0 = width / 2;
+        root.y0 = height / 2;
 
-        var link = g.selectAll(".link")
-            .data(root.links())
-            .enter().append("path")
-            .attr("class", "link")
-            .attr("d", d3.linkRadial()
-                .angle(function (d) {
-                    console.log(d)
-                    return d.x;
-                })
-                .radius(function (d) {
-                    return d.y;
-                }));
+        update(root);
 
+        function update(source) {
 
-        var node = g.selectAll(".node")
-            .data(root.descendants())
-            .enter().append("g")
-            .attr("class", function (d) {
-                return "node" + (d.children ? " node--internal" : " node--leaf");
-            })
-        ;
+            var treeData = tree(root);
+            console.log(treeData);
 
-        node.transition()
-            .duration(2000)
-            .attr("transform", function (d) {
-                return "translate(" + radialPoint(d.x, d.y) + ")";
-            })
+            var nodes = treeData.descendants(),
+                links = nodes.slice(1);
 
-        node.append("circle")
-            .attr("r", 5);
-
-        node.append("text")
-            .attr("dy", "0.31em")
-            .attr("x", function (d) {
-                return d.x < Math.PI === !d.children ? 6 : -6;
-            })
-            .attr("text-anchor", function (d) {
-                return d.x < Math.PI === !d.children ? "start" : "end";
-            })
-            .attr("transform", function (d) {
-                return "rotate(" + (d.x < Math.PI ? d.x - Math.PI / 2 : d.x + Math.PI / 2) * 180 / Math.PI + ")";
-            })
-            .text(function (d) {
-                return d.data.name;
+            nodes.forEach(function (d) {
+                d.y = d.depth * 180
             });
+
+            var node = g.selectAll('g.node')
+                .data(nodes, function (d) {
+                    return d.id || (d.id = ++i);
+                });
+
+            var nodeEnter = node.enter().append('g')
+                .attr('class', 'node')
+                .attr("transform", function (d) {
+                    return "translate(" + source.x0 + "," + source.y0 + ")";
+                })
+                .on('click', click);
+
+            // Add Circle for the nodes
+            nodeEnter.append('circle')
+                .attr('class', 'node')
+                .attr('r', 1e-6)
+                .style("fill", function (d) {
+                    return d._children ? "lightsteelblue" : "#fff";
+                });
+
+            // Add labels for the nodes
+            nodeEnter.append('text')
+                .attr("dy", ".35em")
+                .attr("x", function (d) {
+                    return d.children || d._children ? -13 : 13;
+                })
+                .attr("text-anchor", function (d) {
+                    return d.children || d._children ? "end" : "start";
+                })
+                .text(function (d) {
+                    return d.data.name;
+                });
+
+            // UPDATE
+            var nodeUpdate = nodeEnter.merge(node);
+
+            // Transition to the proper position for the node
+            nodeUpdate.transition()
+                .duration(duration)
+                .attr("transform", function (d) {
+                    return "translate(" +  radialPoint(d.x, d.y) + ")";
+                });
+
+            // Update the node attributes and style
+            nodeUpdate.select('circle.node')
+                .attr('r', 5)
+                .style("fill", function (d) {
+                    return d._children ? "lightsteelblue" : "#fff";
+                })
+                .attr('cursor', 'pointer');
+
+
+            // Remove any exiting nodes
+            var nodeExit = node.exit().transition()
+                .duration(duration)
+                .attr("transform", function (d) {
+                    return "translate(" + radialPoint(d.x, d.y) + ")";
+                })
+                .remove();
+
+            // On exit reduce the node circles size to 0
+            nodeExit.select('circle')
+                .attr('r', 5);
+
+            // On exit reduce the opacity of text labels
+            nodeExit.select('text')
+                .style('fill-opacity', 1e-6);
+
+            // ****************** links section ***************************
+
+            // Update the links...
+            var link = g.selectAll('path.link')
+                .data(links, function (d) {
+                    return d.id;
+                });
+
+            // Enter any new links at the parent's previous position.
+            var linkEnter = link.enter().insert('path', "g")
+                .attr("class", "link")
+                .attr('d', function (d) {
+                    var o = {x: source.x0, y: source.y0}
+                    return diagonal(o, o)
+                });
+
+            // UPDATE
+            var linkUpdate = linkEnter.merge(link);
+
+            // Transition back to the parent element position
+            linkUpdate.transition()
+                .duration(duration)
+                .attr('d', function (d) {
+                    return diagonal(d, d.parent)
+                });
+
+            // Remove any exiting links
+            var linkExit = link.exit().transition()
+                .duration(duration)
+                .attr('d', function (d) {
+                    var o = {x: source.x, y: source.y}
+                    return diagonal(o, o)
+                })
+                .remove();
+
+            // Store the old positions for transition.
+            nodes.forEach(function (d) {
+                d.x0 = d.x;
+                d.y0 = d.y;
+            });
+
+            function diagonal(s, d) {
+
+                return `M ${s.y} ${s.x}
+            C ${(s.y + d.y) / 2} ${s.x},
+              ${(s.y + d.y) / 2} ${d.x},
+              ${d.y} ${d.x}`
+            }
+
+            // Toggle children on click.
+            function click(d) {
+                if (d.children) {
+                    d._children = d.children;
+                    d.children = null;
+                } else {
+                    d.children = d._children;
+                    d._children = null;
+                }
+                update(d);
+            }
+
+        }
 
     });
 
