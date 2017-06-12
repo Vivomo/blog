@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script>
+    const url = 'https://pic3.zhimg.com/3fc3d517dc267de73cb5a347bd17b3a6_is.png';
+    const img = new Image;
+    img.src = url;
+    img.onload = function () {
+        console.log('load');
+    }
+    console.log('start');
+    function loadImg(callback) {
+        img.onload = function () {
+            console.log('load');
+            callback(this);
+        }
+    }
+
+    const p = new Promise(function (resolve, reject) {
+        throw 2;
+        loadImg(resolve)
+    });
+    p.then(function () {
+        console.log(arguments);
+    }).catch(error => console.log(error))
+</script>
+</body>
+</html>
