@@ -31,7 +31,6 @@
 <script src="../../js/d3/d3.js"></script>
 <script src="../../js/d3/sankey.js"></script>
 <script>
-
     var units = "Widgets";
 
     // set the dimensions and margins of the graph
@@ -57,7 +56,6 @@
     // Set the sankey diagram properties
     var sankey = d3.sankey()
         .nodeWidth(36)
-        .nodePadding(10)
         .size([width, height]);
 
     var path = sankey.link();
