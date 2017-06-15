@@ -113,10 +113,12 @@
             nodeEnter.append('text')
                 .attr("dy", ".35em")
                 .attr("x", function (d) {
-                    return d.children || d._children ? -13 : 13;
+                    return d.x < Math.PI === !d.children ? 6 : -6;
+//                    return d.children || d._children ? -13 : 13;
                 })
                 .attr("text-anchor", function (d) {
-                    return d.children || d._children ? "end" : "start";
+//                    return d.children || d._children ? "end" : "start";
+                    return d.x < Math.PI === !d.children ? "start" : "end";
                 })
                 .attr("transform", function (d) {
                     return "rotate(" + (d.x < Math.PI ? d.x - Math.PI / 2 : d.x + Math.PI / 2) * 180 / Math.PI + ")";
@@ -142,6 +144,12 @@
                     return d._children ? "lightsteelblue" : "#fff";
                 })
                 .attr('cursor', 'pointer');
+            nodeUpdate.select("text")
+                .style("fill-opacity", 1)
+                .attr("transform", function(d) {
+                    return "rotate(" + (d.x < Math.PI ? d.x - Math.PI / 2 : d.x + Math.PI / 2) * 180 / Math.PI + ")";
+//                    return d.x < 180 ? "translate(0)" : "rotate(180)translate(-" + (d.data.name.length + 50)  + ")";
+                });
 
 
             // Remove any exiting nodes
@@ -154,7 +162,7 @@
 
             // On exit reduce the node circles size to 0
             nodeExit.select('circle')
-                .attr('r', 5);
+                .attr('r', 1e-6);
 
             // On exit reduce the opacity of text labels
             nodeExit.select('text')
@@ -172,8 +180,7 @@
             var linkEnter = link.enter().insert('path', "g")
                 .attr("class", "link")
                 .attr('d', function (d) {
-                    var o = {x: source.x0, y: source.y0}
-                    return diagonal(o, o)
+                    return d3Link({source: source, target: source})
                 });
 
             // UPDATE
@@ -187,13 +194,14 @@
                 });
 
             // Remove any exiting links
-            var linkExit = link.exit().transition()
+            link.exit().transition()
                 .duration(duration)
                 .attr('d', function (d) {
-                    var o = {x: source.x, y: source.y}
-                    return diagonal(o, o)
+                    return d3Link({source: source, target: source})
                 })
                 .remove();
+
+
 
             // Store the old positions for transition.
             nodes.forEach(function (d) {
@@ -201,13 +209,6 @@
                 d.y0 = d.y;
             });
 
-            function diagonal(s, d) {
-
-                return `M ${s.y} ${s.x}
-            C ${(s.y + d.y) / 2} ${s.x},
-              ${(s.y + d.y) / 2} ${d.x},
-              ${d.y} ${d.x}`
-            }
 
             // Toggle children on click.
             function click(d) {
