@@ -71,6 +71,11 @@
             return d.children;
         }));
 
+        console.log(root.links());
+        console.log(root.descendants());
+
+        window.link = root.links();
+
         var link = g.selectAll(".link")
             .data(root.links())
             .enter().append("path")

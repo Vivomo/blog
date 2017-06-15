@@ -55,6 +55,14 @@
             return (a.parent === b.parent ? 1 : 2) / a.depth;
         });
 
+    var d3Link = d3.linkRadial()
+        .angle(function (d) {
+            return d.x;
+        })
+        .radius(function (d) {
+            return d.y;
+        });
+
     zoomSvg(svg, view);
 
 
@@ -109,6 +117,9 @@
                 })
                 .attr("text-anchor", function (d) {
                     return d.children || d._children ? "end" : "start";
+                })
+                .attr("transform", function (d) {
+                    return "rotate(" + (d.x < Math.PI ? d.x - Math.PI / 2 : d.x + Math.PI / 2) * 180 / Math.PI + ")";
                 })
                 .text(function (d) {
                     return d.data.name;
@@ -172,7 +183,7 @@
             linkUpdate.transition()
                 .duration(duration)
                 .attr('d', function (d) {
-                    return diagonal(d, d.parent)
+                    return d3Link({source: d.parent, target: d});
                 });
 
             // Remove any exiting links
