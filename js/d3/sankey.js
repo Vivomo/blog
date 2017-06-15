@@ -87,10 +87,24 @@ if (typeof d3 !== 'undefined') {
             links.forEach(function(link) {
                 var source = link.source,
                     target = link.target;
+                if (!nodes[link.source]) {
+                    console.warn(`not find this source ${link.source} in node`);
+                }
+                if (!nodes[link.target]) {
+                    console.warn(`not find this target ${link.target} in node`);
+                }
                 if (typeof source === "number") source = link.source = nodes[link.source];
                 if (typeof target === "number") target = link.target = nodes[link.target];
-                source.sourceLinks.push(link);
-                target.targetLinks.push(link);
+                if (source) {
+                    source.sourceLinks.push(link);
+                } else {
+                    console.log(link.source)
+                }
+                if (target) {
+                    target.targetLinks.push(link);
+                } else {
+                    console.log(link.target)
+                }
             });
         }
 
