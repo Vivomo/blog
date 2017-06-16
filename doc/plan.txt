@@ -11,6 +11,7 @@ Python => phabricator
 小程序
 Python 翻译 GitHub上的md文档
 Python 博客生成器
+Python 统计ES5 规范的单词 2017-6-18
 
 博客修改计划
 首页改造为魔方
