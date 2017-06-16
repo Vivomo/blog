@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>01010100101010101010</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/index.css">
+</head>
+<body>
+
+<div id="ani-wrap"></div>
+<script>
+    (function(){
+        var body = document.getElementById('ani-wrap');
+        var w = body.clientWidth;
+
+        function getRandomStyle(){
+            var cssArr = [];
+            cssArr.push('opacity:'+(0.3+Math.random()*0.8));
+            var r = 0.25+Math.random()*0.8;
+            cssArr.push('transform:matrix('+r+',0,0,'+r+','+w*Math.random()+',0)');
+            cssArr.push('transition: all '+ (1.5+Math.random())+'s');
+            return cssArr.join(';');
+        }
+
+        function getText(){
+            return (32 + ~~(Math.random() * 1048576)).toString(2);
+        }
+
+        function P(num){
+            this.elems = new Array(num||1);
+            for (var i = 0; i < this.elems.length; i++) {
+                var elem = document.createElement('p');
+                elem.className = 'ani';
+                elem.innerText = getText();
+                body.appendChild(elem);
+                elem.style.cssText = getRandomStyle();
+                this.elems[i] = elem;
+            }
+        }
+
+        for (var i = 0; i < 50; i++) {
+            setTimeout(function(){
+                new P(3);
+            },i * 100);
+        }
+    })()
+</script>
+</body>
+</html>
