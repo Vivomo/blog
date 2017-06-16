@@ -2,7 +2,6 @@
 基础系列抽取成专栏
 js中的正则表达式 (包含es6)
 js中的数字
-js let var const -- done
 chrome 提醒  2017-6-17
 
 开源计划

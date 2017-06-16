@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notification</title>
+</head>
+<body>
+
+<script>
+    if( Notification.permission !== "denied") {
+        Notification.requestPermission(function(status) {    // 请求权限
+            if(status === 'granted') {
+                // 弹出一个通知
+                var n = new Notification('Title', {
+                    body : 'I am a Notification',
+                    icon : './images/test1.png'
+                });
+                // 两秒后关闭通知
+                setTimeout(function() {
+                    n.close();
+                }, 2000);
+            }
+        });
+    }
+</script>
+</body>
+</html>
