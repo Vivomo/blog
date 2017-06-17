@@ -37,11 +37,8 @@
             });
         }, 100);
 
-        function getTranslate() {
+        function getTranslate(θ = 2 * Math.PI * Math.random(), φ = 2 * Math.PI * Math.random()) {
             var radius = 200;
-            var θ = 2 * Math.PI * Math.random();
-            var φ = 2 * Math.PI * Math.random();
-
             var x = radius * Math.sin(θ) * Math.cos(φ),
                 y = radius * Math.sin(θ) * Math.sin(φ),
                 z = radius * Math.cos(θ);
@@ -51,7 +48,9 @@
             return {
                 x,
                 y,
-                z
+                z,
+                θ,
+                φ
             }
         }
 
