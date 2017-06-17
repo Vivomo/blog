@@ -11,5 +11,8 @@
       "matches": ["http://*/*"],
       "js": ["notifications.js"]
     }
+  ],
+  "permissions": [
+    "notifications"
   ]
 }
