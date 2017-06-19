@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Algorithms</title>
+</head>
+<body>
+
+<script>
+    // 克隆树
+    function cloneTree(root, key) {
+        var _tree = {};
+        _tree.name = root.name;
+        if (root.children) {
+            _tree.children = [];
+            root.children.forEach(function (item) {
+                _tree.children.push(cloneTree(item));
+            });
+        }
+        return _tree;
+    }
+
+    var tree = {
+        name: 'a',
+        children: [
+            { name: 'a1' },
+            {
+                name: 'a2',
+                children: [
+                    {name: 'a21'},
+                    {name: 'a22'},
+                    {name: 'a23'},
+                    {name: 'a24'},
+                    {name: 'a25'},
+                    {name: 'a26'},
+                    {
+                        name: 'a27',
+                        children: [
+                            {name: 'a271'},
+                            {name: 'a272'},
+                            {name: 'a273'},
+                            {
+                                name: 'a274',
+                                children: [
+                                    {name: 'a2741'},
+//                                    {name: 'a2742'},
+                                    {name: 'a2743'},
+                                    {name: 'a2744'},
+                                ]
+                            },
+                        ]
+                    },
+                ]
+            },
+            { name: 'a3' },
+            {
+                name: 'a4',
+                children: [
+                    {name: 'a41'},
+                    {name: 'a42'},
+                    {name: 'a43'},
+                    {name: 'a44'},
+                    {name: 'a45'},
+                ]
+            },
+            ]
+    };
+
+    function loopTree(root, level = []) {
+        console.log(level.join(''), root.name);
+        if (root.children) {
+            root.children.forEach(function (item) {
+                loopTree(item, level.concat('-'));
+            })
+        }
+    }
+</script>
+</body>
+</html>
