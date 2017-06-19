@@ -9,6 +9,7 @@
             width: 200px;
             height: 200px;
             background: #ccc;
+            overflow-y: scroll;
         }
 
         .abs {
@@ -16,6 +17,14 @@
             width: 50px;
             height: 50px;
             background: #999;
+        }
+
+        .wrap::-webkit-scrollbar {
+            width: 3px;
+        }
+        .wrap::-webkit-scrollbar-thumb {
+            border-radius: 3px;
+            background: #000;
         }
     </style>
 </head>
