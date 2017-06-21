@@ -6,19 +6,9 @@
 </head>
 <body>
 
+<script src="../js/utils/TreeUtils.js"></script>
 <script>
     // 克隆树
-    function cloneTree(root, key) {
-        var _tree = {};
-        _tree.name = root.name;
-        if (root.children) {
-            _tree.children = [];
-            root.children.forEach(function (item) {
-                _tree.children.push(cloneTree(item));
-            });
-        }
-        return _tree;
-    }
 
     var tree = {
         name: 'a',
@@ -87,6 +77,10 @@
             })
         }
     }
+
+    console.log(TreeUtils.clone(tree));
+
+
 </script>
 </body>
 </html>
