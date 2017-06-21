@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>文件上传示例</title>
 </head>
 <body>
 <h2>文件上传示例</h2>
 <hr />
-<form method="POST" enctype="multipart/form-data" action="/uploadVisual/csv?basketId=129&amp;type=tree">
+<form id="form" method="POST" enctype="multipart/form-data" action="http://192.168.1.137:8080/uploadIndustry">
+    <input type="hidden" name="hBaseTableName" value="index_data_all" >
     <p>文件：<input type="file" name="file" />
     </p>
     <p>
         <input type="submit" value="上传" />
     </p>
 </form>
+
+<script src="../js/Uploader.js"></script>
+<script>
+//    document.getElementById('form').onsubmit = function () {
+//        console.log(1);
+//        return false;
+//    }
+</script>
 </body>
 </html>

@@ -10,13 +10,15 @@
  *  onLoad: 上传完成是触发
  *  onError: 上传失败时触发
  */
-export default class Uploader {
-    requiredParams = ['url', 'uploadFile'];
+// export default class Uploader {
+class Uploader {
     /**
      *
      * @param cfg
      */
     constructor(cfg) {
+        this.requiredParams = ['url', 'uploadFile'];
+
         this.requiredParams.every((param) => {
             if (param in cfg) {
                 return true;
@@ -96,9 +98,8 @@ export default class Uploader {
 
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                this.success && this.success(xhr.responseText);
+                this.success && this.success(JSON.parse(xhr.responseText));
             }
-            console.log(`${xhr.readyState}--${xhr.status}`);
         };
 
         xhr.open('POST', this.url, true);
