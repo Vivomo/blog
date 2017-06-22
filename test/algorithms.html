@@ -56,27 +56,6 @@
             ]
     };
 
-    function loopTree(root, level = []) {
-        console.log(level.join(''), root.name);
-        if (root.children) {
-            root.children.forEach(function (item) {
-                loopTree(item, level.concat('-'));
-            })
-        }
-    }
-
-    function filterTree(root, key, parent = []) {
-
-        if (root.children) {
-            root.children.filter(function (item) {
-                if (item.children) {
-
-                } else {
-
-                }
-            })
-        }
-    }
 
 //    console.log(tree);
 //    console.log(TreeUtils.clone(tree));
