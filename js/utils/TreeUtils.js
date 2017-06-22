@@ -41,3 +41,26 @@ var TreeUtils = {
 
 
 };
+
+function Tree() {
+    var childKey = 'children';
+    var filter = [];
+
+    function tree() {
+
+    }
+
+    tree.childKey = function (key) {
+        return arguments.length ? (childKey = key, tree) : childKey;
+    };
+
+    tree.filterKey = function (keys) {
+        return arguments.length ? (filter = keys, tree) : filter;
+    };
+
+    tree.clone = function () {
+
+    };
+    
+    return tree;
+}
