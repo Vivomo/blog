@@ -1,11 +1,9 @@
 
-function Tree() {
+function Tree(treeData) {
     var childKey = 'children';
     var filter = [];
-
-    function tree() {
-
-    }
+    var data = treeData;
+    var tree = {};
 
     tree.childKey = function (key) {
         return arguments.length ? (childKey = key, tree) : childKey;
@@ -17,10 +15,8 @@ function Tree() {
 
     /**
      * 浅克隆tree,
-     *
-     * @param data 需要克隆的树
      */
-    tree.clone = function (data) {
+    tree.clone = function () {
         var _tree = {};
         Object.keys(data).forEach(function (key) {
             if (!filter.includes(key)) {
@@ -36,7 +32,7 @@ function Tree() {
         return _tree;
     };
 
-    tree.loop = function (data, callback) {
+    tree.loop = function (callback) {
         if (callback(data) === false) {
             return;
         }
