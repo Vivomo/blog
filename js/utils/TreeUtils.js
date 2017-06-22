@@ -58,9 +58,21 @@ function Tree() {
         return arguments.length ? (filter = keys, tree) : filter;
     };
 
-    tree.clone = function () {
-
+    tree.clone = function (data) {
+        var _tree = {};
+        Object.keys(data).forEach(function (key) {
+            if (!filter.includes(key)) {
+                _tree[key] = data[key];
+            }
+        });
+        if (data[childKey]) {
+            _tree[childKey] = [];
+            data[childKey].forEach(function (item) {
+                _tree[childKey].push(tree.clone(item));
+            });
+        }
+        return _tree;
     };
-    
+
     return tree;
 }
