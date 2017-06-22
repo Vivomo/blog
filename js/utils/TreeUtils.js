@@ -74,5 +74,16 @@ function Tree() {
         return _tree;
     };
 
+    tree.loop = function (data, callback) {
+        if (callback(data) === false) {
+            return;
+        }
+        if (data[childKey]) {
+            data[childKey].forEach(function (item) {
+                tree.loop(item, callback);
+            })
+        }
+    };
+
     return tree;
 }

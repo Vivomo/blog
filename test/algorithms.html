@@ -78,9 +78,12 @@
         }
     }
 
-    console.log(tree);
-    console.log(TreeUtils.clone(tree));
-    console.log(Tree().clone(tree));
+//    console.log(tree);
+//    console.log(TreeUtils.clone(tree));
+//    console.log(Tree().clone(tree));
+    Tree().loop(tree, function (item) {
+        console.log(item);
+    });
 
 
 </script>
