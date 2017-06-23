@@ -11,3 +11,5 @@ gulp.task('testLess', function () {
 gulp.task('testWatch', function () {
     gulp.watch('../less/**/*.less', ['testLess']); //当所有less文件发生改变时，调用testLess任务
 });
+
+gulp.task('default', ['testLess', 'testWatch']);
