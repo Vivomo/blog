@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "gulp": "^3.9.1",
     "gulp-less": "^3.3.2"
   }
 }
