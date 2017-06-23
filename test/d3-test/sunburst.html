@@ -7424,7 +7424,7 @@
 
         const fontSize = '0.5em';
 
-        initHtml();
+//        initHtml();
         initCategory(data);
         category.forEach((name, index) => {
             colors[name] = allColors.colors[index % allColors.colors.length];
@@ -7508,11 +7508,11 @@
                 .style('fill', (d) => {
                     return colors[d.data.name];
                 })
-                .style('opacity', 1)
-                .on('mouseover', mouseover);
+                .style('opacity', 1);
+//                .on('mouseover', mouseover);
 
             // Add the mouseleave handler to the bounding circle.
-            d3.select('#container').on('mouseleave', mouseleave);
+//            d3.select('#container').on('mouseleave', mouseleave);
 
             // Get total size of the tree = value of root node from partition.
             totalSize = path.datum().value;
@@ -7563,7 +7563,7 @@
                 .duration(1000)
                 .style('opacity', 1)
                 .on('end', function () {
-                    d3.select(this).on('mouseover', mouseover);
+//                    d3.select(this).on('mouseover', mouseover);
                 });
 
             d3.select(`#sunburst-explanation`)
@@ -7666,10 +7666,6 @@
             elem.innerHTML = `<div id="sunburst-sequence-${index}" class="sunburst-sequence"></div>
              <div id="sunburst-explanation-${index}" class="sunburst-explanation">
                 <span id="sunburst-percentage-${index}" class="sunburst-percentage"></span><br>
-            </div>
-            <div class="sunburst-sidebar">
-                <input type="checkbox" class="togglelegend" id="togglelegend-${index}">标签<br/>
-                <div id="legend-${index}" class="legend hidden"></div>
             </div>`;
         }
     };
