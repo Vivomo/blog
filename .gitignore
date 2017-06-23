@@ -2,3 +2,4 @@
 html/
 _site/
 test/d3-test/node_modules/
+build/node_modules/
