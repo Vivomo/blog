@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>arc</title>
+    <style>
+        .arc {
+            fill: #000;
+        }
+    </style>
+</head>
+<body>
+<svg id="svg" width="600" height="600"></svg>
+
+<script src="../../js/d3/d3.js"></script>
+<script>
+    var data = '123456'.split('');
+    var splitAngle = Math.PI / data.length;
+    var arc = d3.arc()
+        .innerRadius(30)
+        .outerRadius(60);
+
+    var g = d3.select('#svg').append('g').attr('transform', 'translate(300, 300)');
+
+    g.selectAll
+
+    g.append('path')
+        .attr('class', 'arc')
+        .data(data, function (item) {
+            return item;
+        })
+        .attr('d', function (item) {
+            return arc.startAngle(item * 2 * splitAngle).endAngle((item * 2 + 1) * splitAngle);
+        });
+</script>
+</body>
+</html>
