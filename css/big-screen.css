@@ -5,7 +5,8 @@
 }
 body,
 html {
-  height: 100%;
+  height: 1080px;
+  width: 3858px;
 }
 body {
   padding: 40px 36px;
@@ -21,9 +22,11 @@ h6 {
 }
 .wrap {
   padding: 20px 46px;
+  height: 100%;
 }
 .wrap .modal {
   position: absolute;
+  padding: 10px 0 0 22px;
   border: 1px solid #2df1ff;
   color: #fff;
 }
@@ -85,4 +88,51 @@ h6 {
 .left-modal .l-m-1 {
   width: 248px;
   height: 224px;
+}
+.left-modal .l-m-2 {
+  top: 228px;
+  width: 248px;
+  height: 226px;
+}
+.left-modal .l-m-3 {
+  top: 458px;
+  width: 248px;
+  height: 269px;
+}
+.left-modal .l-m-4 {
+  left: 252px;
+  height: 290px;
+  width: 657px;
+}
+.left-modal .l-m-5 {
+  top: 294px;
+  left: 252px;
+  width: 657px;
+  height: 434px;
+}
+.left-modal .l-m-6 {
+  bottom: 0;
+  width: 910px;
+  height: 227px;
+}
+.right-modal {
+  float: right;
+  position: relative;
+  width: 880px;
+  height: 100%;
+}
+.right-modal .modal {
+  width: 100%;
+}
+.right-modal .r-m-1 {
+  top: 80px;
+  height: 345px;
+}
+.right-modal .r-m-2 {
+  top: 430px;
+  height: 436px;
+}
+.right-modal .r-m-3 {
+  height: 90px;
+  bottom: 0;
 }
