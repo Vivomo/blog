@@ -10,7 +10,14 @@
     </style>
 </head>
 <body>
-<svg id="svg" width="600" height="600"></svg>
+<svg id="svg" width="600" height="600">
+    <defs>
+        <linearGradient id="linear" x1="40%" y1="0%" x2="60%" y2="0%" spreadMethod="pad">
+            <stop offset="0%" stop-color="#05a"/>
+            <stop offset="100%" stop-color="#0a5"/>
+        </linearGradient>
+    </defs>
+</svg>
 
 <script src="../../js/d3/d3.js"></script>
 <script>
@@ -30,6 +37,7 @@
     data.forEach( function(item){
         g.append('path')
             .attr('class', 'arc')
+//            .attr('stroke', 'url(#linear)')
             .attr('d', arc.startAngle(item * 2 * splitAngle).endAngle((item * 2 + 1) * splitAngle))
     });
 

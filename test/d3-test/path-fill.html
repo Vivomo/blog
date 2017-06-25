@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>path fill</title>
+</head>
+<body>
+<svg width="600" height="600">
+    <defs>
+        <linearGradient id="linear" x1="40%" y1="0%" x2="60%" y2="0%" spreadMethod="pad">
+            <stop offset="0%" stop-color="#05a"/>
+            <stop offset="100%" stop-color="#0a5"/>
+        </linearGradient>
+    </defs>
+
+    <defs>
+        <linearGradient id="linear2" x1="0%" y1="0%" x2="100%" y2="100%" spreadMethod="pad">
+            <stop offset="0%" stop-color="#05a"/>
+            <stop offset="100%" stop-color="#0a5"/>
+        </linearGradient>
+    </defs>
+
+    <defs>
+        <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="red"/>
+            <stop offset="100%" stop-color="black" stop-opacity="0"/>
+        </linearGradient>
+    </defs>
+    <!--<path d="M10 110 C 20 140, 40 140, 50 110" stroke="url(#linear)" fill="transparent"/>-->
+
+    <!--<path d="M70 110 C 70 80, 110 80, 110 110" stroke="black" fill="transparent"/>-->
+    <g transform="translate(0, 0) rotate(0)">
+        <path d="M300 300 L 287 200 C 287 174, 313 174, 313 200 M300 300" fill="url(#Gradient2)" transform=" rotate(30)"/>
+    </g>
+</svg>
+</body>
+</html>
