@@ -22,16 +22,25 @@
 
     var g = d3.select('#svg').append('g').attr('transform', 'translate(300, 300)');
 
-    g.selectAll
+//    g.selectAll('path').data(data)
+//        .attr('d', function (item) {
+//        return arc.startAngle(item * 2 * splitAngle).endAngle((item * 2 + 1) * splitAngle);
+//    });
 
-    g.append('path')
-        .attr('class', 'arc')
-        .data(data, function (item) {
-            return item;
-        })
-        .attr('d', function (item) {
-            return arc.startAngle(item * 2 * splitAngle).endAngle((item * 2 + 1) * splitAngle);
-        });
+    data.forEach( function(item){
+        g.append('path')
+            .attr('class', 'arc')
+            .attr('d', arc.startAngle(item * 2 * splitAngle).endAngle((item * 2 + 1) * splitAngle))
+    });
+
+//    g.append('path')
+//        .attr('class', 'arc')
+//        .data(data, function (item) {
+//            return item;
+//        })
+//        .attr('d', function (item) {
+//            return arc.startAngle(item * 2 * splitAngle).endAngle((item * 2 + 1) * splitAngle);
+//        });
 </script>
 </body>
 </html>
