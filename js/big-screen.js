@@ -12,7 +12,7 @@
             dataLength = data.length,
             splitAngle = Math.PI / dataLength;
 
-        const innerRadius = 30;
+        const innerRadius = 40;
         const outerRadius = 90;
         const degreeLength = 5;
         const arcWidth = (outerRadius - innerRadius) / degreeLength;
@@ -31,11 +31,26 @@
 
         const svg = d3.select('#l-m-2 .canvas-wrap')
             .append('svg')
-            .attr('width', 240)
+            .attr('width', 220)
             .attr('height', 180);
 
         const g = svg.append('g')
             .attr('transform', 'translate(120, 90)');
+
+        const title = g.append('text')
+            .attr('class', 'title')
+            .attr('dy', '0.6em')
+            .attr('fill', '#2df1ff')
+            .attr('text-anchor', 'middle')
+            .attr('transform', 'translate(0, -10) scale(0.8)');
+
+        const titleData = g.append('text')
+            .attr('class', 'title-data')
+            .attr('dy', '0.5em')
+            .attr('fill', '#2df1ff')
+            .attr('text-anchor', 'middle')
+            .attr('transform', 'translate(0, 10) scale(0.8)');
+
 
         // 黑arc
         g.selectAll('path')
@@ -81,9 +96,12 @@
         const dataSrcGroup = d3.selectAll('.data-arc-g');
         let loopIndex = 0;
         setInterval(function () {
+            const dataIndex = loopIndex % dataLength;
             dataSrcGroup.attr('fill-opacity', function (d, index) {
-                return loopIndex % dataLength === index ? 1 : 0.5;
+                return dataIndex === index ? 1 : 0.5;
             });
+            title.text(data[dataIndex].name);
+            titleData.text(data[dataIndex].value + '家');
             loopIndex ++;
         }, 3000);
     }
