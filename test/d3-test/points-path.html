@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多点path</title>
+</head>
+<body>
+<svg width="1000" height="600">
+
+</svg>
+
+<script src="../../js/d3/d3.js"></script>
+<script>
+    let randomPoints = [];
+    for (let i = 0; i < 10; i++) {
+        let x = Math.floor(Math.random() * 1000);
+        let y =  Math.floor(Math.random() * 600);
+
+        randomPoints.push([x, y]);
+    }
+
+    randomPoints = randomPoints.sort(function (a, b) {
+        return a[0] - b[0];
+    });
+
+    d3.select('svg').selectAll('circle')
+        .data(randomPoints)
+        .enter()
+        .append('circle')
+        .attr('r', 5)
+        .attr('cx', function (d) {
+            return d[0];
+        })
+        .attr('cy', function (d) {
+            return d[1];
+        });
+
+</script>
+</body>
+</html>
