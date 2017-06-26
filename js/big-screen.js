@@ -1,5 +1,8 @@
 // import * as d3 from "./d3/d3.v4.min";
 (function () {
+
+    const theme = '#2df1ff';
+
     const modals = document.querySelectorAll('.modal');
     Array.from(modals).forEach(function (modal) {
         const div = document.createElement('div');
@@ -44,14 +47,14 @@
         const title = g.append('text')
             .attr('class', 'title')
             .attr('dy', '0.6em')
-            .attr('fill', '#2df1ff')
+            .attr('fill', theme)
             .attr('text-anchor', 'middle')
             .attr('transform', 'translate(0, -10) scale(0.8)');
 
         const titleData = g.append('text')
             .attr('class', 'title-data')
             .attr('dy', '0.5em')
-            .attr('fill', '#2df1ff')
+            .attr('fill', theme)
             .attr('text-anchor', 'middle')
             .attr('transform', 'translate(0, 10) scale(0.8)');
 
@@ -75,24 +78,24 @@
 
         // 彩色arc
         data.forEach(function (item, dIndex) {
-             const dg = g.append('g')
-                 .attr('class', 'data-arc-g')
-                 .attr('fill-opacity', 0.5);
-             const degree = Math.ceil(item.value / (max / 5));
-             dg.selectAll('path')
-                 .data(new Array(degree).fill(0))
-                 .enter()
-                 .append('path')
-                 .attr('d', function (d, index) {
-                     const _innerRadius = innerRadius + index * arcWidth;
-                     const _outerRadius = _innerRadius + arcWidth;
-                     return d3.arc()
-                         .innerRadius(_innerRadius)
-                         .outerRadius(_outerRadius).startAngle(dIndex * 2 * splitAngle).endAngle((dIndex * 2 + 1) * splitAngle)()
-                 })
-                 .attr('fill', function (d, index) {
-                     return colors[index];
-                 })
+            const dg = g.append('g')
+                .attr('class', 'data-arc-g')
+                .attr('fill-opacity', 0.5);
+            const degree = Math.ceil(item.value / (max / 5));
+            dg.selectAll('path')
+                .data(new Array(degree).fill(0))
+                .enter()
+                .append('path')
+                .attr('d', function (d, index) {
+                    const _innerRadius = innerRadius + index * arcWidth;
+                    const _outerRadius = _innerRadius + arcWidth;
+                    return d3.arc()
+                        .innerRadius(_innerRadius)
+                        .outerRadius(_outerRadius).startAngle(dIndex * 2 * splitAngle).endAngle((dIndex * 2 + 1) * splitAngle)()
+                })
+                .attr('fill', function (d, index) {
+                    return colors[index];
+                })
         });
 
         // 循环点亮
@@ -106,7 +109,7 @@
             });
             title.text(data[dataIndex].name);
             titleData.text(data[dataIndex].value + '家');
-            loopIndex ++;
+            loopIndex++;
         }, 3000);
     }
 
@@ -125,26 +128,85 @@
             div.innerHTML = `<div class="line"></div><div class="value">${item.value}</div><div class="name">${item.name}</div>`;
             wrap.appendChild(div);
             setTimeout(function () {
-                const degree = (index+1) * splitDegree - 90;
+                const degree = (index + 1) * splitDegree - 90;
                 div.style.transform = `rotate(${degree}deg)`;
                 div.style.width = `${maxWidth - Math.min(40, Math.abs(degree))}px`;
             }, index * 50);
         });
     }
 
+    /**
+     * 人才热度
+     */
+    function drawTalentsDemand(data1, data2) {
+        drawLine(data1);
+    }
+
+    function drawLine(data) {
+        const svg = d3.select('#l-m-4 .line-wrap svg');
+        const textWidth = svg.attr('width') / (data.length + 1);
+        let max = 0;
+
+        data.forEach(function (item) {
+            item.slice(1).forEach(function (item2) {
+                if (item2 > max) {
+                    max = item2;
+                }
+            })
+        });
+
+        svg.selectAll('text')
+            .data(data.map(item => item[0]))
+            .enter()
+            .append('text')
+            .attr('text-anchor', 'middle')
+            .attr('transform', function (d, index) {
+                return `translate( ${(index + 1) * textWidth}, 212)`;
+            })
+            .attr('fill', theme)
+            .text(function (d) {
+                return d;
+            });
+
+        data.forEach(function (item, index) {
+            svg.append('g').selectAll('circle')
+                .data(item.slice(1))
+                .enter()
+                .append('circle')
+                .attr('r', 3)
+                .attr('fill', '#fff')
+                .attr('transform', function (d) {
+                    const y = Math.min(175, Math.max(3, (1 - d / max) * 180)) + 10;
+                    return `translate( ${(index + 1) * textWidth}, ${y})`;
+                })
+        });
+
+    }
+
     const industryData = [
-        { name: '企业服务', value: 92 },
-        { name: '互联网', value: 57 },
-        { name: '科技研发', value: 71 },
-        { name: '技术推广服务', value: 163 },
-        { name: '电商零售', value: 34 },
-        { name: '广播电讯', value: 23 },
+        {name: '企业服务', value: 92},
+        {name: '互联网', value: 57},
+        {name: '科技研发', value: 71},
+        {name: '技术推广服务', value: 163},
+        {name: '电商零售', value: 34},
+        {name: '广播电讯', value: 23},
         // { name: '文化艺术', value: 20 },
+    ];
+
+    const talensDemand = [
+        [2013, 16, 14, 288],
+        [2014, 54, 65, 1004],
+        [2015, 83, 89, 1500],
+        [2016, 106, 139, 2200],
+        [2017, 111, 145, 2400]
     ];
 
 
     // drawIndustry(industryData);
 
-    drawDistribution(industryData);
+    // drawDistribution(industryData);
+
+    drawTalentsDemand(talensDemand);
+
 
 })();

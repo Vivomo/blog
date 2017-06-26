@@ -35,6 +35,25 @@
             return d[1];
         });
 
+    var x = d3.scaleTime().range([0, 1000]);
+    var y = d3.scaleLinear().range([600, 0]);
+
+    let line = d3.line()
+        .x(function (d) {
+            return x(d[0]);
+        })
+        .y(function (d) {
+            return y(d[1]);
+        });
+
+    d3.select('svg').append('path')
+        .data([randomPoints])
+        .attr('d', randomPoints)
+        .attr('stroke', '#000');
+
+
+
+
 </script>
 </body>
 </html>
