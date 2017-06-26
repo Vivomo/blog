@@ -7,6 +7,10 @@
         modal.appendChild(div);
     });
 
+    /**
+     * 行业热度
+     * @param data
+     */
     function drawIndustry(data) {
         let max = 0,
             dataLength = data.length,
@@ -106,17 +110,41 @@
         }, 3000);
     }
 
+    /**
+     * 企业分布
+     */
+    function drawDistribution(data) {
+        const dataLength = data.length;
+        const splitDegree = Math.floor(180 / (dataLength + 1));
+        const wrap = document.querySelector('#l-m-3 .canvas-wrap');
+        const maxWidth = 160;
+
+        data.forEach(function (item, index) {
+            const div = document.createElement('div');
+            div.className = 'data';
+            div.innerHTML = `<div class="line"></div><div class="value">${item.value}</div><div class="name">${item.name}</div>`;
+            wrap.appendChild(div);
+            setTimeout(function () {
+                const degree = (index+1) * splitDegree - 90;
+                div.style.transform = `rotate(${degree}deg)`;
+                div.style.width = `${maxWidth - Math.min(40, Math.abs(degree))}px`;
+            }, index * 50);
+        });
+    }
+
     const industryData = [
         { name: '企业服务', value: 92 },
-        { name: '技术推广服务', value: 163 },
-        { name: '科技研发', value: 71 },
         { name: '互联网', value: 57 },
+        { name: '科技研发', value: 71 },
+        { name: '技术推广服务', value: 163 },
         { name: '电商零售', value: 34 },
         { name: '广播电讯', value: 23 },
-        { name: '文化艺术', value: 20 },
+        // { name: '文化艺术', value: 20 },
     ];
 
-    drawIndustry(industryData);
-    
+
+    // drawIndustry(industryData);
+
+    drawDistribution(industryData);
 
 })();

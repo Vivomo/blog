@@ -7,6 +7,7 @@ body,
 html {
   height: 1080px;
   width: 3858px;
+  font-size: 12px;
 }
 body {
   padding: 40px 36px;
@@ -106,6 +107,43 @@ h6 {
   top: 458px;
   width: 248px;
   height: 269px;
+}
+.left-modal .l-m-3 .canvas-wrap {
+  position: relative;
+  height: 206px;
+  border-left: 1px solid rgba(41, 241, 255, 0.3);
+}
+.left-modal .l-m-3 .data {
+  position: absolute;
+  top: 92px;
+  left: 6px;
+  width: 160px;
+  height: 20px;
+  line-height: 20px;
+  transform-origin: 0 50%;
+}
+.left-modal .l-m-3 .data .line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 50px;
+  border: 1px solid rgba(41, 241, 255, 0.3);
+}
+.left-modal .l-m-3 .data .value {
+  position: absolute;
+  padding: 0 4px;
+  left: 20%;
+  color: #69bd7c;
+  background: #000;
+}
+.left-modal .l-m-3 .data .name {
+  position: absolute;
+  padding-left: 12px;
+  right: 0;
+  color: #2df1ff;
+  transform: scale(0.8);
+  transform-origin: 0 50%;
+  background: url("../src/big-screen/label_bg.png") no-repeat left center;
 }
 .left-modal .l-m-4 {
   left: 252px;

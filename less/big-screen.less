@@ -6,6 +6,7 @@
 body, html {
     height: 1080px;
     width: 3858px;
+    font-size: 12px;
 }
 body {
     padding: 40px 36px;
@@ -16,6 +17,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @theme: #2df1ff;
+@theme2: rgba(41, 241, 255, 0.3);
 
 .wrap {
     padding: 20px 46px;
@@ -23,7 +25,7 @@ h1, h2, h3, h4, h5, h6 {
     .modal {
         position: absolute;
         padding: 10px 0 0 22px;
-        border: 1px solid rgba(41, 241, 255, 0.3);
+        border: 1px solid @theme2;
         color: #fff;
         h3 {
             position: relative;
@@ -107,6 +109,49 @@ h1, h2, h3, h4, h5, h6 {
         top: 458px;
         width: 248px;
         height: 269px;
+
+        .canvas-wrap {
+            position: relative;
+            height: 206px;
+            border-left: 1px solid @theme2;
+        }
+        .data {
+            position: absolute;
+            top: 92px;
+            left: 6px;
+            width: 160px;
+            height: 20px;
+            line-height: 20px;
+            transform-origin: 0 50%;
+
+            .line {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                right: 50px;
+                border: 1px solid @theme2;
+            }
+
+            .value {
+                position: absolute;
+                padding: 0 4px;
+                left: 20%;
+                color: #69bd7c;
+                background: #000;
+            }
+
+            .name {
+                position: absolute;
+                padding-left: 12px;
+                right: 0;
+                color: @theme;
+                transform: scale(0.8);
+                transform-origin: 0 50%;
+                background: url("../src/big-screen/label_bg.png") no-repeat left center;
+
+            }
+
+        }
     }
 
     .l-m-4 {
