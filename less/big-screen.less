@@ -23,12 +23,16 @@ h1, h2, h3, h4, h5, h6 {
     .modal {
         position: absolute;
         padding: 10px 0 0 22px;
-        border: 1px solid @theme;
+        border: 1px solid rgba(41, 241, 255, 0.3);
         color: #fff;
         h3 {
+            position: relative;
             font-size: 18px;
+            z-index: 1;
         }
         h4 {
+            position: relative;
+            z-index: 1;
             font-size: 12px;
             color: @theme;
         }
@@ -93,6 +97,11 @@ h1, h2, h3, h4, h5, h6 {
         top: 228px;
         width: 248px;
         height: 226px;
+
+        .canvas-wrap {
+            position: relative;
+            top: -10px;
+        }
     }
     .l-m-3 {
         top: 458px;
