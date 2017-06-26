@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="../../js/d3/d3.js"></script>
+</body>
+<script>
+    var matrix = [
+        [11975,  5871, 8916, 2868],
+        [ 1951, 10048, 2060, 6171],
+        [ 8010, 16145, 8090, 8045],
+        [ 1013,   990,  940, 6907]
+    ];
+
+    var tr = d3.select("body")
+        .append("table")
+        .selectAll("tr")
+        .data(matrix)
+        .enter().append("tr");
+
+    var td = tr.selectAll("td")
+        .data(function(d) { return d; })
+        .enter().append("td")
+        .text(function(d) { return d; });
+</script>
+</html>
