@@ -21,25 +21,28 @@
 
 <script src="../../js/d3/d3.js"></script>
 <script>
-    var data = '123456'.split('');
+    var data = '1234565788'.split('');
     var splitAngle = Math.PI / data.length;
     var arc = d3.arc()
         .innerRadius(30)
-        .outerRadius(60);
+        .outerRadius(100);
 
     var g = d3.select('#svg').append('g').attr('transform', 'translate(300, 300)');
 
-//    g.selectAll('path').data(data)
-//        .attr('d', function (item) {
-//        return arc.startAngle(item * 2 * splitAngle).endAngle((item * 2 + 1) * splitAngle);
-//    });
+    g.selectAll('path')
+        .data(data)
+        .enter()
+        .append('path')
+        .attr('d', function (i, item) {
+            console.log(item * 2 * splitAngle, (item * 2 + 1) * splitAngle)
+            return arc.startAngle(item * 2 * splitAngle).endAngle((item * 2 + 1) * splitAngle)();
+        });
 
-    data.forEach( function(item){
-        g.append('path')
-            .attr('class', 'arc')
-//            .attr('stroke', 'url(#linear)')
-            .attr('d', arc.startAngle(item * 2 * splitAngle).endAngle((item * 2 + 1) * splitAngle))
-    });
+//    data.forEach( function(item){
+//        g.append('path')
+//            .attr('class', 'arc')
+//            .attr('d', arc.startAngle(item * 2 * splitAngle).endAngle((item * 2 + 1) * splitAngle))
+//    });
 
 //    g.append('path')
 //        .attr('class', 'arc')
