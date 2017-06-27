@@ -716,6 +716,15 @@
             }, 500);
         }, time);
     }
+    
+    function rotateSunburst() {
+        const sunburst = document.querySelector('.sunburst');
+        sunburst.classList.add('full');
+
+        setTimeout(function () {
+            sunburst.classList.add('rotate');
+        }, 1000);
+    }
 
     const industryData = [
         {name: '企业服务', value: 92},
@@ -796,4 +805,5 @@
 
     scrollElem(document.querySelector('.company-list'));
     scrollElem(document.querySelector('.event-list'));
+    rotateSunburst();
 })();

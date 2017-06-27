@@ -367,6 +367,31 @@ h5 {
   overflow: hidden;
   background: rgba(31, 47, 143, 0.15);
 }
+.right-modal .r-m-1 .sunburst-wrap {
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  right: 30px;
+  top: 0;
+}
+.right-modal .r-m-1 .sunburst {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  width: 164px;
+  height: 164px;
+  border-radius: 50%;
+  background: url("../src/big-screen/sunburst.png") no-repeat center;
+  transform: translate(50%, -50%);
+  transition: all 1s;
+}
+.right-modal .r-m-1 .sunburst.full {
+  width: 314px;
+  height: 314px;
+}
+.right-modal .r-m-1 .sunburst.rotate {
+  animation: rotate 5s infinite linear;
+}
 .right-modal .r-m-2 {
   top: 430px;
   height: 436px;
@@ -390,4 +415,12 @@ h5 {
 .right-modal .r-m-3 {
   height: 90px;
   bottom: 0;
+}
+@keyframes rotate {
+  0% {
+    transform: translate(50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(50%, -50%) rotate(360deg);
+  }
 }

@@ -418,6 +418,36 @@ h5 {
                 }
             }
         }
+
+        .sunburst-wrap {
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            right: 30px;
+            top: 0;
+        }
+
+        .sunburst {
+            position: absolute;
+            top: 50%;
+            right: 50%;
+            width: 164px;
+            height: 164px;
+            border-radius: 50%;
+            background: url("../src/big-screen/sunburst.png") no-repeat center;
+
+            transform: translate(50%, -50%);
+            transition: all 1s;
+
+            &.full {
+                width: 314px;
+                height: 314px;
+            }
+
+            &.rotate {
+                animation: rotate 5s infinite linear;
+            }
+        }
     }
 
     .r-m-2 {
@@ -446,5 +476,16 @@ h5 {
     .r-m-3 {
         height: 90px;
         bottom: 0;
+    }
+}
+
+
+@keyframes rotate {
+    0% {
+        transform: translate(50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(50%, -50%) rotate(360deg);
     }
 }
