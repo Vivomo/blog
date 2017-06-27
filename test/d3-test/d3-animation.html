@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>d3 animation</title>
+</head>
+<body>
+<svg width="1200" height="600"></svg>
+<script src="../../js/d3/d3.js"></script>
+<script>
+    d3.select('svg').append('circle')
+        .attr('fill', '#000')
+        .attr('r', 3)
+        .attr('cx', 100)
+        .attr('cy', 100)
+        .transition(1000)
+        .attr('r', 100)
+</script>
+</body>
+</html>
