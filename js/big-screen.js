@@ -563,10 +563,127 @@
         console.log(points);
 
     }
+
     /**
      * 智能招商匹配
      */
     function drawTalentHeat(data) {
+        const maxR = 48;
+        const minR = 28;
+        const category = ['全国', '浙江', '杭州', '海创园'];
+        let activeIndex = 0;
+
+        let max = data[0].data[0];
+        let min = max;
+
+        data.forEach(function (item) {
+            item.data.forEach(function (value) {
+                if (value > max) {
+                    max = value;
+                }
+                if (value < min) {
+                    min = value;
+                }
+            })
+        });
+
+        const circles = d3.select('.talent-heat .circle')
+            .selectAll('circle')
+            .data(category)
+            .enter()
+            .append('circle')
+            .attr('fill', '#02c9d2')
+            .attr('cx', function (d, index) {
+                return 75 + index * 150
+            })
+            .attr('cy', minR)
+            .attr('r', minR)
+            .attr('transform', 'translate(0, 10)');
+
+        const text = d3.select('.talent-heat .text')
+            .selectAll('text')
+            .data(category)
+            .enter()
+            .append('text')
+            .attr('fill', '#000')
+            .attr('text-anchor', 'middle')
+            .attr('transform', function (d, index) {
+                return `translate(${75 + index * 150}, ${minR + 20})`
+            })
+            .text(function (d) {
+                return d;
+            });
+
+        const point = d3.select('.talent-heat .point')
+            .selectAll('circle')
+            .data(category)
+            .enter()
+            .append('circle')
+            .attr('fill', '#000')
+            .attr('cx', function (d, index) {
+                return 75 + index * 150
+            })
+            .attr('cy', minR)
+            .attr('r', 3);
+
+        const lines = d3.select('.talent-heat .line')
+            .selectAll('line')
+            .data(category)
+            .enter()
+            .append('line')
+            .attr('stroke', '#000')
+            .attr('x1', function (d, index) {
+                return 75 + index * 150
+            })
+            .attr('y1', 10)
+            .attr('x2', function (d, index) {
+                return 75 + index * 150;
+            })
+            .attr('y2', minR);
+
+
+        setInterval(function () {
+            const index = activeIndex % data.length;
+            const legend = document.querySelectorAll('.talent-heat .legend li')[index];
+            const activeLi =  document.querySelector('.talent-heat .legend .active');
+            if (activeLi) {
+                activeLi.classList.remove('active');
+            }
+            legend.classList.add('active');
+
+            const circleData = data[index].data;
+            const rArr = [];
+            circles.transition()
+                .duration(500)
+                .attr('cy', function (d, index) {
+                    const r = (circleData[index] - min) / (max - min) * (maxR - minR) + minR
+                    rArr.push(r);
+                    return r;
+                })
+                .attr('r', function (d, index) {
+                    return rArr[index];
+                });
+
+            text.attr('transform', function (d, index) {
+                    return `translate(${75 + index * 150}, ${rArr[index] + 20})`
+                })
+                .text(function (d, index) {
+                    return category[index] + circleData[index] + '家'
+                });
+
+            point.transition()
+                .duration(500).attr('cy', function (d, index) {
+                return rArr[index];
+            });
+
+            lines.transition()
+                .duration(500)
+                .attr('y2', function (d, index) {
+                    return rArr[index];
+                });
+
+            activeIndex ++;
+        }, 2000);
 
     }
 
@@ -600,10 +717,38 @@
     ];
 
     var IntelligentLeasingData = [
-        {"name":"2017重点扶持","value":69},
-        {"name":"历史扶持项目","value":300},
-        {"name":"孵化器","value":40},
-        {"name":"雏鹰计划项目","value":10},
+        {"name": "2017重点扶持", "value": 69},
+        {"name": "历史扶持项目", "value": 300},
+        {"name": "孵化器", "value": 40},
+        {"name": "雏鹰计划项目", "value": 10},
+    ];
+
+    var talentHeatData = [
+        {
+            name: "企业服务",
+            data: [365246, 26784, 11188, 1420]
+        },
+        {
+            name: "技术推广服务",
+            data: [169454, 6754, 4162, 1051]
+        },
+        {
+            name: "科技研发",
+            data: [54304, 3261, 1317, 391]
+        },
+        {
+            name: "互联网",
+            data: [29263, 2789, 1526, 301],
+
+        },
+        {
+            name: "电商零售",
+            data: [883538, 64728, 19188, 389],
+        },
+        {
+            name: "软件应用",
+            data: [19415, 1243, 957, 139],
+        },
     ];
 
 
@@ -613,7 +758,8 @@
 
     // drawTalentsDemand(talensDemand, DemandFeverData);
 
-    drawIntelligentLeasing(IntelligentLeasingData);
+    // drawIntelligentLeasing(IntelligentLeasingData);
 
+    drawTalentHeat(talentHeatData);
 
 })();
