@@ -334,6 +334,39 @@ h5 {
   top: 80px;
   height: 345px;
 }
+.right-modal .r-m-1 .investment-history {
+  margin-top: 20px;
+  font-size: 16px;
+  width: 394px;
+  text-align: center;
+}
+.right-modal .r-m-1 .investment-history span:nth-child(1) {
+  width: 40%;
+}
+.right-modal .r-m-1 .investment-history span:nth-child(2) {
+  width: 30%;
+}
+.right-modal .r-m-1 .investment-history span:nth-child(3) {
+  width: 30%;
+}
+.right-modal .r-m-1 .investment-history .head {
+  display: flex;
+  margin-bottom: 5px;
+  height: 40px;
+  line-height: 40px;
+  background: rgba(31, 47, 143, 0.15);
+}
+.right-modal .r-m-1 .investment-history li {
+  display: flex;
+  height: 34px;
+  line-height: 34px;
+}
+.right-modal .r-m-1 .investment-history .event-wrap {
+  position: relative;
+  height: 204px;
+  overflow: hidden;
+  background: rgba(31, 47, 143, 0.15);
+}
 .right-modal .r-m-2 {
   top: 430px;
   height: 436px;

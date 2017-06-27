@@ -794,5 +794,6 @@
 
     loopWarningData();
 
-    scrollElem(document.querySelector('.company-list'))
+    scrollElem(document.querySelector('.company-list'));
+    scrollElem(document.querySelector('.event-list'));
 })();
