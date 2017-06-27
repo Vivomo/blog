@@ -157,6 +157,7 @@ li {
 }
 .left-modal .l-m-4 .canvas-wrap {
   position: relative;
+  display: flex;
 }
 .left-modal .l-m-4 .line-wrap .legend {
   position: absolute;
@@ -181,6 +182,12 @@ li {
 }
 .left-modal .l-m-4 .line-wrap li:nth-child(3) span {
   background: #1f4a9e;
+}
+.left-modal .l-m-4 .radar-wrap h5 {
+  padding-left: 4px;
+  height: 16px;
+  line-height: 16px;
+  border-left: 3px solid #2a8bcc;
 }
 .left-modal .l-m-5 {
   top: 294px;
