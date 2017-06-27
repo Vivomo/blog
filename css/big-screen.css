@@ -218,6 +218,54 @@ li {
   width: 910px;
   height: 227px;
 }
+.left-modal .l-m-6 h5 {
+  color: #2df1ff;
+}
+.left-modal .l-m-6 .warning-wrap {
+  position: relative;
+}
+.left-modal .l-m-6 .warning-wrap li {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  font-size: 16px;
+  line-height: 80px;
+  text-align: center;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+.left-modal .l-m-6 .warning-wrap li.active {
+  opacity: 1;
+}
+.left-modal .l-m-6 .warning-wrap li:nth-child(1) {
+  left: 110px;
+  top: 5px;
+  background: #2df1ff;
+}
+.left-modal .l-m-6 .warning-wrap li:nth-child(2) {
+  font-size: 14px;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  top: 50px;
+  background: #b58d1a;
+}
+.left-modal .l-m-6 .warning-wrap li:nth-child(3) {
+  font-size: 14px;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  top: 100px;
+  left: 130px;
+  background: #683930;
+}
+.left-modal .l-m-6 .warning-data {
+  font-size: 20px;
+  position: absolute;
+  top: 80px;
+  left: 62px;
+  color: #2df1ff;
+}
 .right-modal {
   float: right;
   position: relative;

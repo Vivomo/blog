@@ -687,6 +687,23 @@
 
     }
 
+    /**
+     * 企业资信榜
+     */
+    function loopWarningData() {
+        const list = document.querySelectorAll('.warning-wrap li');
+        const dataElem = document.querySelector('.warning-data');
+        let loopIndex = 1;
+        setInterval(function () {
+            const index = loopIndex % 3;
+            document.querySelector('.warning-wrap .active').classList.remove('active');
+            const item = list[index];
+            item.classList.add('active');
+            dataElem.innerText = item.dataset.value + '家';
+            loopIndex ++;
+        }, 2000);
+    }
+
     const industryData = [
         {name: '企业服务', value: 92},
         {name: '互联网', value: 57},
@@ -760,6 +777,7 @@
 
     // drawIntelligentLeasing(IntelligentLeasingData);
 
-    drawTalentHeat(talentHeatData);
+    // drawTalentHeat(talentHeatData);
 
+    loopWarningData();
 })();
