@@ -105,6 +105,84 @@ h5 {
   width: 248px;
   height: 224px;
 }
+.left-modal .l-m-1 .category li {
+  float: left;
+  width: 50%;
+  padding-right: 10px;
+  line-height: 20px;
+}
+.left-modal .l-m-1 .category li:before {
+  content: '';
+  display: inline-block;
+  margin-right: 3px;
+  width: 14px;
+  height: 7px;
+}
+.left-modal .l-m-1 .category li:nth-child(1):before {
+  background: #72be6d;
+}
+.left-modal .l-m-1 .category li:nth-child(2):before {
+  background: #9f4897;
+}
+.left-modal .l-m-1 .category li:nth-child(3):before {
+  background: #ced724;
+}
+.left-modal .l-m-1 .category li:nth-child(4):before {
+  background: #25b7e2;
+}
+.left-modal .l-m-1 .category li:nth-child(5):before {
+  background: #c7431c;
+}
+.left-modal .l-m-1 .category li:nth-child(6):before {
+  background: #1f4a9e;
+}
+.left-modal .l-m-1 .dial-wrap {
+  position: relative;
+  margin-left: -20px;
+  height: 108px;
+  background: url("../src/big-screen/dial.png") no-repeat center;
+}
+.left-modal .l-m-1 .dial-wrap ul {
+  position: relative;
+  left: 50%;
+  top: 48px;
+}
+.left-modal .l-m-1 .dial-wrap li {
+  position: absolute;
+  width: 7px;
+  height: 21px;
+  transform-origin: 50% 100%;
+}
+.left-modal .l-m-1 .dial-wrap li:nth-child(1) {
+  transform: translate(0, -30px) rotate(-120deg);
+  transform-origin: 50% 51px;
+  background: url("../src/big-screen/point1.png");
+}
+.left-modal .l-m-1 .dial-wrap li:nth-child(2) {
+  transform: translate(0, -20px) rotate(-72deg);
+  transform-origin: 50% 41px;
+  background: url("../src/big-screen/point2.png");
+}
+.left-modal .l-m-1 .dial-wrap li:nth-child(3) {
+  transform: translate(0, -10px) rotate(-24deg);
+  transform-origin: 50% 31px;
+  background: url("../src/big-screen/point3.png");
+}
+.left-modal .l-m-1 .dial-wrap li:nth-child(4) {
+  transform: translate(0, -40px) rotate(24deg);
+  transform-origin: 50% 61px;
+  background: url("../src/big-screen/point4.png");
+}
+.left-modal .l-m-1 .dial-wrap li:nth-child(5) {
+  transform: translate(0, -10px) rotate(72deg);
+  transform-origin: 50% 31px;
+  background: url("../src/big-screen/point5.png");
+}
+.left-modal .l-m-1 .dial-wrap li:nth-child(6) {
+  transform: translate(0, -10px) rotate(120deg);
+  transform-origin: 50% 31px;
+  background: url("../src/big-screen/point6.png");
+}
 .left-modal .l-m-2 {
   top: 228px;
   width: 248px;
