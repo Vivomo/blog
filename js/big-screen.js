@@ -409,8 +409,6 @@
             })
         });
 
-        console.log('max', max);
-
         //生成所有的点 pointsList的每个数组是一条线
         for (let i = 1; i <= lineCount; i++) {
             pointsList[i - 1] = data.map(function (item, index) {
@@ -419,7 +417,6 @@
                 return [x, y];
             });
         }
-
 
         // x 轴 时间
         svg.selectAll('text')
@@ -437,7 +434,6 @@
 
         pointsList.forEach(function (points, index) {
             // 点
-
             svg.append('g').selectAll('circle')
                 .data(points)
                 .enter()
@@ -465,10 +461,6 @@
                     return d;
                 });
         });
-
-
-
-
     }
 
     function drawDemandFever(data) {
@@ -480,6 +472,102 @@
         };
 
         drawRadar(document.getElementById('radar-content'), data, config);
+    }
+
+    /**
+     * 智能招商
+     * @param data
+     */
+    function drawIntelligentLeasing(data) {
+        const svg = d3.select('.intelligent-leasing svg');
+        const wrapHeight = svg.attr('height');
+        const splitWidth = svg.attr('width') / data.length;
+        const points = new Array(data.length).fill(null).map(function () {
+            return {};
+        });
+
+        // max
+        let max = 0;
+        data.forEach(function (item) {
+            if (item.value > max) {
+                max = item.value;
+            }
+        });
+
+        // text
+        d3.select('.intelligent-leasing .text')
+            .selectAll('text')
+            .data(data)
+            .enter()
+            .append('text')
+            .attr('transform', function (d, index) {
+                const x = splitWidth * (index + 0.5);
+                points[index].x = x;
+                return `translate(${x}, ${wrapHeight - 8})`;
+            })
+            .attr('text-anchor', 'middle')
+            .attr('fill', '#fff')
+            .text(function (d) {
+                return d.name;
+            });
+        // circle
+        const circle = d3.select('.intelligent-leasing .circle')
+            .selectAll('circle')
+            .data(data)
+            .enter()
+            .append('circle')
+            .attr('fill', '#2a8bcc')
+            .attr('cx', function (d, index) {
+                return points[index].x;
+            })
+            .attr('cy', function () {
+                return wrapHeight - 8
+            })
+            .attr('r', function () {
+                return 1;
+            });
+
+        // animate
+        circle.transition()
+            .duration(1000)
+            .ease(d3.easeBounce)
+            .attr('r', function (d, index) {
+                const r = d.value > 100 ? 11 : 7;
+                points[index].r = r;
+                return r;
+            })
+            .attr('cy', function (d, index) {
+                const height = d.value / max * 100;
+                const y = wrapHeight - 40 - height;
+                points[index].y = y;
+                return y;
+            })
+            .on('end', function (d, index) {
+                var p1 = [points[index].x, 150],
+                    p2 = [points[index].x - points[index].r, points[index].y],
+                    p3 = [points[index].x + points[index].r, points[index].y];
+
+                d3.select('.intelligent-leasing .triangle')
+                    .append('polygon')
+                    .attr('fill', 'rgba(211, 17, 118, 0.35)')
+                    .attr('points', `${p1.join(' ')}, ${p2.join(' ')}, ${p3.join(' ')}`);
+
+                d3.select('.intelligent-leasing .value')
+                    .append('text')
+                    .attr('fill', '#fcf0f6')
+                    .attr('text-anchor', 'middle')
+                    .attr('transform', `translate(${points[index].x}, ${points[index].y - points[index].r - 10})`)
+                    .text(data[index].value);
+            });
+
+        console.log(points);
+
+    }
+    /**
+     * 智能招商匹配
+     */
+    function drawTalentHeat(data) {
+
     }
 
     const industryData = [
@@ -511,12 +599,21 @@
         ]
     ];
 
+    var IntelligentLeasingData = [
+        {"name":"2017重点扶持","value":69},
+        {"name":"历史扶持项目","value":300},
+        {"name":"孵化器","value":40},
+        {"name":"雏鹰计划项目","value":10},
+    ];
+
 
     // drawIndustry(industryData);
 
     // drawDistribution(industryData);
 
-    drawTalentsDemand(talensDemand, DemandFeverData);
+    // drawTalentsDemand(talensDemand, DemandFeverData);
+
+    drawIntelligentLeasing(IntelligentLeasingData);
 
 
 })();
