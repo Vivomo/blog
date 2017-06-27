@@ -142,11 +142,22 @@
         drawLine(data1);
     }
 
+    /**
+     *
+     * @param data 二维数组, 每个一维数组的第一个数是日期;
+     */
     function drawLine(data) {
         const svg = d3.select('#l-m-4 .line-wrap svg');
         const textWidth = svg.attr('width') / (data.length + 1);
         let max = 0;
+        const lineCount = data[0].length - 1;
+        const pointsList = new Array(lineCount);
+        const colors = ['#72be6d', '#25b7e2', '#1f4a9e'];
+        const rangeStart = 40;
+        const rangeEnd = 200;
 
+
+        // 获取极值
         data.forEach(function (item) {
             item.slice(1).forEach(function (item2) {
                 if (item2 > max) {
@@ -155,6 +166,19 @@
             })
         });
 
+        console.log('max', max);
+
+        //生成所有的点 pointsList的每个数组是一条线
+        for (let i = 1; i <= lineCount; i++) {
+            pointsList[i - 1] = data.map(function (item, index) {
+                const x = (index + 1) * textWidth;
+                const y = rangeEnd - item[i] / max * (rangeEnd - rangeStart);
+                return [x, y];
+            });
+        }
+
+
+        // x 轴 时间
         svg.selectAll('text')
             .data(data.map(item => item[0]))
             .enter()
@@ -168,18 +192,39 @@
                 return d;
             });
 
-        data.forEach(function (item, index) {
+        pointsList.forEach(function (points, index) {
+            // 点
+
             svg.append('g').selectAll('circle')
-                .data(item.slice(1))
+                .data(points)
                 .enter()
                 .append('circle')
-                .attr('r', 3)
+                .attr('r', 2)
                 .attr('fill', '#fff')
                 .attr('transform', function (d) {
-                    const y = Math.min(175, Math.max(3, (1 - d / max) * 180)) + 10;
-                    return `translate( ${(index + 1) * textWidth}, ${y})`;
-                })
+                    return `translate( ${d[0]}, ${d[1]})`;
+                });
+
+            //连点成线
+            svg.select('.path-g').append('path')
+                .attr('stroke', colors[index])
+                .attr('fill', 'transparent')
+                .attr('d', function () {
+                    var d = `M ${points[0].join(' ')}\n`;
+
+                    points.slice(1).forEach(function (point, index) {
+                        const prevPoint = points[index];
+                        var p1 = `${0.5 * (prevPoint[0] + point[0])} ${prevPoint[1]}`,
+                            p2 = `${0.5 * (prevPoint[0] + point[0])} ${point[1]}`,
+                            p3 = point.join(' ');
+                        d += `C ${p1} ${p2} ${p3} \n`;
+                    });
+                    return d;
+                });
         });
+
+
+
 
     }
 
@@ -194,11 +239,11 @@
     ];
 
     const talensDemand = [
-        [2013, 16, 14, 288],
-        [2014, 54, 65, 1004],
-        [2015, 83, 89, 1500],
-        [2016, 106, 139, 2200],
-        [2017, 111, 145, 2400]
+        [2013, 16, 60, 288],
+        [2014, 54, 65, 100],
+        [2015, 83, 89, 150],
+        [2016, 106, 139, 220],
+        [2017, 111, 145, 240]
     ];
 
 

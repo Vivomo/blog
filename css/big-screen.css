@@ -21,6 +21,11 @@ h5,
 h6 {
   font-weight: normal;
 }
+ul,
+ol,
+li {
+  list-style: none;
+}
 .wrap {
   padding: 20px 46px;
   height: 100%;
@@ -149,6 +154,33 @@ h6 {
   left: 252px;
   height: 290px;
   width: 657px;
+}
+.left-modal .l-m-4 .canvas-wrap {
+  position: relative;
+}
+.left-modal .l-m-4 .line-wrap .legend {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  display: flex;
+  color: #fff;
+}
+.left-modal .l-m-4 .line-wrap .legend span {
+  display: inline-block;
+  width: 25px;
+  height: 13px;
+}
+.left-modal .l-m-4 .line-wrap li {
+  padding-right: 5px;
+}
+.left-modal .l-m-4 .line-wrap li:nth-child(1) span {
+  background: #72be6d;
+}
+.left-modal .l-m-4 .line-wrap li:nth-child(2) span {
+  background: #25b7e2;
+}
+.left-modal .l-m-4 .line-wrap li:nth-child(3) span {
+  background: #1f4a9e;
 }
 .left-modal .l-m-5 {
   top: 294px;

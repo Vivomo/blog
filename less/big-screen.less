@@ -16,6 +16,10 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
 }
 
+ul, ol, li {
+    list-style: none;
+}
+
 @theme: #2df1ff;
 @theme2: rgba(41, 241, 255, 0.3);
 
@@ -158,6 +162,39 @@ h1, h2, h3, h4, h5, h6 {
         left: 252px;
         height: 290px;
         width: 657px;
+
+        .canvas-wrap {
+            position: relative;
+        }
+        .line-wrap {
+            .legend {
+                position: absolute;
+                left: 10px;
+                top: 15px;
+                display: flex;
+                color: #fff;
+
+                span {
+                    display: inline-block;
+                    width: 25px;
+                    height: 13px;
+                }
+            }
+
+            li {
+                padding-right: 5px;
+            }
+
+            li:nth-child(1) span {
+                background: #72be6d;
+            }
+            li:nth-child(2) span {
+                background: #25b7e2;
+            }
+            li:nth-child(3) span {
+                background: #1f4a9e;
+            }
+        }
     }
     .l-m-5 {
         top: 294px;
