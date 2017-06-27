@@ -726,6 +726,59 @@
         }, 1000);
     }
 
+    function drawRadarPath() {
+        var dataLength = 10;
+        var splitDegree = Math.PI * 2 / dataLength;
+        const svg = d3.select('#r-m-2 svg');
+
+        function drawRadarPath(data) {
+            var points = [];
+
+            data.forEach(function (d, index) {
+                var x = ~~(d * Math.sin(splitDegree * index));
+                var y = ~~(d * Math.cos(splitDegree * index));
+                points.push([x, y]);
+            });
+
+
+            svg.select('.point').append('g').selectAll('circle')
+                .data(points)
+                .enter()
+                .append('circle')
+                .attr('r', 3)
+                .attr('fill', 'transparent')
+                .attr('transform', function (point) {
+                    return `translate(${point[0]}, ${point[1]})`;
+                });
+
+
+            svg.select('.path-g').append('path')
+                .attr('fill', 'rgba(252, 92, 4, 0.1)')
+                .attr('d', function () {
+                    var d = `M ${points[0].join(' ')}\n`;
+                    points.slice(1).concat([points[0]]).forEach(function (point, index) {
+                        var r1 = data[index];
+                        var r2 = data[(index + 1) % data.length];
+                        var degree = (index + 0.5) * splitDegree;
+
+                        var p1 = `${~~(r1 * Math.sin(degree))} ${~~(r1 * Math.cos(degree))}`,
+                            p2 = `${~~(r2 * Math.sin(degree))} ${~~(r2 * Math.cos(degree))}`,
+                            p3 = point.join(' ');
+                        d += `C ${p1} ${p2} ${p3} \n`;
+                    });
+                    return d;
+                });
+        }
+
+
+        for (var i = 0; i < 6; i++) {
+            var data = new Array(dataLength).fill(null).map(function () {
+                return ~~ (Math.random() * 100) + 100;
+            });
+            drawRadarPath(data)
+        }
+    }
+
     const industryData = [
         {name: '企业服务', value: 92},
         {name: '互联网', value: 57},
@@ -806,4 +859,6 @@
     scrollElem(document.querySelector('.company-list'));
     scrollElem(document.querySelector('.event-list'));
     rotateSunburst();
+
+    drawRadarPath();
 })();

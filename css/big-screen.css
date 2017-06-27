@@ -412,6 +412,11 @@ h5 {
   left: 80px;
   top: 90px;
 }
+.right-modal .r-m-2 .canvas-wrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 .right-modal .r-m-3 {
   height: 90px;
   bottom: 0;
