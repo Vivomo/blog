@@ -371,6 +371,22 @@ h5 {
   top: 430px;
   height: 436px;
 }
+.right-modal .r-m-2 .img-wrap {
+  font-size: 14px;
+  color: #2e69b3;
+}
+.right-modal .r-m-2 .img-wrap ul {
+  position: absolute;
+  top: 274px;
+  left: 185px;
+  transform: rotate(35deg);
+  line-height: 23px;
+}
+.right-modal .r-m-2 .arc-img {
+  position: absolute;
+  left: 80px;
+  top: 90px;
+}
 .right-modal .r-m-3 {
   height: 90px;
   bottom: 0;
