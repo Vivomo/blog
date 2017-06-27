@@ -704,6 +704,19 @@
         }, 2000);
     }
 
+    function scrollElem(elem, time = 2000) {
+        const height = elem.firstElementChild.clientHeight;
+        setInterval(function () {
+            elem.style.transition = 'transform 0.5s';
+            elem.style.transform = `translate(0, ${-height}px)`;
+            setTimeout(function () {
+                elem.style.transition = null;
+                elem.style.transform = `translate(0, 0)`;
+                elem.appendChild(elem.firstElementChild);
+            }, 500);
+        }, time);
+    }
+
     const industryData = [
         {name: '企业服务', value: 92},
         {name: '互联网', value: 57},
@@ -780,4 +793,6 @@
     // drawTalentHeat(talentHeatData);
 
     loopWarningData();
+
+    scrollElem(document.querySelector('.company-list'))
 })();

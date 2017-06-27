@@ -23,6 +23,14 @@ ul, ol, li {
 @theme: #2df1ff;
 @theme2: rgba(41, 241, 255, 0.3);
 
+.theme {
+    color: @theme;
+}
+
+h5 {
+    color: @theme;
+}
+
 .wrap {
     padding: 20px 46px;
     height: 100%;
@@ -293,6 +301,52 @@ ul, ol, li {
             top: 80px;
             left: 62px;
             color: @theme;
+        }
+
+        .recommend-list {
+            position: relative;
+            top: -55px;
+            margin-left: 300px;
+            width: 530px;
+            font-size: 16px;
+
+            h5 {
+                font-size: 16px;
+                line-height: 2;
+            }
+
+            .head {
+                display: flex;
+                margin-bottom: 5px;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+                background: rgba(31, 47, 143, 0.15);
+            }
+
+            span {
+                padding-left: 30px;
+            }
+
+            span:first-child {
+                padding-left: 60px;
+                width: 320px;
+            }
+
+            .company-wrap {
+                position: relative;
+                height: 120px;
+                overflow: hidden;
+                background: rgba(31, 47, 143, 0.15);
+
+                .company-list {
+                    li {
+                        display: flex;
+                        height: 30px;
+                        line-height: 30px;
+                    }
+                }
+            }
         }
     }
 }
