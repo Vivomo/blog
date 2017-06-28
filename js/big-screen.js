@@ -844,20 +844,21 @@
     ];
 
 
-    // drawIndustry(industryData);
+    drawIndustry(industryData);
 
-    // drawDistribution(industryData);
+    drawDistribution(industryData);
 
-    // drawTalentsDemand(talensDemand, DemandFeverData);
+    drawTalentsDemand(talensDemand, DemandFeverData);
 
-    // drawIntelligentLeasing(IntelligentLeasingData);
+    drawIntelligentLeasing(IntelligentLeasingData);
 
-    // drawTalentHeat(talentHeatData);
+    drawTalentHeat(talentHeatData);
 
     loopWarningData();
 
     scrollElem(document.querySelector('.company-list'));
     scrollElem(document.querySelector('.event-list'));
+    scrollElem(document.querySelector('.news-list'));
     rotateSunburst();
 
     drawRadarPath();
