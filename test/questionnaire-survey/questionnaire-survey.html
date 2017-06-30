@@ -90,5 +90,32 @@
     </div>
     <div class="footer"></div>
 </section>
+
+<script>
+    (function () {
+
+        function headerH1() {
+            var h1 = document.querySelector('header h1');
+            h1.classList.add('animated');
+
+            setTimeout(function () {
+                headerH3();
+            }, 500);
+        }
+
+        function headerH3() {
+            var h3 = document.querySelector('header h3');
+            h3.classList.add('animated');
+        }
+
+        setTimeout(function () {
+            headerH1();
+        }, 100);
+
+        var animateQueue = [headerH1];
+
+
+    })();
+</script>
 </body>
 </html>
