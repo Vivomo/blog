@@ -207,6 +207,14 @@ td {
 body {
   background: #eee6d8;
 }
+* {
+  box-sizing: border-box;
+}
+ol,
+ul,
+li {
+  list-style: none;
+}
 header {
   height: 423px;
   background: url("../src/questionnaire-survey/e_banner.jpg") no-repeat center;
@@ -251,4 +259,122 @@ header h3.show {
   left: 50%;
   top: 60px;
   margin-left: -370px;
+}
+.main {
+  position: relative;
+  margin: 42px auto;
+  width: 1332px;
+  background: #fff;
+}
+.main .header {
+  position: absolute;
+  width: 100%;
+  height: 360px;
+  background: #ffeaaa;
+}
+.main .header .msg {
+  padding: 30px 40px;
+  background: #fff8ea;
+}
+.main .header .msg .text {
+  padding: 55px 55px 0;
+  height: 334px;
+  font-size: 28px;
+  line-height: 46px;
+  color: #315a92;
+  border: 2px solid #e6d9c1;
+}
+.main .content {
+  padding: 360px 0 310px 0;
+}
+.main .content form {
+  padding: 48px 95px;
+}
+.main .content form h2 {
+  margin: 28px 0;
+  padding-left: 42px;
+  font-size: 28px;
+  color: #315a92;
+  background: url("../src/questionnaire-survey/e_pen.png") no-repeat left center;
+}
+.main .content form li {
+  margin-bottom: 60px;
+  font-size: 24px;
+  line-height: 52px;
+}
+.main .content form .q {
+  color: #315a92;
+}
+.main .content form .q input[type="text"] {
+  width: 180px;
+  border: 0;
+  border-bottom: 1px dashed #315a92;
+}
+.main .content form .a {
+  padding-left: 50px;
+  color: #4c4c4c;
+}
+.main .content form .a textarea {
+  display: block;
+  width: 100%;
+  height: 260px;
+  border: 1px solid #315a92;
+}
+.main .content form .a input[type="checkbox"],
+.main .content form .a input[type="radio"] {
+  margin-right: 5px;
+  width: 20px;
+  height: 20px;
+}
+.main .content form .submit {
+  display: block;
+  margin: 50px auto;
+  width: 260px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 30px;
+  color: #fff;
+  background: #1e6ae9;
+  border-radius: 30px;
+}
+.main .content .company-info-wrap {
+  position: relative;
+  border-top: 1px dashed #315a92;
+  padding: 60px 95px 0;
+}
+.main .content .company-info-wrap .tip {
+  margin-bottom: 60px;
+  font-size: 22px;
+  line-height: 42px;
+  color: #315a92;
+}
+.main .content .company-info-wrap .company-info {
+  font-size: 24px;
+  line-height: 42px;
+  color: #4c4c4c;
+}
+.main .content .company-info-wrap .scissors {
+  position: absolute;
+  top: -31px;
+  left: -45px;
+  width: 63px;
+  height: 40px;
+  background: url("../src/questionnaire-survey/e_scissors.png");
+}
+.main .content .company-info-wrap .qrcode {
+  position: absolute;
+  right: 95px;
+  bottom: 0;
+  width: 204px;
+  height: 214px;
+  background: url("../src/questionnaire-survey/e_zhiweicloud_qrcode.png") no-repeat center;
+}
+.main .footer {
+  position: absolute;
+  bottom: 0;
+  left: -13px;
+  z-index: 3;
+  width: 1354px;
+  height: 310px;
+  background: url("../src/questionnaire-survey/e_email.png") no-repeat center;
 }
