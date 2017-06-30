@@ -1,1 +1,58 @@
 @import "inc/_normalize";
+
+body {
+    background: #eee6d8;
+}
+
+header {
+    height: 423px;
+    background: url("../src/questionnaire-survey/e_banner.jpg") no-repeat center;
+
+    .logo {
+        position: absolute;
+        top: 40px;
+        right: 65px;
+        width: 200px;
+        height: 53px;
+        background: url("../src/questionnaire-survey/e_zhiweicloud_logo.png") no-repeat center;
+    }
+
+    h1 {
+        position: relative;
+        top: 150px;
+        z-index: 2;
+        height: 158px;
+        background: url("../src/questionnaire-survey/e_title.png") no-repeat center;
+    }
+
+    h2 {
+        position: relative;
+        top: 150px;
+        margin-top: 30px;
+        font-size: 28px;
+        font-weight: normal;
+        color: #315a92;
+        text-align: center;
+        background: url("../src/questionnaire-survey/e_parting_line.png") no-repeat center;
+
+
+    }
+
+    h3 {
+        position: absolute;
+        width: 297px;
+        height: 83px;
+        font-size: 28px;
+        line-height: 60px;
+        font-weight: normal;
+        text-align: center;
+        color: #ccf7ff;
+        background: url("../src/questionnaire-survey/e_title2_bg.png") no-repeat center;
+        &.show {
+            left: 50%;
+            top: 60px;
+            margin-left: -370px;
+        }
+    }
+
+}
