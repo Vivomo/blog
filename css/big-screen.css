@@ -252,6 +252,7 @@ h5 {
 }
 .left-modal .l-m-4 .line-wrap .legend span {
   display: inline-block;
+  margin-right: 3px;
   width: 25px;
   height: 13px;
 }
@@ -495,9 +496,31 @@ h5 {
   top: 0;
   right: 0;
 }
+.right-modal .r-m-2 .msg-wrap {
+  position: absolute;
+  top: 186px;
+  right: 140px;
+  width: 154px;
+  text-align: center;
+}
+.right-modal .r-m-2 .msg-wrap strong {
+  font-size: 20px;
+  color: #2df1ff;
+}
 .right-modal .r-m-3 {
   height: 90px;
   bottom: 0;
+}
+.right-modal .r-m-3 .news-wrap {
+  position: relative;
+  top: -10px;
+  overflow: hidden;
+  height: 90px;
+}
+.right-modal .r-m-3 .news-wrap .news-list {
+  font-size: 30px;
+  line-height: 90px;
+  text-align: center;
 }
 @keyframes rotate {
   0% {

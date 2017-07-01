@@ -1,0 +1,449 @@
+@charset "UTF-8";
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+nav,
+section,
+summary {
+  display: block;
+}
+audio,
+canvas,
+video {
+  display: inline-block;
+}
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+/*Base*/
+html {
+  font: 12px/1.5 "Microsoft Yahei", "\5b8b\4f53", Arial, sans-serif;
+  color: #666;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  /*修正手持设备字体变化*/
+}
+a {
+  text-decoration: none;
+  background: transparent;
+  /*修正win8系统IE连接灰色背景*/
+  outline: none;
+  font-family: "Microsoft Yahei", "\5b8b\4f53", Arial, sans-serif;
+}
+a:focus {
+  outline: 0;
+}
+a:active,
+a:hover {
+  outline: 0;
+}
+img {
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+}
+/*fieldset {
+    border: 1px solid #c0c0c0;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
+}*/
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  margin: 0;
+  outline: none;
+  border: 0;
+  line-height: normal;
+  text-transform: none;
+}
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  margin: 0;
+  padding: 0;
+}
+input[type="search"] {
+  -webkit-appearance: textfield;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+textarea {
+  overflow: auto;
+  vertical-align: top;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+ul {
+  list-style: none;
+}
+pre {
+  word-break: break-all;
+  white-space: pre-wrap;
+  /* css-3 */
+  word-wrap: break-word;
+  /* Internet Explorer 5.5+ */
+}
+/**
+ * CSS Reset.
+ */
+/** 清除内外边距 **/
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+button,
+input,
+textarea,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+caption,
+th,
+b {
+  font-weight: normal;
+  font-style: normal;
+}
+address,
+cite,
+dfn,
+em,
+var {
+  font-style: normal;
+}
+/* 将斜体扶正 */
+code,
+kbd,
+pre,
+samp {
+  font-family: "Microsoft Yahei", "冬青黑体", courier new, courier, monospace;
+}
+/* 统一等宽字体 */
+small {
+  font-size: 0.6em;
+}
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+}
+/* 使得表单元素在 ie 下能继承字体大小 */
+/* 注：optgroup 无法扶正 */
+/** HTML5元素 **/
+figure {
+  margin: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+div,
+p,
+pre,
+span,
+a,
+td {
+  word-break: break-all;
+  word-wrap: break-word;
+}
+body {
+  background: #eee6d8;
+}
+* {
+  box-sizing: border-box;
+}
+ol,
+ul,
+li {
+  list-style: none;
+}
+header {
+  height: 423px;
+  background: url("../src/questionnaire-survey/e_banner.jpg") no-repeat center;
+}
+header .logo {
+  position: absolute;
+  top: 40px;
+  right: 65px;
+  width: 200px;
+  height: 53px;
+  background: url("../src/questionnaire-survey/e_zhiweicloud_logo.png") no-repeat center;
+}
+header h1 {
+  position: relative;
+  top: 150px;
+  z-index: 2;
+  height: 158px;
+  background: url("../src/questionnaire-survey/e_title.png") no-repeat center;
+  transform: scale(0.6);
+  transition: all 0.5s cubic-bezier(0.71, -0.47, 0.39, 1.86);
+}
+header h1.animated {
+  transform: scale(1);
+}
+header h2 {
+  position: relative;
+  top: 150px;
+  margin-top: 30px;
+  font-size: 28px;
+  font-weight: normal;
+  color: #315a92;
+  text-align: center;
+  background: url("../src/questionnaire-survey/e_parting_line.png") no-repeat center;
+}
+header h3 {
+  position: absolute;
+  margin-left: -360px;
+  top: 70px;
+  left: 50%;
+  width: 297px;
+  height: 83px;
+  font-size: 28px;
+  line-height: 60px;
+  font-weight: normal;
+  text-align: center;
+  color: #ccf7ff;
+  opacity: 0;
+  background: url("../src/questionnaire-survey/e_title2_bg.png") no-repeat center;
+  transform: rotate(200deg);
+  transform-origin: 224px 100%;
+  transition: all 1s cubic-bezier(0.71, -0.47, 0.39, 1.86);
+}
+header h3.animated {
+  transform: rotate(0deg);
+  opacity: 1;
+}
+.main {
+  position: relative;
+  margin: 42px auto;
+  width: 1332px;
+  background: #fff;
+  perspective: 1600px;
+  -webkit-transform: scale(0.7);
+  -moz-transform: scale(0.7);
+  -ms-transform: scale(0.7);
+  -o-transform: scale(0.7);
+  transform: scale(0.7);
+  -webkit-transition: all 0.6s;
+  -moz-transition: all 0.6s;
+  -ms-transition: all 0.6s;
+  -o-transition: all 0.6s;
+  transition: all 0.6s;
+}
+.main.animated {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+}
+.main .header {
+  position: absolute;
+  width: 100%;
+  height: 360px;
+  background: #ffeaaa;
+}
+.main .header .msg {
+  z-index: 1;
+  padding: 30px 40px;
+  background: #fff8ea;
+}
+.main .header .msg .text {
+  padding: 55px 55px 0;
+  height: 304px;
+  font-size: 28px;
+  line-height: 46px;
+  color: #315a92;
+  border: 2px solid #e6d9c1;
+}
+.main .header .bg,
+.main .header .msg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  transform-origin: 50% 0;
+}
+.main .header .bg {
+  z-index: 2;
+  background: #ffeaaa;
+  transform: rotateX(0deg);
+  -webkit-transition: all 2s;
+  -moz-transition: all 2s;
+  -ms-transition: all 2s;
+  -o-transition: all 2s;
+  transition: all 2s;
+}
+.main .header .bg.animated {
+  opacity: 0;
+  -webkit-transform: rotateX(270deg);
+  -moz-transform: rotateX(270deg);
+  -ms-transform: rotateX(270deg);
+  -o-transform: rotateX(270deg);
+  transform: rotateX(270deg);
+}
+.main .content {
+  padding: 0 0 310px 0;
+  height: 450px;
+  overflow: hidden;
+  -webkit-transition: all 0.6s;
+  -moz-transition: all 0.6s;
+  -ms-transition: all 0.6s;
+  -o-transition: all 0.6s;
+  transition: all 0.6s;
+}
+.main .content.show {
+  padding-top: 360px;
+  height: 2365px;
+  overflow: visible;
+}
+.main .content form {
+  padding: 48px 95px;
+}
+.main .content form h2 {
+  margin: 28px 0;
+  padding-left: 42px;
+  font-size: 28px;
+  color: #315a92;
+  background: url("../src/questionnaire-survey/e_pen.png") no-repeat left center;
+}
+.main .content form li {
+  margin-bottom: 60px;
+  font-size: 24px;
+  line-height: 52px;
+}
+.main .content form .q {
+  color: #315a92;
+}
+.main .content form .q input[type="text"] {
+  width: 180px;
+  border: 0;
+  border-bottom: 1px dashed #315a92;
+}
+.main .content form .a {
+  padding-left: 50px;
+  color: #4c4c4c;
+}
+.main .content form .a textarea {
+  display: block;
+  width: 100%;
+  height: 260px;
+  border: 1px solid #315a92;
+}
+.main .content form .a input[type="checkbox"],
+.main .content form .a input[type="radio"] {
+  margin-right: 5px;
+  width: 20px;
+  height: 20px;
+}
+.main .content form .submit {
+  display: block;
+  margin: 50px auto;
+  width: 260px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 30px;
+  color: #fff;
+  background: #1e6ae9;
+  border-radius: 30px;
+}
+.main .content .company-info-wrap {
+  position: relative;
+  border-top: 1px dashed #315a92;
+  padding: 60px 95px 0;
+}
+.main .content .company-info-wrap .tip {
+  margin-bottom: 60px;
+  font-size: 22px;
+  line-height: 42px;
+  color: #315a92;
+}
+.main .content .company-info-wrap .company-info {
+  font-size: 24px;
+  line-height: 42px;
+  color: #4c4c4c;
+}
+.main .content .company-info-wrap .scissors {
+  position: absolute;
+  top: -31px;
+  left: -45px;
+  width: 63px;
+  height: 40px;
+  background: url("../src/questionnaire-survey/e_scissors.png");
+}
+.main .content .company-info-wrap .qrcode {
+  position: absolute;
+  right: 95px;
+  bottom: 0;
+  width: 204px;
+  height: 214px;
+  background: url("../src/questionnaire-survey/e_zhiweicloud_qrcode.png") no-repeat center;
+}
+.main .footer {
+  position: absolute;
+  bottom: 0;
+  left: -13px;
+  z-index: 3;
+  width: 1354px;
+  height: 310px;
+  background: url("../src/questionnaire-survey/e_email.png") no-repeat center;
+}

@@ -799,12 +799,12 @@
 
     var DemandFeverData = [
         [
-            {"name": "Central ", "value": 80},
-            {"name": "Kirkdale", "value": 40},
-            {"name": "Kensington ", "value": 40},
-            {"name": "Everton ", "value": 90},
-            {"name": "Picton ", "value": 60},
-            {"name": "Riverside ", "value": 80}
+            {"name": "开发工程师 ", "value": 1007},
+            {"name": "产品经理", "value": 269},
+            {"name": "新媒体运营 ", "value": 220},
+            {"name": "文案策划 ", "value": 134},
+            {"name": "测试工程师 ", "value": 222},
+            {"name": "UI设计师 ", "value": 125}
         ]
     ];
 
@@ -844,20 +844,21 @@
     ];
 
 
-    // drawIndustry(industryData);
+    drawIndustry(industryData);
 
-    // drawDistribution(industryData);
+    drawDistribution(industryData);
 
-    // drawTalentsDemand(talensDemand, DemandFeverData);
+    drawTalentsDemand(talensDemand, DemandFeverData);
 
-    // drawIntelligentLeasing(IntelligentLeasingData);
+    drawIntelligentLeasing(IntelligentLeasingData);
 
-    // drawTalentHeat(talentHeatData);
+    drawTalentHeat(talentHeatData);
 
     loopWarningData();
 
     scrollElem(document.querySelector('.company-list'));
     scrollElem(document.querySelector('.event-list'));
+    scrollElem(document.querySelector('.news-list'));
     rotateSunburst();
 
     drawRadarPath();

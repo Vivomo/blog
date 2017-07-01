@@ -270,6 +270,7 @@ h5 {
 
                 span {
                     display: inline-block;
+                    margin-right: 3px;
                     width: 25px;
                     height: 13px;
                 }
@@ -562,11 +563,37 @@ h5 {
             top: 0;
             right: 0;
         }
+
+        .msg-wrap {
+            position: absolute;
+            top: 186px;
+            right: 140px;
+            width: 154px;
+            text-align: center;
+
+            strong {
+                font-size: 20px;
+                color: @theme;
+            }
+        }
     }
 
     .r-m-3 {
         height: 90px;
         bottom: 0;
+
+        .news-wrap {
+            position: relative;
+            top: -10px;
+            overflow: hidden;
+            height: 90px;
+
+            .news-list {
+                font-size: 30px;
+                line-height: 90px;
+                text-align: center;
+            }
+        }
     }
 }
 
