@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>arc</title>
+    <style>
+        path {
+            fill: #000;
+        }
+    </style>
+</head>
+<body>
+
+<svg width="1000" height="800">
+
+</svg>
+
+<script src="../../js/d3/d3.js"></script>
+<script>
+    d3.select('svg').append('g')
+        .attr('transform', 'translate(400, 400)')
+        .append('path')
+        .attr('d', function () {
+            return d3.arc().innerRadius(50).outerRadius(51).startAngle(-Math.PI * 2 / 3).endAngle(Math.PI / 2)();
+        })
+        .transition()
+        .duration(1000)
+        .attr('d', function () {
+            return d3.arc().innerRadius(50).outerRadius(51).startAngle(-Math.PI / 3).endAngle(Math.PI)();
+        })
+</script>
+</body>
+</html>
