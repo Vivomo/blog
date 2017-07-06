@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>arc</title>
+    <style>
+        path {
+            /*fill: transparent;*/
+        }
+    </style>
+</head>
+<body>
+
+<svg width="1000" height="800">
+    <linearGradient id="linear" x1="40%" y1="0%" x2="60%" y2="0%" spreadMethod="pad">
+        <stop offset="0%" stop-color="#05a"/>
+        <stop offset="100%" stop-color="#0a5"/>
+    </linearGradient>
+</svg>
+
+<script src="../../js/d3/d3.js"></script>
+<script>
+    var startAngle = -Math.PI * 5 / 6;
+    var endAngle = Math.PI / 2;
+    var time = 1000;
+    var count = time / 16;
+    var change = (endAngle - startAngle) / count;
+    var arc = d3.arc().innerRadius(100).outerRadius(102).startAngle(startAngle);
+    var path = d3.select('svg').append('g')
+        .attr('transform', 'translate(400, 400)')
+        .append('path')
+        .attr('fill', 'url(#linear)')
+        .attr('d', arc.endAngle(0));
+
+
+    var angle = startAngle;
+    var interval = setInterval(function () {
+        angle += change;
+        if (angle > endAngle) {
+            angle = endAngle;
+            clearInterval(interval);
+        }
+        path.attr('d', arc.endAngle(angle));
+    }, 16);
+</script>
+</body>
+</html>
