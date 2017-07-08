@@ -37,6 +37,7 @@
 
 > DFA (文本主导) 确定型有穷自动机
 > NFA (表达是主导)
+js 是NFA
 
 `/to(nite|knight|night)/`
 
