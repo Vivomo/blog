@@ -72,6 +72,8 @@ js 是NFA
 
 ### link
 [构造正则表达式引擎](http://www.cppblog.com/vczh/archive/2008/05/22/50763.html)
+[在线测试](http://regex.zjmainstay.cn/)
+[正则生成器](http://www.txt2re.com/index.php3)
 
 ```js
 reg = new RegExp(`^[0369]* (
