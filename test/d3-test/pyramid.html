@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pyramid</title>
+</head>
+<body>
+
+<div style="width: 500px; height: 500px; outline: 2px solid; margin: auto;" id="div"></div>
+<script src="../../js/d3/d3.js"></script>
+<script>
+    function drawPyramid(options) {
+        const config = Object.assign({
+            margin: 3,
+            width: options.elem.clientWidth,
+            height: options.elem.clientHeight - 115,
+            colors: ['#f15755', '#f3a653', '#61c4dc']
+        }, options);
+
+        const halfWidth = config.width / 2;
+        const triangleHeight = (config.height - (config.data.length - 1) * config.margin) / config.data.length;
+        const triangleBottom = halfWidth / config.height * triangleHeight;
+
+        d3.select(config.elem).append('svg')
+            .attr('width', config.width)
+            .attr('height', config.height)
+            .append('g')
+            .attr('transform', `translate(${halfWidth}, 0)`)
+            .selectAll('polygon')
+            .data(config.data)
+            .enter()
+            .append('polygon')
+            .attr('points', function (d, index) {
+                const points = new Array(4).fill(null).map(function () {
+                    return [];
+                });
+                points[0][0] = - index * triangleBottom;
+                points[0][1] = index * triangleHeight;
+                points[1][0] = index * triangleBottom;
+                points[1][1] = points[0][1];
+
+                points[3][0] = - (index + 1) * triangleBottom;
+                points[3][1] = (index + 1) * triangleHeight;
+                points[2][0] = (index + 1) * triangleBottom;
+                points[2][1] = points[3][1];
+                return points.map(point => point.toString()).join(' ');
+            })
+            .attr('fill', function (d, index) {
+                return config.colors[index];
+            })
+            .attr('transform', function (d, index) {
+                return `translate(0, ${index * config.margin})`;
+            })
+    }
+
+    drawPyramid({
+        elem: document.querySelector('#div'),
+        data: [{}, {}, {}]
+    })
+</script>
+</body>
+</html>
