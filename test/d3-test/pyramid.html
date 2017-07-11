@@ -17,14 +17,16 @@
             colors: ['#f15755', '#f3a653', '#61c4dc']
         }, options);
 
+        const margin = config.margin;
         const halfWidth = config.width / 2;
-        const triangleHeight = (config.height - (config.data.length - 1) * config.margin) / config.data.length;
+        const triangleHeight = (config.height - (config.data.length - 1) * margin) / config.data.length;
         const triangleBottom = halfWidth / config.height * triangleHeight;
 
-        d3.select(config.elem).append('svg')
+        const svg = d3.select(config.elem).append('svg')
             .attr('width', config.width)
             .attr('height', config.height)
-            .append('g')
+
+        svg.append('g')
             .attr('transform', `translate(${halfWidth}, 0)`)
             .selectAll('polygon')
             .data(config.data)
@@ -49,13 +51,38 @@
                 return config.colors[index];
             })
             .attr('transform', function (d, index) {
-                return `translate(0, ${index * config.margin})`;
+                return `translate(0, ${index * margin})`;
+            });
+
+        svg.append('g')
+            .attr('transform', `translate(${halfWidth}, 0)`)
+            .selectAll('text')
+            .data(config.data)
+            .enter()
+            .append('text')
+            .attr('transform', function (d, index) {
+                const y = triangleHeight / 2 + (triangleHeight + margin) * index;
+                return `translate(0, ${y})`;
+            })
+            .attr('fill', '#fff')
+            .attr('text-anchor', 'middle')
+            .text(function (d) {
+                return d.name;
             })
     }
 
     drawPyramid({
         elem: document.querySelector('#div'),
-        data: [{}, {}, {}]
+        data: [{
+            name: 'one',
+            value: 10
+        }, {
+            name: 'two',
+            value: 20
+        }, {
+            name: 'three',
+            value: 30
+        }]
     })
 </script>
 </body>
