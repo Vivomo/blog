@@ -14,7 +14,7 @@
             margin: 3,
             width: options.elem.clientWidth,
             height: options.elem.clientHeight - 115,
-            colors: ['#f15755', '#f3a653', '#61c4dc']
+            colors: ['#f15755', '#f3a653', '#61c4dc', '#00ff00']
         }, options);
 
         const margin = config.margin;
@@ -67,7 +67,7 @@
             .attr('fill', '#fff')
             .attr('text-anchor', 'middle')
             .text(function (d) {
-                return d.name;
+                return d.value;
             })
     }
 
@@ -82,7 +82,11 @@
         }, {
             name: 'three',
             value: 30
-        }]
+        },{
+            name: 'four',
+            value: 40
+        }
+        ]
     })
 </script>
 </body>
