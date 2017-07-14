@@ -84,7 +84,7 @@ css: css-util
         <li>
             <h3>点不到的按钮</h3>
             <div onclick="alert('背景躺枪')">
-                <button onclick="alert('点到了')" style="pointer-events: none;">你点不到我</button>
+                <button onclick="alert('点到了');arguments[0].stopPropagation();" style="pointer-events: none;">你点不到我</button>
             </div>
 
         </li>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div onclick="console.log('背景躺枪')">
+    <button onclick="alert('点到了'); arguments[0].stopPropagation();" style="pointer-events: none;">你点不到我</button>
+</div>
+</body>
+</html>
