@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>path totalLength</title>
+    <style>
+        path {
+            stroke-width: 2;
+            stroke: #000;
+        }
+    </style>
+</head>
+<body>
+<svg width="1600" height="800">
+    <path d="M0 0, L 800, 0"></path>
+    <path d="M0 0, L 0, 800"></path>
+    <path d="M0 0, L 800, 800"></path>
+    <path d="M0 0, L 800, 1800"></path>
+</svg>
+<script src="../../js/d3/d3.js"></script>
+<script>
+    d3.selectAll('path').each(function () {
+        console.log(this.getTotalLength())
+    })
+</script>
+</body>
+</html>
