@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>path animate</title>
+    <style>
+        .mypath {
+            stroke: #05D380;
+            stroke-width: 2;
+            /*stroke-dasharray: 888;*/
+            /*stroke-dashoffset: 888;*/
+            fill: none;
+            /*-webkit-animation: go 4s ease-in-out forwards;*/
+        }
+
+        @-webkit-keyframes go {
+            0% {
+                stroke-dashoffset: 888;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<svg width="1000" height="600" id="svg">
+
+</svg>
+
+<script src="../../js/d3/d3.js"></script>
+<script>
+    var path = d3.select('svg').append('path')
+        .attr('d', 'M100 100, A120 120, -45 0 1, 300 300 A120 120, -45 0 1, 100 100')
+        .attr('class', 'mypath')
+
+    var length = path.node().getTotalLength();
+
+    path.attr('stroke-dasharray', length)
+        .attr('stroke-dashoffset', length)
+        .transition()
+        .duration(1000)
+        .attr('stroke-dashoffset', 0);
+
+</script>
+</body>
+</html>
