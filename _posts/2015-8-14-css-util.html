@@ -81,7 +81,13 @@ css: css-util
             <div style="height: 200px; background: linear-gradient(#fff, #000 50%, #fff)"></div>
         </li>
         <li><div style="height: 200px; background: linear-gradient(90deg, #fff, #000 50%, #fff)"></div></li>
-        <li></li>
+        <li>
+            <h3>点不到的按钮</h3>
+            <div onclick="alert('背景躺枪')">
+                <button onclick="alert('点到了')" style="pointer-events: none;">你点不到我</button>
+            </div>
+
+        </li>
         <li></li>
         <li></li>
         <li></li>
