@@ -5,7 +5,7 @@
     <title>path animate</title>
     <style>
         .mypath {
-            stroke: #05D380;
+            /*stroke: #05D380;*/
             stroke-width: 2;
             /*stroke-dasharray: 888;*/
             /*stroke-dashoffset: 888;*/
@@ -29,18 +29,26 @@
 </svg>
 
 <script src="../../js/d3/d3.js"></script>
+
+
 <script>
+    // svg 的 attr 会被 css 里面设置的样式覆盖掉
     var path = d3.select('svg').append('path')
         .attr('d', 'M100 100, A120 120, -45 0 1, 300 300 A120 120, -45 0 1, 100 100')
         .attr('class', 'mypath')
 
     var length = path.node().getTotalLength();
 
-    path.attr('stroke-dasharray', length)
+    path
+        .attr('stroke-dasharray', length)
         .attr('stroke-dashoffset', length)
+        .attr('stroke', '#05D380')
         .transition()
-        .duration(1000)
-        .attr('stroke-dashoffset', 0);
+        .duration(3000)
+        .attr('stroke', '#f00')
+        .attr('stroke-dashoffset', 0)
+
+//    path.attr('stroke', '#f00')
 
 </script>
 </body>
