@@ -63,22 +63,22 @@ console.log(0.1 + 0.2) // 0.30000000000000004
 
 #### 数值的转换
 有三个API可以将非数值转换为数值: 
->. Number 可以接受任意数据类型
->. parseInt, parseFloat 专门用于处理**字符串**
+> 1. Number 可以接受任意数据类型
+> 2. parseInt, parseFloat 专门用于处理**字符串**
 
 Number的转换规则为
->. true => 1 false => 0
->. null => 0
->. undefined => NaN
->. Object => 调用其valueOf 如果NaN 则调用其toString 方法, 在执行下面String的规则
->. String 这个情况比较多, 下面依次分类说明
+> 1. true => 1 false => 0
+> 2. null => 0
+> 3. undefined => NaN
+> 4. Object => 调用其valueOf 如果NaN 则调用其toString 方法, 在执行下面String的规则
+> 5. String 这个情况比较多, 下面依次分类说明
 
 
 ##### String => Number
->. 只包含数字 => 10进制数字
->. 有效浮点数 => 浮点数
->. 有效十六进制 => 相等的10进制  `Number("0xa") => 10`
->. else => NaN
+> 1. 只包含数字 => 10进制数字
+> 2. 有效浮点数 => 浮点数
+> 3. 有效十六进制 => 相等的10进制  `Number("0xa") => 10`
+> 4. else => NaN
 
 #### 数值API的修复
 精度问题是没办法处理的, JS不像Java有BigInteger 和 BigDecimal这种以专门处理精度的类.
