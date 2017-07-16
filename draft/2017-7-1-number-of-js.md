@@ -13,9 +13,7 @@ JS的数值是一个很大话题.涉及的很多的层面,本文重点讲解以�
 > 3. 浮点数
 > 4. 科学计算法
 > 6. 数值的转换
-> 7. 数值的拓展与修复
-> 8. API使用注意点
-> 9. ES6中的数值
+> 7. 数值API的修复与使用注意点
 
 #### IEEE754
 JS处理数值时,会先尝试用32bit的整数来处理, 如果范围超出(2^31)或不是整数,则会用64位的[IEEE754](http://baike.baidu.com/item/IEEE%20754/3869922)格式处理.(
@@ -82,4 +80,56 @@ Number的转换规则为
 >. 有效十六进制 => 相等的10进制  `Number("0xa") => 10`
 >. else => NaN
 
+#### 数值API的修复
+精度问题是没办法处理的, JS不像Java有BigInteger 和 BigDecimal这种以专门处理精度的类.
+但有一个API我们常用却极少关注的,甚至很少有资料说明其错误的, 也可能是多数业务场景后端都帮前端计算好了,前端只负责一个数值展示吧
+那个API就是toFixed, 下面是ES5 规范的对其使用说明.
+Number.prototype.toFixed (fractionDigits)
+令 f 为 ToInteger(fractionDigits). ( 如果 fractionDigits 是 undefined, 此步骤产生 0 值 ).
+如果 f < 0 或 f > 20, 抛出一个 RangeError 异常 .
+令 x 为 this 数字值 .
+如果 x 是 NaN, 返回字符串 "NaN".
+令 s 为空字符串 .
+如果 x < 0, 则
+令 s 为 "-".
+令 x = –x.
+如果 x ≥ 1021, 则
+令 m = ToString(x).
+否则 , x < 1021
+令 n 为一个整数，让 n ÷ 10f – x 准确的数学值尽可能接近零。如果有两个这样 n 值，选择较大的 n。
+如果 n = 0, 令 m 为字符串 "0". 否则 , 令 m 为由 n 的十进制表示里的数组成的字符串（为了没有前导零）。
+如果 f ≠ 0, 则
+令 k 为 m 里的字符数目 .
+如果 k ≤ f, 则
+令 z 为 f+1–k 个 ‘0’ 组成的字符串 .
+令 m 为 串联字符串 z 的 m 的结果 .
+令 k = f + 1.
+令 a 为 m 的前 k–f 个字符，令 b 为其余 f 个字符。
+令 m 为 串联三个字符串 a, ".", 和 b 的结果。
+返回串联字符串 s 和 m 的结果。
+ toFixed 方法的 length 属性是 1。
+ 
+说白了就是指定小数位数的四舍五入
+但...
+```js
+(1.15).toFixed(1); // 1.1
+(1.25).toFixed(1); // 1.3
+```
 
+薛定谔的小数...
+针对这个情况我写了一个修复
+```js
+Number.prototype.toFixed2 = function (fractionalDigits, notKeepZero) {
+    var fixedNum = this,
+        _fd = fractionalDigits;
+    if (this % 1 && fractionalDigits) {
+        var num = 1;
+        while (fractionalDigits-- > 0) {
+            num *= 10;
+        }
+        fixedNum = Math.round(this * num ) / num;
+    }
+    return notKeepZero ? fixedNum : fixedNum.toFixed(_fd);
+};
+```
+#### API使用注意点
