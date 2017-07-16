@@ -133,3 +133,36 @@ Number.prototype.toFixed2 = function (fractionalDigits, notKeepZero) {
 };
 ```
 #### API使用注意点
+这里就说一个吧 `parseInt`
+一个注意点是其参数, 首先他需要两个参数, 第二个参数代表数值进制, 默认不传就是10
+但ES3 和 ES5 对 `070`的执行不一致, 前者认为可以转八进制, 后者直接还是按默认参数的值来执行, 所以ESlint有对parseInt第二个参数的检查
+同时写业务逻辑时, 假如我们要把一个数组全部转化为数字可能会这么写
+```js
+var strArr = ['1', '2', '3'];
+var numArr = strArr.map(parseInt);
+// 结果
+console.log(numArr); // [1, NaN, NaN]
+```
+真是因为parseInt需要两个参数, 所以上面等同于执行了
+```js
+parseInt('1', 0);
+parseInt('2', 1);
+parseInt('3', 2);
+```
+另一个是parseInt的执行过程
+他会首先把第一个参数执行其toString方法, 然后从第一个字符开始读取, 一直到非有效数字为止 , 如果没有有效数字则返回`NaN`
+```js
+parseInt('11a'); // 11
+parseInt('a'); // NaN
+```
+第一个参数即使你传的是数值也不例外,也会先转为字符串, 但这会有什么影响呢, 看下面的代码
+```js
+parseInt(0.000001); // 0
+parseInt(0.0000001); // 1
+```
+OK, 这里就是我上面说科学计数法里面的那个坑, 0.0000001 toString 为 "1e-7", 所以`parseInt(0.0000001)` 等同于 `parseInt("1e-7")`
+知道有这些注意点, parseInt还是能帮我们省不少事哒, 比如正则提取前面数字什么的, 具体看业务需求.
+
+
+#### 结束语
+零零碎碎想到了这么多, 数值是一个很大的话题, 难免会有遗漏, 如果读者有什么意见和建议, 欢迎在评论区留言
