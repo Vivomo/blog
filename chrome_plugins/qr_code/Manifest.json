@@ -1,0 +1,25 @@
+{
+  "name" : "QR Code",
+  "version" : "1.0.0",
+  "manifest_version": 2,
+  "description": "A light weight QR Code, and no networking required",
+  "icons": {
+    "48": "icon48.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "48": "icon48.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "default title"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_start",
+      "matches": [ "http://*/*", "https://*/*" ],
+      "js": ["qrCode.js"]
+    }
+  ]
+}
