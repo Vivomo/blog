@@ -8,6 +8,10 @@
 * 一些游戏 <br>
 * 后续会抽时间写一些学习笔记,心得等等 <br>
 
+## 技术博客目录
+* [基础——重中之重之JS中的数值](http://www.weimu.me/2017/07/16/number-of-js.html)
+* [基础——重中之重之JS的变量的声明](http://www.weimu.me/2017/05/30/variable-declaration-of-js.html)
+
 ## 目录直达
 * 一个的chrome插件(生成QRcode, 无需联网)[地址](https://github.com/Vivomo/blog/tree/gh-pages/chrome_plugins/qr_code)
 如果chrome提示"请停用...", 见[解决方案](https://github.com/Vivomo/blog/tree/gh-pages/chrome_plugins)
