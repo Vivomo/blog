@@ -11,7 +11,7 @@
       "48": "qrcode.png"
     },
     "default_popup": "popup.html",
-    "default_title": "default title"
+    "default_title": "Create a QR Code for url"
   },
   "content_scripts": [
     {
