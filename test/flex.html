@@ -9,7 +9,7 @@
             height: 100%;
         }
 
-        .box {
+        .box-column {
             display: flex;
             flex-direction: column;
             width: 300px;
@@ -28,12 +28,30 @@
         .b1 .item2 {
             flex: 1 0 auto;
         }
+
+        .box {
+            display: flex;
+            width: 300px;
+            height: 300px;
+            outline: 2px solid #ccc;
+        }
+        .b2 .item1{
+            width: 20px;
+        }
+        .b2 .item2 {
+            width: 100px;
+        }
     </style>
 </head>
 <body>
 
 
-<div class="box b1">
+<div class="box-column b1">
+    <div class="item1"></div>
+    <div class="item2"></div>
+</div>
+
+<div class="box b2">
     <div class="item1"></div>
     <div class="item2"></div>
 </div>
