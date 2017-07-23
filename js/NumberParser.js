@@ -20,7 +20,8 @@ var NumberParser = (function () {
         十: 10,
         百: 100,
         千: 1000,
-        万: 10000
+        万: 10000,
+        亿: 100000000,
     };
 
     var zeroToken = '零';
@@ -55,4 +56,4 @@ var NumberParser = (function () {
     }
 })();
 
-console.log(NumberParser.parse('九万四千八百六十九'));
+console.log(NumberParser.parse('九万亿四千八百六十九'));
