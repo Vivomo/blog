@@ -27,13 +27,13 @@ var NumberParser = (function () {
     var zeroToken = '零';
 
     function translate(num){
-        var tokens = [];
+        var numberComponent = [];
         for (var i = 0; i < num.length; i++) {
             var char = num[i];
             if (char in numberMap) {
-                tokens.push([numberMap[char], 1]);
+                numberComponent.push([numberMap[char], 1]);
             } else if (char in quantifierMap) {
-                var lastToken = tokens[tokens.length - 1];
+                var lastToken = numberComponent[numberComponent.length - 1];
                 lastToken[1] *= quantifierMap[char];
             } else {
                 if (zeroToken !== char) {
@@ -41,15 +41,15 @@ var NumberParser = (function () {
                 }
             }
         }
-        return tokens;
+        return numberComponent;
     }
 
     return {
         parse: function (num) {
-            var tokens = translate(num);
+            var numberComponent = translate(num);
             var sum = 0;
-            tokens.forEach(function (token) {
-                sum += token[0] * token[1];
+            numberComponent.forEach(function (component) {
+                sum += component[0] * component[1];
             });
             return sum;
         }
