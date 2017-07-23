@@ -30,7 +30,7 @@ var NumberParser = (function () {
         for (var i = 0; i < num.length; i++) {
             var char = num[i];
             if (char in numberMap) {
-                char.push([numberMap[char], 1]);
+                tokens.push([numberMap[char], 1]);
             } else if (char in quantifierMap) {
                 var lastToken = tokens[tokens.length - 1];
                 lastToken[1] *= quantifierMap[char];
@@ -54,3 +54,5 @@ var NumberParser = (function () {
         }
     }
 })();
+
+console.log(NumberParser.parse('九万四千八百六十九'));
