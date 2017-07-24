@@ -31,10 +31,9 @@ var NumberParser = (function () {
         for (var i = 0; i < num.length; i++) {
             var char = num[i];
             if (char in numberMap) {
-                numberComponent.push([numberMap[char], 1]);
+                numberComponent.push(numberMap[char]);
             } else if (char in quantifierMap) {
-                var lastToken = numberComponent[numberComponent.length - 1];
-                lastToken[1] *= quantifierMap[char];
+                numberComponent[numberComponent.length - 1] *= quantifierMap[char];
             } else {
                 if (zeroToken !== char) {
                     throw '不合法的数字'
@@ -48,8 +47,8 @@ var NumberParser = (function () {
         parse: function (num) {
             var numberComponent = translate(num);
             var sum = 0;
-            numberComponent.forEach(function (component) {
-                sum += component[0] * component[1];
+            numberComponent.forEach(function (number) {
+                sum += number;
             });
             return sum;
         }
