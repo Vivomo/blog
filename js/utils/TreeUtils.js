@@ -32,16 +32,47 @@ function Tree(treeData) {
         return _tree;
     };
 
-    tree.loop = function (callback) {
-        if (callback(data) === false) {
-            return;
-        }
-        if (data[childKey]) {
-            data[childKey].forEach(function (item) {
-                tree.loop(item, callback);
-            })
-        }
+    tree.loop = function (callback, loopData = data) {
+        loopData.every(function (item) {
+            var result = callback(item);
+            if (result === false) {
+                return false;
+            } else {
+                if (item[childKey]) {
+                    tree.loop(callback, item[childKey])
+                }
+                return true;
+            }
+        });
     };
 
     return tree;
 }
+
+var data = [
+    {
+        id: 1,
+        children: [
+            {
+                id: 2,
+            },
+            {
+                id: 3
+            }
+        ]
+    },
+    {
+        id: 4,
+        children: [
+            {
+                id: 6,
+            },
+            {
+                id: 7
+            }
+        ]
+    }
+];
+Tree(data).loop(function (item) {
+    console.log(item)
+})
