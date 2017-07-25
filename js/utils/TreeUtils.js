@@ -46,6 +46,21 @@ function Tree(treeData) {
         });
     };
 
+    tree.map = function (callback, loopData = data) {
+        return loopData.map(function (item) {
+            var result = callback(item);
+
+            if (typeof result === 'object' && result !== null) {
+                var children = item[childKey];
+                if (children) {
+                    result[childKey] = tree.map(callback, children);
+                }
+            }
+            return result;
+        });
+
+    };
+
     return tree;
 }
 
@@ -73,6 +88,16 @@ var data = [
         ]
     }
 ];
+console.log(data);
+
 Tree(data).loop(function (item) {
-    console.log(item)
+    console.log(item);
+})
+var result = Tree(data).map(function (item) {
+    return {
+        id: item.id * 10
+    }
+});
+Tree(result).loop(function (item) {
+    console.log(item);
 })
