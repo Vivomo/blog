@@ -88,16 +88,11 @@ var data = [
         ]
     }
 ];
-console.log(data);
+console.log(JSON.stringify(data, null, 4));
 
-Tree(data).loop(function (item) {
-    console.log(item);
-})
 var result = Tree(data).map(function (item) {
     return {
         id: item.id * 10
     }
 });
-Tree(result).loop(function (item) {
-    console.log(item);
-})
+console.log(JSON.stringify(result, null, 4));
