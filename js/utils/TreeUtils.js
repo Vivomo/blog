@@ -1,16 +1,11 @@
 
 function Tree(treeData) {
     var childKey = 'children';
-    var filter = [];
     var data = treeData;
     var tree = {};
 
     tree.childKey = function (key) {
         return arguments.length ? (childKey = key, tree) : childKey;
-    };
-
-    tree.filterKey = function (keys) {
-        return arguments.length ? (filter = keys, tree) : filter;
     };
 
     /**
@@ -61,10 +56,11 @@ function Tree(treeData) {
                 nodes.push(item)
             }
         });
+        var filter = function (item) {
+            return item[childKey] || callback(item);
+        };
         for (var i = nodes.length - 1; i >= 0; i--) {
-            nodes[i][childKey] = nodes[i][childKey].filter(function (item) {
-                return item[childKey] || callback(item);
-            });
+            nodes[i][childKey] = nodes[i][childKey].filter(filter);
             if (nodes[i][childKey].length === 0) {
                 delete nodes[i][childKey];
             }
