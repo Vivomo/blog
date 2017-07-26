@@ -140,6 +140,9 @@ var data = [
                         children: [
                             {
                                 id: 12
+                            },
+                            {
+                                id: 15
                             }
                         ]
                     },
