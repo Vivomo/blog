@@ -17,29 +17,23 @@ function Tree(treeData) {
      * 浅克隆tree,
      */
     tree.clone = function () {
-        var _tree = {};
-        Object.keys(data).forEach(function (key) {
-            if (!filter.includes(key)) {
-                _tree[key] = data[key];
-            }
-        });
-        if (data[childKey]) {
-            _tree[childKey] = [];
-            data[childKey].forEach(function (item) {
-                _tree[childKey].push(tree.clone(item));
+        return tree.map(function (item) {
+            var obj = {};
+            Object.keys(item).forEach(function (key) {
+                obj[key] = item[key];
             });
-        }
-        return _tree;
+            return obj;
+        }, data);
     };
 
     tree.loop = function (callback, loopData = data) {
-        loopData.every(function (item) {
+        return loopData.every(function (item) {
             var result = callback(item);
             if (result === false) {
                 return false;
             } else {
                 if (item[childKey]) {
-                    tree.loop(callback, item[childKey])
+                    return tree.loop(callback, item[childKey]);
                 }
                 return true;
             }
@@ -58,7 +52,6 @@ function Tree(treeData) {
             }
             return result;
         });
-
     };
 
     return tree;
@@ -88,11 +81,14 @@ var data = [
         ]
     }
 ];
-console.log(JSON.stringify(data, null, 4));
-
-var result = Tree(data).map(function (item) {
-    return {
-        id: item.id * 10
-    }
-});
-console.log(JSON.stringify(result, null, 4));
+// console.log(JSON.stringify(data, null, 4));
+//
+// var cloneData = Tree(data).clone();
+//
+// var result = Tree(cloneData).map(function (item) {
+//     return {
+//         id: item.id * 10
+//     }
+// });
+// console.log(JSON.stringify(data, null, 4));
+// console.log(JSON.stringify(result, null, 4));
