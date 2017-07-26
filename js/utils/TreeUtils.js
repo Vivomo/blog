@@ -55,7 +55,21 @@ function Tree(treeData) {
     };
 
     tree.filter = function (callback) {
-        // TODO
+        var nodes = [];
+        tree.loop(function (item) {
+            if (item[childKey]) {
+                nodes.push(item)
+            }
+        });
+        for (var i = nodes.length - 1; i >= 0; i--) {
+            nodes[i][childKey] = nodes[i][childKey].filter(function (item) {
+                return item[childKey] || callback(item);
+            });
+            if (nodes[i][childKey].length === 0) {
+                delete nodes[i][childKey];
+            }
+        }
+        return data;
     };
 
     tree.find = function (callback) {
@@ -90,6 +104,14 @@ var data = [
         children: [
             {
                 id: 2,
+                children: [
+                    {
+                        id: 2.1
+                    },
+                    {
+                        id: 2.2
+                    }
+                ]
             },
             {
                 id: 3
@@ -111,7 +133,20 @@ var data = [
                 ]
             },
             {
-                id: 7
+                id: 7,
+                children: [
+                    {
+                        id: 11,
+                        children: [
+                            {
+                                id: 12
+                            }
+                        ]
+                    },
+                    {
+                        id: 13
+                    }
+                ]
             }
         ]
     }
@@ -128,12 +163,15 @@ var data = [
 // console.log(JSON.stringify(data, null, 4));
 // console.log(JSON.stringify(result, null, 4));
 // Tree(data).loop(function (item) {
-//     console.log(item);
-//     return item.id < 5;
-// })
+//     console.log(item.id);
+// });
 
-var target = Tree(data).find(function (item) {
-    return item.id === 10;
+// var target = Tree(data).find(function (item) {
+//     return item.id === 10;
+// });
+//
+// console.log(target);
+var filterResult = Tree(data).filter(function (item) {
+    return item.id % 2 === 0;
 });
-
-console.log(target);
+console.log(JSON.stringify(filterResult, null, 4));
