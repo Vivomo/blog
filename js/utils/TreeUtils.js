@@ -75,19 +75,20 @@ function Tree(treeData) {
     tree.find = function (callback) {
         var arrList = [data];
         var arr, target = null, found = false;
+        var findTarget = function (item) {
+            var result = callback(item);
+            if (result) {
+                target = item;
+                found = true;
+                return false;
+            }
+            if (item[childKey]) {
+                arrList.push(item[childKey])
+            }
+            return true;
+        };
         while ((arr = arrList.shift())) {
-            arr.every(function (item) {
-                var result = callback(item);
-                if (result) {
-                    target = item;
-                    found = true;
-                    return false;
-                }
-                if (item[childKey]) {
-                    arrList.push(item[childKey])
-                }
-                return true;
-            });
+            arr.every(findTarget);
             if (found) {
                 break;
             }
