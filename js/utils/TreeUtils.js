@@ -54,6 +54,33 @@ function Tree(treeData) {
         });
     };
 
+    tree.filter = function (callback) {
+        // TODO
+    };
+
+    tree.find = function (callback) {
+        var arrList = [data];
+        var arr, target = null, found = false;
+        while ((arr = arrList.shift())) {
+            arr.every(function (item) {
+                var result = callback(item);
+                if (result) {
+                    target = item;
+                    found = true;
+                    return false;
+                }
+                if (item[childKey]) {
+                    arrList.push(item[childKey])
+                }
+                return true;
+            });
+            if (found) {
+                break;
+            }
+        }
+        return target;
+    };
+
     return tree;
 }
 
@@ -74,6 +101,14 @@ var data = [
         children: [
             {
                 id: 6,
+                children: [
+                    {
+                        id: 9,
+                    },
+                    {
+                        id: 10
+                    }
+                ]
             },
             {
                 id: 7
@@ -92,3 +127,13 @@ var data = [
 // });
 // console.log(JSON.stringify(data, null, 4));
 // console.log(JSON.stringify(result, null, 4));
+// Tree(data).loop(function (item) {
+//     console.log(item);
+//     return item.id < 5;
+// })
+
+var target = Tree(data).find(function (item) {
+    return item.id === 10;
+});
+
+console.log(target);
