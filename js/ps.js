@@ -1,5 +1,5 @@
 
-const Canvas = (function () {
+var Canvas = (function () {
 
     var loadFile = document.getElementById('loadFile'),
         canvas = document.getElementById('canvas'),
@@ -23,11 +23,9 @@ const Canvas = (function () {
         init: function () {
             this.loadFile.onchange = function () {
                 this.drawImgOnCanvas(URL.createObjectURL(this.loadFile.files[0]))
-            }.bind(this)
+            }.bind(this);
 
-            this.loadText.onchange = function () {
 
-            }
         }
     }
 })();
