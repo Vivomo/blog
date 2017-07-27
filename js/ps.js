@@ -5,6 +5,9 @@ var Canvas = (function () {
         canvas = document.getElementById('canvas'),
         webImg = document.getElementById('webImg'),
         pasteImg = document.getElementById('pasteImg'),
+        toBase64 = document.getElementById('toBase64'),
+        base64Content = document.getElementById('base64Content'),
+        copyBase64 = document.getElementById('copyBase64'),
         loadWebImg = document.getElementById('loadWebImg');
     return {
         loadFile,
@@ -39,7 +42,7 @@ var Canvas = (function () {
                 this.drawImgOnCanvas(webImg.value)
             });
 
-            pasteImg.addEventListener( 'paste', (e) => {
+            pasteImg.addEventListener('paste', (e) => {
                 // 添加到事件对象中的访问系统剪贴板的接口
                 var clipboardData = e.clipboardData,
                     items, item, types;
@@ -65,6 +68,16 @@ var Canvas = (function () {
                     }
                 }
             });
+
+            toBase64.addEventListener('click', () => {
+                base64Content.value = canvas.toDataURL('images/png');
+            });
+
+            copyBase64.addEventListener('click', function () {
+                base64Content.select();
+                if (!document.execCommand('copy'))
+                    alert('你的垃圾浏览器不支持复制');
+            }, false);
         }
     }
 })();
