@@ -3,18 +3,18 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>{{ page.title }}</title>
-    <link rel="stylesheet" href="{{site.baseurl}}css/common.css"/>
+    <link rel="stylesheet" href="{{site.cname}}css/common.css"/>
     {% if page.css != null %}
-    <link rel="stylesheet" href="{{site.baseurl}}css/{{page.css}}.css"/>
+    <link rel="stylesheet" href="{{site.cname}}css/{{page.css}}.css"/>
     {% endif %}
-    <link rel="shortcut icon" href="{{site.baseurl}}img/favicon.ico">
+    <link rel="shortcut icon" href="{{site.cname}}img/favicon.ico">
 </head>
 <body>
 
 {{ content }}
 
 {% if page.js != null %}
-<script src="{{site.baseurl}}js/{{page.js}}.js"></script>
+<script src="{{site.cname}}js/{{page.js}}.js"></script>
 {% endif %}
 </body>
 </html>

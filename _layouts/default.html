@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>{{ page.title }}</title>
-    <link rel="stylesheet" href="{{site.baseurl}}css/common.css"/>
-    <link rel="stylesheet" href="{{site.baseurl}}css/{{page.css}}.css"/>
-    <link rel="shortcut icon" href="{{site.baseurl}}img/favicon.ico">
+    <link rel="stylesheet" href="{{site.cname}}css/common.css"/>
+    <link rel="stylesheet" href="{{site.cname}}css/{{page.css}}.css"/>
+    <link rel="shortcut icon" href="{{site.cname}}img/favicon.ico">
 </head>
 <body>
 <header>
@@ -24,8 +24,8 @@
 </header>
 {{ content }}
 
-<input type="hidden" id="data" data-baseurl="{{site.baseurl}}" data-js="{{page.js}}">
-<script src="{{site.baseurl}}js/V.js"></script>
-<script src="{{site.baseurl}}js/app.js"></script>
+<input type="hidden" id="data" data-baseurl="{{site.cname}}" data-js="{{page.js}}">
+<script src="{{site.cname}}js/V.js"></script>
+<script src="{{site.cname}}js/app.js"></script>
 </body>
 </html>
