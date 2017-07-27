@@ -5,6 +5,7 @@
 var NumberParser = (function () {
 
     var numberMap = {
+        零: 0,
         一: 1,
         二: 2,
         三: 3,
@@ -24,7 +25,6 @@ var NumberParser = (function () {
         亿: 100000000,
     };
 
-    var zeroToken = '零';
 
     function translate(num){
         var numberComponent = [];
@@ -35,9 +35,7 @@ var NumberParser = (function () {
             } else if (char in quantifierMap) {
                 numberComponent[numberComponent.length - 1] *= quantifierMap[char];
             } else {
-                if (zeroToken !== char) {
-                    throw '不合法的数字'
-                }
+                throw '不合法的数字'
             }
         }
         return numberComponent;
@@ -55,4 +53,4 @@ var NumberParser = (function () {
     }
 })();
 
-console.log(NumberParser.parse('九万亿四千八百六十九'));
+console.log(NumberParser.parse('九千零五十二'));
