@@ -13,18 +13,30 @@
 </head>
 <body>
 
-    <div>
-        <h3>插入图片</h3>
-        <input type="file" id="loadFile" placeholder="0.0">
+<div class="box">
+
+    <h2>插入图片</h2>
+    <div class="form-line">
+
+        <input type="file" id="loadFile" class="v-input fl">
+
+        <input type="text" placeholder="Ctrl+V粘贴图片" class="v-input fl" id="pasteImg">
 
         <input type="text" placeholder="图片地址或base64" class="v-input" id="webImg" spellcheck="false">
         <button id="loadWebImg" class="btn">加载</button>
-
-        <input type="text" placeholder="Ctrl+V粘贴图片" class="v-input" id="pasteImg">
     </div>
+
+    <h2>
+        图片处理
+        <div class="form-line">
+
+        </div>
+    </h2>
 
 
     <canvas id="canvas" />
+</div>
+
 <script src="../js/ps.js"></script>
 </body>
 </html>
