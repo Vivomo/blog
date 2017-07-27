@@ -3,11 +3,11 @@ var Canvas = (function () {
 
     var loadFile = document.getElementById('loadFile'),
         canvas = document.getElementById('canvas'),
-        loadText = document.getElementById('loadText');
+        webImg = document.getElementById('webImg'),
+        loadWebImg = document.getElementById('loadWebImg');
     return {
         loadFile,
         canvas,
-        loadText,
         pen: canvas.getContext('2d'),
         drawImgOnCanvas: function(src){
             let img = new Image,
@@ -18,14 +18,15 @@ var Canvas = (function () {
                 canvas.height = this.height;
                 pen.drawImage(this, 0, 0);
             };
-
         },
         init: function () {
-            this.loadFile.onchange = function () {
+            this.loadFile.onchange = () => {
                 this.drawImgOnCanvas(URL.createObjectURL(this.loadFile.files[0]))
-            }.bind(this);
+            };
 
-
+            loadWebImg.addEventListener('click', () => {
+                this.drawImgOnCanvas(webImg.value)
+            });
         }
     }
 })();

@@ -9,21 +9,20 @@
         }
         #canvas {
             background: #FFF;
-            margin: 100px auto;
+            margin: 50px auto;
         }
     </style>
 </head>
 <body>
-<form>
     <div>
         <input type="file" id="loadFile">
     </div>
+    <div>
+        <input type="text" placeholder="网络图片地址" class="v-inp" id="webImg">
+        <button id="loadWebImg">加载</button>
+    </div>
 
-    <input type="text" placeholder="网络图片地址" class="v-inp">
-    <button>加载</button>
-
-</form>
-<canvas id="canvas"></canvas>
+    <canvas id="canvas"></canvas>
 <script src="../js/ps.js"></script>
 </body>
 </html>
