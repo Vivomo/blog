@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>PS</title>
+    <link rel="stylesheet" href="../css/common.css">
     <style>
-        body{
-            background: #aaa;
-        }
         #canvas {
             background: #FFF;
             margin: 50px auto;
@@ -14,15 +12,19 @@
     </style>
 </head>
 <body>
+
     <div>
-        <input type="file" id="loadFile">
-    </div>
-    <div>
-        <input type="text" placeholder="网络图片地址" class="v-inp" id="webImg">
-        <button id="loadWebImg">加载</button>
+        <h3>插入图片</h3>
+        <input type="file" id="loadFile" placeholder="0.0">
+
+        <input type="text" placeholder="网络图片地址" class="v-input" id="webImg">
+        <button id="loadWebImg" class="btn">加载</button>
+
+        <input type="text" placeholder="Ctrl+V粘贴图片" class="v-input" id="pasteImg">
     </div>
 
-    <canvas id="canvas"></canvas>
+
+    <canvas id="canvas" />
 <script src="../js/ps.js"></script>
 </body>
 </html>
