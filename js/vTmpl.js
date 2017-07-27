@@ -1,6 +1,3 @@
-/**
- * Created by ui on 2016/9/9.
- */
 
 ;(function () {
     var reg = /\s*(\w+)\s*(?:\|\s*(\w+)(?:\((.*)\))?)?/;
@@ -14,7 +11,7 @@
                     return vt.render(str, item)
                 }).join('');
             } else if(obj && (typeof obj == 'object')) {
-                str = str.replace(/\{\{(.+?)}}/g, function (s, $1) {
+                str = str.replace(/{{(.+?)}}/g, function (s, $1) {
 
                     var result = reg.exec($1);
                     var filter = result[2];

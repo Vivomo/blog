@@ -42,7 +42,7 @@
                 },false);
             }else if(DOC.attachEvent){
                 DOC.attachEvent('onreadystatechange',function(){
-                    if(DOC.readyState=='complete'){
+                    if(DOC.readyState == 'complete'){
                         DOC.detachEvent('onreadystatechange',arguments.callee);
                         fn();
                     }
