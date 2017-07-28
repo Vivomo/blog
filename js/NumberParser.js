@@ -28,12 +28,16 @@ var NumberParser = (function () {
 
     function translate(num){
         var numberComponent = [];
+        if (num[0] === '十') {
+            numberComponent.push(1);
+        }
+
         for (var i = 0; i < num.length; i++) {
             var char = num[i];
             if (char in numberMap) {
                 numberComponent.push(numberMap[char]);
             } else if (char in quantifierMap) {
-                numberComponent[numberComponent.length - 1] *= quantifierMap[char];
+                numberComponent[numberComponent.length - 1] = quantifierMap[char] * (numberComponent[numberComponent.length - 1] || 1) ;
             } else {
                 throw '不合法的数字'
             }
@@ -53,4 +57,4 @@ var NumberParser = (function () {
     }
 })();
 
-console.log(NumberParser.parse('九千零五十二'));
+console.log(NumberParser.parse('十二'));
