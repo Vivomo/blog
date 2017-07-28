@@ -47,29 +47,33 @@
 <a name="l28"><span class="ln">28   </span></a> 
 <a name="l29"><span class="ln">29   </span></a>    </span><span class="s3">function </span><span class="s2">translate(num){ 
 <a name="l30"><span class="ln">30   </span></a>        </span><span class="s3">var </span><span class="s2">numberComponent = []</span><span class="s5">;</span><span class="s2"> 
-<a name="l31"><span class="ln">31   </span></a>        </span><span class="s3">for </span><span class="s2">(</span><span class="s3">var </span><span class="s2">i = </span><span class="s4">0</span><span class="s5">; </span><span class="s2">i &lt; num.length</span><span class="s5">; </span><span class="s2">i++) { 
-<a name="l32"><span class="ln">32   </span></a>            </span><span class="s3">var </span><span class="s2">char = num[i]</span><span class="s5">;</span><span class="s2"> 
-<a name="l33"><span class="ln">33   </span></a>            </span><span class="s3">if </span><span class="s2">(char </span><span class="s3">in </span><span class="s2">numberMap) { 
-<a name="l34"><span class="ln">34   </span></a>                numberComponent.push(numberMap[char])</span><span class="s5">;</span><span class="s2"> 
-<a name="l35"><span class="ln">35   </span></a>            } </span><span class="s3">else if </span><span class="s2">(char </span><span class="s3">in </span><span class="s2">quantifierMap) { 
-<a name="l36"><span class="ln">36   </span></a>                numberComponent[numberComponent.length - </span><span class="s4">1</span><span class="s2">] *= quantifierMap[char]</span><span class="s5">;</span><span class="s2"> 
-<a name="l37"><span class="ln">37   </span></a>            } </span><span class="s3">else </span><span class="s2">{ 
-<a name="l38"><span class="ln">38   </span></a>                </span><span class="s3">throw </span><span class="s6">'不合法的数字'</span><span class="s2"> 
-<a name="l39"><span class="ln">39   </span></a>            } 
-<a name="l40"><span class="ln">40   </span></a>        } 
-<a name="l41"><span class="ln">41   </span></a>        </span><span class="s3">return </span><span class="s2">numberComponent</span><span class="s5">;</span><span class="s2"> 
-<a name="l42"><span class="ln">42   </span></a>    } 
-<a name="l43"><span class="ln">43   </span></a> 
-<a name="l44"><span class="ln">44   </span></a>    </span><span class="s3">return </span><span class="s2">{ 
-<a name="l45"><span class="ln">45   </span></a>        parse: </span><span class="s3">function </span><span class="s2">(num) { 
-<a name="l46"><span class="ln">46   </span></a>            </span><span class="s3">var </span><span class="s2">numberComponent = translate(num)</span><span class="s5">;</span><span class="s2"> 
-<a name="l47"><span class="ln">47   </span></a>            </span><span class="s3">var </span><span class="s2">sum = </span><span class="s4">0</span><span class="s5">;</span><span class="s2"> 
-<a name="l48"><span class="ln">48   </span></a>            numberComponent.forEach(</span><span class="s3">function </span><span class="s2">(number) { 
-<a name="l49"><span class="ln">49   </span></a>                sum += number</span><span class="s5">;</span><span class="s2"> 
-<a name="l50"><span class="ln">50   </span></a>            })</span><span class="s5">;</span><span class="s2"> 
-<a name="l51"><span class="ln">51   </span></a>            </span><span class="s3">return </span><span class="s2">sum</span><span class="s5">;</span><span class="s2"> 
-<a name="l52"><span class="ln">52   </span></a>        } 
-<a name="l53"><span class="ln">53   </span></a>    } 
-    <a name="l54"><span class="ln">54   </span></a>})()</span><span class="s5">;</span></pre>
+<a name="l31"><span class="ln">31   </span></a>        </span><span class="s3">if </span><span class="s2">(num[</span><span class="s4">0</span><span class="s2">] === </span><span class="s6">'十'</span><span class="s2">) {
+<a name="l32"><span class="ln">32   </span></a>            numberComponent.push(</span><span class="s4">1</span><span class="s2">)</span><span class="s5">;</span><span class="s2">
+<a name="l33"><span class="ln">33   </span></a>        }
+<a name="l34"><span class="ln">34   </span></a>
+<a name="l35"><span class="ln">35   </span></a>        </span><span class="s3">for </span><span class="s2">(</span><span class="s3">var </span><span class="s2">i = </span><span class="s4">0</span><span class="s5">; </span><span class="s2">i &lt; num.length</span><span class="s5">; </span><span class="s2">i++) {
+<a name="l36"><span class="ln">36   </span></a>            </span><span class="s3">var </span><span class="s2">char = num[i]</span><span class="s5">;</span><span class="s2">
+<a name="l37"><span class="ln">37   </span></a>            </span><span class="s3">if </span><span class="s2">(char </span><span class="s3">in </span><span class="s2">numberMap) {
+<a name="l38"><span class="ln">38   </span></a>                numberComponent.push(numberMap[char])</span><span class="s5">;</span><span class="s2">
+<a name="l39"><span class="ln">39   </span></a>            } </span><span class="s3">else if </span><span class="s2">(char </span><span class="s3">in </span><span class="s2">quantifierMap) {
+<a name="l40"><span class="ln">40   </span></a>                numberComponent[numberComponent.length - </span><span class="s4">1</span><span class="s2">] = quantifierMap[char] * (numberComponent[numberComponent.length - </span><span class="s4">1</span><span class="s2">] || </span><span class="s4">1</span><span class="s2">) </span><span class="s5">;</span><span class="s2">
+<a name="l41"><span class="ln">41   </span></a>            } </span><span class="s3">else </span><span class="s2">{
+<a name="l42"><span class="ln">42   </span></a>                </span><span class="s3">throw </span><span class="s6">'不合法的数字'</span><span class="s2">
+<a name="l43"><span class="ln">43   </span></a>            }
+<a name="l44"><span class="ln">44   </span></a>        }
+<a name="l45"><span class="ln">45   </span></a>        </span><span class="s3">return </span><span class="s2">numberComponent</span><span class="s5">;</span><span class="s2">
+<a name="l46"><span class="ln">46   </span></a>    } 
+<a name="l47"><span class="ln">47   </span></a>
+<a name="l48"><span class="ln">48   </span></a>    </span><span class="s3">return </span><span class="s2">{
+<a name="l49"><span class="ln">49   </span></a>        parse: </span><span class="s3">function </span><span class="s2">(num) {
+<a name="l50"><span class="ln">50   </span></a>            </span><span class="s3">var </span><span class="s2">numberComponent = translate(num)</span><span class="s5">;</span><span class="s2">
+<a name="l51"><span class="ln">51   </span></a>            </span><span class="s3">var </span><span class="s2">sum = </span><span class="s4">0</span><span class="s5">;</span><span class="s2">
+<a name="l52"><span class="ln">52   </span></a>            numberComponent.forEach(</span><span class="s3">function </span><span class="s2">(number) {
+<a name="l53"><span class="ln">53   </span></a>                sum += number</span><span class="s5">;</span><span class="s2">
+<a name="l54"><span class="ln">54   </span></a>            })</span><span class="s5">;</span><span class="s2">
+<a name="l55"><span class="ln">55   </span></a>            </span><span class="s3">return </span><span class="s2">sum</span><span class="s5">;</span><span class="s2">
+<a name="l56"><span class="ln">56   </span></a>        }
+<a name="l57"><span class="ln">57   </span></a>    }
+    <a name="l58"><span class="ln">58   </span></a>})()</span><span class="s5">;</span></pre>
 <script src="{{site.cname}}js/NumberParser.js"></script>
 </body>
