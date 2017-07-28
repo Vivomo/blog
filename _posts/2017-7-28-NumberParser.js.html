@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>NumberParser.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #606366; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(98,151,85); font-style: italic; }
+.s1 { color: rgb(98,151,85); font-weight: bold; font-style: italic; }
+.s2 { color: rgb(169,183,198); }
+.s3 { color: rgb(204,120,50); font-weight: bold; }
+.s4 { color: rgb(104,151,187); }
+.s5 { color: rgb(204,120,50); }
+.s6 { color: rgb(106,135,89); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+NumberParser.js</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<a name="l1"><span class="ln">1    </span></a><span class="s0">/** 
+<a name="l2"><span class="ln">2    </span></a> * 格式化数字  四千八百六十九 =&gt; 4869 
+<a name="l3"><span class="ln">3    </span></a> * </span><span class="s1">@constructor</span><span class="s0"> 
+<a name="l4"><span class="ln">4    </span></a> */</span><span class="s2"> 
+<a name="l5"><span class="ln">5    </span></a></span><span class="s3">var </span><span class="s2">NumberParser = (</span><span class="s3">function </span><span class="s2">() { 
+<a name="l6"><span class="ln">6    </span></a> 
+<a name="l7"><span class="ln">7    </span></a>    </span><span class="s3">var </span><span class="s2">numberMap = { 
+<a name="l8"><span class="ln">8    </span></a>        零: </span><span class="s4">0</span><span class="s5">,</span><span class="s2"> 
+<a name="l9"><span class="ln">9    </span></a>        一: </span><span class="s4">1</span><span class="s5">,</span><span class="s2"> 
+<a name="l10"><span class="ln">10   </span></a>        二: </span><span class="s4">2</span><span class="s5">,</span><span class="s2"> 
+<a name="l11"><span class="ln">11   </span></a>        三: </span><span class="s4">3</span><span class="s5">,</span><span class="s2"> 
+<a name="l12"><span class="ln">12   </span></a>        四: </span><span class="s4">4</span><span class="s5">,</span><span class="s2"> 
+<a name="l13"><span class="ln">13   </span></a>        五: </span><span class="s4">5</span><span class="s5">,</span><span class="s2"> 
+<a name="l14"><span class="ln">14   </span></a>        六: </span><span class="s4">6</span><span class="s5">,</span><span class="s2"> 
+<a name="l15"><span class="ln">15   </span></a>        七: </span><span class="s4">7</span><span class="s5">,</span><span class="s2"> 
+<a name="l16"><span class="ln">16   </span></a>        八: </span><span class="s4">8</span><span class="s5">,</span><span class="s2"> 
+<a name="l17"><span class="ln">17   </span></a>        九: </span><span class="s4">9</span><span class="s2"> 
+<a name="l18"><span class="ln">18   </span></a>    }</span><span class="s5">;</span><span class="s2"> 
+<a name="l19"><span class="ln">19   </span></a> 
+<a name="l20"><span class="ln">20   </span></a>    </span><span class="s3">var </span><span class="s2">quantifierMap = { 
+<a name="l21"><span class="ln">21   </span></a>        十: </span><span class="s4">10</span><span class="s5">,</span><span class="s2"> 
+<a name="l22"><span class="ln">22   </span></a>        百: </span><span class="s4">100</span><span class="s5">,</span><span class="s2"> 
+<a name="l23"><span class="ln">23   </span></a>        千: </span><span class="s4">1000</span><span class="s5">,</span><span class="s2"> 
+<a name="l24"><span class="ln">24   </span></a>        万: </span><span class="s4">10000</span><span class="s5">,</span><span class="s2"> 
+<a name="l25"><span class="ln">25   </span></a>        亿: </span><span class="s4">100000000</span><span class="s5">,</span><span class="s2"> 
+<a name="l26"><span class="ln">26   </span></a>    }</span><span class="s5">;</span><span class="s2"> 
+<a name="l27"><span class="ln">27   </span></a> 
+<a name="l28"><span class="ln">28   </span></a> 
+<a name="l29"><span class="ln">29   </span></a>    </span><span class="s3">function </span><span class="s2">translate(num){ 
+<a name="l30"><span class="ln">30   </span></a>        </span><span class="s3">var </span><span class="s2">numberComponent = []</span><span class="s5">;</span><span class="s2"> 
+<a name="l31"><span class="ln">31   </span></a>        </span><span class="s3">for </span><span class="s2">(</span><span class="s3">var </span><span class="s2">i = </span><span class="s4">0</span><span class="s5">; </span><span class="s2">i &lt; num.length</span><span class="s5">; </span><span class="s2">i++) { 
+<a name="l32"><span class="ln">32   </span></a>            </span><span class="s3">var </span><span class="s2">char = num[i]</span><span class="s5">;</span><span class="s2"> 
+<a name="l33"><span class="ln">33   </span></a>            </span><span class="s3">if </span><span class="s2">(char </span><span class="s3">in </span><span class="s2">numberMap) { 
+<a name="l34"><span class="ln">34   </span></a>                numberComponent.push(numberMap[char])</span><span class="s5">;</span><span class="s2"> 
+<a name="l35"><span class="ln">35   </span></a>            } </span><span class="s3">else if </span><span class="s2">(char </span><span class="s3">in </span><span class="s2">quantifierMap) { 
+<a name="l36"><span class="ln">36   </span></a>                numberComponent[numberComponent.length - </span><span class="s4">1</span><span class="s2">] *= quantifierMap[char]</span><span class="s5">;</span><span class="s2"> 
+<a name="l37"><span class="ln">37   </span></a>            } </span><span class="s3">else </span><span class="s2">{ 
+<a name="l38"><span class="ln">38   </span></a>                </span><span class="s3">throw </span><span class="s6">'不合法的数字'</span><span class="s2"> 
+<a name="l39"><span class="ln">39   </span></a>            } 
+<a name="l40"><span class="ln">40   </span></a>        } 
+<a name="l41"><span class="ln">41   </span></a>        </span><span class="s3">return </span><span class="s2">numberComponent</span><span class="s5">;</span><span class="s2"> 
+<a name="l42"><span class="ln">42   </span></a>    } 
+<a name="l43"><span class="ln">43   </span></a> 
+<a name="l44"><span class="ln">44   </span></a>    </span><span class="s3">return </span><span class="s2">{ 
+<a name="l45"><span class="ln">45   </span></a>        parse: </span><span class="s3">function </span><span class="s2">(num) { 
+<a name="l46"><span class="ln">46   </span></a>            </span><span class="s3">var </span><span class="s2">numberComponent = translate(num)</span><span class="s5">;</span><span class="s2"> 
+<a name="l47"><span class="ln">47   </span></a>            </span><span class="s3">var </span><span class="s2">sum = </span><span class="s4">0</span><span class="s5">;</span><span class="s2"> 
+<a name="l48"><span class="ln">48   </span></a>            numberComponent.forEach(</span><span class="s3">function </span><span class="s2">(number) { 
+<a name="l49"><span class="ln">49   </span></a>                sum += number</span><span class="s5">;</span><span class="s2"> 
+<a name="l50"><span class="ln">50   </span></a>            })</span><span class="s5">;</span><span class="s2"> 
+<a name="l51"><span class="ln">51   </span></a>            </span><span class="s3">return </span><span class="s2">sum</span><span class="s5">;</span><span class="s2"> 
+<a name="l52"><span class="ln">52   </span></a>        } 
+<a name="l53"><span class="ln">53   </span></a>    } 
+<a name="l54"><span class="ln">54   </span></a>})()</span><span class="s5">;</span><span class="s2"> 
+<a name="l55"><span class="ln">55   </span></a> 
+<a name="l56"><span class="ln">56   </span></a>console.log(NumberParser.parse(</span><span class="s6">'九千零五十二'</span><span class="s2">))</span><span class="s5">;</span></pre>
+</body>
+</html>
