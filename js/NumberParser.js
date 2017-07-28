@@ -37,7 +37,7 @@ var NumberParser = (function () {
             if (char in numberMap) {
                 numberComponent.push(numberMap[char]);
             } else if (char in quantifierMap) {
-                numberComponent[numberComponent.length - 1] = quantifierMap[char] * (numberComponent[numberComponent.length - 1] || 1) ;
+                numberComponent[numberComponent.length - 1] *= quantifierMap[char];
             } else {
                 throw '不合法的数字'
             }
@@ -57,4 +57,4 @@ var NumberParser = (function () {
     }
 })();
 
-console.log(NumberParser.parse('十二'));
+console.log(NumberParser.parse('五十九万'));
