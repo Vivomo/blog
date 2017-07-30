@@ -25,6 +25,20 @@
                     pointer-events: none;
                 }`;
             document.head.appendChild(style);
+        },
+        "www.panda.tv": function () {
+            console.log('load end')
+            if (location.href.match("http://www.panda.tv/lpl")) {
+                [].slice.call(document.querySelectorAll('iframe')).forEach(function (iframe) {
+                    var style = document.createElement('style');
+                    style.innerText =
+                        `.room-chat-container .room-chat-scroller .room-chat-item { color: transparent; }`;
+                    iframe.onload = function () {
+                        iframe.contentDocument.head.appendChild(style);
+                    }
+                });
+
+            }
         }
     };
     var host = location.host;
