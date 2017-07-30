@@ -32,7 +32,9 @@
                 [].slice.call(document.querySelectorAll('iframe')).forEach(function (iframe) {
                     var style = document.createElement('style');
                     style.innerText =
-                        `.room-chat-container .room-chat-scroller .room-chat-item { color: transparent; }`;
+                        `.room-chat-container .room-chat-scroller .room-chat-item { color: transparent; }
+                         .room-chat-special-tips {display: none}   
+                        `;
                     iframe.onload = function () {
                         iframe.contentDocument.head.appendChild(style);
                     }
