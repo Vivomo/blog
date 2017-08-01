@@ -103,7 +103,6 @@ class WanExpression extends Expression {
             data += context.data * this.multiplier();
         }
 
-        context.str = str;
         context.data = data;
     }
 }
@@ -120,7 +119,7 @@ class Context {
 }
 
 (function main() {
-    const context = new Context('八千零二万九千三百七十二');
+    const context = new Context('十二');
     const expressionList = [new GeExpression(), new ShiExpression(), new BaiExpression(), new QianExpression(), new WanExpression()];
     expressionList.forEach(expression => expression.parse(context));
     console.log(context)
