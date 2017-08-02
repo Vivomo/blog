@@ -238,11 +238,22 @@
 
     if (!Object.values) {
         Object.values = function (object) {
-            if (object === null) {
+            if (object === null || object === undefined) {
                 throw 'Cannot convert undefined or null to object'
             }
             return Object.keys(object).map(function (key) {
                 return object[key];
+            });
+        }
+    }
+
+    if (!Object.entries) {
+        Object.entries = function (object) {
+            if (object === null || object === undefined) {
+                throw 'Cannot convert undefined or null to object'
+            }
+            return Object.keys(object).map(function (key) {
+                return [key, object[key]];
             });
         }
     }
