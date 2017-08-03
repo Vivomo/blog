@@ -115,8 +115,8 @@
         }
     }
  
-    Number.parseInt && (Number.parseInt = parseInt);
-    Number.parseFloat && (Number.parseFloat = parseFloat);
+    !Number.parseInt && (Number.parseInt = parseInt);
+    !Number.parseFloat && (Number.parseFloat = parseFloat);
     /**
      * Math.
      *  trunc //去除小数部分
@@ -151,8 +151,6 @@
      * Array.prototype.
      *  copyWithin 在当前数组内部，将指定位置的成员复制到其他位置（会覆盖原有成员），然后返回当前数组。也就是说，使用这个方法，会修改当前数组。
      *  find
-     *  findIndex
-     *  fill
      *  keys
      *  values
      *  includes
@@ -164,8 +162,21 @@
         }
     }
     if (!arrPro.findIndex) {
-        arrPro.findIndex = function () {
-            // TODO
+        arrPro.findIndex = function (item) {
+            for (var i = 0, l = this.length; i < l; i++) {
+                if (item === this[i]) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+    }
+
+    if (!arrPro.fill) {
+        arrPro.fill = function (item) {
+            for (var i = 0, l = this.length; i < l; i++) {
+                this[i] = item;
+            }
         }
     }
 
@@ -190,7 +201,7 @@
                 for (var k in item) {
                     target[k] = item[k]
                 }
-            })
+            });
             return target;
         }
     }
