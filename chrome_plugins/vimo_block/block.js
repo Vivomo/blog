@@ -41,6 +41,16 @@
                 });
 
             }
+        },
+        "segmentfault.com": function () {
+
+            var style = document.createElement('style');
+            style.innerText =
+                `.widget-register {
+                    opacity: 0;
+                    display: none!important;
+                }`;
+            document.head.appendChild(style);
         }
     };
     var host = location.host;
