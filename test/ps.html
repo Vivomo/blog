@@ -16,22 +16,24 @@
 
 <div class="box">
 
-    <h2>插入图片</h2>
-    <div class="form-line">
-
+    <fieldset class="form-line">
+        <legend>插入图片</legend>
         <input type="file" id="loadFile" class="v-input fl">
 
         <input type="text" placeholder="Ctrl+V粘贴图片" class="v-input fl" id="pasteImg">
 
         <input type="text" placeholder="图片地址或base64" class="v-input" id="webImg" spellcheck="false">
         <button id="loadWebImg" class="btn">加载</button>
-    </div>
+    </fieldset>
 
     <h2>图片处理</h2>
     <div class="form-line">
         <button class="btn" id="toBase64">转base64</button>
         <input type="text" readonly class="v-input" placeholder="base64" id="base64Content">
         <button class="btn" id="copyBase64">复制</button>
+    </div>
+    <div class="form-line">
+        <input type="color">
     </div>
 
     <div class="canvas-wrap">
