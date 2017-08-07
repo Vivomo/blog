@@ -48,7 +48,6 @@ var Canvas = (function () {
                     items, item, types;
 
                 if( clipboardData ){
-                    console.log(clipboardData);
                     items = clipboardData.items;
                     if( !items ){
                         return;
