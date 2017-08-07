@@ -1,29 +1,31 @@
+/**
+ * 只是为了展示代理模式, 实际项目的中代码不会这么单纯
+ */
 class FormProxy{
     constructor(form) {
         this.form = form;
+        this._elements = null;
     }
 
-    // 验证字段
-    valid() {
-        return true;
+    get elements() {
+        if (!this._elements) {
+            this.elements = this.form.elements;
+        }
+        return this.elements;
     }
 
-    // 获取值
-    getValues() {
-        return Array.form(this.form.elements).map(elem => ({
-            name: elem.name,
-            value: elem.value
-        }))
+    set elements(elements) {
+        this._elements = elements;
     }
 
     // 提交
     submit() {
-
+        this.form.submit();
     }
 }
 
 (function () {
     const formProxy = new FormProxy(document.getElementById('form'));
-    console.log(formProxy.getValues());
+    console.log(formProxy.elements);
     formProxy.submit();
 })();
