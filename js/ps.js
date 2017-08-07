@@ -1,18 +1,16 @@
 
-var Canvas = (function () {
+const Canvas = (function () {
 
-    var loadFile = document.getElementById('loadFile'),
-        canvas = document.getElementById('canvas'),
-        webImg = document.getElementById('webImg'),
-        pasteImg = document.getElementById('pasteImg'),
-        toBase64 = document.getElementById('toBase64'),
-        base64Content = document.getElementById('base64Content'),
-        copyBase64 = document.getElementById('copyBase64'),
-        loadWebImg = document.getElementById('loadWebImg');
+    var canvas = document.getElementById('canvas'),
+        base64Content = document.getElementById('base64Content');
 
+    // noinspection JSUnusedGlobalSymbols
     const commands = {
+        drawImgByFile: function (e) {
+            this.drawImgOnCanvas(URL.createObjectURL(e.target.files[0]))
+        },
         drawImgBySrc: function() {
-            this.drawImgOnCanvas(webImg.value)
+            this.drawImgOnCanvas(e.target.value)
         },
         drawImgByClipboard: function(e)  {
             // 添加到事件对象中的访问系统剪贴板的接口
@@ -49,7 +47,6 @@ var Canvas = (function () {
     };
 
     return {
-        loadFile,
         canvas,
         commands,
         base64Content,
@@ -72,7 +69,7 @@ var Canvas = (function () {
                 this.drawImgOnCanvas(e.target.result);
             };
             // 读取文件
-            reader.readAsDataURL( blob );
+            reader.readAsDataURL(blob);
         },
         execCommand: function(cmdName) {
             let cmd = this.commands[cmdName];
@@ -82,10 +79,6 @@ var Canvas = (function () {
             cmd.apply(this, Array.from(arguments).splice(1));
         },
         init: function() {
-            this.loadFile.onchange = () => {
-                this.drawImgOnCanvas(URL.createObjectURL(this.loadFile.files[0]))
-            };
-
             Array.from(document.querySelectorAll('[data-cmd]')).forEach((elem) => {
                 const data = elem.dataset;
                 elem.addEventListener(data.event || 'click', (e) => {
