@@ -94,21 +94,25 @@ circle:nth-child(12n + 12) {
     fill-opacity: 1; }
   75% {
     fill-opacity: 0; } }
+
 @keyframes opacity {
   3% {
     fill-opacity: 1; }
   75% {
     fill-opacity: 0; } }
+
 @-webkit-keyframes opacity-stroke {
   10% {
     stroke-opacity: 1; }
   85% {
     stroke-opacity: 0; } }
+
 @keyframes opacity-stroke {
   10% {
     stroke-opacity: 1; }
   85% {
     stroke-opacity: 0; } }
+
 @-webkit-keyframes colors {
   0% {
     fill: yellowgreen; }
@@ -116,6 +120,7 @@ circle:nth-child(12n + 12) {
     fill: gold; }
   75% {
     fill: crimson; } }
+
 @keyframes colors {
   0% {
     fill: yellowgreen; }
@@ -123,6 +128,7 @@ circle:nth-child(12n + 12) {
     fill: gold; }
   75% {
     fill: crimson; } }
+
 @-webkit-keyframes colors-stroke {
   0% {
     stroke: yellowgreen; }
@@ -130,6 +136,7 @@ circle:nth-child(12n + 12) {
     stroke: gold; }
   75% {
     stroke: crimson; } }
+
 @keyframes colors-stroke {
   0% {
     stroke: yellowgreen; }
@@ -137,6 +144,7 @@ circle:nth-child(12n + 12) {
     stroke: gold; }
   75% {
     stroke: crimson; } }
+
 @-webkit-keyframes colors-2 {
   0% {
     fill: yellow; }
@@ -146,6 +154,7 @@ circle:nth-child(12n + 12) {
     fill: orangered; }
   95% {
     fill: gold; } }
+
 @keyframes colors-2 {
   0% {
     fill: yellow; }
@@ -155,6 +164,7 @@ circle:nth-child(12n + 12) {
     fill: orangered; }
   95% {
     fill: gold; } }
+
 @-webkit-keyframes colors-3 {
   0% {
     fill: yellowgreen; }
@@ -164,6 +174,7 @@ circle:nth-child(12n + 12) {
     fill: yellow; }
   95% {
     fill: orange; } }
+
 @keyframes colors-3 {
   0% {
     fill: yellowgreen; }
@@ -173,26 +184,31 @@ circle:nth-child(12n + 12) {
     fill: yellow; }
   95% {
     fill: orange; } }
+
 @-webkit-keyframes transform {
   10% {
     -webkit-transform: scale(0.75);
     transform: scale(0.75); } }
+
 @keyframes transform {
   10% {
     -webkit-transform: scale(0.75);
     transform: scale(0.75); } }
+
 @-webkit-keyframes transform-2 {
   40% {
     -webkit-transform: scale(0.85);
     transform: scale(0.85); }
   60% {
     stroke-width: 20; } }
+
 @keyframes transform-2 {
   40% {
     -webkit-transform: scale(0.85);
     transform: scale(0.85); }
   60% {
     stroke-width: 20; } }
+
 * {
   margin: 0;
   padding: 0; }
@@ -510,11 +526,13 @@ body {
     opacity: 0.2; }
   100% {
     opacity: 1; } }
+
 @keyframes twinkled {
   0% {
     opacity: 0.2; }
   100% {
     opacity: 1; } }
+
 @-webkit-keyframes flowerDrop {
   0% {
     -webkit-transform: translate(0, -200px) rotate(0deg);
@@ -522,6 +540,7 @@ body {
   100% {
     -webkit-transform: translate(40px, 2000px) rotate(220deg);
     transform: translate(40px, 2000px) rotate(220deg); } }
+
 @keyframes flowerDrop {
   0% {
     -webkit-transform: translate(0, -200px) rotate(0deg);
@@ -529,6 +548,7 @@ body {
   100% {
     -webkit-transform: translate(40px, 2000px) rotate(220deg);
     transform: translate(40px, 2000px) rotate(220deg); } }
+
 @-webkit-keyframes shake {
   0% {
     -webkit-transform: rotate(0deg);
@@ -542,6 +562,7 @@ body {
   100% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg); } }
+
 @keyframes shake {
   0% {
     -webkit-transform: rotate(0deg);
@@ -555,6 +576,7 @@ body {
   100% {
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg); } }
+
 @-webkit-keyframes rotate {
   0% {
     -webkit-transform: rotate(0deg);
@@ -562,6 +584,7 @@ body {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
+
 @keyframes rotate {
   0% {
     -webkit-transform: rotate(0deg);

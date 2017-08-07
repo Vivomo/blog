@@ -313,6 +313,7 @@ html, body {
     transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateY(0deg); }
   100% {
     transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(360deg) rotateY(0deg); } }
+
 @keyframes revolution {
   0% {
     transform: translate3d(-50%, -50%, 0) rotateX(0deg) rotateY(0deg) rotateY(0deg); }

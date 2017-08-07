@@ -30,9 +30,12 @@
 .result-list span {
   display: inline-block;
   min-width: 120px; }
+
 .result-list .nickname {
   color: #f60; }
+
 .result-list .qq {
   color: #3DB1FF; }
+
 .result-list .group {
   color: #00FFE6; }

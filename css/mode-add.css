@@ -82,6 +82,7 @@ h2 {
     text-align: center;
     font-size: 30px;
     line-height: 1; }
+
 .main .set-title {
   display: block;
   width: 90%;
@@ -89,6 +90,7 @@ h2 {
   height: 40px;
   font-size: 28px;
   text-align: center; }
+
 .main .set-video-img-detail {
   height: 300px; }
   .main .set-video-img-detail .img-wrap, .main .set-video-img-detail .video-wrap {
@@ -117,6 +119,7 @@ h2 {
   .main .set-video-img-detail .video-wrap:before {
     content: 'Video';
     font: bold 100px/240px "黑体"; }
+
 .main .set-img-six-detail .news-list {
   overflow: hidden;
   margin-right: -20px; }
