@@ -180,32 +180,6 @@
         }
     }
 
-    /**
-     * function.
-     *  name 这个属性早就被浏览器广泛支持，但是直到 ES6，才将其写入了标准。
-     */
-
-    /**
-     * Object.
-     *  is
-     *
-     *  values
-     *  entries
-     *
-     */
-    if (!Object.assign) {
-        Object.assign = function () {
-            var target = arguments[0],
-                sources = arrPro.slice.call(arguments).slice(1);
-            sources.forEach(function (item) {
-                for (var k in item) {
-                    target[k] = item[k]
-                }
-            });
-            return target;
-        }
-    }
-
     if (Object.keys) {
         Object.keys = (function() {
             var hasOwnProperty = Object.prototype.hasOwnProperty,
@@ -244,6 +218,19 @@
                 return result;
             };
         }());
+    }
+
+    if (!Object.assign) {
+        Object.assign = function () {
+            var target = arguments[0],
+                sources = arrPro.slice.call(arguments).slice(1);
+            sources.forEach(function (item) {
+                Object.keys(item).forEach(function (key) {
+                    target[key] = item[key];
+                });
+            });
+            return target;
+        }
     }
 
 
