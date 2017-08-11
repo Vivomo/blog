@@ -150,15 +150,21 @@
      *  of
      * Array.prototype.
      *  copyWithin 在当前数组内部，将指定位置的成员复制到其他位置（会覆盖原有成员），然后返回当前数组。也就是说，使用这个方法，会修改当前数组。
-     *  find
-     *  keys
-     *  values
      *  includes
      */
     var arrPro = Array.prototype;
     if (!Array.from) {
         Array.from = function () {
 
+        }
+    }
+    if (!arrPro.find) {
+        arrPro.find = function (callback) {
+            for (var i = 0, l = this.length; i < l; i++) {
+                if (callback(this[i])) {
+                    return this[i];
+                }
+            }
         }
     }
     if (!arrPro.findIndex) {
