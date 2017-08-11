@@ -172,9 +172,9 @@
         }
     }
     if (!arrProp.findIndex) {
-        arrProp.findIndex = function (item) {
+        arrProp.findIndex = function (callback) {
             for (var i = 0, l = this.length; i < l; i++) {
-                if (item === this[i]) {
+                if (callback(this[i])) {
                     return i;
                 }
             }
