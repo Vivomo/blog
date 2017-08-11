@@ -150,16 +150,15 @@
      *  of
      * Array.prototype.
      *  copyWithin 在当前数组内部，将指定位置的成员复制到其他位置（会覆盖原有成员），然后返回当前数组。也就是说，使用这个方法，会修改当前数组。
-     *  includes
      */
-    var arrPro = Array.prototype;
+    var arrProp = Array.prototype;
     if (!Array.from) {
         Array.from = function () {
 
         }
     }
-    if (!arrPro.find) {
-        arrPro.find = function (callback) {
+    if (!arrProp.find) {
+        arrProp.find = function (callback) {
             for (var i = 0, l = this.length; i < l; i++) {
                 if (callback(this[i])) {
                     return this[i];
@@ -167,8 +166,13 @@
             }
         }
     }
-    if (!arrPro.findIndex) {
-        arrPro.findIndex = function (item) {
+    if (!arrProp.includes) {
+        arrProp.includes = function (item) {
+            return this.indexOf(item) > -1;
+        }
+    }
+    if (!arrProp.findIndex) {
+        arrProp.findIndex = function (item) {
             for (var i = 0, l = this.length; i < l; i++) {
                 if (item === this[i]) {
                     return i;
@@ -178,8 +182,8 @@
         }
     }
 
-    if (!arrPro.fill) {
-        arrPro.fill = function (item) {
+    if (!arrProp.fill) {
+        arrProp.fill = function (item) {
             for (var i = 0, l = this.length; i < l; i++) {
                 this[i] = item;
             }
@@ -229,7 +233,7 @@
     if (!Object.assign) {
         Object.assign = function () {
             var target = arguments[0],
-                sources = arrPro.slice.call(arguments).slice(1);
+                sources = arrProp.slice.call(arguments).slice(1);
             sources.forEach(function (item) {
                 Object.keys(item).forEach(function (key) {
                     target[key] = item[key];
