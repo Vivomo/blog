@@ -51,6 +51,13 @@
                     display: none!important;
                 }`;
             document.head.appendChild(style);
+        },
+        "www.pornhub.com": function () {
+            Array.from(document.querySelector('#hd-rightColVideoPage').children).forEach(function (elem) {
+                if (elem.style.display === 'block') {
+                    elem.style.zoom = 0.01;
+                }
+            })
         }
     };
     var host = location.host;
