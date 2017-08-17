@@ -2,6 +2,34 @@
 layout: blank
 title: 图片处理
 js: ps
+css: ps
 ---
 
-<iframe src="../test/ps.html" frameborder="0"></iframe>
+<div class="box">
+
+    <fieldset>
+        <legend>插入图片</legend>
+        <input type="file" id="loadFile" class="v-input fl" data-event="change" data-cmd="drawImgByFile">
+
+        <input type="text" placeholder="Ctrl+V粘贴图片" class="v-input fl" id="pasteImg" data-event="paste" data-cmd="drawImgByClipboard">
+
+        <input type="text" placeholder="图片地址或base64" class="v-input" id="webImg" spellcheck="false">
+        <button id="loadWebImg" class="btn" data-cmd="drawImgBySrc">加载</button>
+    </fieldset>
+
+    <fieldset>
+        <legend>图片处理</legend>
+        <button class="btn" id="toBase64" data-cmd="toBase64">转base64</button>
+        <input type="text" readonly class="v-input" placeholder="base64" id="base64Content">
+        <button class="btn" id="copyBase64" data-cmd="copyBase64">复制</button>
+    </fieldset>
+
+    <fieldset>
+        <legend>其他操作</legend>
+        <button class="btn" id="straw">吸色</button>
+    </fieldset>
+
+    <div class="canvas-wrap" id="canvas-wrap">
+        <canvas id="canvas" class="theme"></canvas>
+    </div>
+</div>
