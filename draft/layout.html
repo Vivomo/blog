@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Layout</title>
+    <style>
+        .window {
+            margin: 10px;
+            width: 400px;
+            height: 100px;
+            box-shadow: 0 0 3px #000;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .absolute {
+            position: absolute;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .content {
+            width: 100px;
+            height: 100px;
+            background: #999;
+        }
+    </style>
+</head>
+<body>
+
+<div class="window">
+    <div class="content" style="margin: 0 auto"></div>
+</div>
+
+<div class="window" style="text-align: center">
+    <button>button</button>
+</div>
+<div class="window" style="text-align: center">
+    <span>span</span>
+</div>
+
+<div class="window relative">
+    <div class="absolute content" style="left: 50%; margin-left: -50px"></div>
+</div>
+
+<div class="window relative">
+    <div class="absolute content" style="left: 50%; transform: translate(-50%, 0)"></div>
+</div>
+
+<div class="window flex" style="justify-content: center">
+    <div class="content"></div>
+</div>
+
+</body>
+</html>
