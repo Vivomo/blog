@@ -6,8 +6,15 @@
     <style>
         .window {
             margin: 10px;
-            width: 400px;
-            height: 100px;
+            width: 200px;
+            height: 60px;
+            box-shadow: 0 0 3px #000;
+        }
+
+        .v-window {
+            margin: 10px;
+            height: 200px;
+            width: 60px;
             box-shadow: 0 0 3px #000;
         }
 
@@ -23,15 +30,20 @@
             display: flex;
         }
 
+        .table-cell {
+            display: table-cell;
+        }
+
         .content {
-            width: 100px;
-            height: 100px;
+            width: 60px;
+            height: 60px;
             background: #999;
         }
+
     </style>
 </head>
 <body>
-
+<!--水平居中-->
 <div class="window">
     <div class="content" style="margin: 0 auto"></div>
 </div>
@@ -53,6 +65,12 @@
 
 <div class="window flex" style="justify-content: center">
     <div class="content"></div>
+</div>
+
+<!--垂直居中-->
+
+<div class="v-window relative">
+    <div class="content" style="margin: auto 0; position: absolute; top: 0; bottom: 0;"></div>
 </div>
 
 </body>
