@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random ceil</title>
+    <style>
+        td {
+            width: 4px;
+            height: 4px;
+        }
+
+        .active {
+            background: #ccc;
+        }
+    </style>
+</head>
+<body>
+<table></table>
+<script>
+
+
+    var Table = (function () {
+        var max = 150;
+        return {
+            point: {
+                x: max / 2,
+                y: max / 2
+            },
+            start: function () {
+                this.init();
+                this.move(~~(Math.random() * 4));
+                var interval = setInterval(function () {
+                    this.move((this.prev + Math.ceil(Math.random() * 3) + 2) % 4);
+                    if (this.isOver()) {
+                        clearInterval(interval);
+                    } else {
+                        this.mark();
+                    }
+                }.bind(this), 100);
+            },
+            /**
+             *
+             * @param direction 1, 2, 3, 4
+             */
+            move: function (direction) {
+                console.log(direction);
+                if (direction % 2) {
+                    this.point.y += direction - 2
+                } else {
+                    this.point.x += direction - 1
+                }
+                this.prev = direction;
+            },
+            mark: function () {
+                this.rows[this.point.x].children[this.point.y].classList.add('active');
+            },
+            isOver: function () {
+                var {x, y} = this.point;
+                return x < 0 || y < 0 || x >= max || y >= max;
+            },
+            init: function () {
+                var row = `<tr>${new Array(max).fill('<td></td>').join('')}</tr>`;
+                $('table').innerHTML = new Array(max).fill(row).join('');
+                this.rows = $$('tr');
+            }
+        }
+    })();
+
+    Table.start();
+
+    function $(selector) {
+        return document.querySelector(selector);
+    }
+
+    function $$(selector) {
+        return typeof selector === 'string' ?
+            Array.from(document.querySelectorAll(selector))
+            :
+            Array.from(selector);
+    }
+</script>
+</body>
+</html>
