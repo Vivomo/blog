@@ -38,6 +38,13 @@
             display: table-cell;
         }
 
+        .v-center-after:after{
+            content: " ";
+            display: inline-block;
+            vertical-align: middle;
+            height: 100%;
+        }
+
         .fl {
             float: left;
         }
@@ -92,6 +99,11 @@
     </div>
     <div class="v-window table-cell" style="vertical-align: middle">
         <div class="content"></div>
+    </div>
+
+<!--宽度大于父级则失效-->
+    <div class="v-window v-center-after">
+        <div style="display: inline-block">000</div>
     </div>
 
     <div class="v-window relative">
