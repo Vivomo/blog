@@ -43,6 +43,18 @@ const Canvas = (function () {
         copyBase64: function() {
             this.base64Content.select();
             document.execCommand('copy');
+        },
+        decolourize: function () {
+            var imageData = this.getImageData();
+            var data = imageData.data;
+            for (var i = 0, l = data.length; i < l; i += 4) {
+                var avg = (data[i] + data[i+1] + data[i+2]) / 3;
+                data[i] = avg;
+                data[i+1] = avg;
+                data[i+2] = avg;
+            }
+            console.log(imageData);
+            this.pen.putImageData(imageData, 0, 0);
         }
     };
 
@@ -51,6 +63,9 @@ const Canvas = (function () {
         commands,
         base64Content,
         pen: canvas.getContext('2d'),
+        getImageData: function () {
+            return this.pen.getImageData(0, 0, this.canvas.width, this.canvas.height);
+        },
         drawImgOnCanvas: function(src) {
             let img = new Image,
                 pen = this.pen;
