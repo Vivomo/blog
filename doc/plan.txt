@@ -2,6 +2,9 @@
 基础系列抽取成专栏
 js中的正则表达式 (包含es6)
 js中的表达式
+布局
+js中的数组
+
 
 开源计划
 Python3+Django =>博客 0.5
@@ -12,6 +15,9 @@ Python 翻译 GitHub上的md文档
 Python 博客生成器
 Python 统计ES5 规范的单词 2017-6-18
 Python 微博爬虫
+
+b^n % m
+进制转换
 
 博客修改计划
 首页改造为魔方
