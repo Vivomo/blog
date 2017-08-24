@@ -30,6 +30,10 @@
             display: flex;
         }
 
+        .table {
+            display: table;
+        }
+
         .table-cell {
             display: table-cell;
         }
@@ -46,6 +50,7 @@
             width: 60px;
             height: 60px;
             background: #999;
+            box-shadow: 0 0 6px #fff inset;
         }
 
     </style>
@@ -104,13 +109,22 @@
 
 <div class="window">
     <div class="content fl"></div>
-    <div style="background: #aaa; height: 60px; margin-left: 70px"></div>
+    <div style="background: #aaa; height: 60px; margin-left: 60px"></div>
 </div>
 
 
 <div class="window flex">
     <div class="content"></div>
-    <div style="background: #aaa; height: 60px; flex: 1 1 auto; margin-left: 10px"></div>
+    <div style="background: #aaa; height: 60px; flex: 1 1 auto;"></div>
+</div>
+
+<!--等分-->
+<div class="window table">
+    <div class="content table-cell"></div>
+    <div class="content table-cell"></div>
+    <div class="content table-cell"></div>
+    <div class="content table-cell"></div>
+    <div class="content table-cell"></div>
 </div>
 
 </body>
