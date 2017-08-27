@@ -30,14 +30,34 @@
             display: flex;
         }
 
+        .table {
+            display: table;
+        }
+
         .table-cell {
             display: table-cell;
+        }
+
+        .v-center-after:after{
+            content: " ";
+            display: inline-block;
+            vertical-align: middle;
+            height: 100%;
+        }
+
+        .fl {
+            float: left;
+        }
+
+        .fr {
+            float: right;
         }
 
         .content {
             width: 60px;
             height: 60px;
             background: #999;
+            box-shadow: 0 0 10px #fff inset;
         }
 
     </style>
@@ -80,10 +100,56 @@
     <div class="v-window table-cell" style="vertical-align: middle">
         <div class="content"></div>
     </div>
+
+<!--宽度大于父级则失效-->
+    <div class="v-window v-center-after">
+        <div style="display: inline-block">000</div>
+    </div>
+
+    <div class="v-window relative">
+        <div class="absolute content" style="top: 50%; transform: translate(0, -50%)"></div>
+    </div>
+
     <div class="v-window flex" style="align-items: center">
         <div class="content"></div>
     </div>
 
+<!--各种各样的自适应-->
+<div class="window relative">
+    <div class="absolute" style="left: 10px; right: 10px; top: 10px; bottom: 10px; background: #aaa"></div>
+</div>
+
+<div class="window">
+    <div class="content fl"></div>
+    <div style="background: #aaa; height: 60px; margin-left: 60px"></div>
+</div>
+
+
+<div class="window flex">
+    <div class="content"></div>
+    <div style="background: #aaa; height: 60px; flex: 1 1 auto;"></div>
+</div>
+
+<div class="window">
+    <div class="content fr"></div>
+    <div class="content fl"></div>
+    <div style="background: #aaa; height: 60px; margin-left: 60px; margin-right: 60px"></div>
+</div>
+
+<div class="window flex">
+    <div class="content"></div>
+    <div style="background: #aaa; height: 60px; flex: 1 1 auto;"></div>
+    <div class="content"></div>
+</div>
+
+<!--等分-->
+<div class="window table">
+    <div class="content table-cell"></div>
+    <div class="content table-cell"></div>
+    <div class="content table-cell"></div>
+    <div class="content table-cell"></div>
+    <div class="content table-cell"></div>
+</div>
 
 </body>
 </html>
