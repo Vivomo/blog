@@ -3,10 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>radio</title>
+    <style>
+        input[type='radio']:checked + span {
+            color: #f00;
+        }
+
+        .none {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<input type="radio" name="a" id="a1" value="1"><input type="radio" name="a" id="a2" value="2"><input type="radio"
-                                                                                                     name="a" id="a3"
-                                                                                                     value="3">
+<h2>eg.1</h2>
+<input type="radio" name="a" id="a1" value="1">
+<input type="radio" name="a" id="a2" value="2">
+<input type="radio" name="a" id="a3" value="3">
+
+<h2>eg.2</h2>
+<input type="radio" class="none" name="aa" value="2" id="aa"><span>○</span> <label for="aa">label</label> <br>
+<input type="radio" name="aa" value="2" id="aa2"><span>○</span> <label for="aa2">label</label>
+
 </body>
 </html>
