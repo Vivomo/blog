@@ -11,5 +11,6 @@
 * 常量定义
 
 ## 常用组件注意点
-* `TextInput` 安卓去掉下划线 `underlineColorAndroid='transparent'`
+* `TextInput` Android去掉下划线 `underlineColorAndroid='transparent'`
+* Android 设置lineHeight 要避免小数, 否则会造成闪退
 * 项目初期就把组件尽量抽取完毕, 抽取了组件就等于抽取了样式(如 分割线, 容器, 各种按钮等)
