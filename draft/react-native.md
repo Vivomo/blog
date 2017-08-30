@@ -14,9 +14,12 @@
 * `TextInput` Android去掉下划线 `underlineColorAndroid='transparent'`
 * Android 设置lineHeight 要避免小数, 否则会造成闪退
 * 项目初期就把组件尽量抽取完毕, 抽取了组件就等于抽取了样式(如 分割线, 容器, 各种按钮等)
+* 组件中用了未定义的函数, 导致异常不会有明显的提示, Node has not been attached to a View. (eg:xzb)
 
 ## 适配
+
 以750px宽度的设计稿为例
+
 ```js
 import {Dimensions} from 'react-native';
 
