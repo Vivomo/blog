@@ -4,11 +4,12 @@
 * 用AndroidStudio 来配置安卓环境
 * 模拟器用 Genymotion
 * Webstorm 开发
-* [中文文档](https://reactnative.cn/docs/0.47/getting-started.html)
+* [RN中文文档](https://reactnative.cn/docs/0.47/getting-started.html)
 
 ## 项目规定
 * 统一tab
 * 常量定义
 
-# 常用组件注意点
+## 常用组件注意点
 * `TextInput` 安卓去掉下划线 `underlineColorAndroid='transparent'`
+* 项目初期就把组件尽量抽取完毕, 抽取了组件就等于抽取了样式(如 分割线, 容器, 各种按钮等)
