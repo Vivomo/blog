@@ -10,3 +10,5 @@
 * 统一tab
 * 常量定义
 
+# 常用组件注意点
+* `TextInput` 安卓去掉下划线 `underlineColorAndroid='transparent'`
