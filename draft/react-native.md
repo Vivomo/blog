@@ -6,3 +6,7 @@
 * Webstorm 开发
 * [中文文档](https://reactnative.cn/docs/0.47/getting-started.html)
 
+## 项目规定
+* 统一tab
+* 常量定义
+
