@@ -14,3 +14,17 @@
 * `TextInput` Android去掉下划线 `underlineColorAndroid='transparent'`
 * Android 设置lineHeight 要避免小数, 否则会造成闪退
 * 项目初期就把组件尽量抽取完毕, 抽取了组件就等于抽取了样式(如 分割线, 容器, 各种按钮等)
+
+## 适配
+以750px宽度的设计稿为例
+```js
+import {Dimensions} from 'react-native';
+
+const deviceWidth = Dimensions.get('window').width;      //设备的宽度
+const deviceHeight = Dimensions.get('window').height;    //设备的高度
+const uiWidthPx = 750;
+
+function pxToDp(uiElementPx) {
+    return uiElementPx *  deviceWidth / uiWidthPx;
+}
+```
