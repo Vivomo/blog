@@ -1,5 +1,7 @@
 # React Native 踩过的那些坑
 
+## 一个RN学习笔记, [地址](https://github.com/crazycodeboy/RNStudyNotes/) 
+
 ## 环境搭建(比较简单的方式)
 * 用AndroidStudio 来配置安卓环境
 * 模拟器用 Genymotion
