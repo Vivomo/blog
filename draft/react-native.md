@@ -18,7 +18,8 @@
  如果项目已开发了很多又不想一个一个改的话, 可以全局更改(Android和IOS的APP生成者都需要改),
   在`node_modules\react-native\Libraries\Text\Text.js`中的`defaultProps()`里面加`selectable: true`
 * Android 设置lineHeight 要避免小数, 否则会造成闪退
-* 项目初期就把组件尽量抽取完毕, 抽取了组件就等于抽取了样式(如 分割线, 容器, 各种按钮等)
+* 项目初期就把组件尽量抽取完毕, 抽取了组件就等于抽取了样式(如 分割线, 容器, 各种按钮等), 在多人项目中, 有时组件名比较抽象,可以配一个
+    图文代码的文档(建议 .md),以便快速找到需要的组件, 和知道哪些组件没有开发
 * 组件中用了未定义的函数, 导致异常不会有明显的提示, Node has not been attached to a View. (eg:xzb)
 
 ## 适配
