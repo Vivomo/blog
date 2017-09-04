@@ -179,6 +179,20 @@ keywords: CSS布局,垂直居中,水平居中,自适应布局,栅格布局
     <div class="content"></div>
 </div>
 
+## 等分布局
 
+### table-cell
+<div class="window table">
+    <div class="content table-cell"></div>
+    <div class="content table-cell"></div>
+    <div class="content table-cell"></div>
+    <div class="content table-cell"></div>
+    <div class="content table-cell"></div>
+</div>
 
+```
+flex 没有写兼容代码, 你可以通过工具是生成兼容性的CSS
+暂时想到了这么多, 有建议欢迎留言
+The end
+```
 
