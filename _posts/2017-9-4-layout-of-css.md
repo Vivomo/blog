@@ -146,6 +146,39 @@ keywords: CSS布局,垂直居中,水平居中,自适应布局,栅格布局
 关于垂直水平居中可以通过上面列举的方式根据情况组合出来, 这里就不啰嗦了, 否则就是一个笛卡尔积式的blog
 ```
 
+## 各种各样的自适应
+
+### 边距固定,宽高自适应
+<div class="window relative">
+    <div class="absolute" style="left: 10px; right: 10px; top: 10px; bottom: 10px; background: #aaa"></div>
+</div>
+
+### 左固定, 右自适应 by float
+<div class="window">
+    <div class="content fl"></div>
+    <div style="background: #aaa; height: 60px; margin-left: 60px"></div>
+</div>
+
+### 左固定, 右自适应 by flex
+<div class="window flex">
+    <div class="content"></div>
+    <div style="background: #aaa; height: 60px; flex: 1 1 auto;"></div>
+</div>
+
+### 三列布局 左右固定, 中间适应 by float
+<div class="window">
+    <div class="content fr"></div>
+    <div class="content fl"></div>
+    <div style="background: #aaa; height: 60px; margin-left: 60px; margin-right: 60px"></div>
+</div>
+
+### 三列布局 左右固定, 中间适应 by flex
+<div class="window flex">
+    <div class="content"></div>
+    <div style="background: #aaa; height: 60px; flex: 1 1 auto;"></div>
+    <div class="content"></div>
+</div>
+
 
 
 
