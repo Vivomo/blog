@@ -14,6 +14,9 @@
 
 ## 常用组件注意点
 * `TextInput` Android去掉下划线 `underlineColorAndroid='transparent'`
+* `Text` 组件默认是不可选的, 建议用他的时候抽成组件, 避免很多地方都要加 `selectable={true}`,
+ 如果项目已开发了很多又不想一个一个改的话, 可以全局更改(Android和IOS的APP生成者都需要改),
+  在`node_modules\react-native\Libraries\Text\Text.js`中的`defaultProps()`里面加`selectable: true`
 * Android 设置lineHeight 要避免小数, 否则会造成闪退
 * 项目初期就把组件尽量抽取完毕, 抽取了组件就等于抽取了样式(如 分割线, 容器, 各种按钮等)
 * 组件中用了未定义的函数, 导致异常不会有明显的提示, Node has not been attached to a View. (eg:xzb)
