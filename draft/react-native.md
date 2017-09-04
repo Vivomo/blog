@@ -22,6 +22,15 @@
     图文代码的文档(建议 .md),以便快速找到需要的组件, 和知道哪些组件没有开发
 * 组件中用了未定义的函数, 导致异常不会有明显的提示, Node has not been attached to a View. (eg:xzb)
 
+## iconfont
+利用www.iconfont.com 生成的.ttf 放置对应的资源文件, 在用的时候输入编码,同时声明fontFamily
+eg.
+```html
+<Text style={{fontFamily: 'iconfont'}}>&#xeb6f;</Text>
+```
+
+如果以后有更新,更换ttf后要执行 `react-native link`
+
 ## 适配
 
 以750px宽度的设计稿为例
