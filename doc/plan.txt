@@ -15,6 +15,8 @@ Python 博客生成器
 Python 统计ES5 规范的单词 2017-6-18
 Python 微博爬虫
 
+Node or Python js 文档生成
+
 b^n % m
 进制转换
 欧几里得算法
