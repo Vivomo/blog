@@ -58,7 +58,6 @@ function binarySearchInsertSort(arr) {
             arr[j-1] = arr[j];
             arr[j] = temp;
         }
-        console.log('->', arr)
     }
 }
 
@@ -69,10 +68,23 @@ function getRandomArray(len, max=100000) {
     }
     return arr;
 }
-//  [ 92, 46, 86, 85, 77, 7, 51, 6, 36, 40, 25, 68, 26, 28, 29, 64, 6, 72, 37, 61 ]
-var arr = getRandomArray(30, 1000);
 
-console.log('before sort', arr);
-binarySearchInsertSort(arr);
-console.log('after sort', arr.toString());
+var arr = getRandomArray(100000, 1000000);
+var arr2 = Array.from(arr);
+
+console.time('1');
+insertSort(arr);
+console.timeEnd('1');
+
+console.time('2');
+binarySearchInsertSort(arr2);
+console.timeEnd('2');
+
+/**
+ * 二分查找插入排序 略小于 插入排序, 节省了小部分时间
+ * */
+
+// console.log('before sort', arr);
+// binarySearchInsertSort(arr);
+// console.log('after sort', arr.toString());
 
