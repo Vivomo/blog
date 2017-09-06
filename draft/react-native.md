@@ -9,7 +9,7 @@
 * [RN中文文档](https://reactnative.cn/docs/0.47/getting-started.html)
 
 ## 项目规定
-* 统一tab
+* 统一tab size
 * 常量定义
 
 ## 常用组件注意点
@@ -46,3 +46,6 @@ function pxToDp(uiElementPx) {
     return uiElementPx *  deviceWidth / uiWidthPx;
 }
 ```
+
+### 盒模型
+RN的盒模型相当于CSS中的box-sizing: border-box;
