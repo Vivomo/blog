@@ -4,7 +4,7 @@
   border-left: 1px solid #ddd;
   font-size: 14px;
   overflow: hidden; }
-  .util-wrap li {
+  .util-wrap > li {
     box-sizing: border-box;
     float: left;
     padding: 10px;
@@ -13,7 +13,7 @@
     overflow: hidden;
     border-bottom: 1px solid #ddd;
     border-right: 1px solid #ddd; }
-    .util-wrap li p {
+    .util-wrap > li p {
       line-height: 2; }
   .util-wrap .ellipsis {
     overflow: hidden;

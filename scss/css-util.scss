@@ -8,7 +8,7 @@
     border-left: 1px solid #ddd;
     font-size: 14px;
     overflow: hidden;
-    li {
+    & > li {
         box-sizing: border-box;
         float: left;
         padding: 10px;
