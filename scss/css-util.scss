@@ -104,4 +104,24 @@
         filter: gray;
 
     }
+
+    .scroll-wrap {
+        border: 2px solid #ccc;
+        height: 180px;
+        overflow: auto;
+
+        &::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background: $theme1;
+        }
+
+        .scroll-content {
+            height: 120px;
+            background: rgba(#999, 0.5);
+        }
+    }
 }

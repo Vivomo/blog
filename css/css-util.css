@@ -85,3 +85,15 @@
     filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
     -webkit-filter: grayscale(1);
     filter: gray; }
+  .util-wrap .scroll-wrap {
+    border: 2px solid #ccc;
+    height: 180px;
+    overflow: auto; }
+    .util-wrap .scroll-wrap::-webkit-scrollbar {
+      width: 4px; }
+    .util-wrap .scroll-wrap::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background: #1EEDFF; }
+    .util-wrap .scroll-wrap .scroll-content {
+      height: 120px;
+      background: rgba(153, 153, 153, 0.5); }

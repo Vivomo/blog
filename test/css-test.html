@@ -4,18 +4,22 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        #d {
-            width: 100px;
-            height: 100px;
-            background-color: rgba(255, 0, 0, 0.2);
-            background-color: red;
-
+        ul {
+            height: 200px;
+            border: 1px solid #ccc;
+            overflow: scroll;
         }
-        li:last-child{
-            color: red;
+        ul li {
+            height: 300px;
+            background: #999;
+            opacity: 0.5;
         }
-        li:first-child{
-            color: #fffc00;
+        ul::-webkit-scrollbar {
+            width: 4px;
+        }
+        ul::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background: #900;
         }
     </style>
 </head>
