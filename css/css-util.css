@@ -4,7 +4,7 @@
   border-left: 1px solid #ddd;
   font-size: 14px;
   overflow: hidden; }
-  .util-wrap li {
+  .util-wrap > li {
     box-sizing: border-box;
     float: left;
     padding: 10px;
@@ -13,7 +13,7 @@
     overflow: hidden;
     border-bottom: 1px solid #ddd;
     border-right: 1px solid #ddd; }
-    .util-wrap li p {
+    .util-wrap > li p {
       line-height: 2; }
   .util-wrap .ellipsis {
     overflow: hidden;
@@ -85,3 +85,15 @@
     filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
     -webkit-filter: grayscale(1);
     filter: gray; }
+  .util-wrap .scroll-wrap {
+    border: 2px solid #ccc;
+    height: 180px;
+    overflow: auto; }
+    .util-wrap .scroll-wrap::-webkit-scrollbar {
+      width: 4px; }
+    .util-wrap .scroll-wrap::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background: #1EEDFF; }
+    .util-wrap .scroll-wrap .scroll-content {
+      height: 120px;
+      background: rgba(153, 153, 153, 0.5); }
