@@ -8,6 +8,8 @@ fs.readFile('F:\\doc\\es6.html', function (err, data) {
         return console.error(err);
     }
     const html = data.toString();
+
+    // 测试结果 reg优
     console.time('reg');
     countWordByReg(html);
     console.timeEnd('reg');
@@ -37,7 +39,10 @@ function countWordByReg(html) {
 }
 
 
-
+/**
+ * 有限状态机方式来统计单词
+ * @param html
+ */
 function countWordByFiniteState(html) {
     const contentBeginToken = '>';
     const contentEndToken = '<';
