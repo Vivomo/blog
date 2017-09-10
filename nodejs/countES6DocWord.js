@@ -1,14 +1,15 @@
 const fs = require('fs');
 
 const contentReg = />([^<]+)</g; // JS 不支持 (?<=) 所以只有 (?=)没用
-const wordReg = /[a-zA-Z]\w+/g;
+const wordReg = /[a-zA-Z]+/g;
 
 fs.readFile('F:\\doc\\es6.html', function (err, data) {
     if (err) {
         return console.error(err);
     }
     const html = data.toString();
-    countWordByReg(html);
+    // countWordByReg(html);
+    countWordByFiniteState(html);
 });
 
 /**
@@ -21,16 +22,10 @@ function countWordByReg(html) {
     let result;
 
     while (result = contentReg.exec(html)) {
-        const content = result[1].toLowerCase();
+        const content = result[1];
         const words = content.match(wordReg);
         if (words) {
-            words.forEach((word) => {
-                if (dictionary[word]) {
-                    dictionary[word] += 1;
-                } else {
-                    dictionary[word] = 1;
-                }
-            })
+            words.forEach(word => addWordToDic(word, dictionary));
         }
     }
     printDictionary(dictionary)
@@ -43,17 +38,39 @@ function countWordByFiniteState(html) {
     const contentEndToken = '<';
     const letterReg = /[a-zA-Z]/;
 
-    const invalidState = 0;
-    const contenState = 1;
+    const tagState = 0;
+    const contentState = 1;
     const wordState = 2;
 
-    const state = invalidState;
-
+    let state = tagState;
+    let wordStartIndex = -1;
     const dictionary = {};
+    
     for (let i = 0, l = html.length; i < l; i++) {
-        let letter = html[i];
-
+        let char = html[i];
+        
+        switch (state) {
+            case tagState:
+                if (char === contentBeginToken) {
+                    state = contentState;
+                }
+                break;
+            case contentState:
+                if (char === contentEndToken) {
+                    state = tagState;
+                } else if (char.match(letterReg)) {
+                    wordStartIndex = i;
+                    state = wordState;
+                }
+                break;
+            default:
+                if (!char.match(letterReg)) {
+                    state = char === contentEndToken ? tagState : contentState;
+                    addWordToDic(html.substring(wordStartIndex, i), dictionary);
+                }
+        }
     }
+    printDictionary(dictionary);
 }
 
 /**
@@ -61,7 +78,21 @@ function countWordByFiniteState(html) {
  * @param dictionary
  */
 function printDictionary(dictionary) {
-    console.log(dictionary);
+    // console.log(dictionary);
     console.log('单词个数', Object.keys(dictionary).length);
     console.log('最常用的单词排序', Object.entries(dictionary).sort((a, b) => b[1] - a[1]).slice(0, 100));
+}
+
+/**
+ * 将单词加入字典
+ * @param word
+ * @param dic
+ */
+function addWordToDic(word, dic) {
+    word = word.toLowerCase();
+    if (dic[word]) {
+        dic[word] += 1;
+    } else {
+        dic[word] = 1;
+    }
 }
