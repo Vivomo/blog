@@ -39,7 +39,21 @@ function countWordByReg(html) {
 
 
 function countWordByFiniteState(html) {
+    const contentBeginToken = '>';
+    const contentEndToken = '<';
+    const letterReg = /[a-zA-Z]/;
 
+    const invalidState = 0;
+    const contenState = 1;
+    const wordState = 2;
+
+    const state = invalidState;
+
+    const dictionary = {};
+    for (let i = 0, l = html.length; i < l; i++) {
+        let letter = html[i];
+
+    }
 }
 
 /**
