@@ -11,8 +11,8 @@
 <div id="ani-wrap"></div>
 <script>
     (function(){
-        var body = document.getElementById('ani-wrap');
-        var w = body.clientWidth;
+        var aniWrap = document.getElementById('ani-wrap');
+        var aniWrapWidth = aniWrap.clientWidth;
 
         function getRandomStyle(){
             var cssArr = [];
@@ -33,7 +33,7 @@
                 var elem = document.createElement('p');
                 elem.className = 'ani';
                 elem.innerText = getText();
-                body.appendChild(elem);
+                aniWrap.appendChild(elem);
                 elem.style.cssText = getRandomStyle();
                 this.elems[i] = elem;
             }
@@ -42,7 +42,7 @@
         for (var i = 0; i < 50; i++) {
             setTimeout(function(){
                 new P(3);
-            },i * 100);
+            }, i * 100);
         }
     })()
 </script>
