@@ -8,8 +8,13 @@ fs.readFile('F:\\doc\\es6.html', function (err, data) {
         return console.error(err);
     }
     const html = data.toString();
-    // countWordByReg(html);
+    console.time('reg');
+    countWordByReg(html);
+    console.timeEnd('reg');
+
+    console.time('state');
     countWordByFiniteState(html);
+    console.timeEnd('state')
 });
 
 /**
