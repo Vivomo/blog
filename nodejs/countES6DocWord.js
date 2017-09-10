@@ -25,7 +25,6 @@ fs.readFile('F:\\doc\\es6.html', function (err, data) {
  */
 function countWordByReg(html) {
     const dictionary = {};
-
     let result;
 
     while (result = contentReg.exec(html)) {
@@ -88,7 +87,6 @@ function countWordByFiniteState(html) {
  * @param dictionary
  */
 function printDictionary(dictionary) {
-    // console.log(dictionary);
     console.log('单词个数', Object.keys(dictionary).length);
     console.log('最常用的单词排序', Object.entries(dictionary).sort((a, b) => b[1] - a[1]).slice(0, 100));
 }
