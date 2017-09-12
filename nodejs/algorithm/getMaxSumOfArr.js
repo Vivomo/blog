@@ -3,6 +3,9 @@
  * 获取 数组中连续片段的最大和
  */
 
+const arrUtils = require('../util/arrUtil');
+const getRandomArr = arrUtils.getRandomArr;
+
 /**
  * 简单算法
  * @param arr
@@ -25,3 +28,5 @@ function simple(arr) {
     console.log(begin, end, max);
     return max;
 }
+
+console.log(getRandomArr);
