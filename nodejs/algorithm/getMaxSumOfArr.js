@@ -16,17 +16,19 @@ function simple(arr) {
     let end = 0;
     for (let i = 0, l = arr.length; i < l; i++ ) {
         let sum = 0;
-        for (let j = i; i < l; j++) {
+        for (let j = i; j < l; j++) {
             sum += arr[j];
             if (sum > max) {
                 max = sum;
                 begin = i;
                 end = j;
             }
+            console.log(i, j, '->', sum);
         }
     }
     console.log(begin, end, max);
     return max;
 }
 
-console.log(getRandomArr);
+let arr = getRandomArr(10, -100, 100);
+console.log(simple(arr));
