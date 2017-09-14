@@ -12,6 +12,7 @@ Python => phabricator
 Python 翻译 GitHub上的md文档
 Python 博客生成器
 Python 微博爬虫
+Python image -> excel
 
 Node or Python js 文档生成
 
