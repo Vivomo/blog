@@ -40,7 +40,8 @@
                     tr.appendChild(document.createElement('td'));
                 }
             }
-            this.wrapElem.appendChild(table)
+            this.wrapElem.appendChild(table);
+            this.initTable();
         }
 
         setText(text, row, col) {
@@ -51,13 +52,19 @@
             return this.table.querySelectorAll('tr')[row].querySelectorAll('td')[col];
         }
 
+        initTable() {
+            this.table.addEventListener('dblclick', function (e) {
+                e.target.contentEditable = true;
+            })
+        }
+
     }
 
     let table = new Table('#table-wrap');
     table.create(5, 5);
 
     table.setText(123, 3, 3);
-    
+
 </script>
 </body>
 </html>
