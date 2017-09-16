@@ -7,7 +7,7 @@
         box-sizing: border-box;
 
         &:hover {
-            background: #eee;
+            background: #f1f1f1;
         }
 
         textarea {
@@ -21,6 +21,7 @@
         td {
             text-align: center;
             height: 16px;
+            user-select: none;
         }
     }
 
@@ -28,5 +29,6 @@
         width: 40px;
         text-align: center;
         background: #e6e6e6;
+        user-select: none;
     }
 }

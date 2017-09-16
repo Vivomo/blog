@@ -2,9 +2,9 @@ class Table {
     constructor(elem) {
         this.wrapElem = typeof elem === 'string' ? document.querySelector(elem) : elem;
     }
-    create(row, col) {
-        this.row = row;
+    create(col, row) {
         this.col = col;
+        this.row = row;
         const table = this.table = document.createElement('table');
         for (let i = 0; i <= row; i++) {
             const tr = document.createElement('tr');
@@ -13,12 +13,12 @@ class Table {
                 tr.appendChild(document.createElement('td'));
             }
         }
-        this._setColRowIndex();
+        this._initColRowIndex();
         this.wrapElem.appendChild(table);
         this.initTable();
     }
 
-    _setColRowIndex() {
+    _initColRowIndex() {
         const trColIndex = this.table.firstElementChild;
         trColIndex.classList.add('tr-col-index');
 
@@ -38,13 +38,14 @@ class Table {
         firstTd.classList.add('td-row-index');
     }
 
-    setText(text, row, col) {
-        this.getTd(row, col).innerText = text;
+    setText(text, col, row) {
+        this.getTd(col, row).innerText = text;
     }
 
-    getTd(row, col) {
+    getTd(col, row) {
         return this.table.querySelectorAll('tr')[row].querySelectorAll('td')[col];
     }
+
 
     /**
      * 给table 绑定一些事件
@@ -80,6 +81,7 @@ class Table {
 }
 
 let table = new Table('#table-wrap');
-table.create(5, 5);
+table.create(15, 30);
 
 table.setText(123, 3, 3);
+table.setText(1232344, 4, 9);

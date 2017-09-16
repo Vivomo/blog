@@ -6,7 +6,7 @@
     height: 28px;
     box-sizing: border-box; }
     .edit-table td:hover {
-      background: #eee; }
+      background: #f1f1f1; }
     .edit-table td textarea {
       display: block;
       box-sizing: border-box; }
@@ -14,8 +14,10 @@
     background: #e6e6e6; }
     .edit-table .tr-col-index td {
       text-align: center;
-      height: 16px; }
+      height: 16px;
+      user-select: none; }
   .edit-table .td-row-index {
     width: 40px;
     text-align: center;
-    background: #e6e6e6; }
+    background: #e6e6e6;
+    user-select: none; }
