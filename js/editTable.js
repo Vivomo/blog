@@ -86,6 +86,7 @@ class Table {
         startTd.colSpan = colSpanCount;
         startTd.rowSpan = rowSpanCount;
 
+        startTd.innerHTML = tdContent;
         setTimeout(function () {
             removeTdList.forEach(item => item.remove());
         },1);
