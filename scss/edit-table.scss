@@ -1,3 +1,10 @@
+* {
+    box-sizing: border-box;
+}
+#table-wrap {
+    position: relative;
+    overflow: hidden;
+}
 .edit-table {
     border-collapse:collapse;
     td {
@@ -31,4 +38,11 @@
         background: #e6e6e6;
         user-select: none;
     }
+}
+
+.table-select {
+    position: absolute;
+    z-index: 99;
+    top: -100px;
+    border: 2px solid rgba(#217346, 0.8);
 }

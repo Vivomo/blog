@@ -1,6 +1,9 @@
 class Table {
-    constructor(elem) {
+    constructor(elem, col, row) {
         this.wrapElem = typeof elem === 'string' ? document.querySelector(elem) : elem;
+        if (col && row) {
+            this.create(col, row);
+        }
     }
     create(col, row) {
         this.col = col;
@@ -17,30 +20,10 @@ class Table {
             }
         }
         this._initColRowIndex();
-        this.trs = table.children;
-        this.wrapElem.appendChild(table);
-        this.initTable();
+        this._initTable();
+        this._initTableSelect();
     }
 
-    _initColRowIndex() {
-        const trColIndex = this.table.firstElementChild;
-        trColIndex.classList.add('tr-col-index');
-
-        const colIndexTd = trColIndex.querySelectorAll('td');
-        for (let i = 1; i <= this.col; i++) {
-            colIndexTd[i].innerHTML = String.fromCharCode(65 + i - 1); // 65是A
-        }
-
-        const trList = this.table.querySelectorAll('tr');
-        for (let j = 1; j <= this.row; j++) {
-            const tdRowIndex = trList[j].firstElementChild;
-            tdRowIndex.classList.add('td-row-index');
-            tdRowIndex.innerHTML = j;
-        }
-
-        const firstTd = trColIndex.firstElementChild;
-        firstTd.classList.add('td-row-index');
-    }
 
     setText(text, col, row) {
         this.getCell(col, row).innerText = text;
@@ -93,10 +76,38 @@ class Table {
 
     }
 
+    _initTableSelect() {
+        const tableSelect = this.tableSelect = document.createElement('div');
+        tableSelect.className = 'table-select';
+        this.wrapElem.appendChild(tableSelect);
+    }
+
+    _initColRowIndex() {
+        const trColIndex = this.table.firstElementChild;
+        trColIndex.classList.add('tr-col-index');
+
+        const colIndexTd = trColIndex.querySelectorAll('td');
+        for (let i = 1; i <= this.col; i++) {
+            colIndexTd[i].innerHTML = String.fromCharCode(65 + i - 1); // 65是A
+        }
+
+        const trList = this.table.querySelectorAll('tr');
+        for (let j = 1; j <= this.row; j++) {
+            const tdRowIndex = trList[j].firstElementChild;
+            tdRowIndex.classList.add('td-row-index');
+            tdRowIndex.innerHTML = j;
+        }
+
+        const firstTd = trColIndex.firstElementChild;
+        firstTd.classList.add('td-row-index');
+    }
     /**
      * 给table 绑定一些事件
      */
-    initTable() {
+    _initTable() {
+        const table = this.table;
+        this.wrapElem.appendChild(table);
+        this.trs = table.children;
         this.table.classList.add('edit-table');
 
         // 双击编辑
@@ -126,8 +137,7 @@ class Table {
 
 }
 
-let table = new Table('#table-wrap');
-table.create(15, 30);
+let table = new Table('#table-wrap', 15, 30);
 
 table.setText(123, 3, 3);
 table.setText(1232344, 4, 9);
