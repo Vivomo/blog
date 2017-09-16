@@ -43,10 +43,10 @@ class Table {
     }
 
     setText(text, col, row) {
-        this.getTd(col, row).innerText = text;
+        this.getCell(col, row).innerText = text;
     }
 
-    getTd(col, row) {
+    getCell(col, row) {
         return this.trs[row].children[col];
     }
 
@@ -58,7 +58,7 @@ class Table {
     mergeCell(from, to) {
         const [startCol, endCol] = [from[0], to[0]].sort();
         const [startRow, endRow] = [from[1], to[1]].sort();
-        const startTd = this.getTd(startCol, startRow);
+        const startTd = this.getCell(startCol, startRow);
 
         const colSpanCount = endCol - startCol + 1;
         const rowSpanCount = endRow - startRow + 1;
@@ -69,7 +69,7 @@ class Table {
 
         for (let i = startRow; i <= endRow; i++) {
             for (let j = startCol; j <= endCol; j++) {
-                let willRemovedTd = this.getTd(j, i);
+                let willRemovedTd = this.getCell(j, i);
                 if (!willRemovedTd || ~~willRemovedTd.dataset.col > endCol) {
                     break;
                 } else {
