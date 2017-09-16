@@ -10,7 +10,10 @@ class Table {
             const tr = document.createElement('tr');
             table.appendChild(tr);
             for (let j = 0; j <= col; j++) {
-                tr.appendChild(document.createElement('td'));
+                const td = document.createElement('td');
+                td.dataset.col = j;
+                td.dataset.row = i;
+                tr.appendChild(td);
             }
         }
         this._initColRowIndex();
