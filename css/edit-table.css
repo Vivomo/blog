@@ -1,11 +1,21 @@
-table {
+.edit-table {
   border-collapse: collapse; }
-  table td {
+  .edit-table td {
     border: 1px solid #ddd;
     width: 60px;
-    height: 20px; }
-    table td:hover {
+    height: 28px;
+    box-sizing: border-box; }
+    .edit-table td:hover {
       background: #eee; }
-    table td textarea {
+    .edit-table td textarea {
       display: block;
       box-sizing: border-box; }
+  .edit-table .tr-col-index {
+    background: #e6e6e6; }
+    .edit-table .tr-col-index td {
+      text-align: center;
+      height: 16px; }
+  .edit-table .td-row-index {
+    width: 40px;
+    text-align: center;
+    background: #e6e6e6; }

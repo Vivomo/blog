@@ -1,9 +1,10 @@
-table {
+.edit-table {
     border-collapse:collapse;
     td {
         border: 1px solid #ddd;
         width: 60px;
-        height: 20px;
+        height: 28px;
+        box-sizing: border-box;
 
         &:hover {
             background: #eee;
@@ -13,5 +14,19 @@ table {
             display: block;
             box-sizing: border-box;
         }
+    }
+
+    .tr-col-index {
+        background: #e6e6e6;
+        td {
+            text-align: center;
+            height: 16px;
+        }
+    }
+
+    .td-row-index {
+        width: 40px;
+        text-align: center;
+        background: #e6e6e6;
     }
 }

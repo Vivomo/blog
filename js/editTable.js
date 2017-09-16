@@ -6,7 +6,6 @@ class Table {
         this.row = row;
         this.col = col;
         const table = this.table = document.createElement('table');
-        table.contenteditable = true;
         for (let i = 0; i <= row; i++) {
             const tr = document.createElement('tr');
             table.appendChild(tr);
@@ -20,14 +19,23 @@ class Table {
     }
 
     _setColRowIndex() {
-        const colIndexTd = this.table.firstElementChild.querySelectorAll('td');
+        const trColIndex = this.table.firstElementChild;
+        trColIndex.classList.add('tr-col-index');
+
+        const colIndexTd = trColIndex.querySelectorAll('td');
         for (let i = 1; i <= this.col; i++) {
             colIndexTd[i].innerHTML = String.fromCharCode(65 + i - 1); // 65是A
         }
+
         const trList = this.table.querySelectorAll('tr');
         for (let j = 1; j <= this.row; j++) {
-            trList[j].firstElementChild.innerHTML = j;
+            const tdRowIndex = trList[j].firstElementChild;
+            tdRowIndex.classList.add('td-row-index');
+            tdRowIndex.innerHTML = j;
         }
+
+        const firstTd = trColIndex.firstElementChild;
+        firstTd.classList.add('td-row-index');
     }
 
     setText(text, row, col) {
@@ -42,6 +50,7 @@ class Table {
      * 给table 绑定一些事件
      */
     initTable() {
+        this.table.classList.add('edit-table');
 
         // 双击编辑
         this.table.addEventListener('dblclick', function (e) {
