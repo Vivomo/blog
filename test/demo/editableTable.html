@@ -54,7 +54,16 @@
 
         initTable() {
             this.table.addEventListener('dblclick', function (e) {
-                e.target.contentEditable = true;
+                const target = e.target;
+                if (target.tagName === 'TD') {
+                    const text = target.innerText;
+                    target.innerHTML = `<textarea>${text}</textarea>`;
+                    const input = target.querySelector('textarea');
+                    input.focus();
+                    input.onblur = function () {
+                        target.innerText = this.value;
+                    }
+                }
             })
         }
 
