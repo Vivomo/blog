@@ -17,6 +17,7 @@ class Table {
             }
         }
         this._initColRowIndex();
+        this.trs = table.children;
         this.wrapElem.appendChild(table);
         this.initTable();
     }
@@ -46,7 +47,7 @@ class Table {
     }
 
     getTd(col, row) {
-        return this.table.querySelectorAll('tr')[row].querySelectorAll('td')[col];
+        return this.trs[row].children[col];
     }
 
     /**
@@ -57,13 +58,38 @@ class Table {
     mergeCell(from, to) {
         const [startCol, endCol] = [from[0], to[0]].sort();
         const [startRow, endRow] = [from[1], to[1]].sort();
-        const td = this.getTd(startCol, startRow);
+        const startTd = this.getTd(startCol, startRow);
 
         const colSpanCount = endCol - startCol + 1;
         const rowSpanCount = endRow - startRow + 1;
 
-        td.colSpan = colSpanCount;
-        td.rowSpan = rowSpanCount;
+        let tdContent = '';
+        let removeTdList = [];
+
+
+        for (let i = startRow; i <= endRow; i++) {
+            for (let j = startCol; j <= endCol; j++) {
+                let willRemovedTd = this.getTd(j, i);
+                if (!willRemovedTd || ~~willRemovedTd.dataset.col > endCol) {
+                    break;
+                } else {
+                    if (!tdContent) {
+                        tdContent = willRemovedTd.innerText;
+                    }
+                    removeTdList.push(willRemovedTd);
+                }
+            }
+        }
+
+        removeTdList.shift();
+
+        startTd.colSpan = colSpanCount;
+        startTd.rowSpan = rowSpanCount;
+
+        setTimeout(function () {
+            removeTdList.forEach(item => item.remove());
+        },1);
+
     }
 
     /**
