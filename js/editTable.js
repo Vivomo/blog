@@ -46,6 +46,22 @@ class Table {
         return this.table.querySelectorAll('tr')[row].querySelectorAll('td')[col];
     }
 
+    /**
+     * 合并单元格
+     * @param from  [col, row]
+     * @param to    [col, row]
+     */
+    mergeCell(from, to) {
+        const [startCol, endCol] = [from[0], to[0]].sort();
+        const [startRow, endRow] = [from[1], to[1]].sort();
+        const td = this.getTd(startCol, startRow);
+
+        const colSpanCount = endCol - startCol + 1;
+        const rowSpanCount = endRow - startRow + 1;
+
+        td.colSpan = colSpanCount;
+        td.rowSpan = rowSpanCount;
+    }
 
     /**
      * 给table 绑定一些事件
