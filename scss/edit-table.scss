@@ -1,0 +1,17 @@
+table {
+    border-collapse:collapse;
+    td {
+        border: 1px solid #ddd;
+        width: 60px;
+        height: 20px;
+
+        &:hover {
+            background: #eee;
+        }
+
+        textarea {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+}

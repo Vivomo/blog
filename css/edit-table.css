@@ -1,0 +1,10 @@
+table {
+  border-collapse: collapse; }
+
+td {
+  border: 1px solid #ddd;
+  width: 60px;
+  height: 20px; }
+
+td:hover {
+  background: #eee; }
