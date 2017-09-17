@@ -1,13 +1,12 @@
 class Table {
     constructor(elem, col, row) {
         this.wrapElem = typeof elem === 'string' ? document.querySelector(elem) : elem;
-        if (col && row) {
-            this.create(col, row);
-        }
-    }
-    create(col, row) {
         this.col = col;
         this.row = row;
+        this.init();
+    }
+    init() {
+        const {col, row} = this;
         const table = this.table = document.createElement('table');
         for (let i = 0; i <= row; i++) {
             const tr = document.createElement('tr');
@@ -73,6 +72,14 @@ class Table {
         setTimeout(function () {
             removeTdList.forEach(item => item.remove());
         },1);
+
+    }
+
+    /**
+     * 初始化单元格坐标
+     * @private
+     */
+    _initCoordinate() {
 
     }
 
