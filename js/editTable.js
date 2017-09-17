@@ -80,7 +80,15 @@ class Table {
      * @private
      */
     _initCoordinate() {
+        const coord = [];
+        const theadHeight = this.trs[0].firstElementChild.clientHeight;
+        const theadTdCoord = Array.from(this.trs[0]).map(td => ({
+            top: 0,
+            left: td.offsetLeft
+        }));
+        for (let row = 0; row < this.row; row++) {
 
+        }
     }
 
     _initTableSelect() {
