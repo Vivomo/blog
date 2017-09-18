@@ -19,6 +19,7 @@ class Table {
             }
         }
         this._initColRowIndex();
+        this._initWrapElem();
         this._initTable();
         this._initTableSelect();
         this._updateCellsPosition();
@@ -29,18 +30,24 @@ class Table {
         this.getCell(col, row).innerText = text;
     }
 
+    /**
+     * 获取对应坐标的TD
+     * @param col
+     * @param row
+     * @returns {HTMLElement}
+     */
     getCell(col, row) {
         return this.trs[row].children[col];
     }
 
     /**
      * 合并单元格
-     * @param from  [col, row]
-     * @param to    [col, row]
+     * @param from  {col, row}
+     * @param to    {col, row}
      */
     mergeCell(from, to) {
-        const [startCol, endCol] = [from[0], to[0]].sort();
-        const [startRow, endRow] = [from[1], to[1]].sort();
+        const [startCol, endCol] = [from.col, to.col].sort();
+        const [startRow, endRow] = [from.row, to.row].sort();
         const startTd = this.getCell(startCol, startRow);
 
         const colSpanCount = endCol - startCol + 1;
@@ -71,7 +78,10 @@ class Table {
 
         startTd.innerHTML = tdContent;
         setTimeout(function () {
-            removeTdList.forEach(item => item.remove());
+            removeTdList.forEach(item => {
+
+                item.remove();
+            });
         },1);
 
     }
@@ -146,7 +156,7 @@ class Table {
     }
 
     /**
-     *
+     * init table select
      * @param style
      * @private
      */
@@ -156,6 +166,10 @@ class Table {
         });
     }
 
+    /**
+     * init 行列标注
+     * @private
+     */
     _initColRowIndex() {
         const trColIndex = this.table.firstElementChild;
         trColIndex.classList.add('tr-col-index');
@@ -175,15 +189,24 @@ class Table {
         const firstTd = trColIndex.firstElementChild;
         firstTd.classList.add('td-row-index');
     }
+
+    /**
+     * init wrap
+     * @private
+     */
+    _initWrapElem() {
+        this.wrapElem.appendChild(this.table);
+        this.wrapElem.style.width = `${41+this.col * 60}px`;
+        this.wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
+    }
     /**
      * 给table 绑定一些事件
      */
     _initTable() {
         const table = this.table;
-        this.wrapElem.appendChild(table);
-        this.wrapElem.style.width = `${41+this.col * 60}px`;
         this.trs = table.children;
         this.table.classList.add('edit-table');
+
 
         // 双击编辑
         this.table.addEventListener('dblclick', function (e) {
