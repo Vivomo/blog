@@ -16,6 +16,8 @@
       background: #f1f1f1; }
     .edit-table td textarea {
       display: block;
+      max-width: 100%;
+      max-height: 100%;
       box-sizing: border-box; }
   .edit-table .tr-col-index {
     background: #e6e6e6; }
@@ -33,4 +35,5 @@
   position: absolute;
   z-index: 99;
   top: -100px;
-  border: 2px solid rgba(33, 115, 70, 0.8); }
+  border: 2px solid rgba(33, 115, 70, 0.8);
+  pointer-events: none; }

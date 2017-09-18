@@ -21,7 +21,7 @@ class Table {
         this._initColRowIndex();
         this._initTable();
         this._initTableSelect();
-        this._initCoordinate();
+        this._updateCellsPosition();
     }
 
 
@@ -80,16 +80,49 @@ class Table {
      * 选择区域
      */
     select(startPoint, endPoint = startPoint) {
-        console.log(startPoint, endPoint)
+
+        const [startCol, endCol] = [startPoint.col, endPoint.col];
+        const [startRow, endRow] = [startPoint.row, endPoint.row];
+
+        const leftTopTdCoord = this.cellsPosition[startRow][startCol];
+        let {top, bottom, left, right} = leftTopTdCoord;
+
+        for (let i = endCol; i >= startCol; i--) {
+            top = Math.min(this.cellsPosition[startRow][i].top, top);
+            bottom = Math.min(this.cellsPosition[endRow][i].bottom, bottom);
+        }
+
+        for (let i = endRow; i >= startRow; i--) {
+            left = Math.min(this.cellsPosition[i][startCol].left, left);
+            right = Math.min(this.cellsPosition[i][endCol].right, right);
+        }
+
+        this._setTableSelect({
+            top,
+            bottom,
+            left,
+            right
+        });
+
     }
 
     /**
      * 初始化单元格坐标
      * @private
      */
-    _initCoordinate() {
-        this.coord = new Array(this.row).fill(null).map((item, index) => {
-            return Array.from(this.trs[index].children).map(elem => elem.getBoundingClientRect().toJSON())
+    _updateCellsPosition() {
+        const wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
+
+        this.cellsPosition = new Array(this.row).fill(null).map((item, index) => {
+            return Array.from(this.trs[index].children).map((elem) => {
+                const bcr = elem.getBoundingClientRect();
+                return {
+                    top: elem.offsetTop,
+                    bottom: wrapBCR.bottom - bcr.bottom,
+                    left: elem.offsetLeft,
+                    right: wrapBCR.right - bcr.right,
+                }
+            })
         });
     }
 
@@ -102,10 +135,25 @@ class Table {
 
     }
 
+    /**
+     * 初始化选择框
+     * @private
+     */
     _initTableSelect() {
         const tableSelect = this.tableSelect = document.createElement('div');
         tableSelect.className = 'table-select';
         this.wrapElem.appendChild(tableSelect);
+    }
+
+    /**
+     *
+     * @param style
+     * @private
+     */
+    _setTableSelect(style){
+        Object.entries(style).forEach(([key, value]) => {
+            this.tableSelect.style[key] = `${value}px`;
+        });
     }
 
     _initColRowIndex() {
@@ -133,6 +181,7 @@ class Table {
     _initTable() {
         const table = this.table;
         this.wrapElem.appendChild(table);
+        this.wrapElem.style.width = `${41+this.col * 60}px`;
         this.trs = table.children;
         this.table.classList.add('edit-table');
 
@@ -145,6 +194,7 @@ class Table {
                 const tdHeight = target.clientHeight;
 
                 target.innerHTML = `<textarea style="width: ${tdWidth}px; height: ${tdHeight}px">${text}</textarea>`;
+                console.log(target.firstElementChild);
                 const input = target.querySelector('textarea');
                 input.focus();
                 input.onblur = function () {
@@ -156,10 +206,12 @@ class Table {
         this.table.addEventListener('mousedown', (e) => {
             const target = e.target;
             if (target.tagName === 'TD') {
+                this._updateCellsPosition();
+
                 const data = target.dataset;
                 const startPoint = {
-                    col: data.col,
-                    row: data.row
+                    col: ~~data.col,
+                    row: ~~data.row
                 };
                 this.select(startPoint);
 
@@ -168,8 +220,8 @@ class Table {
                     if (target.tagName === 'TD') {
                         const data = target.dataset;
                         const endPoint = {
-                            col: data.col,
-                            row: data.row
+                            col: ~~data.col,
+                            row: ~~data.row
                         };
                         this.select(startPoint, endPoint);
                     }
@@ -189,5 +241,5 @@ class Table {
 
 let table = new Table('#table-wrap', 15, 30);
 
-table.setText(123, 3, 3);
-table.setText(1232344, 4, 9);
+// table.setText(123, 3, 3);
+// table.setText(1232344, 4, 9);
