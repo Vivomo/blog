@@ -282,7 +282,7 @@ class Table {
      */
     _initWrapElem() {
         this.wrapElem.appendChild(this.table);
-        this.wrapElem.style.width = `${41+this.col * 60}px`;
+        this.wrapElem.style.width = `${41+this.col * 120}px`;
         this.wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
     }
     /**

@@ -9,9 +9,10 @@
     border-collapse:collapse;
     td {
         border: 1px solid #ddd;
-        width: 60px;
+        width: 120px;
         height: 28px;
         box-sizing: border-box;
+        word-break: break-all;
 
         &:hover {
             background: #f1f1f1;
