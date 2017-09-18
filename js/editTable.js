@@ -157,9 +157,26 @@ class Table {
      * @private
      */
     _updateCellsPosition() {
-        this.cellsPosition = new Array(this.row + 1).fill(null).map((item, index) => {
-            return Array.from(this.trs[index].children).map(elem => this._getCellPosition(elem));
+        const tempPosition = new Array(this.row + 1).fill(null).map(() => new Array(this.col + 1).fill(null));
+        this.trs.forEach((tr) => {
+            Array.from(tr.children).forEach((cell) => {
+                const col = ~~cell.dataset.col;
+                const row = ~~cell.dataset.row;
+                const cellPosition = this._getCellPosition(cell);
+
+                const colSpan = ~~cell.colSpan;
+                const rowSpan = ~~cell.rowSpan;
+
+                for (let _row = 0; _row < rowSpan; _row++) {
+                    for (let _col = 0; _col < colSpan; _col++) {
+                        tempPosition[row + _row][col + _col] = cellPosition;
+                    }
+                }
+            });
         });
+
+        this.cellsPosition = tempPosition;
+
     }
 
 
@@ -222,7 +239,7 @@ class Table {
      */
     _bindTableEvent() {
         const table = this.table;
-        this.trs = table.children;
+        this.trs = Array.from(table.children);
 
 
         // 双击编辑
