@@ -21,6 +21,7 @@ class Table {
         this._initColRowIndex();
         this._initTable();
         this._initTableSelect();
+        this._initCoordinate();
     }
 
 
@@ -80,15 +81,11 @@ class Table {
      * @private
      */
     _initCoordinate() {
-        const coord = [];
-        const theadHeight = this.trs[0].firstElementChild.clientHeight;
-        const theadTdCoord = Array.from(this.trs[0]).map(td => ({
-            top: 0,
-            left: td.offsetLeft
-        }));
-        for (let row = 0; row < this.row; row++) {
+        this.coord = new Array(this.row).fill(null).map((item, index) => {
+            return Array.from(this.trs[index].children).map(elem => elem.getBoundingClientRect().toJSON())
+        });
+        console.log(this.coord);
 
-        }
     }
 
     _initTableSelect() {
@@ -145,7 +142,7 @@ class Table {
         this.table.addEventListener('mousedown', function (e) {
             const target = e.target;
             if (target.tagName === 'TD') {
-
+                console.log(e);
             }
         });
     }
