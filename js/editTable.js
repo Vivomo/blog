@@ -77,6 +77,13 @@ class Table {
     }
 
     /**
+     * 选择区域
+     */
+    select(startPoint, endPoint = startPoint) {
+        console.log(startPoint, endPoint)
+    }
+
+    /**
      * 初始化单元格坐标
      * @private
      */
@@ -84,7 +91,14 @@ class Table {
         this.coord = new Array(this.row).fill(null).map((item, index) => {
             return Array.from(this.trs[index].children).map(elem => elem.getBoundingClientRect().toJSON())
         });
-        console.log(this.coord);
+    }
+
+    /**
+     * 获取一个坐标对应单元格的行列
+     * @param point
+     * @private
+     */
+    _getCoordIndex(point) {
 
     }
 
@@ -139,13 +153,37 @@ class Table {
             }
         });
 
-        this.table.addEventListener('mousedown', function (e) {
+        this.table.addEventListener('mousedown', (e) => {
             const target = e.target;
             if (target.tagName === 'TD') {
-                console.log(e);
+                const data = target.dataset;
+                const startPoint = {
+                    col: data.col,
+                    row: data.row
+                };
+                this.select(startPoint);
+
+                this.table.onmousemove = (e) => {
+                    const target = e.target;
+                    if (target.tagName === 'TD') {
+                        const data = target.dataset;
+                        const endPoint = {
+                            col: data.col,
+                            row: data.row
+                        };
+                        this.select(startPoint, endPoint);
+                    }
+                }
+
             }
         });
+
+        this.table.addEventListener('mouseup', () => {
+            this.table.onmousemove = null;
+        });
     }
+
+
 
 }
 
