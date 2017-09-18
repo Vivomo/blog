@@ -6,6 +6,19 @@ class Table {
         this.init();
     }
     init() {
+        this._createTable();
+        this._initColRowIndex();
+        this._initWrapElem();
+        this._initTable();
+        this._initTableSelect();
+        this._updateCellsPosition();
+    }
+
+    /**
+     * 创建表格
+     * @private
+     */
+    _createTable() {
         const {col, row} = this;
         const table = this.table = document.createElement('table');
         table.className = 'edit-table';
@@ -19,11 +32,6 @@ class Table {
                 tr.appendChild(td);
             }
         }
-        this._initColRowIndex();
-        this._initWrapElem();
-        this._initTable();
-        this._initTableSelect();
-        this._updateCellsPosition();
     }
 
 
