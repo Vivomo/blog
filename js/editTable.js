@@ -9,7 +9,7 @@ class Table {
         this._createTable();
         this._initColRowIndex();
         this._initWrapElem();
-        this._initTable();
+        this._bindTableEvent();
         this._initTableSelect();
         this._updateCellsPosition();
     }
@@ -220,7 +220,7 @@ class Table {
     /**
      * 给table 绑定一些事件
      */
-    _initTable() {
+    _bindTableEvent() {
         const table = this.table;
         this.trs = table.children;
         // this.table.classList.add('edit-table');
