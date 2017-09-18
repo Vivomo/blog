@@ -8,6 +8,7 @@ class Table {
     init() {
         const {col, row} = this;
         const table = this.table = document.createElement('table');
+        table.className = 'edit-table';
         for (let i = 0; i <= row; i++) {
             const tr = document.createElement('tr');
             table.appendChild(tr);
@@ -38,6 +39,21 @@ class Table {
      */
     getCell(col, row) {
         return this.trs[row].children[col];
+    }
+
+    /**
+     * 获取一个单元格的位置
+     * @param cell
+     * @private
+     */
+    _getCellPosition(cell) {
+        const cellBCR = cell.getBoundingClientRect();
+        return {
+            top: cell.offsetTop,
+            bottom: this.wrapBCR.bottom - cellBCR.bottom,
+            left: cell.offsetLeft,
+            right: this.wrapBCR.right - cellBCR.right,
+        }
     }
 
     /**
@@ -77,9 +93,12 @@ class Table {
         startTd.rowSpan = rowSpanCount;
 
         startTd.innerHTML = tdContent;
-        setTimeout(function () {
-            removeTdList.forEach(item => {
 
+        setTimeout(() => {
+            const startTdPosition = this._getCellPosition(startTd);
+            removeTdList.forEach(item => {
+                const {col, row} = item.dataset;
+                this.cellsPosition[row][col] = startTdPosition;
                 item.remove();
             });
         },1);
@@ -91,8 +110,8 @@ class Table {
      */
     select(startPoint, endPoint = startPoint) {
 
-        const [startCol, endCol] = [startPoint.col, endPoint.col];
-        const [startRow, endRow] = [startPoint.row, endPoint.row];
+        const [startCol, endCol] = [startPoint.col, endPoint.col].sort();
+        const [startRow, endRow] = [startPoint.row, endPoint.row].sort();
 
         const leftTopTdCoord = this.cellsPosition[startRow][startCol];
         let {top, bottom, left, right} = leftTopTdCoord;
@@ -121,18 +140,8 @@ class Table {
      * @private
      */
     _updateCellsPosition() {
-        const wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
-
-        this.cellsPosition = new Array(this.row).fill(null).map((item, index) => {
-            return Array.from(this.trs[index].children).map((elem) => {
-                const bcr = elem.getBoundingClientRect();
-                return {
-                    top: elem.offsetTop,
-                    bottom: wrapBCR.bottom - bcr.bottom,
-                    left: elem.offsetLeft,
-                    right: wrapBCR.right - bcr.right,
-                }
-            })
+        this.cellsPosition = new Array(this.row + 1).fill(null).map((item, index) => {
+            return Array.from(this.trs[index].children).map(elem => this._getCellPosition(elem));
         });
     }
 
@@ -198,6 +207,7 @@ class Table {
         this.wrapElem.appendChild(this.table);
         this.wrapElem.style.width = `${41+this.col * 60}px`;
         this.wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
+        // console.log()
     }
     /**
      * 给table 绑定一些事件
@@ -205,7 +215,7 @@ class Table {
     _initTable() {
         const table = this.table;
         this.trs = table.children;
-        this.table.classList.add('edit-table');
+        // this.table.classList.add('edit-table');
 
 
         // 双击编辑
@@ -262,7 +272,7 @@ class Table {
 
 }
 
-let table = new Table('#table-wrap', 15, 30);
+let table = new Table('#table-wrap', 15, 10);
 
 // table.setText(123, 3, 3);
 // table.setText(1232344, 4, 9);
