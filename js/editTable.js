@@ -76,8 +76,8 @@ class Table {
      * @param to    {col, row}
      */
     mergeCell(from, to) {
-        const [startCol, endCol] = [from.col, to.col].sort();
-        const [startRow, endRow] = [from.row, to.row].sort();
+        const [startCol, endCol] = [from.col, to.col].sort(numSort);
+        const [startRow, endRow] = [from.row, to.row].sort(numSort);
         const startTd = this.getCell(startCol, startRow);
 
         const colSpanCount = endCol - startCol + 1;
@@ -136,8 +136,8 @@ class Table {
      */
     select(startPoint, endPoint = startPoint) {
 
-        const [startCol, endCol] = [startPoint.col, endPoint.col].sort();
-        const [startRow, endRow] = [startPoint.row, endPoint.row].sort();
+        const [startCol, endCol] = [startPoint.col, endPoint.col].sort(numSort);
+        const [startRow, endRow] = [startPoint.row, endPoint.row].sort(numSort);
         const from = {
             col: startCol,
             row: startRow
@@ -284,6 +284,9 @@ class Table {
         this.wrapElem.appendChild(this.table);
         this.wrapElem.style.width = `${41+this.col * 120}px`;
         this.wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
+        window.addEventListener('scroll', () => {
+            this.wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
+        });
     }
     /**
      * 给table 绑定一些事件
@@ -341,12 +344,15 @@ class Table {
             this.table.onmousemove = null;
         });
     }
-
-
+    
 
 }
 
-let table = new Table('#table-wrap', 15, 10);
+function numSort(a, b) {
+    return a - b;
+}
+
+let table = new Table('#table-wrap', 15, 30);
 
 document.getElementById('merge').addEventListener('click', () => {
     table.mergeSelectedCell();
