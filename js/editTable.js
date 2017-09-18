@@ -35,6 +35,12 @@ class Table {
     }
 
 
+    /**
+     * 设置单元格文本
+     * @param text
+     * @param col
+     * @param row
+     */
     setText(text, col, row) {
         this.getCell(col, row).innerText = text;
     }
@@ -152,15 +158,7 @@ class Table {
             return Array.from(this.trs[index].children).map(elem => this._getCellPosition(elem));
         });
     }
-
-    /**
-     * 获取一个坐标对应单元格的行列
-     * @param point
-     * @private
-     */
-    _getCoordIndex(point) {
-
-    }
+    
 
     /**
      * 初始化选择框
