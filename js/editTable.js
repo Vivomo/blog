@@ -108,12 +108,15 @@ class Table {
 
         startTd.innerHTML = tdContent;
 
+
         setTimeout(() => {
+
+            removeTdList.forEach(item => item.remove());
+
             const startTdPosition = this._getCellPosition(startTd);
             removeTdList.forEach(item => {
                 const {col, row} = item.dataset;
-                this.cellsPosition[row][col] = startTdPosition;
-                item.remove();
+                this.cellsPosition[row][col] = startTdPosition
             });
         },1);
 
@@ -127,8 +130,8 @@ class Table {
         const [startCol, endCol] = [startPoint.col, endPoint.col].sort();
         const [startRow, endRow] = [startPoint.row, endPoint.row].sort();
 
-        const leftTopTdCoord = this.cellsPosition[startRow][startCol];
-        let {top, bottom, left, right} = leftTopTdCoord;
+        const leftTopCellPosition = this.cellsPosition[startRow][startCol];
+        let {top, bottom, left, right} = leftTopCellPosition;
 
         for (let i = endCol; i >= startCol; i--) {
             top = Math.min(this.cellsPosition[startRow][i].top, top);
