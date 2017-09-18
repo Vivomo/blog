@@ -158,7 +158,7 @@ class Table {
             return Array.from(this.trs[index].children).map(elem => this._getCellPosition(elem));
         });
     }
-    
+
 
     /**
      * 初始化选择框
@@ -213,7 +213,6 @@ class Table {
         this.wrapElem.appendChild(this.table);
         this.wrapElem.style.width = `${41+this.col * 60}px`;
         this.wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
-        // console.log()
     }
     /**
      * 给table 绑定一些事件
@@ -221,7 +220,6 @@ class Table {
     _bindTableEvent() {
         const table = this.table;
         this.trs = table.children;
-        // this.table.classList.add('edit-table');
 
 
         // 双击编辑
@@ -233,7 +231,6 @@ class Table {
                 const tdHeight = target.clientHeight;
 
                 target.innerHTML = `<textarea style="width: ${tdWidth}px; height: ${tdHeight}px">${text}</textarea>`;
-                console.log(target.firstElementChild);
                 const input = target.querySelector('textarea');
                 input.focus();
                 input.onblur = function () {
