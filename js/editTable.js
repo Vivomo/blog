@@ -123,31 +123,71 @@ class Table {
     }
 
     /**
+     * 合并选择的单元格
+     */
+    mergeSelectedCell() {
+        const from = JSON.parse(this.tableSelect.dataset.from);
+        const to = JSON.parse(this.tableSelect.dataset.to);
+        this.mergeCell(from, to);
+    }
+
+    /**
      * 选择区域
      */
     select(startPoint, endPoint = startPoint) {
 
         const [startCol, endCol] = [startPoint.col, endPoint.col].sort();
         const [startRow, endRow] = [startPoint.row, endPoint.row].sort();
+        const from = {
+            col: startCol,
+            row: startRow
+        };
+        const to = {
+            col: endCol,
+            row: endRow
+        };
 
         const leftTopCellPosition = this.cellsPosition[startRow][startCol];
         let {top, bottom, left, right} = leftTopCellPosition;
 
+        // TODO 优化
         for (let i = endCol; i >= startCol; i--) {
-            top = Math.min(this.cellsPosition[startRow][i].top, top);
-            bottom = Math.min(this.cellsPosition[endRow][i].bottom, bottom);
+            const topPosition = this.cellsPosition[startRow][i];
+            if (topPosition.top < top) {
+                top = topPosition.top;
+                from.col = topPosition.col;
+            }
+            const bottomPosition = this.cellsPosition[endRow][i];
+            if (bottomPosition.bottom < bottom) {
+                bottom = bottomPosition.bottom;
+                to.col = bottomPosition.col;
+            }
+            // top = Math.min(this.cellsPosition[startRow][i].top, top);
+            // bottom = Math.min(this.cellsPosition[endRow][i].bottom, bottom);
         }
 
         for (let i = endRow; i >= startRow; i--) {
-            left = Math.min(this.cellsPosition[i][startCol].left, left);
-            right = Math.min(this.cellsPosition[i][endCol].right, right);
+            const leftPosition = this.cellsPosition[i][startCol];
+            if (leftPosition.left < left) {
+                left = leftPosition.left;
+                from.row = leftPosition.row;
+            }
+            const rightPosition = this.cellsPosition[i][endCol];
+            if (rightPosition.right < right) {
+                right = rightPosition.right;
+                to.row = rightPosition.row;
+            }
+            // left = Math.min(this.cellsPosition[i][startCol].left, left);
+            // right = Math.min(this.cellsPosition[i][endCol].right, right);
         }
 
         this._setTableSelect({
             top,
             bottom,
             left,
-            right
+            right,
+            from,
+            to
         });
 
     }
@@ -162,7 +202,10 @@ class Table {
             Array.from(tr.children).forEach((cell) => {
                 const col = ~~cell.dataset.col;
                 const row = ~~cell.dataset.row;
+
                 const cellPosition = this._getCellPosition(cell);
+                cellPosition.col = col;
+                cellPosition.row = row;
 
                 const colSpan = ~~cell.colSpan;
                 const rowSpan = ~~cell.rowSpan;
@@ -192,13 +235,21 @@ class Table {
 
     /**
      * init table select
-     * @param style
+     * @param config
      * @private
      */
-    _setTableSelect(style){
-        Object.entries(style).forEach(([key, value]) => {
-            this.tableSelect.style[key] = `${value}px`;
-        });
+    _setTableSelect(config){
+        const {left, right, top, bottom} = config;
+        this.tableSelect.style.left = `${left}px`;
+        this.tableSelect.style.right = `${right}px`;
+        this.tableSelect.style.top = `${top}px`;
+        this.tableSelect.style.bottom = `${bottom}px`;
+
+        this.tableSelect.dataset.from = JSON.stringify(config.from);
+        this.tableSelect.dataset.to = JSON.stringify(config.to);
+        // Object.entries(config).forEach(([key, value]) => {
+        //     this.tableSelect.style[key] = `${value}px`;
+        // });
     }
 
     /**
@@ -297,5 +348,8 @@ class Table {
 
 let table = new Table('#table-wrap', 15, 10);
 
+document.getElementById('merge').addEventListener('click', () => {
+    table.mergeSelectedCell();
+});
 // table.setText(123, 3, 3);
 // table.setText(1232344, 4, 9);
