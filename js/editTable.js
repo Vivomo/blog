@@ -1,5 +1,5 @@
 class Table {
-    constructor(elem, col, row) {
+    constructor({elem, col, row}) {
         this.wrapElem = typeof elem === 'string' ? document.querySelector(elem) : elem;
         this.col = col;
         this.row = row;
@@ -352,7 +352,11 @@ function numSort(a, b) {
     return a - b;
 }
 
-let table = new Table('#table-wrap', 15, 30);
+let table = new Table({
+    elem: '#table-wrap',
+    col: 15,
+    row: 30
+});
 
 document.getElementById('merge').addEventListener('click', () => {
     table.mergeSelectedCell();
