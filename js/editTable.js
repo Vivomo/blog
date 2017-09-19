@@ -162,8 +162,6 @@ class Table {
                 bottom = bottomPosition.bottom;
                 to.col = bottomPosition.col;
             }
-            // top = Math.min(this.cellsPosition[startRow][i].top, top);
-            // bottom = Math.min(this.cellsPosition[endRow][i].bottom, bottom);
         }
 
         for (let i = endRow; i >= startRow; i--) {
@@ -177,8 +175,6 @@ class Table {
                 right = rightPosition.right;
                 to.row = rightPosition.row;
             }
-            // left = Math.min(this.cellsPosition[i][startCol].left, left);
-            // right = Math.min(this.cellsPosition[i][endCol].right, right);
         }
 
         this._setTableSelect({
