@@ -133,7 +133,6 @@ class SimpleExcel {
      * 选择区域
      */
     select(startPoint, endPoint = startPoint) {
-
         const [startCol, endCol] = [startPoint.col, endPoint.col].sort(numSort);
         const [startRow, endRow] = [startPoint.row, endPoint.row].sort(numSort);
         const from = {
