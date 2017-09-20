@@ -35,6 +35,10 @@
 .table-select {
   position: absolute;
   z-index: 99;
-  top: -100px;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
   border: 2px solid rgba(33, 115, 70, 0.8);
+  transition: all 0.2s;
   pointer-events: none; }
