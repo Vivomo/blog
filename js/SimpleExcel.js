@@ -46,6 +46,24 @@ class SimpleExcel {
     }
 
     /**
+     * 设置缓存属性
+     */
+    setData(...args) {
+        let cell;
+        let data;
+        if (args.length === 2) {
+            cell = args[0];
+            data = args[1];
+        } else if (args.length === 3) {
+            const col = args[0];
+            const row = args[1];
+            cell = this.getCell(col, row);
+            data = args[2];
+        }
+        cell.dataset.cache = JSON.stringify(data);
+    }
+
+    /**
      * 获取对应坐标的TD
      * @param col
      * @param row
