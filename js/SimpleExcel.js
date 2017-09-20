@@ -37,12 +37,15 @@ class SimpleExcel {
 
     /**
      * 设置单元格文本
-     * @param text
-     * @param col
-     * @param row
      */
-    setText(text, col, row) {
-        this.getCell(col, row).innerText = text;
+    setText(...args) {
+        let cell;
+        if (args.length === 3) {
+            cell = this.getCell(args[1], args[2]);
+        } else if(args.length === 2) {
+            cell = args[1];
+        }
+        cell.innerHTML = args[0];
     }
 
     /**
@@ -60,7 +63,23 @@ class SimpleExcel {
             cell = this.getCell(col, row);
             data = args[2];
         }
-        cell.dataset.cache = JSON.stringify(data);
+        cell.dataset._cache = JSON.stringify(data);
+    }
+
+    /**
+     * 清空数据
+     * @param args
+     */
+    clearData(...args) {
+        let cell;
+        if (args.length === 1) {
+            cell = args[0];
+        } else if (args.length === 2) {
+            const col = args[0];
+            const row = args[1];
+            cell = this.getCell(col, row);
+        }
+        cell.dataset._cache = '';
     }
 
     /**
@@ -122,7 +141,7 @@ class SimpleExcel {
         startTd.colSpan = colSpanCount;
         startTd.rowSpan = rowSpanCount;
 
-        startTd.innerHTML = tdContent;
+        this.setText(tdContent, startCol, startRow);
 
 
         setTimeout(() => {
@@ -314,7 +333,7 @@ class SimpleExcel {
 
 
         // 双击编辑
-        this.table.addEventListener('dblclick', function (e) {
+        this.table.addEventListener('dblclick', (e) => {
             const target = e.target;
             if (target.tagName === 'TD') {
                 const text = target.innerText;
@@ -324,7 +343,7 @@ class SimpleExcel {
                 target.innerHTML = `<textarea style="width: ${tdWidth}px; height: ${tdHeight}px">${text}</textarea>`;
                 const input = target.querySelector('textarea');
                 input.focus();
-                input.onblur = function () {
+                input.onblur = function() {
                     target.innerText = this.value;
                 }
             }
