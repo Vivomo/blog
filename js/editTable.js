@@ -52,7 +52,7 @@ class Table {
      * @returns {HTMLElement}
      */
     getCell(col, row) {
-        return this.trs[row].children[col];
+        return this.table.querySelector(`[data-col="${col}"][data-row="${row}"]`);
     }
 
     /**
@@ -89,14 +89,12 @@ class Table {
 
         for (let i = startRow; i <= endRow; i++) {
             for (let j = startCol; j <= endCol; j++) {
-                let willRemovedTd = this.getCell(j, i);
-                if (!willRemovedTd || ~~willRemovedTd.dataset.col > endCol) {
-                    break;
-                } else {
+                let cell = this.getCell(j, i);
+                if (cell) {
                     if (!tdContent) {
-                        tdContent = willRemovedTd.innerText;
+                        tdContent = cell.innerText;
                     }
-                    removeTdList.push(willRemovedTd);
+                    removeTdList.push(cell);
                 }
             }
         }
