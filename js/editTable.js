@@ -341,7 +341,13 @@ class Table {
         });
     }
     
-
+    getContent() {
+        const div = document.createElement('div');
+        div.innerHTML = this.table.outerHTML;
+        Array.from(div.querySelectorAll('.tr-col-index')).forEach(elem => elem.remove());
+        Array.from(div.querySelectorAll('.td-row-index')).forEach(elem => elem.remove());
+        return div.innerHTML;
+    }
 }
 
 function numSort(a, b) {
@@ -350,8 +356,8 @@ function numSort(a, b) {
 
 let table = new Table({
     elem: '#table-wrap',
-    col: 15,
-    row: 30
+    col: 5,
+    row: 5
 });
 
 document.getElementById('merge').addEventListener('click', () => {
