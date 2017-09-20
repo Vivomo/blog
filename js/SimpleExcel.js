@@ -1,4 +1,4 @@
-class Table {
+class SimpleExcel {
     constructor({elem, col, row}) {
         this.wrapElem = typeof elem === 'string' ? document.querySelector(elem) : elem;
         this.col = col;
@@ -175,15 +175,24 @@ class Table {
             }
         }
 
-        this._setTableSelect({
-            top,
-            bottom,
-            left,
-            right,
-            from,
-            to
-        });
+        if (SimpleExcel.isSameRect([startPoint, endPoint], [from, to])) {
+            this._setTableSelect({
+                top,
+                bottom,
+                left,
+                right,
+                from,
+                to
+            });
+        } else {
+            this.select(from, to);
+        }
+    }
 
+    static isSameRect([from1, to1], [from2, to2]) {
+        return true;
+        return from1.col === from2.col && from1.row === from2.row &&
+            to1.col === to2.col && to1.row === to2.row;
     }
 
     /**
@@ -241,9 +250,6 @@ class Table {
 
         this.tableSelect.dataset.from = JSON.stringify(config.from);
         this.tableSelect.dataset.to = JSON.stringify(config.to);
-        // Object.entries(config).forEach(([key, value]) => {
-        //     this.tableSelect.style[key] = `${value}px`;
-        // });
     }
 
     /**
@@ -352,7 +358,7 @@ function numSort(a, b) {
     return a - b;
 }
 
-let table = new Table({
+let table = new SimpleExcel({
     elem: '#table-wrap',
     col: 5,
     row: 5
