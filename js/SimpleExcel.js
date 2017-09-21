@@ -79,7 +79,7 @@ class SimpleExcel {
             const row = args[1];
             cell = this.getCell(col, row);
         }
-        cell.dataset._cache = '';
+        delete cell.dataset._cache;
     }
 
     /**
@@ -217,12 +217,6 @@ class SimpleExcel {
             from,
             to
         });
-        //
-        // if (SimpleExcel.isSameRect([startPoint, endPoint], [from, to])) {
-        //
-        // } else {
-        //     this.select(from, to);
-        // }
     }
 
     static isSameRect([from1, to1], [from2, to2]) {
@@ -341,8 +335,9 @@ class SimpleExcel {
                 target.innerHTML = `<textarea style="width: ${tdWidth}px; height: ${tdHeight}px">${text}</textarea>`;
                 const input = target.querySelector('textarea');
                 input.focus();
-                input.onblur = function () {
-                    target.innerText = this.value;
+                input.onblur = () => {
+                    this.clearData(target);
+                    target.innerText = input.value;
                 };
             }
         });
