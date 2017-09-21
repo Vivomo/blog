@@ -49,7 +49,7 @@ class SimpleExcel {
     }
 
     /**
-     * 设置缓存属性
+     * 设置缓存属性 data是最后一个参数, 其前面有一个参数则为cell 有两个则为col, row
      */
     setData(...args) {
         let cell;
@@ -68,7 +68,7 @@ class SimpleExcel {
 
     /**
      * 清空数据
-     * @param args
+     * @param args 有一个参数就是cell, 两个就是col, row
      */
     clearData(...args) {
         let cell;
