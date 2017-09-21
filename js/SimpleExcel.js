@@ -53,12 +53,15 @@ class SimpleExcel {
      */
     setText(...args) {
         let cell;
+        let data;
         if (args.length === 3) {
-            cell = this.getCell(args[1], args[2]);
+            cell = this.getCell(args[0], args[1]);
+            data = args[2];
         } else if (args.length === 2) {
-            cell = args[1];
+            cell = args[0];
+            data = args[1];
         }
-        cell.innerHTML = args[0];
+        cell.innerHTML = data;
     }
 
     /**
@@ -401,7 +404,7 @@ function numSort(a, b) {
 
 let table = new SimpleExcel({
     elem: '#table-wrap',
-    col: 5,
+    col: 10,
     row: 5
 });
 
