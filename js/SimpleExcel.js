@@ -1,8 +1,9 @@
 class SimpleExcel {
-    constructor({elem, col, row}) {
+    constructor({elem, col, row, tableHTML}) {
         this.wrapElem = typeof elem === 'string' ? document.querySelector(elem) : elem;
         this.col = col;
         this.row = row;
+        this.tableHTML = tableHTML;
         this.init();
     }
     init() {
@@ -19,17 +20,29 @@ class SimpleExcel {
      * @private
      */
     _createTable() {
-        const {col, row} = this;
-        const table = this.table = document.createElement('table');
-        table.className = 'edit-table';
-        for (let i = 0; i <= row; i++) {
-            const tr = document.createElement('tr');
-            table.appendChild(tr);
-            for (let j = 0; j <= col; j++) {
-                const td = document.createElement('td');
-                td.dataset.col = j;
-                td.dataset.row = i;
-                tr.appendChild(td);
+        if (this.tableHTML) {
+            const tempWrap = document.createElement('div');
+            tempWrap.innerHTML = this.tableHTML;
+            this.table = tempWrap.firstElementChild;
+            this.row = this.table.querySelectorAll('tr').length;
+            let col = 0;
+            Array.from(this.table.querySelector('tr').querySelectorAll('td')).forEach(td => {
+                col += Number(td.colSpan);
+            });
+            this.col = col;
+        } else {
+            const {col, row} = this;
+            const table = this.table = document.createElement('table');
+            table.className = 'edit-table';
+            for (let i = 1; i <= row; i++) {
+                const tr = document.createElement('tr');
+                table.appendChild(tr);
+                for (let j = 1; j <= col; j++) {
+                    const td = document.createElement('td');
+                    td.dataset.col = j;
+                    td.dataset.row = i;
+                    tr.appendChild(td);
+                }
             }
         }
     }
@@ -285,23 +298,23 @@ class SimpleExcel {
      * @private
      */
     _initColRowIndex() {
-        const trColIndex = this.table.firstElementChild;
-        trColIndex.classList.add('tr-col-index');
-
-        const colIndexTd = trColIndex.querySelectorAll('td');
-        for (let i = 1; i <= this.col; i++) {
-            colIndexTd[i].innerHTML = String.fromCharCode(65 + i - 1); // 65是A
+        const trCol = document.createElement('tr');
+        trCol.className = 'tr-col-index';
+        for (let i = 0; i < this.col; i++) {
+            const td = document.createElement('td');
+            td.innerText = String.fromCharCode(65 + i); // 65是A
+            trCol.appendChild(td);
         }
+        this.table.insertBefore(trCol, this.table.firstElementChild);
 
         const trList = this.table.querySelectorAll('tr');
-        for (let j = 1; j <= this.row; j++) {
-            const tdRowIndex = trList[j].firstElementChild;
-            tdRowIndex.classList.add('td-row-index');
-            tdRowIndex.innerHTML = j;
+        for (let j = 0; j <= this.row; j++) {
+            const td = document.createElement('td');
+            td.className = 'td-row-index';
+            td.innerText = j;
+            trList[j].insertBefore(td, trList[j].firstElementChild);
         }
-
-        const firstTd = trColIndex.firstElementChild;
-        firstTd.classList.add('td-row-index');
+        this.table.querySelector('.td-row-index').innerHTML = '';
     }
 
     /**
