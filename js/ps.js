@@ -44,6 +44,11 @@ const Canvas = (function () {
             this.base64Content.select();
             document.execCommand('copy');
         },
+        toJPG: function () {
+            var img = document.createElement('img');
+            img.src = this.canvas.toDataURL("image/jpeg");
+            document.body.appendChild(img);
+        },
         decolourize: function () {
             var imageData = this.getImageData();
             var data = imageData.data;
