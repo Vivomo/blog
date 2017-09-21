@@ -42,7 +42,7 @@ class SimpleExcel {
         let cell;
         if (args.length === 3) {
             cell = this.getCell(args[1], args[2]);
-        } else if(args.length === 2) {
+        } else if (args.length === 2) {
             cell = args[1];
         }
         cell.innerHTML = args[0];
@@ -104,7 +104,7 @@ class SimpleExcel {
             bottom: this.wrapBCR.bottom - cellBCR.bottom,
             left: cell.offsetLeft,
             right: this.wrapBCR.right - cellBCR.right,
-        }
+        };
     }
 
     /**
@@ -121,12 +121,12 @@ class SimpleExcel {
         const rowSpanCount = endRow - startRow + 1;
 
         let tdContent = '';
-        let removeTdList = [];
+        const removeTdList = [];
 
 
         for (let i = startRow; i <= endRow; i++) {
             for (let j = startCol; j <= endCol; j++) {
-                let cell = this.getCell(j, i);
+                const cell = this.getCell(j, i);
                 if (cell) {
                     if (!tdContent) {
                         tdContent = cell.innerText;
@@ -145,16 +145,14 @@ class SimpleExcel {
 
 
         setTimeout(() => {
-
             removeTdList.forEach(item => item.remove());
 
             const startTdPosition = this._getCellPosition(startTd);
-            removeTdList.forEach(item => {
+            removeTdList.forEach((item) => {
                 const {col, row} = item.dataset;
-                this.cellsPosition[row][col] = startTdPosition
+                this.cellsPosition[row][col] = startTdPosition;
             });
-        },1);
-
+        }, 1);
     }
 
     /**
@@ -211,22 +209,23 @@ class SimpleExcel {
             }
         }
 
-        if (SimpleExcel.isSameRect([startPoint, endPoint], [from, to])) {
-            this._setTableSelect({
-                top,
-                bottom,
-                left,
-                right,
-                from,
-                to
-            });
-        } else {
-            this.select(from, to);
-        }
+        this._setTableSelect({
+            top,
+            bottom,
+            left,
+            right,
+            from,
+            to
+        });
+        //
+        // if (SimpleExcel.isSameRect([startPoint, endPoint], [from, to])) {
+        //
+        // } else {
+        //     this.select(from, to);
+        // }
     }
 
     static isSameRect([from1, to1], [from2, to2]) {
-        return true;
         return from1.col === from2.col && from1.row === from2.row &&
             to1.col === to2.col && to1.row === to2.row;
     }
@@ -258,7 +257,6 @@ class SimpleExcel {
         });
 
         this.cellsPosition = tempPosition;
-
     }
 
 
@@ -277,7 +275,7 @@ class SimpleExcel {
      * @param config
      * @private
      */
-    _setTableSelect(config){
+    _setTableSelect(config) {
         const {left, right, top, bottom} = config;
         this.tableSelect.style.left = `${left}px`;
         this.tableSelect.style.right = `${right}px`;
@@ -318,7 +316,7 @@ class SimpleExcel {
      */
     _initWrapElem() {
         this.wrapElem.appendChild(this.table);
-        this.wrapElem.style.width = `${41+this.col * 120}px`;
+        this.wrapElem.style.width = `${41 + this.col * 120}px`;
         this.wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
         window.addEventListener('scroll', () => {
             this.wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
@@ -343,9 +341,9 @@ class SimpleExcel {
                 target.innerHTML = `<textarea style="width: ${tdWidth}px; height: ${tdHeight}px">${text}</textarea>`;
                 const input = target.querySelector('textarea');
                 input.focus();
-                input.onblur = function() {
+                input.onblur = function () {
                     target.innerText = this.value;
-                }
+                };
             }
         });
 
@@ -371,8 +369,7 @@ class SimpleExcel {
                         };
                         this.select(startPoint, endPoint);
                     }
-                }
-
+                };
             }
         });
 
@@ -380,7 +377,7 @@ class SimpleExcel {
             this.table.onmousemove = null;
         });
     }
-    
+
     getContent() {
         const div = document.createElement('div');
         div.innerHTML = this.table.outerHTML;
