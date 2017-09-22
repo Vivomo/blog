@@ -109,6 +109,15 @@ class SimpleExcel {
     }
 
     /**
+     * 获取所有设置了缓存属性的单元格
+     * @param parentElem
+     * @returns {Array}
+     */
+    static getAllSetDataCells(parentElem = document) {
+        return Array.from(parentElem.querySelectorAll('td[data-_cache]'));
+    }
+
+    /**
      * 获取一个单元格的位置
      * @param cell
      * @private
