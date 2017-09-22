@@ -83,6 +83,28 @@ class SimpleExcel {
     }
 
     /**
+     * 获取表格的缓存属性
+     * @param args
+     * @returns {*}
+     */
+    getData(...args) {
+        if (args.length === 1) {
+            return SimpleExcel.getData(args[0]);
+        } else {
+            return SimpleExcel.getData(this.getCell(args[0], args[1]));
+        }
+    }
+
+    /**
+     * 获取表格缓存属性
+     * @param cell
+     * @returns {*}
+     */
+    static getData(cell) {
+        return cell.dataset._cache;
+    }
+
+    /**
      * 清空数据
      * @param args 有一个参数就是cell, 两个就是col, row
      */
