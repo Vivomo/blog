@@ -131,6 +131,18 @@ class SimpleExcel {
     }
 
     /**
+     * 获取选中的表格,选中多个则返回左上角的那个
+     */
+    getSelectedCell() {
+        const position = this.tableSelect.dataset.from;
+        if (position) {
+            const {col, row} = JSON.parse(position);
+            return this.getCell(col, row);
+        }
+        return null;
+    }
+
+    /**
      * 获取所有设置了缓存属性的单元格
      * @param parentElem
      * @returns {Array}
