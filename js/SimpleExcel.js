@@ -62,6 +62,7 @@ class SimpleExcel {
             data = args[1];
         }
         cell.innerHTML = data;
+        this.updateTableSelectStyle();
     }
 
     /**
@@ -275,6 +276,18 @@ class SimpleExcel {
         });
     }
 
+    /**
+     * 更新选框的样式
+     */
+    updateTableSelectStyle() {
+        const {from, to} = this.tableSelect.dataset;
+        if (!from) {
+            return;
+        }
+        this._updateCellsPosition();
+        this.select(JSON.parse(from), JSON.parse(to));
+    }
+
     static isSameRect([from1, to1], [from2, to2]) {
         return from1.col === from2.col && from1.row === from2.row &&
             to1.col === to2.col && to1.row === to2.row;
@@ -285,6 +298,7 @@ class SimpleExcel {
      * @private
      */
     _updateCellsPosition() {
+        this.wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
         const tempPosition = new Array(this.row + 1).fill(null).map(() => new Array(this.col + 1).fill(null));
         this.trs.forEach((tr) => {
             Array.from(tr.children).forEach((cell) => {
@@ -392,8 +406,9 @@ class SimpleExcel {
                 const input = target.querySelector('textarea');
                 input.focus();
                 input.onblur = () => {
-                    this.clearData(target);
                     target.innerText = input.value;
+                    this.clearData(target);
+                    this.updateTableSelectStyle();
                 };
             }
         });
