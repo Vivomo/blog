@@ -89,7 +89,7 @@ class SimpleExcel {
      */
     getData(...args) {
         const cell = args.length === 1 ? args[0] : this.getCell(args[0], args[1]);
-        return JSON.stringify(SimpleExcel.getData(cell));
+        return JSON.parse(SimpleExcel.getData(cell));
     }
 
     /**
