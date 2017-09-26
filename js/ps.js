@@ -45,16 +45,20 @@ const Canvas = (function () {
             document.execCommand('copy');
         },
         downloadJPG: function () {
-            var a = document.createElement('a');
-            a.href = this.canvas.toDataURL("image/jpeg");
-            a.download = 'download.jpg';
-            a.click();
+            this.canvas.toBlob((blob) => {
+                var a = document.createElement('a');
+                a.href = window.URL.createObjectURL(blob);
+                a.download = 'download.jpg';
+                a.click();
+            }, 'image/jpeg');
         },
         downloadPNG: function () {
-            var a = document.createElement('a');
-            a.href = this.canvas.toDataURL("image/png");
-            a.download = 'download.png';
-            a.click();
+            this.canvas.toBlob((blob) => {
+                var a = document.createElement('a');
+                a.href = window.URL.createObjectURL(blob);
+                a.download = 'download.png';
+                a.click();
+            }, 'image/png');
         },
         decolourize: function () {
             var imageData = this.getImageData();
