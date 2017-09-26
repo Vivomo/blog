@@ -152,15 +152,7 @@ class SimpleExcel {
         const {col, row} = cell.dataset;
         return this.getCell(col, Number(row) + 1);
     }
-
-    /**
-     * 是否为内容区的单元格
-     * @param cell
-     * @returns {*|boolean}
-     */
-    static isContentCell(cell) {
-        return cell && cell.hasAttribute('data-col');
-    }
+    
 
     /**
      * 获取选中的表格,选中多个则返回左上角的那个
