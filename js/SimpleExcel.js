@@ -209,6 +209,7 @@ class SimpleExcel {
                 const {col, row} = item.dataset;
                 this.cellsPosition[row][col] = startTdPosition;
             });
+            this.updateTableSelectStyle();
         }, 1);
     }
 
