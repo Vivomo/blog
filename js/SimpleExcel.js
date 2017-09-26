@@ -198,7 +198,7 @@ class SimpleExcel {
         startTd.colSpan = colSpanCount;
         startTd.rowSpan = rowSpanCount;
 
-        this.setText(tdContent, startCol, startRow);
+        this.setText(startCol, startRow, tdContent);
 
 
         setTimeout(() => {
