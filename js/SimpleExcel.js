@@ -129,6 +129,40 @@ class SimpleExcel {
     }
 
     /**
+     * 获取单元格的左边的单元格, 没有或不是内容单元格则返回null
+     * @param cell
+     * @returns {*}
+     */
+    getLeftCell(cell) {
+        const {col, row} = cell.dataset;
+        return this.getCell(col - 1, row);
+    }
+
+    getRightCell(cell) {
+        const {col, row} = cell.dataset;
+        return this.getCell(Number(col) + 1, row);
+    }
+
+    getTopCell(cell) {
+        const {col, row} = cell.dataset;
+        return this.getCell(col, row - 1);
+    }
+
+    getBottomCell(cell) {
+        const {col, row} = cell.dataset;
+        return this.getCell(col, Number(row) + 1);
+    }
+
+    /**
+     * 是否为内容区的单元格
+     * @param cell
+     * @returns {*|boolean}
+     */
+    static isContentCell(cell) {
+        return cell && cell.hasAttribute('data-col');
+    }
+
+    /**
      * 获取选中的表格,选中多个则返回左上角的那个
      */
     getSelectedCell() {
