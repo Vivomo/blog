@@ -47,7 +47,13 @@ const Canvas = (function () {
         downloadJPG: function () {
             var a = document.createElement('a');
             a.href = this.canvas.toDataURL("image/jpeg");
-            a.download = 'v.jpg';
+            a.download = 'download.jpg';
+            a.click();
+        },
+        downloadPNG: function () {
+            var a = document.createElement('a');
+            a.href = this.canvas.toDataURL("image/png");
+            a.download = 'download.png';
             a.click();
         },
         decolourize: function () {
