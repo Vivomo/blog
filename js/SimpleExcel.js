@@ -170,7 +170,37 @@ class SimpleExcel {
         }
         return cells;
     }
-    
+
+    /**
+     * 删除行 (暂时未考虑merge cell带来的问题)
+     * TODO 兼容 merge cell
+     * @param row
+     */
+    delRow(row) {
+        this.row -= 1;
+        this.rows[row - 1].remove();
+        this.rows = this.getRows();
+        this.rows.forEach((row, index) => {
+            row.firstElementChild.innerHTML = index + 1;
+        });
+        this._updateColRow();
+        this._updateCellsPosition();
+        this._hideTableSelect();
+    }
+
+    /**
+     * 更新单元格的col row
+     * @private
+     */
+    _updateColRow() {
+        this.rows.slice(1).forEach((row, rowIndex) => {
+            Array.from(row.children).slice(1).forEach((cell, colIndex) => {
+                cell.dataset.row = rowIndex + 1;
+                cell.dataset.col = colIndex + 1;
+            })
+        });
+    }
+
 
     /**
      * 获取选中的表格,选中多个则返回左上角的那个
@@ -331,6 +361,17 @@ class SimpleExcel {
         }
         this._updateCellsPosition();
         this.select(JSON.parse(from), JSON.parse(to));
+    }
+
+    /**
+     * 隐藏选框
+     * @private
+     */
+    _hideTableSelect() {
+        const selector = this.tableSelect;
+        delete selector.dataset.from;
+        delete selector.dataset.to;
+        selector.style.top = selector.style.bottom = selector.style.left = selector.style.right = '-2px';
     }
 
     static isSameRect([from1, to1], [from2, to2]) {
