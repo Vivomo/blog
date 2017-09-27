@@ -130,6 +130,25 @@ class SimpleExcel {
     }
 
     /**
+     * 获取某一行的单元格
+     * @param row
+     * @returns {Array}
+     */
+    getCellsByRow(row) {
+        return Array.from(this.table.querySelector(`[data-row="${row}"]`));
+    }
+
+    /**
+     * 获取某一列的单元格
+     * @param col
+     * @returns {Array}
+     */
+    getCellsByCol(col) {
+        return Array.from(this.table.querySelector(`[data-col="${col}"]`));
+    }
+
+
+    /**
      * 获取所有行, 不包含第一行标注
      * @returns {HTMLElement} TR Array
      */
