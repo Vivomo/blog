@@ -152,7 +152,16 @@ class SimpleExcel {
         const {col, row} = cell.dataset;
         return this.getCell(col, Number(row) + 1);
     }
-    
+
+    getRightCells(cell) {
+        let target;
+        const cells = [];
+        while ((target = cell.nextElementSibling)) {
+            cells.push(target);
+        }
+        return cells;
+    }
+
 
     /**
      * 获取选中的表格,选中多个则返回左上角的那个
