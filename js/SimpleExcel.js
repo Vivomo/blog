@@ -130,6 +130,14 @@ class SimpleExcel {
     }
 
     /**
+     * 获取所有行, 不包含第一行标注
+     * @returns {HTMLElement} TR Array
+     */
+    getRows() {
+        return Array.from(this.table.children).filter(tr => !tr.classList.contains('tr-col-index'));
+    }
+
+    /**
      * 获取单元格的左边的单元格, 没有或不是内容单元格则返回null
      * @param cell
      * @returns {*}
@@ -162,7 +170,7 @@ class SimpleExcel {
         }
         return cells;
     }
-
+    
 
     /**
      * 获取选中的表格,选中多个则返回左上角的那个
@@ -337,7 +345,7 @@ class SimpleExcel {
     _updateCellsPosition() {
         this.wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
         const tempPosition = new Array(this.row + 1).fill(null).map(() => new Array(this.col + 1).fill(null));
-        this.trs.forEach((tr) => {
+        this.rows.forEach((tr) => {
             Array.from(tr.children).forEach((cell) => {
                 const col = ~~cell.dataset.col;
                 const row = ~~cell.dataset.row;
@@ -427,8 +435,7 @@ class SimpleExcel {
      * 给table 绑定一些事件
      */
     _bindTableEvent() {
-        const table = this.table;
-        this.trs = Array.from(table.children);
+        this.rows = this.getRows();
 
 
         // 双击编辑
