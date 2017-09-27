@@ -90,7 +90,8 @@ class SimpleExcel {
      */
     getData(...args) {
         const cell = args.length === 1 ? args[0] : this.getCell(args[0], args[1]);
-        return JSON.parse(SimpleExcel.getData(cell));
+        const data = SimpleExcel.getData(cell);
+        return data ? JSON.parse(data) : data;
     }
 
     /**
@@ -154,9 +155,9 @@ class SimpleExcel {
     }
 
     getRightCells(cell) {
-        let target;
+        let target = cell;
         const cells = [];
-        while ((target = cell.nextElementSibling)) {
+        while ((target = target.nextElementSibling)) {
             cells.push(target);
         }
         return cells;
