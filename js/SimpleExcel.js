@@ -1,6 +1,7 @@
 class SimpleExcel {
     constructor({elem, col, row, tableHTML}) {
         this.wrapElem = typeof elem === 'string' ? document.querySelector(elem) : elem;
+        this.wrapElem.innerHTML = '';
         this.col = col;
         this.row = row;
         this.tableHTML = tableHTML;
