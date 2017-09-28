@@ -154,10 +154,10 @@ class SimpleExcel {
 
     /**
      * 获取所有行, 不包含第一行标注
-     * @returns {HTMLElement} TR Array
+     * @returns [] TR Array
      */
     getRows() {
-        return Array.from(this.table.children).filter(tr => !tr.classList.contains('tr-col-index'));
+        return Array.from(this.table.querySelectorAll('tr')).filter(tr => !tr.classList.contains('tr-col-index'));
     }
 
     /**
