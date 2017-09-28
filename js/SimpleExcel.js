@@ -65,6 +65,10 @@ class SimpleExcel {
         this.updateTableSelectStyle();
     }
 
+    static setText(cell, data) {
+        cell.innerHTML = data;
+    }
+
     /**
      * 设置缓存属性 data是最后一个参数, 其前面有一个参数则为cell 有两个则为col, row
      */
@@ -90,8 +94,7 @@ class SimpleExcel {
      */
     getData(...args) {
         const cell = args.length === 1 ? args[0] : this.getCell(args[0], args[1]);
-        const data = SimpleExcel.getData(cell);
-        return data ? JSON.parse(data) : data;
+        return SimpleExcel.getData(cell);
     }
 
     /**
@@ -100,7 +103,8 @@ class SimpleExcel {
      * @returns {*}
      */
     static getData(cell) {
-        return cell.dataset._cache;
+        const data = cell.dataset._cache;
+        return data ? JSON.parse(data) : data;
     }
 
     /**
