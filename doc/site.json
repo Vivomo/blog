@@ -18,6 +18,10 @@
         {
           "name": "CSS规范(English)",
           "url": "https://www.w3.org/TR/CSS/#css"
+        },
+        {
+          "name": "前端工程学习",
+          "url": "https://www.kancloud.cn/chandler/web_technology/344206"
         }
       ]
     }
