@@ -140,7 +140,7 @@ class SimpleExcel {
      * @returns {Array}
      */
     getCellsByRow(row) {
-        return Array.from(this.table.querySelector(`[data-row="${row}"]`));
+        return Array.from(this.table.querySelectorAll(`[data-row="${row}"]`));
     }
 
     /**
@@ -149,7 +149,7 @@ class SimpleExcel {
      * @returns {Array}
      */
     getCellsByCol(col) {
-        return Array.from(this.table.querySelector(`[data-col="${col}"]`));
+        return Array.from(this.table.querySelectorAll(`[data-col="${col}"]`));
     }
 
 
