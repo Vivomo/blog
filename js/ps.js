@@ -4,6 +4,12 @@ const Canvas = (function () {
     var canvas = document.getElementById('canvas'),
         base64Content = document.getElementById('base64Content');
 
+    function swipArr(arr, index1, index2) {
+        var temp = arr[index1];
+        arr[index1] = arr[index2];
+        arr[index2] = temp;
+    }
+
     // noinspection JSUnusedGlobalSymbols
     const commands = {
         drawImgByFile: function (e) {
@@ -69,7 +75,23 @@ const Canvas = (function () {
                 data[i+1] = avg;
                 data[i+2] = avg;
             }
-            console.log(imageData);
+            this.pen.putImageData(imageData, 0, 0);
+        },
+        hFlip: function(){
+            var imageData = this.getImageData();
+            var data = imageData.data;
+            var w = this.canvas.width * 4;
+            var h = this.canvas.height;
+            var loop =  ~~(w / 2);
+            for (var i = 0; i < h; i++) {
+                for (var j = 0; j < loop; j += 4) {
+                    var p1 = i * w + j;
+                    var p2 = (i + 1) * w - j - 4;
+                    swipArr(data, p1, p2);
+                    swipArr(data, p1 + 1, p2 + 1);
+                    swipArr(data, p1 + 2, p2 + 2);
+                }
+            }
             this.pen.putImageData(imageData, 0, 0);
         }
     };
