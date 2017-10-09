@@ -408,7 +408,7 @@ class SimpleExcel {
      * @private
      */
     _updateCellsPosition() {
-        this.wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
+        this.wrapBCR = SimpleExcel.getElemPlainRect(this.wrapElem);
         const tempPosition = new Array(this.row + 1).fill(null).map(() => new Array(this.col + 1).fill(null));
         this.rows.forEach((tr) => {
             Array.from(tr.children).forEach((cell) => {
@@ -491,9 +491,9 @@ class SimpleExcel {
     _initWrapElem() {
         this.wrapElem.appendChild(this.table);
         this.wrapElem.style.width = `${41 + this.col * 120}px`;
-        this.wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
+        this.wrapBCR = SimpleExcel.getElemPlainRect(this.wrapElem);
         window.addEventListener('scroll', () => {
-            this.wrapBCR = this.wrapElem.getBoundingClientRect().toJSON();
+            this.wrapBCR = SimpleExcel.getElemPlainRect(this.wrapElem);
         });
     }
     /**
@@ -559,6 +559,25 @@ class SimpleExcel {
         Array.from(div.querySelectorAll('.tr-col-index')).forEach(elem => elem.remove());
         Array.from(div.querySelectorAll('.td-row-index')).forEach(elem => elem.remove());
         return div.innerHTML;
+    }
+
+    /**
+     * 提高兼容性, 此方法等同于 elem.getBoundingClientReact().toJSON(); 但兼容性太差, 需要chrome61及以上才支持
+     * @param elem
+     * @returns {{bottom: Number, height: Number, left: Number, right: Number, top: Number, width: Number, x, y}}
+     */
+    static getElemPlainRect(elem) {
+        const rect = elem.getBoundingClientRect();
+        return {
+            bottom: rect.bottom,
+            height: rect.height,
+            left: rect.left,
+            right: rect.right,
+            top: rect.top,
+            width: rect.width,
+            x: rect.x,
+            y: rect.y
+        }
     }
 }
 
