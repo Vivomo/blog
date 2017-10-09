@@ -239,6 +239,28 @@ class SimpleExcel {
     }
 
     /**
+     * 获取选中的表格
+     */
+    getSelectedCells() {
+        let {from, to} = this.tableSelect.dataset;
+        const cells = [];
+        if (from) {
+            from = JSON.parse(from);
+            to = JSON.parse(to);
+            const fromCol = Number(from.col);
+            const fromRow = Number(from.row);
+            const toCol = Number(to.col);
+            const toRow = Number(to.row);
+            for (let col = fromCol; col <= toCol; col++) {
+                for (let row = fromRow; row <= toRow; row++) {
+                    cells.push(this.getCell(col, row))
+                }
+            }
+        }
+        return cells.filter(cell => cell);
+    }
+
+    /**
      * 获取所有设置了缓存属性的单元格
      * @param parentElem
      * @returns {Array}
