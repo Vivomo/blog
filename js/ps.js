@@ -4,10 +4,20 @@ const Canvas = (function () {
     var canvas = document.getElementById('canvas'),
         base64Content = document.getElementById('base64Content');
 
-    function swipArr(arr, index1, index2) {
-        var temp = arr[index1];
-        arr[index1] = arr[index2];
-        arr[index2] = temp;
+    /**
+     * 交换两个坐标像素信息
+     * @param arr canvas imageData (一维数组)
+     * @param p1 点1的起始index
+     * @param p2
+     */
+    function swipePoint(arr, p1, p2) {
+        for (var i = 0; i < 4; i++) {
+            var index1 = p1 + i;
+            var index2 = p2 + i;
+            var temp = arr[index1];
+            arr[index1] = arr[index2];
+            arr[index2] = temp;
+        }
     }
 
     // noinspection JSUnusedGlobalSymbols
@@ -87,9 +97,22 @@ const Canvas = (function () {
                 for (var j = 0; j < loop; j += 4) {
                     var p1 = i * w + j;
                     var p2 = (i + 1) * w - j - 4;
-                    swipArr(data, p1, p2);
-                    swipArr(data, p1 + 1, p2 + 1);
-                    swipArr(data, p1 + 2, p2 + 2);
+                    swipePoint(data, p1, p2);
+                }
+            }
+            this.pen.putImageData(imageData, 0, 0);
+        },
+        vFlip: function(){
+            var imageData = this.getImageData();
+            var data = imageData.data;
+            var w = this.canvas.width * 4;
+            var h = this.canvas.height;
+            var loop = ~~(h / 2);
+            for (var i = 0; i < loop; i++) {
+                for (var j = 0; j < w; j += 4) {
+                    var p1 = i * w + j;
+                    var p2 = (h - 1 - i) * w + j;
+                    swipePoint(data, p1, p2);
                 }
             }
             this.pen.putImageData(imageData, 0, 0);
