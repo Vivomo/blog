@@ -116,6 +116,16 @@ const Canvas = (function () {
                 }
             }
             this.pen.putImageData(imageData, 0, 0);
+        },
+        inverse: function(){
+            var imageData = this.getImageData();
+            var data = imageData.data;
+            for (var i = 0, l = data.length; i < l; i += 4) {
+                data[i] = 255 - data[i];
+                data[i + 1] = 255 - data[i + 1];
+                data[i + 2] = 255 - data[i + 2];
+            }
+            this.pen.putImageData(imageData, 0, 0);
         }
     };
 
