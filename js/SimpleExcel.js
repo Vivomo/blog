@@ -348,6 +348,56 @@ class SimpleExcel {
     select(startPoint, endPoint = startPoint) {
         const [startCol, endCol] = [startPoint.col, endPoint.col].sort(numSort);
         const [startRow, endRow] = [startPoint.row, endPoint.row].sort(numSort);
+
+
+        const leftTopCellPosition = this.cellsPosition[startRow][startCol];
+        let {top, bottom, left, right} = leftTopCellPosition;
+
+        let _startCol = startCol;
+        let _startRow = startRow;
+        let _endCol = endCol;
+        let _endRow = endRow;
+
+        for (let i = endCol; i >= startCol; i--) {
+            const topPosition = this.cellsPosition[startRow][i];
+            if (topPosition.row < _startRow) {
+                _startRow = topPosition.row;
+            }
+            const bottomPosition = this.cellsPosition[endRow][i];
+            if (bottomPosition.endRow > _endRow) {
+                _endRow = bottomPosition.endRow;
+            }
+        }
+
+
+        for (let i = endRow; i >= startRow; i--) {
+            const leftPosition = this.cellsPosition[i][startCol];
+            if (leftPosition.col < _startCol) {
+                _startCol = leftPosition.col;
+            }
+            const rightPosition = this.cellsPosition[i][endCol];
+            if (rightPosition.endCol > _endCol) {
+                _endCol = rightPosition.endCol;
+            }
+        }
+        if (startCol !== _startCol || _startRow !== startRow || endCol !== _endCol || endRow !== _endRow) {
+            this.select({
+                col: _startCol,
+                row: _startRow
+            }, {
+                col: _endCol,
+                row: _endRow
+            });
+            return;
+        } else {
+            const startPosition = this.cellsPosition[startRow][startCol];
+            const endPosition = this.cellsPosition[endRow][endCol];
+            top = startPosition.top;
+            left = startPosition.left;
+            bottom = endPosition.bottom;
+            right = endPosition.right;
+        }
+
         const from = {
             col: startCol,
             row: startRow
@@ -356,36 +406,6 @@ class SimpleExcel {
             col: endCol,
             row: endRow
         };
-
-        const leftTopCellPosition = this.cellsPosition[startRow][startCol];
-        let {top, bottom, left, right} = leftTopCellPosition;
-
-        // TODO 优化
-        for (let i = endCol; i >= startCol; i--) {
-            const topPosition = this.cellsPosition[startRow][i];
-            if (topPosition.top < top) {
-                top = topPosition.top;
-                from.col = topPosition.col;
-            }
-            const bottomPosition = this.cellsPosition[endRow][i];
-            if (bottomPosition.bottom < bottom) {
-                bottom = bottomPosition.bottom;
-                to.col = bottomPosition.col;
-            }
-        }
-
-        for (let i = endRow; i >= startRow; i--) {
-            const leftPosition = this.cellsPosition[i][startCol];
-            if (leftPosition.left < left) {
-                left = leftPosition.left;
-                from.row = leftPosition.row;
-            }
-            const rightPosition = this.cellsPosition[i][endCol];
-            if (rightPosition.right < right) {
-                right = rightPosition.right;
-                to.row = rightPosition.row;
-            }
-        }
 
         this._setTableSelect({
             top,
@@ -438,11 +458,13 @@ class SimpleExcel {
                 const row = ~~cell.dataset.row;
 
                 const cellPosition = this._getCellPosition(cell);
-                cellPosition.col = col;
-                cellPosition.row = row;
-
                 const colSpan = ~~cell.colSpan;
                 const rowSpan = ~~cell.rowSpan;
+
+                cellPosition.col = col;
+                cellPosition.row = row;
+                cellPosition.endCol = col - 1 + colSpan;
+                cellPosition.endRow = row - 1 + rowSpan;
 
                 for (let _row = 0; _row < rowSpan; _row++) {
                     for (let _col = 0; _col < colSpan; _col++) {
@@ -547,6 +569,12 @@ class SimpleExcel {
         this.table.addEventListener('mousedown', (e) => {
             const target = e.target;
             if (target.tagName === 'TD') {
+                if (target.classList.contains('td-row-index')) {
+                    return false;
+                }
+                if (target.parentNode.classList.contains('tr-col-index')) {
+                    return false;
+                }
                 this._updateCellsPosition();
 
                 const data = target.dataset;
