@@ -536,8 +536,12 @@ class SimpleExcel {
         this.wrapElem.appendChild(this.table);
         this.wrapElem.style.width = `${41 + this.col * 120}px`;
         this.wrapBCR = SimpleExcel.getElemPlainRect(this.wrapElem);
+        let intervalMark;
         window.addEventListener('scroll', () => {
-            this.wrapBCR = SimpleExcel.getElemPlainRect(this.wrapElem);
+            clearTimeout(intervalMark);
+            intervalMark = setTimeout(() => {
+                this.wrapBCR = SimpleExcel.getElemPlainRect(this.wrapElem);
+            }, 300);
         });
     }
     /**
