@@ -196,21 +196,33 @@ class SimpleExcel {
     }
 
     /**
-     * 删除行 (暂时未考虑merge cell带来的问题)
-     * TODO 兼容 merge cell
+     * 删除行
      * @param row
      */
     delRow(row) {
-        const willRemoveRow = this.rows[row - 1];
         this.cellsPosition[row].slice(1).forEach((position) => {
-            if (position.row !== position.endRow) {
-                if (position.col === position.endCol) {
-                    if (row === position.row) {
-
-                    } else {
-                        const cell = this.getCell(position.col, position.row);
-                        cell.rowSpan -= 1;
+            if (position.row !== position.endRow && position.col === position.endCol) {
+                if (row === position.row) {
+                    if (row === this.row) {
+                        return;
                     }
+                    let isLast = true;
+                    const nextRow = this.rows[row];
+                    const willMovedCell = this.getCell(position.col, row);
+                    for (let i = position.col + 1; i <= this.col; i++) {
+                        const nextCell = this.getCell(i, row + 1);
+                        if (nextCell) {
+                            isLast = false;
+                            nextRow.insertBefore(willMovedCell, nextCell)
+                            break;
+                        }
+                    }
+                    if (isLast) {
+                        nextRow.appendChild(willMovedCell);
+                    }
+                } else {
+                    const cell = this.getCell(position.col, position.row);
+                    cell.rowSpan -= 1;
                 }
             }
         });
