@@ -209,6 +209,7 @@ class SimpleExcel {
                     let isLast = true;
                     const nextRow = this.rows[row];
                     const willMovedCell = this.getCell(position.col, row);
+                    willMovedCell.rowSpan -= 1;
                     for (let i = position.col + 1; i <= this.col; i++) {
                         const nextCell = this.getCell(i, row + 1);
                         if (nextCell) {
