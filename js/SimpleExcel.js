@@ -201,13 +201,27 @@ class SimpleExcel {
      * @param row
      */
     delRow(row) {
+        const willRemoveRow = this.rows[row - 1];
+        this.cellsPosition[row].slice(1).forEach((position) => {
+            if (position.row !== position.endRow) {
+                if (position.col === position.endCol) {
+                    if (row === position.row) {
+
+                    } else {
+                        const cell = this.getCell(position.col, position.row);
+                        cell.rowSpan -= 1;
+                    }
+                }
+            }
+        });
+
         this.row -= 1;
         this.rows[row - 1].remove();
         this.rows = this.getRows();
         this.rows.forEach((row, index) => {
             row.firstElementChild.innerHTML = index + 1;
         });
-        this._updateColRow();
+        this._updateDataRow();
         this._updateCellsPosition();
         this._hideTableSelect();
     }
@@ -216,11 +230,10 @@ class SimpleExcel {
      * 更新单元格的col row
      * @private
      */
-    _updateColRow() {
-        this.rows.slice(1).forEach((row, rowIndex) => {
-            Array.from(row.children).slice(1).forEach((cell, colIndex) => {
+    _updateDataRow() {
+        this.rows.forEach((row, rowIndex) => {
+            Array.from(row.children).slice(1).forEach((cell) => {
                 cell.dataset.row = rowIndex + 1;
-                cell.dataset.col = colIndex + 1;
             })
         });
     }
@@ -641,8 +654,8 @@ function numSort(a, b) {
 
 let table = new SimpleExcel({
     elem: '#table-wrap',
-    col: 10,
-    row: 5
+    col: 3,
+    row: 3
 });
 
 document.getElementById('merge').addEventListener('click', () => {
