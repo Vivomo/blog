@@ -186,6 +186,11 @@ class SimpleExcel {
         return this.getCell(col, Number(row) + 1);
     }
 
+    /**
+     * 获取单元格右侧所有的单元格
+     * @param cell
+     * @returns {Array}
+     */
     getRightCells(cell) {
         let target = cell;
         const cells = [];
@@ -196,7 +201,7 @@ class SimpleExcel {
     }
 
     /**
-     * 删除行
+     * 删除行(已考虑merge 带来的各种情况, 交互同Microsoft Excel)
      * @param row
      */
     delRow(row) {
