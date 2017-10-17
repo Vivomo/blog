@@ -16,7 +16,15 @@ function isPrime2(num) {
     return true;
 }
 
-const MAX_NUM = 20000;
+function isPrime4(num) {
+    for (let i = 2; i * i <= num; i++) {
+        if (num % i === 0)
+            return false;
+    }
+    return true;
+}
+
+const MAX_NUM = 1000000;
 
 function f1() {
     let primeArr = [2, 3, 5];
@@ -42,9 +50,18 @@ function f3() {
     console.log(primeArr.length);
 }
 
-console.time('f1');
-f1();
-console.timeEnd('f1');
+
+function f4() {
+    let primeArr = [2, 3, 5];
+    for (let i = 7; i < MAX_NUM; i += 2) {
+        isPrime4(i) && primeArr.push(i);
+    }
+    console.log(primeArr.length);
+}
+
+// console.time('f1');
+// f1();
+// console.timeEnd('f1');
 
 console.time('f2');
 f2();
@@ -53,5 +70,9 @@ console.timeEnd('f2');
 console.time('f3');
 f3();
 console.timeEnd('f3');
+
+console.time('f4');
+f4();
+console.timeEnd('f4');
 
 
