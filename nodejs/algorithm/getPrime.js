@@ -7,11 +7,14 @@ function isPrime(num){
     return false;
 }
 
-console.time('f1');
-let primeArr = [2, 3, 5];
-for (let i = 7; i < 10000; i++) {
-    isPrime(i) && primeArr.push(i);
+function f1() {
+    let primeArr = [2, 3, 5];
+    for (let i = 7; i < 10000; i++) {
+        isPrime(i) && primeArr.push(i);
+    }
+    console.log(primeArr.length);
 }
-console.log(primeArr.length);
-console.timeEnd('f1');
 
+console.time('f1');
+f1();
+console.timeEnd('f1');
