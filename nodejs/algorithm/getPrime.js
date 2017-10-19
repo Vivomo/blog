@@ -24,7 +24,20 @@ function isPrime4(num) {
     return true;
 }
 
-const MAX_NUM = 1000000;
+function isPrime5(num, arr) {
+    let root = ~~Math.sqrt(num);
+    for (let i = 0, l = arr.length; i < l; i++) {
+        if (arr[i] > root) {
+            return true;
+        }
+        if (num % arr[i] === 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+const MAX_NUM = 5000000;
 
 function f1() {
     let primeArr = [2, 3, 5];
@@ -59,20 +72,28 @@ function f4() {
     console.log(primeArr.length);
 }
 
+function f5() {
+    let primeArr = [2, 3, 5];
+    for (let i = 7; i < MAX_NUM; i += 2) {
+        isPrime5(i, primeArr) && primeArr.push(i);
+    }
+    console.log(primeArr.length);
+}
+
 // console.time('f1');
 // f1();
 // console.timeEnd('f1');
 
-console.time('f2');
+let t2 = +new Date;
 f2();
-console.timeEnd('f2');
+console.log('f2', new Date - t2);
 
-console.time('f3');
+let t3 = +new Date;
 f3();
-console.timeEnd('f3');
+console.log('f3', new Date - t3);
 
-console.time('f4');
-f4();
-console.timeEnd('f4');
+console.time('f5');
+f5();
+console.timeEnd('f5');
 
 
