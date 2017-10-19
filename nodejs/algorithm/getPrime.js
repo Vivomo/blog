@@ -84,16 +84,16 @@ function f5() {
 // f1();
 // console.timeEnd('f1');
 
-let t2 = +new Date;
+console.time('f2');
 f2();
-console.log('f2', new Date - t2);
+console.timeEnd('f2');
 
-let t3 = +new Date;
+console.time('f3');
 f3();
-console.log('f3', new Date - t3);
+console.timeEnd('f3');
 
 console.time('f5');
-f5();
+// f5();
 console.timeEnd('f5');
 
 
