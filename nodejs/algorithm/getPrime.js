@@ -85,7 +85,7 @@ function f5() {
 // console.timeEnd('f1');
 
 console.time('f2');
-f2();
+// f2();
 console.timeEnd('f2');
 
 console.time('f3');
