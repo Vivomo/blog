@@ -57,7 +57,7 @@ function f2() {
 
 function f3() {
     let primeArr = [2, 3, 5];
-    for (let i = 7; i < MAX_NUM; i += 2) {
+    for (let i = 7; i < MAX_NUM; i = i + 2) {
         isPrime2(i) && primeArr.push(i);
     }
     console.log(primeArr.length);
@@ -85,7 +85,7 @@ function f5() {
 // console.timeEnd('f1');
 
 console.time('f2');
-// f2();
+f2();
 console.timeEnd('f2');
 
 console.time('f3');
