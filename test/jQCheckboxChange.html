@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="checkbox" name="" id="c1"><input type="checkbox" name="" id="c2"><input type="checkbox" name="" id="c3">
+<button id="selectAll">select all</button>
+<script src="../js/jq/jquery.js"></script>
+<script>
+    var $box = $('input:checkbox');
+    $('body').on('change', 'input:checkbox', function () {
+        console.log('changed', this.id, this.checked);
+    });
+    $('#selectAll').click(function () {
+         $box.each(function () {
+             !this.checked && $(this).trigger('click');
+         })
+    });
+</script>
+</body>
+</html>
