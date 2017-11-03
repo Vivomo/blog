@@ -91,7 +91,6 @@ class SimpleExcel {
         this.getCell(...args).title = '';
     }
 
-
     /**
      * 获取表格缓存属性
      * @returns {*}
@@ -592,6 +591,7 @@ class SimpleExcel {
                 input.onblur = () => {
                     target.innerText = input.value;
                     this.clearData(target);
+                    this.clearTitle(target);
                     this.updateTableSelectStyle();
                 };
             }
