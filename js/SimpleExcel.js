@@ -53,16 +53,7 @@ class SimpleExcel {
      * 设置单元格文本
      */
     setText(...args) {
-        let cell;
-        let data;
-        if (args.length === 3) {
-            cell = this.getCell(args[0], args[1]);
-            data = args[2];
-        } else if (args.length === 2) {
-            cell = args[0];
-            data = args[1];
-        }
-        cell.innerHTML = data;
+        this.getCell(...args).innerHTML = args[args.length - 1];
         this.updateTableSelectStyle();
     }
 
@@ -74,18 +65,7 @@ class SimpleExcel {
      * 设置缓存属性 data是最后一个参数, 其前面有一个参数则为cell 有两个则为col, row
      */
     setData(...args) {
-        let cell;
-        let data;
-        if (args.length === 2) {
-            cell = args[0];
-            data = args[1];
-        } else if (args.length === 3) {
-            const col = args[0];
-            const row = args[1];
-            cell = this.getCell(col, row);
-            data = args[2];
-        }
-        cell.dataset._cache = JSON.stringify(data);
+        this.getCell(...args).dataset._cache = JSON.stringify(args[args.length - 1]);
     }
 
     /**
@@ -94,17 +74,15 @@ class SimpleExcel {
      * @returns {*}
      */
     getData(...args) {
-        const cell = args.length === 1 ? args[0] : this.getCell(args[0], args[1]);
-        return SimpleExcel.getData(cell);
+        return SimpleExcel.getData(this.getCell(...args));
     }
 
     /**
      * 获取表格缓存属性
-     * @param cell
      * @returns {*}
      */
-    static getData(cell) {
-        const data = cell.dataset._cache;
+    static getData(...args) {
+        const data = this.getCell(...args).dataset._cache;
         return data ? JSON.parse(data) : data;
     }
 
@@ -113,15 +91,7 @@ class SimpleExcel {
      * @param args 有一个参数就是cell, 两个就是col, row
      */
     clearData(...args) {
-        let cell;
-        if (args.length === 1) {
-            cell = args[0];
-        } else if (args.length === 2) {
-            const col = args[0];
-            const row = args[1];
-            cell = this.getCell(col, row);
-        }
-        delete cell.dataset._cache;
+        delete this.getCell(...args).dataset._cache;
     }
 
     /**
@@ -131,7 +101,7 @@ class SimpleExcel {
      * @returns {HTMLElement}
      */
     getCell(col, row) {
-        return this.table.querySelector(`[data-col="${col}"][data-row="${row}"]`);
+        return typeof col === 'object' ? col : this.table.querySelector(`[data-col="${col}"][data-row="${row}"]`);
     }
 
     /**
