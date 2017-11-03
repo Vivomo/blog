@@ -78,6 +78,21 @@ class SimpleExcel {
     }
 
     /**
+     * 设置单元格的title
+     */
+    setTitle(...args) {
+        this.getCell(...args).title = args[args.length - 1];
+    }
+
+    /**
+     * 清空单元格的title
+     */
+    clearTitle(...args) {
+        this.getCell(...args).title = '';
+    }
+
+
+    /**
      * 获取表格缓存属性
      * @returns {*}
      */
@@ -92,6 +107,17 @@ class SimpleExcel {
      */
     clearData(...args) {
         delete this.getCell(...args).dataset._cache;
+    }
+
+    /**
+     * 删除单元格的标题, 数据, 文本
+     * @param args
+     */
+    clearCell(...args) {
+        const cell = this.getCell(...args);
+        this.clearData(cell);
+        this.clearTitle(cell);
+        cell.innerHTML = '';
     }
 
     /**
