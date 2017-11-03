@@ -214,7 +214,7 @@ class SimpleExcel {
                         const nextCell = this.getCell(i, row + 1);
                         if (nextCell) {
                             isLast = false;
-                            nextRow.insertBefore(willMovedCell, nextCell)
+                            nextRow.insertBefore(willMovedCell, nextCell);
                             break;
                         }
                     }
@@ -247,7 +247,7 @@ class SimpleExcel {
         this.rows.forEach((row, rowIndex) => {
             Array.from(row.children).slice(1).forEach((cell) => {
                 cell.dataset.row = rowIndex + 1;
-            })
+            });
         });
     }
 
@@ -279,7 +279,7 @@ class SimpleExcel {
             const toRow = Number(to.row);
             for (let col = fromCol; col <= toCol; col++) {
                 for (let row = fromRow; row <= toRow; row++) {
-                    cells.push(this.getCell(col, row))
+                    cells.push(this.getCell(col, row));
                 }
             }
         }
@@ -658,7 +658,7 @@ class SimpleExcel {
             width: rect.width,
             x: rect.x,
             y: rect.y
-        }
+        };
     }
 }
 
