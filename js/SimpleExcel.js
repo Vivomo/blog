@@ -27,7 +27,7 @@ class SimpleExcel {
             this.table = tempWrap.firstElementChild;
             this.row = this.table.querySelectorAll('tr').length;
             let col = 0;
-            Array.from(this.table.querySelector('tr').querySelectorAll('td')).forEach(td => {
+            Array.from(this.table.querySelector('tr').querySelectorAll('td')).forEach((td) => {
                 col += Number(td.colSpan);
             });
             this.col = col;
