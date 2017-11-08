@@ -57,8 +57,8 @@ class SimpleExcel {
         this.updateTableSelectStyle();
     }
 
-    static setText(cell, data) {
-        cell.innerHTML = data;
+    static setText(cell, text) {
+        cell.innerHTML = text;
     }
 
     /**
@@ -85,6 +85,13 @@ class SimpleExcel {
     }
 
     /**
+     * 设置单元格的title
+     */
+    static setTitle(cell, title) {
+        cell.title = title;
+    }
+
+    /**
      * 清空单元格的title
      */
     clearTitle(...args) {
@@ -95,8 +102,8 @@ class SimpleExcel {
      * 获取表格缓存属性
      * @returns {*}
      */
-    static getData(...args) {
-        const data = this.getCell(...args).dataset._cache;
+    static getData(cell) {
+        const data = cell.dataset._cache;
         return data ? JSON.parse(data) : data;
     }
 
