@@ -7,25 +7,47 @@
         [contenteditable="false"] {
             background: #ccc;
         }
+
+        #wrap {
+            margin: 0 auto;
+            width: 1200px;
+            height: 300px;
+            outline: 1px solid;
+        }
     </style>
 </head>
-<body contentEditable="true">
-<!--
-    如果不可编辑区在末尾则不能用delete 键删除,
-    同时光标也不能定义到末尾
-    但如果 不可编辑区非block的元素,则可以正常删除整块
--->
-<div>13213</div>
-123123
-<div contentEditable="false">
-    不可编辑区
-</div>
-<div>
-    123123 <span contentEditable="false">123</span>
+<body >
+
+<div id="wrap" contentEditable="true">
+    <!--
+        如果不可编辑区在末尾则不能用delete 键删除,
+        同时光标也不能定义到末尾
+        但如果 不可编辑区非block的元素,则可以正常删除整块
+    -->
+    <div>13213</div>
+    123123
+    <div contentEditable="false">
+        不可编辑区
+    </div>
+    <div>
+        123123 <span contentEditable="false">123</span>
+    </div>
+
+    <div contentEditable="false">
+        不可编辑区
+    </div>
 </div>
 
-<div contentEditable="false">
-    不可编辑区
-</div>
+<script>
+//    wrap.focus();
+    wrap.addEventListener('blur', function (e) {
+        console.log(e);
+//        var range = getSelection().getRangeAt(0);
+//        var tempNode = document.createElement('span');
+//        tempNode.innerText = 'temp';
+//        range.insertNode(tempNode);
+    })
+
+</script>
 </body>
 </html>

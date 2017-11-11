@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        h3 {
+            color: #987;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <h1>h1</h1>
+    <h2 style="color: #678;">h2</h2>
+    <h3>h3</h3>
+</div>
+
+<img id="img" alt="">
+<script src="../js/lib/html2canvas.js"></script>
+<script>
+    var img = document.querySelector('#img');
+    html2canvas(document.querySelector('#wrap'), {
+        onrendered: function (canvas) {
+            img.src = canvas.toDataURL();
+        }
+    })
+</script>
+</body>
+</html>

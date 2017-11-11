@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="d">
+    <p id="p">123</p>
+</div>
+
+<script src="../js/jq/jquery.js"></script>
+<script>
+    $('#d').click(function () {
+        console.log('d')
+    })
+    $('#d').on('click', '#p', function () {
+        setTimeout(function () {
+            console.log('p');
+        }, 0)
+    });
+
+</script>
+</body>
+</html>

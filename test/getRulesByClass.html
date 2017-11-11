@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .test {
+            background: #fff;
+        }
+        .test {
+            color: red;
+            font-size: 13px;
+        }
+        .test2 {
+            color: blue;
+        }
+    </style>
+    <link rel="stylesheet" href="../css/test.css">
+</head>
+<body>
+<span class="test">test</span>
+
+<script>
+    function getStyle(className) {
+        var classes = document.styleSheets[0].rules;
+        for (var x = 0; x < classes.length; x++) {
+            if (classes[x].selectorText == className) {
+                var style = {};
+                var styleLength = classes[x].style.length;
+                for (var i = 0; i < styleLength; i++) {
+                    style[classes[x].style[i]] = classes[x].style[classes[x].style[i]];
+                }
+                return style;
+            }
+        }
+    }
+    console.log(getStyle('.test'));
+</script>
+</body>
+</html>

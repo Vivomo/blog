@@ -65,7 +65,7 @@ function Tree(treeData) {
                 delete nodes[i][childKey];
             }
         }
-        return data;
+        return data.filter(filter);
     };
 
     tree.find = function (callback) {
@@ -103,7 +103,8 @@ var data = [
                 id: 2,
                 children: [
                     {
-                        id: 2.1
+                        id: 2.1,
+                        children: []
                     },
                     {
                         id: 2.2
@@ -171,7 +172,17 @@ var data = [
 // });
 //
 // console.log(target);
+const log = (obj) => {
+    console.log(JSON.stringify(obj, null, 4))
+};
 var filterResult = Tree(data).filter(function (item) {
-    return item.id % 2 === 0;
+    return item.id > 10;
 });
-console.log(JSON.stringify(filterResult, null, 4));
+// console.log(JSON.stringify(filterResult, null, 4));
+
+var data2 = [
+    {id:1, children:[{id:11}, {id:12, children: [{id:124}, {id:122}]}]},
+    {id:2, },
+    {id:3, children:[{id:31}, {id:32}]},
+];
+log(Tree(data2).filter(item => item.id % 2));
