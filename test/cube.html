@@ -8,34 +8,14 @@
 
 </head>
 
-<!--
-             ms-css-transform="style($index)"
-
--->
 <body>
 <div ms-controller="cube" class="outer-wrap">
-    <div class="outer-box">
-        <div ms-repeat="cubes" class="cubes"
-             ms-attr-id="'id_'+$index"
-             ms-attr-data-role="role($index)"
-             ms-attr-data-side="side($index)"
-             ms-attr-data-position="position($index)"
-             ms-css-transform="getTransform($index)"
-        >
-
-            <div class="front face" ms-css-background="bg($index,'front')" ></div>
-            <div class="left face" ms-css-background="bg($index,'left')"></div>
-            <div class="up face" ms-css-background="bg($index,'up')"></div>
-            <div class="right face" ms-css-background="bg($index,'right')"></div>
-            <div class="back face" ms-css-background="bg($index,'back')"></div>
-            <div class="bottom face" ms-css-background="bg($index,'bottom')"></div>
-        </div>
-    </div>
 
     <div class="outer-box">
         <div ms-repeat="cubes" class="cubes"
              ms-attr-id="'id_'+$index"
              ms-css-transform="style($index)"
+             ms-css-transform-origin="origin($index)"
              ms-attr-data-role="role($index)"
              ms-attr-data-side="side($index)"
              ms-attr-data-position="position($index)">
@@ -113,12 +93,23 @@
     for (let i = 0; i < 27; i++) {
         let item = {
             index : i,
-            x : i % 3 * l,
-            y : ~~(i % 9 / 3) * l,
-            z : ~~(i / 9) * l
+            x : (i % 3 - 1) * l,
+            y : ~~(i % 9 / 3) * l - l,
+            z : ~~(i / 9) * l - l
         };
         cubes.push(item);
         initCube(item);
+    }
+
+    function getOrigin(translate) {
+        return -translate + l / 2;
+        if (translate > 0) {
+            return translate + l / 2;
+        } else if (translate < 0) {
+            return translate - l / 2;
+        } else {
+            return 0;
+        }
     }
 
     let vm = avalon.define({
@@ -137,10 +128,10 @@
             return vm.transform[index];
         },
         style: function (index, str) {
-            let _x = cubes[index].x,
-                    _y = cubes[index].y,
-                    _z = cubes[index].z + 50;
-            return 'translate3d(' + _x + 'px,' + _y + 'px,' +  _z + 'px)' + (str || '');
+            return `translate3d(${cubes[index].x}px, ${cubes[index].y}px,${cubes[index].z}px)  rotateX(0deg) rotateY(0deg) rotateZ(0deg) ${str || ''}`;
+        },
+        origin: function (index) {
+            return `${getOrigin(cubes[index].x)}px ${getOrigin(cubes[index].y)}px ${getOrigin(cubes[index].z)}px `;
         },
         /**
          * 标记方块的角色 二进制标识位
@@ -188,14 +179,12 @@
         bg : function (index, key) {
             let arr = vm[key];
             for (let i = 0; i < arr.length; i++) {
-                if (arr[i].index == index)
+                if (arr[i].index === index)
                     return colorMap[key]
             }
         }
     });
     avalon.scan();
-
-
 
 
     function initCube(item){
@@ -205,51 +194,22 @@
         if (item.index > 17) {
             front.push(item);
         }
-        if (item.x == 0) {
+
+        var m = item.index % 3;
+        if (m === 0) {
             left.push(item);
-        }
-        if (item.x == 200) {
+        } else if (m === 2) {
             right.push(item);
         }
-        if (item.y == 0) {
+
+        var m2 = item.index % 9;
+        if (m2 < 3) {
             up.push(item);
-        }
-        if (item.y == 200) {
+        } else if (m2 > 5){
             bottom.push(item);
         }
     }
 
-
-
-    function test(){
-        let li = document.querySelectorAll('.cubes')[18];
-        let transform = li.style.transform;
-        let str = transform.substring( transform.indexOf('(') + 1, transform.lastIndexOf(')'));
-        let arr = str.split(',');
-        let x = parseInt(arr[0]);
-        let y = parseInt(arr[1]);
-        let z = parseInt(arr[2]);
-        let j = 90/24;
-        let start = 0;
-        let i = 0;
-        let r = Math.sqrt(20000);
-
-        let clear = setInterval(function(){
-            start += j;
-            let degree = (180 - start) / 2 - 45;
-            let l = Math.sqrt(2*r*r*(1-cos(start)));
-            console.log(l);
-
-            let _x = l * cos(degree);
-            let _y = l * sin(degree);
-
-            li.style.transform = 'translate3d('+(x+_x)+'px, '+(y-_y)+'px, '+z+'px) ' + 'rotateZ('+start+'deg)';
-            i++;
-            if (i == 24) {
-                clearInterval(clear);
-            }
-        },25);
-    }
 
 </script>
 </body>

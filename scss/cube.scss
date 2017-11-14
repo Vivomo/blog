@@ -18,6 +18,11 @@ body{
     margin: auto;
     width: 300px;
     height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: 1px solid #fff;
+    background: rgba(012, 123, 234, 0.3);
     transform: rotateX(-15deg) rotateY(-33deg) rotateZ(2deg);
     transform-style: preserve-3d;
 }
