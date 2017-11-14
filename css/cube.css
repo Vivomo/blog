@@ -12,6 +12,7 @@ body {
 
 .outer-box {
   position: relative;
+  margin: auto;
   width: 300px;
   height: 300px;
   transform: rotateX(-15deg) rotateY(-33deg) rotateZ(2deg);
