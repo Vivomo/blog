@@ -26,6 +26,10 @@
             left: 0;
             top: 0;
         }
+
+        input[type="range"] {
+            width: 600px;
+        }
     </style>
 </head>
 <body>
@@ -52,9 +56,19 @@
 
 <fieldset class="opt-wrap">
     <legend>整体旋转</legend>
-    <label for="x">x</label><input type="range" min="-180" max="180" name="" id="x" value="-15">
-    <label for="y">y</label><input type="range" min="-180" max="180" name="" id="y" value="-33">
-    <label for="z">z</label><input type="range" min="-180" max="180" name="" id="z" value="2">
+    <div>
+        <label for="x">X:</label>
+        <input type="range" min="-180" max="180" name="" id="x" value="-15">
+    </div>
+    <div>
+        <label for="y">Y:</label>
+        <input type="range" min="-180" max="180" name="" id="y" value="-33">
+    </div>
+    <div>
+        <label for="z">Z:</label>
+        <input type="range" min="-180" max="180" name="" id="z" value="2">
+    </div>
+
 </fieldset>
 
 <script>
