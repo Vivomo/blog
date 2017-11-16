@@ -19,7 +19,8 @@
              ms-attr-data-role="role($index)"
              ms-attr-data-side="side($index)"
              ms-attr-data-position="position($index)">
-            {{$index}}
+            {{el.x}},{{el.y}},{{el.z}} <br>
+            {{el.rotateX}}, {{el.rotateY}}, {{el.rotateZ}}
             <div class="front face" ms-css-background="bg($index,'front')" ></div>
             <div class="left face" ms-css-background="bg($index,'left')"></div>
             <div class="up face" ms-css-background="bg($index,'up')"></div>
