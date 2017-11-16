@@ -14,8 +14,8 @@
     <div class="outer-box">
         <div ms-repeat="cubes" class="cubes"
              ms-attr-id="'id_'+$index"
-             ms-css-transform="style($index)"
-             ms-css-transform-origin="origin($index)"
+             ms-css-transform="translate3d({{el.x}}px, {{el.y}}px, {{el.z}}px) rotateX({{el.rotateX}}deg) rotateY({{el.rotateY}}deg) rotateZ({{el.rotateZ}}deg)"
+             ms-css-transform-origin="{{el.originX}}px {{el.originY}}px {{el.originZ}}px"
              ms-attr-data-role="role($index)"
              ms-attr-data-side="side($index)"
              ms-attr-data-position="position($index)">
@@ -91,17 +91,35 @@
 
 
     for (let i = 0; i < 27; i++) {
+        let x = (i % 3 - 1) * l,
+            y = ~~(i % 9 / 3) * l - l,
+            z = ~~(i / 9) * l - l;
+
+        let originX = getOrigin(x),
+            originY = getOrigin(y),
+            originZ = getOrigin(z);
+
         let item = {
             index : i,
-            x : (i % 3 - 1) * l,
-            y : ~~(i % 9 / 3) * l - l,
-            z : ~~(i / 9) * l - l
+            x,
+            y,
+            z,
+            originX,
+            originY,
+            originZ,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0,
         };
         cubes.push(item);
         initCube(item);
     }
 
-    function getOrigin(translate) {
+    function getOrigin(translate, isZ = false, index) {
+        if (isZ) {
+            return index < 9 ? -l :
+                index < 18 ? 0 : l;
+        }
         return -translate + l / 2;
     }
 
@@ -119,18 +137,6 @@
         }),
         getTransform: function (index) {
             return vm.transform[index];
-        },
-        style: function (index, str) {
-            return `translate3d(${cubes[index].x}px, ${cubes[index].y}px,${cubes[index].z}px)  rotateX(0deg) rotateY(0deg) rotateZ(0deg) ${str || ''}`;
-        },
-        origin: function (index) {
-            let z = 0;
-            if (z < 9) {
-                z = -100;
-            } else if (z > 17) {
-                z = 100;
-            }
-            return `${getOrigin(cubes[index].x)}px ${getOrigin(cubes[index].y)}px ${z}px `;
         },
         /**
          * 标记方块的角色 二进制标识位
