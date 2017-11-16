@@ -103,13 +103,6 @@
 
     function getOrigin(translate) {
         return -translate + l / 2;
-        if (translate > 0) {
-            return translate + l / 2;
-        } else if (translate < 0) {
-            return translate - l / 2;
-        } else {
-            return 0;
-        }
     }
 
     let vm = avalon.define({
@@ -131,7 +124,13 @@
             return `translate3d(${cubes[index].x}px, ${cubes[index].y}px,${cubes[index].z}px)  rotateX(0deg) rotateY(0deg) rotateZ(0deg) ${str || ''}`;
         },
         origin: function (index) {
-            return `${getOrigin(cubes[index].x)}px ${getOrigin(cubes[index].y)}px ${getOrigin(cubes[index].z)}px `;
+            let z = 0;
+            if (z < 9) {
+                z = -100;
+            } else if (z > 17) {
+                z = 100;
+            }
+            return `${getOrigin(cubes[index].x)}px ${getOrigin(cubes[index].y)}px ${z}px `;
         },
         /**
          * 标记方块的角色 二进制标识位
