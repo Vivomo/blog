@@ -22,9 +22,12 @@
 </head>
 <body>
 <span class="test">test</span>
-
 <script>
     function getStyle(className) {
+        const allStyle = {};
+        for (let i = 0, l = document.styleSheets.length; i < l; i++) {
+
+        }
         var classes = document.styleSheets[0].rules;
         for (var x = 0; x < classes.length; x++) {
             if (classes[x].selectorText == className) {
