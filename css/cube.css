@@ -6,14 +6,20 @@ body {
   background: radial-gradient(ellipse at center, #444 0%, #000000 90%); }
 
 .outer-wrap {
+  position: relative;
+  top: 160px;
   width: 800px;
-  margin: 160px auto;
+  margin: 0 auto;
   perspective: 1600px; }
 
 .outer-box {
   position: relative;
+  margin: auto;
   width: 300px;
   height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transform: rotateX(-15deg) rotateY(-33deg) rotateZ(2deg);
   transform-style: preserve-3d; }
 
@@ -21,7 +27,8 @@ body {
   position: absolute;
   transform-style: preserve-3d;
   width: 100px;
-  height: 100px; }
+  height: 100px;
+  transition: all 0.5s; }
 
 .face {
   position: absolute;
