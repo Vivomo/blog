@@ -15,7 +15,7 @@
 <script>
     var myChart = echarts.init(document.getElementById('wrap'));
     let option = {
-        color: ['#3398DB'],
+//        color: ['#3398DB'],
         tooltip : {
             trigger: 'axis',
             axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -25,32 +25,52 @@
         grid: {
             left: '3%',
             right: '4%',
-            bottom: '3%',
+            bottom: '10%',
             containLabel: true
         },
         xAxis : [
             {
                 type : 'category',
-                data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                axisTick: {
-                    alignWithLabel: true
-                }
+                data : ['苏', '军', '截', '是', '大', '本', '柱'],
+                position: 'bottom',
+            },
+            {
+                type : 'category',
+                data : ['素', '君', '接', '时', '打', '笨', '竹'],
+                position: 'bottom',
+                offset: -40,
+            },
+            {
+                type : 'category',
+                data : ['速', '俊', '借', '市', '达', '夲', '注'],
+                position: 'bottom',
+                offset: -80,
             }
         ],
         yAxis : [
             {
                 type : 'value',
-                min: 200,
-                max: 300
             }
         ],
 
         series : [
             {
-                name:'直接访问',
-                type:'bar',
+                name:'一个事实',
+                type:'line',
                 barWidth: '60%',
                 data:[10, 52, 200, 195, 390, 310, 220]
+            },
+            {
+                name:'又一个事实',
+                type:'line',
+                barWidth: '60%',
+                data:[20, 42, 100, 295, 290, 210, 120]
+            },
+            {
+                name:'还是一个事实',
+                type:'line',
+                barWidth: '60%',
+                data:[120, 142, 300, 95, 90, 10, 20]
             }
         ]
     };
