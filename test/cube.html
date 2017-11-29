@@ -21,7 +21,7 @@
              ms-attr-data-position="position($index)">
             {{el.x}},{{el.y}},{{el.z}} <br>
             {{el.rotateX}}, {{el.rotateY}}, {{el.rotateZ}}
-            <div class="front face" ms-css-background="bg($index,'front')" ></div>
+            <div class="front face" ms-css-background="bg($index,'front')"></div>
             <div class="left face" ms-css-background="bg($index,'left')"></div>
             <div class="up face" ms-css-background="bg($index,'up')"></div>
             <div class="right face" ms-css-background="bg($index,'right')"></div>
@@ -33,89 +33,95 @@
 </div>
 <script>
 
-    Math.radian = function(degree) {
+    Math.radian = function (degree) {
         return degree * Math.PI / 180;
     };
 
     const COLOR_MAP = {
-        up : 'yellow',
-        bottom : 'white',
-        left : 'orange',
-        right : 'red',
-        front : 'blue',
-        back : 'green'
+        up: 'yellow',
+        bottom: 'white',
+        left: 'orange',
+        right: 'red',
+        front: 'blue',
+        back: 'green'
     };
     const CUBE_WIDTH = 100;
 
-    const CubeUtil = {
-        front : 32, // 100000
-        back : 16, //  010000
-        up : 8,
-        bottom : 4,
-        left : 2,
-        right : 1,
-        getMarkObj: function (mark) {
-            const markNum = typeof mark === 'number' ? mark : CubeUtil.getBaseMark(mark);
-            const markObj = {};
-            ['front', 'back', 'up', 'bottom', 'left', 'right'].forEach((item) => {
-                markObj[item] = markNum & CubeUtil[item];
-            });
-            return markObj;
-        },
-        createCubes: () => {
-            return avalon.range(0, 27).map((index) => {
-                let x = (index % 3 - 1) * CUBE_WIDTH,
-                    y = ~~(index % 9 / 3) * CUBE_WIDTH - CUBE_WIDTH,
-                    z = ~~(index / 9) * CUBE_WIDTH - CUBE_WIDTH,
+    const CubeUtil = (() => {
+        const front = 32,
+            back = 16,
+            up = 8,
+            bottom = 4,
+            left = 2,
+            right = 1;
+        return {
+            front,
+            back,
+            up,
+            bottom,
+            left,
+            right,
+            xDirection: [front, up, back, bottom],
+            yDirection: [front, left, back, right],
+            zDirection: [up, right, bottom, left],
+            getMarkObj: function (mark) {
+                const markNum = typeof mark === 'number' ? mark : this.getBaseMark(mark);
+                const markObj = {};
+                ['front', 'back', 'up', 'bottom', 'left', 'right'].forEach((item) => {
+                    markObj[item] = markNum & this[item];
+                });
+                return markObj;
+            },
+            createCubes: function() {
+                return avalon.range(0, 27).map((index) => {
+                    let x = (index % 3 - 1) * CUBE_WIDTH,
+                        y = ~~(index % 9 / 3) * CUBE_WIDTH - CUBE_WIDTH,
+                        z = ~~(index / 9) * CUBE_WIDTH - CUBE_WIDTH,
 
-                    originX = getOrigin(x),
-                    originY = getOrigin(y),
-                    originZ = getOrigin(z, true, index);
+                        originX = this.getCubeOrigin(x),
+                        originY = this.getCubeOrigin(y),
+                        originZ = this.getCubeOrigin(z, true, index);
 
-                return {
-                    index,
-                    x,
-                    y,
-                    z,
-                    originX,
-                    originY,
-                    originZ,
-                    rotateX: 0,
-                    rotateY: 0,
-                    rotateZ: 0,
-                };
-            })
-        },
-        getBaseMark: (cube) => {
-            let mark = 0;
-            if (cube.z == -CUBE_WIDTH)
-                mark |= CubeUtil.back;
-            if (cube.z == CUBE_WIDTH)
-                mark |= CubeUtil.front;
-            if (cube.x == -CUBE_WIDTH)
-                mark |= CubeUtil.left;
-            if (cube.x == CUBE_WIDTH)
-                mark |= CubeUtil.right;
-            if (cube.y == -CUBE_WIDTH)
-                mark |= CubeUtil.up;
-            if (cube.y == CUBE_WIDTH)
-                mark |= CubeUtil.bottom;
-            return mark;
+                    return {
+                        index,
+                        x,
+                        y,
+                        z,
+                        originX,
+                        originY,
+                        originZ,
+                        rotateX: 0,
+                        rotateY: 0,
+                        rotateZ: 0,
+                    };
+                })
+            },
+            getBaseMark: (cube) => {
+                let mark = 0;
+                if (cube.z == -CUBE_WIDTH)
+                    mark |= CubeUtil.back;
+                if (cube.z == CUBE_WIDTH)
+                    mark |= CubeUtil.front;
+                if (cube.x == -CUBE_WIDTH)
+                    mark |= CubeUtil.left;
+                if (cube.x == CUBE_WIDTH)
+                    mark |= CubeUtil.right;
+                if (cube.y == -CUBE_WIDTH)
+                    mark |= CubeUtil.up;
+                if (cube.y == CUBE_WIDTH)
+                    mark |= CubeUtil.bottom;
+                return mark;
+            },
+            getCubeOrigin: (translate, isZ = false, index) => {
+                if (isZ) {
+                    return index < 9 ? CUBE_WIDTH :
+                        index < 18 ? 0 : -CUBE_WIDTH;
+                }
+                return -translate + CUBE_WIDTH / 2;
+            }
         }
-    };
+    })();
 
-    CubeUtil.xDirection = [CubeUtil.front, CubeUtil.up, CubeUtil.back, CubeUtil.bottom];
-    CubeUtil.yDirection = [CubeUtil.front, CubeUtil.left, CubeUtil.back, CubeUtil.right];
-    CubeUtil.zDirection = [CubeUtil.up, CubeUtil.right, CubeUtil.bottom, CubeUtil.left];
-
-
-    function getOrigin(translate, isZ = false, index) {
-        if (isZ) {
-            return index < 9 ? CUBE_WIDTH :
-                index < 18 ? 0 : -CUBE_WIDTH;
-        }
-        return -translate + CUBE_WIDTH / 2;
-    }
 
     let vm = avalon.define({
         $id: 'cube',
@@ -125,17 +131,18 @@
          * 000000  前后上下左右
          * @param index
          */
-        side : function(index) {
+        side: function (index) {
             let cube = vm.cubes[index];
-            let mark = CubeUtil.getBaseMark(cube);
+            let markObj = CubeUtil.getMarkObj(cube);
+            let { front, back, up, bottom, left, right } = markObj;
 
             if (cube.rotateX !== 0) {
-
+                let rotateCount = cube.rotateX % 360 / 90;
             }
             return mark;
         },
 
-        bg : function (index, direction) {
+        bg: function (index, direction) {
             const cube = vm.cubes[index];
             const mark = CubeUtil.getBaseMark(cube);
             if (mark & CubeUtil[direction]) {
@@ -144,7 +151,6 @@
         }
     });
     avalon.scan();
-
 
 
 </script>
