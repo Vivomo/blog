@@ -51,82 +51,72 @@
             front : 'blue',
             back : 'green'
         },
-        cubes = [],
         up = [],
         bottom = [],
         left = [],
         right = [],
         front = [],
         back = [],
-        l = 100;
+        cubeWidth = 100;
 
 
 
     let CubeUtil = {
-        edge : 8,
-        horn : 4,
-        center : 2,
-        core : 1,
         front : 32, // 100000
         back : 16, //  010000
         up : 8,
         bottom : 4,
         left : 2,
         right : 1,
-        hornIndexArr : [0,2,6,8,18,20,24,26], //为了避免方法调用时,总要生成一个新的数组
-        centerIndexArr : [4,10,12,14,16,22], //同上
-        isEdge : function(index) {
-            return index % 2 != 0 && index != 13;
+        getMark: function (mark) {
+            const markObj = {};
+            ['front', 'back', 'up', 'bottom', 'left', 'right'].forEach((item) => {
+                markObj[item] = mark & CubeUtil[item];
+            });
+            return markObj;
         },
-        isHorn : function(index) {
-            return CubeUtil.hornIndexArr.indexOf(index) != -1;
-        },
-        isCenter : function(index) {
-            return CubeUtil.centerIndexArr.indexOf(index) != -1;
-        },
-        isCore : function(index) {
-            return index == 13;
+        createCubes: () => {
+            return avalon.range(0, 27).map((index) => {
+                let x = (index % 3 - 1) * cubeWidth,
+                    y = ~~(index % 9 / 3) * cubeWidth - cubeWidth,
+                    z = ~~(index / 9) * cubeWidth - cubeWidth;
+
+                let originX = getOrigin(x),
+                    originY = getOrigin(y),
+                    originZ = getOrigin(z, true, index);
+
+                return {
+                    index,
+                    x,
+                    y,
+                    z,
+                    originX,
+                    originY,
+                    originZ,
+                    rotateX: 0,
+                    rotateY: 0,
+                    rotateZ: 0,
+                };
+            })
         }
     };
 
+    CubeUtil.xDirection = [CubeUtil.front, CubeUtil.up, CubeUtil.back, CubeUtil.bottom];
+    CubeUtil.yDirection = [CubeUtil.front, CubeUtil.left, CubeUtil.back, CubeUtil.right];
+    CubeUtil.zDirection = [CubeUtil.up, CubeUtil.right, CubeUtil.bottom, CubeUtil.left];
 
-
-    for (let index = 0; index < 27; index++) {
-        let x = (index % 3 - 1) * l,
-            y = ~~(index % 9 / 3) * l - l,
-            z = ~~(index / 9) * l - l;
-
-        let originX = getOrigin(x),
-            originY = getOrigin(y),
-            originZ = getOrigin(z, true, index);
-
-        let item = {
-            index,
-            x,
-            y,
-            z,
-            originX,
-            originY,
-            originZ,
-            rotateX: 0,
-            rotateY: 0,
-            rotateZ: 0,
-        };
-        cubes.push(item);
-        initCube(item);
-    }
 
     function getOrigin(translate, isZ = false, index) {
         if (isZ) {
-            return index < 9 ? l :
-                index < 18 ? 0 : -l;
+            return index < 9 ? cubeWidth :
+                index < 18 ? 0 : -cubeWidth;
         }
-        return -translate + l / 2;
+        return -translate + cubeWidth / 2;
     }
 
     let vm = avalon.define({
         $id: 'cube',
-        cubes: cubes,
+        cubes: CubeUtil.createCubes(),
         up : up,
         bottom : bottom,
         left : left,
@@ -139,49 +129,34 @@
         getTransform: function (index) {
             return vm.transform[index];
         },
-        /**
-         * 标记方块的角色 二进制标识位
-         * 1000 棱 (8)
-         * 0100 角 (4)
-         * 0010 中心(2)
-         * 0001 核心(1)
-         * @param index
-         */
-        role : function(index){
-            if ( CubeUtil.isEdge(index))
-                return CubeUtil.edge;
-            if ( CubeUtil.isHorn(index))
-                return CubeUtil.horn;
-            if ( CubeUtil.isCenter(index))
-                return CubeUtil.center;
-            if ( CubeUtil.isCore(index))
-                return CubeUtil.core;
-        },
+
         /**
          * 标记方块属于那一个边
          * 000000  前后上下左右
          * @param index
          */
         side : function(index) {
-            let temp = 0;
-            let cube = cubes[index];
-            if (cube.z == 50)
-                temp |= CubeUtil.back;
-            if (cube.z == 250)
-                temp |= CubeUtil.front;
-            if (cube.x == 0)
-                temp |= CubeUtil.left;
-            if (cube.x == 200)
-                temp |= CubeUtil.right;
-            if (cube.y == 0)
-                temp |= CubeUtil.up;
-            if (cube.y == 200)
-                temp |= CubeUtil.bottom;
-            return temp;
-        },
-        position : function(index) {
+            let mark = 0;
+            let cube = vm.cubes[index];
+            if (cube.z == -cubeWidth)
+                mark |= CubeUtil.back;
+            if (cube.z == cubeWidth)
+                mark |= CubeUtil.front;
+            if (cube.x == -cubeWidth)
+                mark |= CubeUtil.left;
+            if (cube.x == cubeWidth)
+                mark |= CubeUtil.right;
+            if (cube.y == -cubeWidth)
+                mark |= CubeUtil.up;
+            if (cube.y == cubeWidth)
+                mark |= CubeUtil.bottom;
 
+            if (cube.rotateX !== 0) {
+
+            }
+            return mark;
         },
+
         bg : function (index, key) {
             let arr = vm[key];
             for (let i = 0; i < arr.length; i++) {
@@ -192,29 +167,6 @@
     });
     avalon.scan();
 
-
-    function initCube(item){
-        if (item.index < 9) {
-            back.push(item);
-        }
-        if (item.index > 17) {
-            front.push(item);
-        }
-
-        var m = item.index % 3;
-        if (m === 0) {
-            left.push(item);
-        } else if (m === 2) {
-            right.push(item);
-        }
-
-        var m2 = item.index % 9;
-        if (m2 < 3) {
-            up.push(item);
-        } else if (m2 > 5){
-            bottom.push(item);
-        }
-    }
 
 
 </script>
