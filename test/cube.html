@@ -134,12 +134,50 @@
         side: function (index) {
             let cube = vm.cubes[index];
             let markObj = CubeUtil.getMarkObj(cube);
-            let { front, back, up, bottom, left, right } = markObj;
+            let baseMark = CubeUtil.getBaseMark(cube);
 
             if (cube.rotateX !== 0) {
+                CubeUtil.xDirection.forEach((direction) => {
+                    baseMark &= ~direction;
+                });
                 let rotateCount = cube.rotateX % 360 / 90;
+                Object.values(markObj).forEach((value) => {
+                    let index = CubeUtil.xDirection.indexOf(value);
+                    if (index !== -1) {
+                        baseMark |= CubeUtil.xDirection[(index + rotateCount + 4) % 4];
+                    }
+                });
+                markObj = CubeUtil.getMarkObj(baseMark);
             }
-            return mark;
+
+            if (cube.rotateY !== 0) {
+                CubeUtil.yDirection.forEach((direction) => {
+                    baseMark &= ~direction;
+                });
+                let rotateCount = cube.rotateY % 360 / 90;
+                Object.values(markObj).forEach((value) => {
+                    let index = CubeUtil.yDirection.indexOf(value);
+                    if (index !== -1) {
+                        baseMark |= CubeUtil.yDirection[(index + rotateCount + 4) % 4];
+                    }
+                });
+                markObj = CubeUtil.getMarkObj(baseMark);
+            }
+
+            if (cube.rotateZ !== 0) {
+                CubeUtil.zDirection.forEach((direction) => {
+                    baseMark &= ~direction;
+                });
+                let rotateCount = cube.rotateZ % 360 / 90;
+                Object.values(markObj).forEach((value) => {
+                    let index = CubeUtil.zDirection.indexOf(value);
+                    if (index !== -1) {
+                        baseMark |= CubeUtil.yDirection[(index + rotateCount + 4) % 4];
+                    }
+                });
+            }
+
+            return baseMark;
         },
 
         bg: function (index, direction) {
