@@ -36,52 +36,39 @@
     Math.radian = function(degree) {
         return degree * Math.PI / 180;
     };
-    let cos = function(degree) {
-        return Math.cos(Math.radian(degree));
+
+    const COLOR_MAP = {
+        up : 'yellow',
+        bottom : 'white',
+        left : 'orange',
+        right : 'red',
+        front : 'blue',
+        back : 'green'
     };
-    let sin = function(degree) {
-        return Math.sin(Math.radian(degree));
-    };
+    const CUBE_WIDTH = 100;
 
-    let colorMap = {
-            up : 'yellow',
-            bottom : 'white',
-            left : 'orange',
-            right : 'red',
-            front : 'blue',
-            back : 'green'
-        },
-        up = [],
-        bottom = [],
-        left = [],
-        right = [],
-        front = [],
-        back = [],
-        cubeWidth = 100;
-
-
-
-    let CubeUtil = {
+    const CubeUtil = {
         front : 32, // 100000
         back : 16, //  010000
         up : 8,
         bottom : 4,
         left : 2,
         right : 1,
-        getMark: function (mark) {
+        getMarkObj: function (mark) {
+            const markNum = typeof mark === 'number' ? mark : CubeUtil.getBaseMark(mark);
             const markObj = {};
             ['front', 'back', 'up', 'bottom', 'left', 'right'].forEach((item) => {
-                markObj[item] = mark & CubeUtil[item];
+                markObj[item] = markNum & CubeUtil[item];
             });
             return markObj;
         },
         createCubes: () => {
             return avalon.range(0, 27).map((index) => {
-                let x = (index % 3 - 1) * cubeWidth,
-                    y = ~~(index % 9 / 3) * cubeWidth - cubeWidth,
-                    z = ~~(index / 9) * cubeWidth - cubeWidth;
+                let x = (index % 3 - 1) * CUBE_WIDTH,
+                    y = ~~(index % 9 / 3) * CUBE_WIDTH - CUBE_WIDTH,
+                    z = ~~(index / 9) * CUBE_WIDTH - CUBE_WIDTH,
 
-                let originX = getOrigin(x),
+                    originX = getOrigin(x),
                     originY = getOrigin(y),
                     originZ = getOrigin(z, true, index);
 
@@ -98,6 +85,22 @@
                     rotateZ: 0,
                 };
             })
+        },
+        getBaseMark: (cube) => {
+            let mark = 0;
+            if (cube.z == -CUBE_WIDTH)
+                mark |= CubeUtil.back;
+            if (cube.z == CUBE_WIDTH)
+                mark |= CubeUtil.front;
+            if (cube.x == -CUBE_WIDTH)
+                mark |= CubeUtil.left;
+            if (cube.x == CUBE_WIDTH)
+                mark |= CubeUtil.right;
+            if (cube.y == -CUBE_WIDTH)
+                mark |= CubeUtil.up;
+            if (cube.y == CUBE_WIDTH)
+                mark |= CubeUtil.bottom;
+            return mark;
         }
     };
 
@@ -108,48 +111,23 @@
 
     function getOrigin(translate, isZ = false, index) {
         if (isZ) {
-            return index < 9 ? cubeWidth :
-                index < 18 ? 0 : -cubeWidth;
+            return index < 9 ? CUBE_WIDTH :
+                index < 18 ? 0 : -CUBE_WIDTH;
         }
-        return -translate + cubeWidth / 2;
+        return -translate + CUBE_WIDTH / 2;
     }
 
     let vm = avalon.define({
         $id: 'cube',
         cubes: CubeUtil.createCubes(),
-        up : up,
-        bottom : bottom,
-        left : left,
-        right : right,
-        front : front,
-        back : back,
-        transform: avalon.range(0, 27).map(function () {
-            return 'translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
-        }),
-        getTransform: function (index) {
-            return vm.transform[index];
-        },
-
         /**
          * 标记方块属于那一个边
          * 000000  前后上下左右
          * @param index
          */
         side : function(index) {
-            let mark = 0;
             let cube = vm.cubes[index];
-            if (cube.z == -cubeWidth)
-                mark |= CubeUtil.back;
-            if (cube.z == cubeWidth)
-                mark |= CubeUtil.front;
-            if (cube.x == -cubeWidth)
-                mark |= CubeUtil.left;
-            if (cube.x == cubeWidth)
-                mark |= CubeUtil.right;
-            if (cube.y == -cubeWidth)
-                mark |= CubeUtil.up;
-            if (cube.y == cubeWidth)
-                mark |= CubeUtil.bottom;
+            let mark = CubeUtil.getBaseMark(cube);
 
             if (cube.rotateX !== 0) {
 
@@ -157,11 +135,11 @@
             return mark;
         },
 
-        bg : function (index, key) {
-            let arr = vm[key];
-            for (let i = 0; i < arr.length; i++) {
-                if (arr[i].index === index)
-                    return colorMap[key]
+        bg : function (index, direction) {
+            const cube = vm.cubes[index];
+            const mark = CubeUtil.getBaseMark(cube);
+            if (mark & CubeUtil[direction]) {
+                return COLOR_MAP[direction]
             }
         }
     });
