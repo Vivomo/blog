@@ -16,11 +16,10 @@
              ms-attr-id="'id_'+$index"
              ms-css-transform="translate3d({{el.x}}px, {{el.y}}px, {{el.z}}px) rotateX({{el.rotateX}}deg) rotateY({{el.rotateY}}deg) rotateZ({{el.rotateZ}}deg)"
              ms-css-transform-origin="{{el.originX}}px {{el.originY}}px {{el.originZ}}px"
-             ms-attr-data-role="role($index)"
-             ms-attr-data-side="side($index)"
-             ms-attr-data-position="position($index)">
+        >
             {{el.x}},{{el.y}},{{el.z}} <br>
-            {{el.rotateX}}, {{el.rotateY}}, {{el.rotateZ}}
+            {{el.rotateX}}, {{el.rotateY}}, {{el.rotateZ}} <br>
+            {{side($index)}}
             <div class="front face" ms-css-background="bg($index,'front')"></div>
             <div class="left face" ms-css-background="bg($index,'left')"></div>
             <div class="up face" ms-css-background="bg($index,'up')"></div>
@@ -118,6 +117,53 @@
                         index < 18 ? 0 : -CUBE_WIDTH;
                 }
                 return -translate + CUBE_WIDTH / 2;
+            },
+            getSide: function (cube) {
+                let markObj = this.getMarkObj(cube);
+                let baseMark = this.getBaseMark(cube);
+
+                if (cube.rotateX !== 0) {
+                    this.xDirection.forEach((direction) => {
+                        baseMark &= ~direction;
+                    });
+                    let rotateCount = cube.rotateX % 360 / 90;
+                    Object.values(markObj).forEach((value) => {
+                        let index = this.xDirection.indexOf(value);
+                        if (index !== -1) {
+                            baseMark |= this.xDirection[(index + rotateCount + 4) % 4];
+                        }
+                    });
+                    markObj = this.getMarkObj(baseMark);
+                }
+
+                if (cube.rotateY !== 0) {
+                    this.yDirection.forEach((direction) => {
+                        baseMark &= ~direction;
+                    });
+                    let rotateCount = cube.rotateY % 360 / 90;
+                    Object.values(markObj).forEach((value) => {
+                        let index = this.yDirection.indexOf(value);
+                        if (index !== -1) {
+                            baseMark |= this.yDirection[(index + rotateCount + 4) % 4];
+                        }
+                    });
+                    markObj = this.getMarkObj(baseMark);
+                }
+
+                if (cube.rotateZ !== 0) {
+                    this.zDirection.forEach((direction) => {
+                        baseMark &= ~direction;
+                    });
+                    let rotateCount = cube.rotateZ % 360 / 90;
+                    Object.values(markObj).forEach((value) => {
+                        let index = this.zDirection.indexOf(value);
+                        if (index !== -1) {
+                            baseMark |= this.yDirection[(index + rotateCount + 4) % 4];
+                        }
+                    });
+                }
+
+                return baseMark;
             }
         }
     })();
@@ -132,54 +178,8 @@
          * @param index
          */
         side: function (index) {
-            let cube = vm.cubes[index];
-            let markObj = CubeUtil.getMarkObj(cube);
-            let baseMark = CubeUtil.getBaseMark(cube);
-
-            if (cube.rotateX !== 0) {
-                CubeUtil.xDirection.forEach((direction) => {
-                    baseMark &= ~direction;
-                });
-                let rotateCount = cube.rotateX % 360 / 90;
-                Object.values(markObj).forEach((value) => {
-                    let index = CubeUtil.xDirection.indexOf(value);
-                    if (index !== -1) {
-                        baseMark |= CubeUtil.xDirection[(index + rotateCount + 4) % 4];
-                    }
-                });
-                markObj = CubeUtil.getMarkObj(baseMark);
-            }
-
-            if (cube.rotateY !== 0) {
-                CubeUtil.yDirection.forEach((direction) => {
-                    baseMark &= ~direction;
-                });
-                let rotateCount = cube.rotateY % 360 / 90;
-                Object.values(markObj).forEach((value) => {
-                    let index = CubeUtil.yDirection.indexOf(value);
-                    if (index !== -1) {
-                        baseMark |= CubeUtil.yDirection[(index + rotateCount + 4) % 4];
-                    }
-                });
-                markObj = CubeUtil.getMarkObj(baseMark);
-            }
-
-            if (cube.rotateZ !== 0) {
-                CubeUtil.zDirection.forEach((direction) => {
-                    baseMark &= ~direction;
-                });
-                let rotateCount = cube.rotateZ % 360 / 90;
-                Object.values(markObj).forEach((value) => {
-                    let index = CubeUtil.zDirection.indexOf(value);
-                    if (index !== -1) {
-                        baseMark |= CubeUtil.yDirection[(index + rotateCount + 4) % 4];
-                    }
-                });
-            }
-
-            return baseMark;
+            return CubeUtil.getSide(vm.cubes[index])
         },
-
         bg: function (index, direction) {
             const cube = vm.cubes[index];
             const mark = CubeUtil.getBaseMark(cube);
