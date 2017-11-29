@@ -186,6 +186,49 @@
             if (mark & CubeUtil[direction]) {
                 return COLOR_MAP[direction]
             }
+        },
+        rotate: (direction, num, isClockwise = true) => {
+            if (direction === 'x') {
+                vm.cubes.filter((cube) => {
+                    let side = CubeUtil.getSide(cube);
+                    if (num === 1) {
+                        return side & CubeUtil.left;
+                    } else if (num === 2) {
+                        return !(side & CubeUtil.left) && !(side & CubeUtil.right);
+                    } else {
+                        return side & CubeUtil.right;
+                    }
+                }).forEach((cube) => {
+                    cube.rotateX += isClockwise ? 90 : -90;
+                });
+            } else if (direction === 'y') {
+                vm.cubes.filter((cube) => {
+                    let side = CubeUtil.getSide(cube);
+                    if (num === 1) {
+                        return side & CubeUtil.up;
+                    } else if (num === 2) {
+                        return !(side & CubeUtil.up) && !(side & CubeUtil.bottom);
+                    } else {
+                        return side & CubeUtil.bottom;
+                    }
+                }).forEach((cube) => {
+                    cube.rotateY += isClockwise ? 90 : -90;
+                });
+            } else if (direction === 'z') {
+                vm.cubes.filter((cube) => {
+                    let side = CubeUtil.getSide(cube);
+                    if (num === 1) {
+                        return side & CubeUtil.front;
+                    } else if (num === 2) {
+                        return !(side & CubeUtil.front) && !(side & CubeUtil.back);
+                    } else {
+                        return side & CubeUtil.back;
+                    }
+                }).forEach((cube) => {
+                    cube.rotateZ += isClockwise ? 90 : -90;
+                });
+            }
+
         }
     });
     avalon.scan();
