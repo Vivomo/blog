@@ -5,3 +5,4 @@ test/d3-test/node_modules/
 build/node_modules/
 test/big-screen/
 ignore/
+webpack-test/node_modules/
