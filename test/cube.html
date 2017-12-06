@@ -9,13 +9,15 @@
 </head>
 
 <body>
+<!--
+             ms-css-transform-origin="{{el.originX}}px {{el.originY}}px {{el.originZ}}px"
+-->
 <div ms-controller="cube" class="outer-wrap">
 
     <div class="outer-box">
         <div ms-repeat="cubes" class="cubes"
              ms-attr-id="'id_'+$index"
              ms-css-transform="translate3d({{el.x}}px, {{el.y}}px, {{el.z}}px) rotateX({{el.rotateX}}deg) rotateY({{el.rotateY}}deg) rotateZ({{el.rotateZ}}deg)"
-             ms-css-transform-origin="{{el.originX}}px {{el.originY}}px {{el.originZ}}px"
         >
             {{el.x}},{{el.y}},{{el.z}} <br>
             {{el.rotateX}}, {{el.rotateY}}, {{el.rotateZ}} <br>
@@ -164,6 +166,9 @@
                 }
 
                 return baseMark;
+            },
+            getDistance: function (cube) {
+                return cube.x * cube.x + cube.y * cube.y + cube.z * cube.z;
             }
         }
     })();
@@ -199,10 +204,20 @@
                         return side & CubeUtil.right;
                     }
                 });
-                console.log(cubes.length);
                 cubes.forEach((cube) => {
                     cube.rotateX += isClockwise ? 90 : -90;
                 });
+                let sortedCubes = cubes.sort((a, b) => {
+                    return CubeUtil.getDistance(a) - CubeUtil.getDistance(b);
+                });
+
+                let tempTranslate = {
+                    x: sortedCubes[0].x,
+                    y: sortedCubes[0].y,
+                    z: sortedCubes[0].z
+                }
+
+
             } else if (direction === 'y') {
                 vm.cubes.filter((cube) => {
                     let side = CubeUtil.getSide(cube);
