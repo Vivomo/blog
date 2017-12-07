@@ -130,13 +130,20 @@
                 return COLOR_MAP[direction]
             }
         },
+        /**
+         * 一个点绕一个圆心(0, 0)旋转后的坐标
+         * x1=x0cosn-y0sinn
+         * y1=x0sinn+y0cosn
+         * @param direction
+         * @param num
+         * @param isClockwise
+         */
         rotate: (direction, num, isClockwise = true) => {
             let rangeDegree = isClockwise ? 3 : -3;
+            let cubes = vm.cubes.filter((cube) => {
+                return (cube[direction] + CUBE_WIDTH * 2) / CUBE_WIDTH === num;
+            });
             if (direction === 'x') {
-                let cubes = vm.cubes.filter((cube) => {
-                    return (cube.x + CUBE_WIDTH * 2) / CUBE_WIDTH === num;
-                });
-
                 cubes.forEach((cube) => {
                     let count = 0;
                     let x = cube.z;
@@ -145,9 +152,6 @@
                         cube.rotateX += rangeDegree;
                         count++;
                         let rad = -CubeUtil.degreeToRad(count * rangeDegree);
-                        // 一个点绕一个圆心(0, 0)旋转后的坐标
-                        // x1=x0cosn-y0sinn
-                        // y1=x0sinn+y0cosn
 
                         cube.z = x * Math.cos(rad) - y * Math.sin(rad);
                         cube.y = x * Math.sin(rad) + y * Math.cos(rad);
@@ -158,20 +162,26 @@
                     }, 16);
                 });
 
-
-
             } else if (direction === 'y') {
-                let cubes = vm.cubes.filter((cube) => {
-                    return (cube.y + CUBE_WIDTH * 2) / CUBE_WIDTH === num;
-                });
 
                 cubes.forEach((cube) => {
-                    cube.rotateY += isClockwise ? 90 : -90;
+                    let count = 0;
+                    let x = cube.x;
+                    let y = cube.z;
+                    let tempInterval = setInterval(() => {
+                        cube.rotateX += rangeDegree;
+                        count++;
+                        let rad = -CubeUtil.degreeToRad(count * rangeDegree);
+
+                        cube.x = x * Math.cos(rad) - y * Math.sin(rad);
+                        cube.z = x * Math.sin(rad) + y * Math.cos(rad);
+
+                        if (count === 30) {
+                            clearInterval(tempInterval);
+                        }
+                    }, 16);
                 });
             } else if (direction === 'z') {
-                let cubes = vm.cubes.filter((cube) => {
-                    return (cube.z + CUBE_WIDTH * 2) / CUBE_WIDTH === num;
-                });
 
                 cubes.forEach((cube) => {
                     let count = 0;
@@ -181,9 +191,6 @@
                         cube.rotateZ += rangeDegree;
                         count++;
                         let rad = CubeUtil.degreeToRad(count * rangeDegree);
-                        // 一个点绕一个圆心(0, 0)旋转后的坐标
-                        // x1=x0cosn-y0sinn
-                        // y1=x0sinn+y0cosn
 
                         cube.x = x * Math.cos(rad) - y * Math.sin(rad);
                         cube.y = x * Math.sin(rad) + y * Math.cos(rad);
