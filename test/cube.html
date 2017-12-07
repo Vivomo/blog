@@ -169,7 +169,7 @@
                     let x = cube.x;
                     let y = cube.z;
                     let tempInterval = setInterval(() => {
-                        cube.rotateX += rangeDegree;
+                        cube.rotateY += rangeDegree;
                         count++;
                         let rad = -CubeUtil.degreeToRad(count * rangeDegree);
 
@@ -201,6 +201,12 @@
                     }, 16);
                 });
             }
+
+            vm.cubes.forEach((cube) => {
+                cube.x = ~~cube.x;
+                cube.y = ~~cube.y;
+                cube.z = ~~cube.z;
+            })
 
         }
     });
