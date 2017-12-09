@@ -9,18 +9,21 @@
 </head>
 
 <body>
+<!--
+             ms-css-transform-origin="{{el.originX}}px {{el.originY}}px {{el.originZ}}px"
+
+                  {{el.x}},{{el.y}},{{el.z}} <br>
+            {{el.rotateX}}, {{el.rotateY}}, {{el.rotateZ}} <br>
+            {{side($index)}}
+-->
 <div ms-controller="cube" class="outer-wrap">
 
     <div class="outer-box">
         <div ms-repeat="cubes" class="cubes"
              ms-attr-id="'id_'+$index"
              ms-css-transform="translate3d({{el.x}}px, {{el.y}}px, {{el.z}}px) rotateX({{el.rotateX}}deg) rotateY({{el.rotateY}}deg) rotateZ({{el.rotateZ}}deg)"
-             ms-css-transform-origin="{{el.originX}}px {{el.originY}}px {{el.originZ}}px"
         >
-            {{el.x}},{{el.y}},{{el.z}} <br>
-            {{el.rotateX}}, {{el.rotateY}}, {{el.rotateZ}} <br>
-            {{side($index)}}
-            <div class="front face" ms-css-background="bg($index,'front')"></div>
+            <div class="front face" ms-css-background="bg($index,'front')">{{$index}}</div>
             <div class="left face" ms-css-background="bg($index,'left')"></div>
             <div class="up face" ms-css-background="bg($index,'up')"></div>
             <div class="right face" ms-css-background="bg($index,'right')"></div>
@@ -63,14 +66,6 @@
             xDirection: [front, up, back, bottom],
             yDirection: [front, left, back, right],
             zDirection: [up, right, bottom, left],
-            getMarkObj: function (mark) {
-                const markNum = typeof mark === 'number' ? mark : this.getBaseMark(mark);
-                const markObj = {};
-                ['front', 'back', 'up', 'bottom', 'left', 'right'].forEach((item) => {
-                    markObj[item] = markNum & this[item];
-                });
-                return markObj;
-            },
             createCubes: function() {
                 return avalon.range(0, 27).map((index) => {
                     let x = (index % 3 - 1) * CUBE_WIDTH,
@@ -118,52 +113,8 @@
                 }
                 return -translate + CUBE_WIDTH / 2;
             },
-            getSide: function (cube) {
-                let markObj = this.getMarkObj(cube);
-                let baseMark = this.getBaseMark(cube);
-
-                if (cube.rotateX !== 0) {
-                    this.xDirection.forEach((direction) => {
-                        baseMark &= ~direction;
-                    });
-                    let rotateCount = cube.rotateX % 360 / 90;
-                    Object.values(markObj).forEach((value) => {
-                        let index = this.xDirection.indexOf(value);
-                        if (index !== -1) {
-                            baseMark |= this.xDirection[(index + rotateCount + 4) % 4];
-                        }
-                    });
-                    markObj = this.getMarkObj(baseMark);
-                }
-
-                if (cube.rotateY !== 0) {
-                    this.yDirection.forEach((direction) => {
-                        baseMark &= ~direction;
-                    });
-                    let rotateCount = cube.rotateY % 360 / 90;
-                    Object.values(markObj).forEach((value) => {
-                        let index = this.yDirection.indexOf(value);
-                        if (index !== -1) {
-                            baseMark |= this.yDirection[(index + rotateCount + 4) % 4];
-                        }
-                    });
-                    markObj = this.getMarkObj(baseMark);
-                }
-
-                if (cube.rotateZ !== 0) {
-                    this.zDirection.forEach((direction) => {
-                        baseMark &= ~direction;
-                    });
-                    let rotateCount = cube.rotateZ % 360 / 90;
-                    Object.values(markObj).forEach((value) => {
-                        let index = this.zDirection.indexOf(value);
-                        if (index !== -1) {
-                            baseMark |= this.zDirection[(index + rotateCount + 4) % 4];
-                        }
-                    });
-                }
-
-                return baseMark;
+            degreeToRad: function (degree) {
+                return degree * Math.PI / 180;
             }
         }
     })();
@@ -172,14 +123,6 @@
     let vm = avalon.define({
         $id: 'cube',
         cubes: CubeUtil.createCubes(),
-        /**
-         * 标记方块属于那一个边
-         * 000000  前后上下左右
-         * @param index
-         */
-        side: function (index) {
-            return CubeUtil.getSide(vm.cubes[index])
-        },
         bg: function (index, direction) {
             const cube = vm.cubes[index];
             const mark = CubeUtil.getBaseMark(cube);
@@ -187,49 +130,83 @@
                 return COLOR_MAP[direction]
             }
         },
+        /**
+         * 一个点绕一个圆心(0, 0)旋转后的坐标
+         * x1=x0cosn-y0sinn
+         * y1=x0sinn+y0cosn
+         * @param direction
+         * @param num
+         * @param isClockwise
+         */
         rotate: (direction, num, isClockwise = true) => {
+            let rangeDegree = isClockwise ? 3 : -3;
+            let cubes = vm.cubes.filter((cube) => {
+                return (cube[direction] + CUBE_WIDTH * 2) / CUBE_WIDTH === num;
+            });
             if (direction === 'x') {
-                let cubes = vm.cubes.filter((cube) => {
-                    let side = CubeUtil.getSide(cube);
-                    if (num === 1) {
-                        return side & CubeUtil.left;
-                    } else if (num === 2) {
-                        return !(side & CubeUtil.left) && !(side & CubeUtil.right);
-                    } else {
-                        return side & CubeUtil.right;
-                    }
-                });
-                console.log(cubes.length);
                 cubes.forEach((cube) => {
-                    cube.rotateX += isClockwise ? 90 : -90;
+                    let count = 0;
+                    let x = cube.z;
+                    let y = cube.y;
+                    let tempInterval = setInterval(() => {
+                        cube.rotateX += rangeDegree;
+                        count++;
+                        let rad = -CubeUtil.degreeToRad(count * rangeDegree);
+
+                        cube.z = x * Math.cos(rad) - y * Math.sin(rad);
+                        cube.y = x * Math.sin(rad) + y * Math.cos(rad);
+
+                        if (count === 30) {
+                            clearInterval(tempInterval);
+                        }
+                    }, 16);
                 });
+
             } else if (direction === 'y') {
-                vm.cubes.filter((cube) => {
-                    let side = CubeUtil.getSide(cube);
-                    if (num === 1) {
-                        return side & CubeUtil.up;
-                    } else if (num === 2) {
-                        return !(side & CubeUtil.up) && !(side & CubeUtil.bottom);
-                    } else {
-                        return side & CubeUtil.bottom;
-                    }
-                }).forEach((cube) => {
-                    cube.rotateY += isClockwise ? 90 : -90;
+
+                cubes.forEach((cube) => {
+                    let count = 0;
+                    let x = cube.x;
+                    let y = cube.z;
+                    let tempInterval = setInterval(() => {
+                        cube.rotateY += rangeDegree;
+                        count++;
+                        let rad = -CubeUtil.degreeToRad(count * rangeDegree);
+
+                        cube.x = x * Math.cos(rad) - y * Math.sin(rad);
+                        cube.z = x * Math.sin(rad) + y * Math.cos(rad);
+
+                        if (count === 30) {
+                            clearInterval(tempInterval);
+                        }
+                    }, 16);
                 });
             } else if (direction === 'z') {
-                vm.cubes.filter((cube) => {
-                    let side = CubeUtil.getSide(cube);
-                    if (num === 1) {
-                        return side & CubeUtil.front;
-                    } else if (num === 2) {
-                        return !(side & CubeUtil.front) && !(side & CubeUtil.back);
-                    } else {
-                        return side & CubeUtil.back;
-                    }
-                }).forEach((cube) => {
-                    cube.rotateZ += isClockwise ? 90 : -90;
+
+                cubes.forEach((cube) => {
+                    let count = 0;
+                    let x = cube.x;
+                    let y = cube.y;
+                    let tempInterval = setInterval(() => {
+                        cube.rotateZ += rangeDegree;
+                        count++;
+                        let rad = CubeUtil.degreeToRad(count * rangeDegree);
+
+                        cube.x = x * Math.cos(rad) - y * Math.sin(rad);
+                        cube.y = x * Math.sin(rad) + y * Math.cos(rad);
+
+                        if (count === 30) {
+                            clearInterval(tempInterval);
+                        }
+                    }, 16);
                 });
             }
+
+            vm.cubes.forEach((cube) => {
+                cube.x = ~~cube.x;
+                cube.y = ~~cube.y;
+                cube.z = ~~cube.z;
+            })
 
         }
     });

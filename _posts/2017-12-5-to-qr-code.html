@@ -1,0 +1,15 @@
+---
+layout: default
+title: 二维码转换
+js: toQRCode
+---
+
+<div class="box u-content">
+    <input type="text" class="v-input" id="qr-value" placeholder="输入任意字符串">
+    <button class="btn" id="run">转换</button>
+    <div id="qr-wrap" style="margin: 30px"></div>
+</div>
+
+<script src="{{site.cname}}js/jq/jquery.js"></script>
+<script src="{{site.cname}}js/lib/qrcode.js"></script>
+<script src="{{site.cname}}js/lib/jquery.qrcode.js"></script>

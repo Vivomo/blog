@@ -30,7 +30,7 @@ body{
     transform-style: preserve-3d;
     width: 100px;
     height: 100px;
-    transition: all 0.5s;
+    //transition: all 0.5s;
 }
 
 
@@ -44,7 +44,7 @@ body{
     background: #ccc;
     transition: all 0.5s;
     list-style: none;
-    opacity: 0.5;
+    opacity: 0.8;
 }
 .front{
     transform: translate3d(0px, 0px, 50px);
