@@ -26,8 +26,12 @@
 </header>
 {{ content }}
 
-<input type="hidden" id="data" data-baseurl="{{site.cname}}" data-js="{{page.js}}">
-<script src="{{site.cname}}js/V.js"></script>
+<script>
+    var baseUrl = '{{site.cname}}';
+    var pageJS = '{{page.js}}';
+    var test = '{{page.test}}';
+</script>
 <script src="{{site.cname}}js/app.js"></script>
+
 </body>
 </html>

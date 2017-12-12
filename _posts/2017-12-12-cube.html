@@ -1,0 +1,25 @@
+---
+layout: default
+title: 半成品魔方
+js: cube
+css: cube
+---
+
+<div ms-controller="cube" class="outer-wrap">
+
+    <div class="outer-box">
+        <div ms-repeat="cubes" class="cubes"
+             ms-attr-id="'id_'+$index"
+             ms-css-transform="translate3d({{el.x}}px, {{el.y}}px, {{el.z}}px) rotateX({{el.rotateX}}deg) rotateY({{el.rotateY}}deg) rotateZ({{el.rotateZ}}deg)"
+        >
+            <div class="front face" ms-css-background="bg($index,'front')">{{$index}}</div>
+            <div class="left face" ms-css-background="bg($index,'left')"></div>
+            <div class="up face" ms-css-background="bg($index,'up')"></div>
+            <div class="right face" ms-css-background="bg($index,'right')"></div>
+            <div class="back face" ms-css-background="bg($index,'back')"></div>
+            <div class="bottom face" ms-css-background="bg($index,'bottom')"></div>
+        </div>
+    </div>
+
+</div>
+<script src="{{site.cname}}js/avalon.js"></script>
