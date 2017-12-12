@@ -1,11 +1,11 @@
-/**
- * Created by ui on 2016/9/26.
- */
-
 (function () {
-    var data = document.getElementById('data').dataset;
+    var jsPath = eval(pageJS);
 
-    if (data.js) {
-        V.loadJS(data.baseurl + '/js/' + data.js + '.js')
+    if (jsPath) {
+        if (Array.isArray(jsPath)) {
+            jsPath.forEach(path => V.loadJS(baseUrl + '/js/' + path + '.js'))
+        } else if(typeof jsPath == 'string') {
+            V.loadJS(baseUrl + '/js/' + jsPath + '.js');
+        }
     }
 })();
