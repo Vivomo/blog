@@ -1,3 +1,6 @@
+avalon.config({
+    interpolate: ["[[","]]"]
+});
 Math.radian = function (degree) {
     return degree * Math.PI / 180;
 };
