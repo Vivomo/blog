@@ -17,10 +17,24 @@ let tree = new File({
 
 
 function createFilesArray(path, tree) {
-    let files = fs.readdirSync(path);
-    tree.children = files.map((filename) => {
+    let files;
+    try {
+        files = fs.readdirSync(path);
+    } catch (e) {
+        // 无权限
+        return;
+    }
+    tree.children = files.map((filename, index) => {
         let filePath = path + '\\' + filename;
-        let stats = fs.statSync(filePath);
+        let stats;
+        try {
+            stats = fs.statSync(filePath);
+        } catch (e) {
+            return {
+                name: '无权限文件' + index,
+                size: 0
+            }
+        }
         let file = new File({
             name: filename,
             size: stats.size,
