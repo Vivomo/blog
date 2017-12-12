@@ -50,5 +50,9 @@ function createFilesArray(path, tree) {
 console.time('f');
 createFilesArray(filePath, tree);
 console.timeEnd('f');
-console.log(tree.size);
-// console.log(JSON.stringify(tree));
+
+fs.writeFile('../../ignore/c.json', JSON.stringify(tree), (err) => {
+    if (!err) {
+        console.log('write');
+    }
+});
