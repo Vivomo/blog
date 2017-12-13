@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-let filePath = `C:\\`;
+let filePath = `G:\\`;
 
 class File {
     constructor(data) {
@@ -22,6 +22,7 @@ function createFilesArray(path, tree) {
         files = fs.readdirSync(path);
     } catch (e) {
         // 无权限
+        console.log(e + path);
         return;
     }
     tree.children = files.map((filename, index) => {
@@ -30,6 +31,7 @@ function createFilesArray(path, tree) {
         try {
             stats = fs.statSync(filePath);
         } catch (e) {
+            console.log(e + filePath);
             return {
                 name: '无权限文件' + index,
                 size: 0
