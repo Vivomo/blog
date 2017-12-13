@@ -11,7 +11,7 @@ class File {
 
 let tree = new File({
     children: [],
-    size: 0,
+    value: 0,
     name: 'root'
 });
 
@@ -34,17 +34,17 @@ function createFilesArray(path, tree) {
             console.log(e + filePath);
             return {
                 name: '无权限文件' + index,
-                size: 0
+                value: 0
             }
         }
         let file = new File({
             name: filename,
-            size: stats.size,
+            value: stats.size,
         });
         if (stats.isDirectory()) {
             createFilesArray(filePath, file);
         }
-        tree.size += file.size;
+        tree.value += file.size;
         return file;
     });
 }
