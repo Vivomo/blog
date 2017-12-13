@@ -67,7 +67,7 @@
 
                     return [
                         '<div class="tooltip-title">' + info.name + '</div>',
-                        'Disk Usage: ' + formatUtil.addCommas(value) + ' KB',
+                        'Disk Usage: ' + formatUtil.addCommas(value) + ' KB' + (info.value * 100 / diskData.value).toFixed(4) + '%',
                     ].join('');
                 }
             },
@@ -84,6 +84,12 @@
                     itemStyle: {
                         normal: {
                             borderColor: '#fff'
+                        }
+                    },
+                    upperLabel: {
+                        normal: {
+//                            show: true,
+                            height: 20
                         }
                     },
                     levels: getLevelOption(),

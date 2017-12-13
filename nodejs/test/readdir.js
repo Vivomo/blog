@@ -44,7 +44,7 @@ function createFilesArray(path, tree) {
         if (stats.isDirectory()) {
             createFilesArray(filePath, file);
         }
-        tree.value += file.size;
+        tree.value += file.value;
         return file;
     });
 }
