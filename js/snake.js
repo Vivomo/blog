@@ -10,52 +10,74 @@
         DOWN: 3
     };
 
-    function nextSquare(head, direction){
-        var x, y;
-        if (direction % 2 == 0) {
-            y = head.y;
-            x = head.x + direction - 1;
-        } else {
-            x = head.x;
-            y = head.y + direction - 2;
+    const Square = {
+        cfg: {
+            width: 11
+        },
+        createSquare: function () {
+            return avalon.range(0, this.cfg.width).map(() =>
+                avalon.range(0, this.cfg.width).map(() => ({
+                    isFood: false
+                }))
+            );
+        },
+        nextSquare: function(point, direction){
+            var x, y;
+            if (direction % 2 == 0) {
+                y = point.y;
+                x = point.x + direction - 1;
+            } else {
+                x = point.x;
+                y = point.y + direction - 2;
+            }
+            return {
+                x,
+                y
+            }
         }
-        return {
-            x: x,
-            y: y
-        }
-    }
+    };
 
-    function directionKeyBind(e){
-        if (e.keyCode < 37 || e.keyCode > 40) {
-            return
-        }
-        var direction = e.keyCode - 37;
-        if (Math.abs(direction - snake.direction) != 2) {
-            snake.direction = direction;
-            snake.stop();
-            snake.move();
-            snake.start();
-        }
-    }
+    const Snake = {
+        cfg: {
+            speed: 1500,
+        },
+        createSnakeBody: function () {
+            const center = ~~(Square.cfg.width / 2);
+            return avalon.range(0, 4).map((i) => ({
+                x: center,
+                y: center + i
+            }));
+        },
+    };
 
 
-
-    var snake = window.snake = avalon.define({
+    var snake = avalon.define({
         $id : 'snake',
         tip: '',
         ceilLength: 11,
         body: [],
         square: [],
         direction : DIRECTION.TOP, // 0123 依次代表左上右下
-        speed : 1500,
         ceilWidth : 60,
+        directionKeyBind: function(e){
+            if (e.keyCode < 37 || e.keyCode > 40) {
+                return
+            }
+            var direction = e.keyCode - 37;
+            if (Math.abs(direction - snake.direction) != 2) {
+                snake.direction = direction;
+                snake.stop();
+                snake.move();
+                snake.start();
+            }
+        },
         move : function () {
 
             var head = snake.body[0];
-            var ceil = nextSquare(head, snake.direction);
+            var ceil = Square.nextSquare(head, snake.direction);
             if (snake.isOutOfIndex(ceil) || snake.isOnBody(ceil)) {
                 snake.tip = 'Game Over!';
-                document.removeEventListener('keydown', directionKeyBind);
+                document.removeEventListener('keydown', snake.directionKeyBind);
                 snake.stop();
                 return;
             }
@@ -115,33 +137,16 @@
                 }
             }
         },
-        init : function () {
-            var startX = 5,
-                startY = 5,
-                snakeArr = [],
-                square = [], i, j;
 
-            for (i = 0; i < 4; i++) {
-                snakeArr.push({
-                    x : startX,
-                    y : startY + i
-                })
+        init : function (auto = false) {
+            this.auto = auto;
+
+            if (!this.auto) {
+                document.addEventListener('keydown', snake.directionKeyBind);
             }
 
-            snake.body = snakeArr;
-
-            for (i = 0; i < snake.ceilLength; i++) {
-                square.push([]);
-                for (j = 0; j < snake.ceilLength; j++) {
-                    square[i].push({
-                        isFood : false
-                    })
-                }
-            }
-            snake.square = square;
-
-            document.addEventListener('keydown', directionKeyBind);
-
+            snake.body = Snake.createSnakeBody();
+            snake.square = Square.createSquare();
             snake.createFood();
             snake.start();
         },
@@ -151,7 +156,7 @@
         start : function () {
             snake.interval = setInterval(function () {
                 snake.move();
-            }, snake.speed);
+            }, Snake.cfg.speed);
         }
     });
 
@@ -159,8 +164,5 @@
     snake.init();
 
     avalon.scan();
-
-
-
 
 //})();
