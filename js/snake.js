@@ -55,6 +55,8 @@ const Snake = {
 var snake = avalon.define({
     $id: 'snake',
     $task: [],
+    $food: null,
+
     tip: '',
     body: [],
     square: [],
@@ -72,8 +74,11 @@ var snake = avalon.define({
             snake.start();
         }
     },
+    // 反方向
+    isNegativeDirection: function (direction) {
+        return Math.abs(this.direction - direction) === 2;
+    },
     move: function () {
-
         var head = this.body[0];
         var ceil = Square.nextSquare(head, this.direction);
         if (this.isOutOfIndex(ceil) || this.isOnBody(ceil)) {
@@ -127,13 +132,23 @@ var snake = avalon.define({
         while (true) {
             let point = Square.createRandomPoint();
             if (!this.isOnBody(point)) {
+                this.$food = point;
                 this.square[point.y][point.x].isFood = true;
                 break;
             }
         }
     },
-    runShortestPath: function (start, end) {
+    runShortestPath: function () {
+        let head = this.body[0];
+        if (this.direction === DIRECTION.LEFT || this.direction === DIRECTION.RIGHT) {
+            if (this.$food.y > head.y) {
+                this.$task.splice(0, 0, )
+            } else {
 
+            }
+        } else {
+
+        }
     },
     init: function (auto = false) {
         this.auto = auto;
