@@ -1,4 +1,4 @@
-const {swap} = require('../util/arrUtil');
+// const {swap} = require('../util/arrUtil');
 
 /**
  *
@@ -18,16 +18,20 @@ function allPermutations(x, y){
 }
 
 function getInsertedArr(arr, elem) {
-    const result = [];
+    const s = new Set;
     arr.forEach((item) => {
-        result.push(elem + item);
+        s.add(elem + item);
         for (let i = 0, l = item.length; i < l; i++) {
             if (item[i] !== elem) {
-                result.push(item.substring(0, i + 1) + elem + item.substr(i + 1));
+                s.add(strInsertChar(item, elem, i));
             }
         }
     });
-    return result;
+    return [...s];
+}
+
+function strInsertChar(str, char, index) {
+    return str.substring(0, index + 1) + char + str.substr(index + 1);
 }
 
 allPermutations(2, 2);
