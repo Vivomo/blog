@@ -169,7 +169,7 @@ let vm = avalon.define({
             });
         }
 
-        vm.cubes.forEach((cube) => {
+        cubes.forEach((cube) => {
             cube.x = ~~cube.x;
             cube.y = ~~cube.y;
             cube.z = ~~cube.z;
