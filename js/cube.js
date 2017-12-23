@@ -53,6 +53,14 @@ const CubeUtil = (() => {
                     rotateX: 0,
                     rotateY: 0,
                     rotateZ: 0,
+                    bg: {
+                        left: '',
+                        right: '',
+                        up: '',
+                        bottom: '',
+                        front: '',
+                        back: ''
+                    }
                 };
             })
         },
@@ -81,6 +89,14 @@ const CubeUtil = (() => {
         },
         degreeToRad: function (degree) {
             return degree * Math.PI / 180;
+        },
+        paint: function (cubes) {
+            cubes.filter(cube => cube.z === -CUBE_WIDTH).forEach(cube => cube.bg.back = COLOR_MAP.back);
+            cubes.filter(cube => cube.z === CUBE_WIDTH).forEach(cube => cube.bg.front = COLOR_MAP.front);
+            cubes.filter(cube => cube.x === -CUBE_WIDTH).forEach(cube => cube.bg.left = COLOR_MAP.left);
+            cubes.filter(cube => cube.x === CUBE_WIDTH).forEach(cube => cube.bg.right = COLOR_MAP.right);
+            cubes.filter(cube => cube.y === -CUBE_WIDTH).forEach(cube => cube.bg.up = COLOR_MAP.up);
+            cubes.filter(cube => cube.y === CUBE_WIDTH).forEach(cube => cube.bg.bottom = COLOR_MAP.bottom);
         }
     }
 })();
@@ -89,13 +105,13 @@ const CubeUtil = (() => {
 let vm = avalon.define({
     $id: 'cube',
     cubes: CubeUtil.createCubes(),
-    bg: function (index, direction) {
-        const cube = vm.cubes[index];
-        const mark = CubeUtil.getBaseMark(cube);
-        if (mark & CubeUtil[direction]) {
-            return COLOR_MAP[direction]
-        }
-    },
+    // bg: function (index, direction) {
+    //     const cube = vm.cubes[index];
+    //     const mark = CubeUtil.getBaseMark(cube);
+    //     if (mark & CubeUtil[direction]) {
+    //         return COLOR_MAP[direction]
+    //     }
+    // },
     /**
      * 一个点绕一个圆心(0, 0)旋转后的坐标
      * 未完待续
@@ -177,4 +193,5 @@ let vm = avalon.define({
 
     }
 });
+CubeUtil.paint(vm.cubes);
 avalon.scan();
