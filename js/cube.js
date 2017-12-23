@@ -64,22 +64,6 @@ const CubeUtil = (() => {
                 };
             })
         },
-        getBaseMark: (cube) => {
-            let mark = 0;
-            if (cube.z == -CUBE_WIDTH)
-                mark |= CubeUtil.back;
-            if (cube.z == CUBE_WIDTH)
-                mark |= CubeUtil.front;
-            if (cube.x == -CUBE_WIDTH)
-                mark |= CubeUtil.left;
-            if (cube.x == CUBE_WIDTH)
-                mark |= CubeUtil.right;
-            if (cube.y == -CUBE_WIDTH)
-                mark |= CubeUtil.up;
-            if (cube.y == CUBE_WIDTH)
-                mark |= CubeUtil.bottom;
-            return mark;
-        },
         getCubeOrigin: (translate, isZ = false, index) => {
             if (isZ) {
                 return index < 9 ? CUBE_WIDTH :
@@ -97,6 +81,7 @@ const CubeUtil = (() => {
             cubes.filter(cube => cube.x === CUBE_WIDTH).forEach(cube => cube.bg.right = COLOR_MAP.right);
             cubes.filter(cube => cube.y === -CUBE_WIDTH).forEach(cube => cube.bg.up = COLOR_MAP.up);
             cubes.filter(cube => cube.y === CUBE_WIDTH).forEach(cube => cube.bg.bottom = COLOR_MAP.bottom);
+            return cubes;
         }
     }
 })();
@@ -104,14 +89,7 @@ const CubeUtil = (() => {
 
 let vm = avalon.define({
     $id: 'cube',
-    cubes: CubeUtil.createCubes(),
-    // bg: function (index, direction) {
-    //     const cube = vm.cubes[index];
-    //     const mark = CubeUtil.getBaseMark(cube);
-    //     if (mark & CubeUtil[direction]) {
-    //         return COLOR_MAP[direction]
-    //     }
-    // },
+    cubes: CubeUtil.paint(CubeUtil.createCubes()),
     /**
      * 一个点绕一个圆心(0, 0)旋转后的坐标
      * 未完待续
@@ -126,64 +104,31 @@ let vm = avalon.define({
         let cubes = vm.cubes.filter((cube) => {
             return (cube[direction] + CUBE_WIDTH * 2) / CUBE_WIDTH === num;
         });
+        let x = 'x', y = 'y';
+        let rotateDirection = 'rotate' + direction.toUpperCase();
         if (direction === 'x') {
-            cubes.forEach((cube) => {
-                let count = 0;
-                let x = cube.z;
-                let y = cube.y;
-                let tempInterval = setInterval(() => {
-                    cube.rotateX += rangeDegree;
-                    count++;
-                    let rad = -CubeUtil.degreeToRad(count * rangeDegree);
-
-                    cube.z = x * Math.cos(rad) - y * Math.sin(rad);
-                    cube.y = x * Math.sin(rad) + y * Math.cos(rad);
-
-                    if (count === 30) {
-                        clearInterval(tempInterval);
-                    }
-                }, 16);
-            });
-
+            x = 'z';
         } else if (direction === 'y') {
-
-            cubes.forEach((cube) => {
-                let count = 0;
-                let x = cube.x;
-                let y = cube.z;
-                let tempInterval = setInterval(() => {
-                    cube.rotateY += rangeDegree;
-                    count++;
-                    let rad = -CubeUtil.degreeToRad(count * rangeDegree);
-
-                    cube.x = x * Math.cos(rad) - y * Math.sin(rad);
-                    cube.z = x * Math.sin(rad) + y * Math.cos(rad);
-
-                    if (count === 30) {
-                        clearInterval(tempInterval);
-                    }
-                }, 16);
-            });
-        } else if (direction === 'z') {
-
-            cubes.forEach((cube) => {
-                let count = 0;
-                let x = cube.x;
-                let y = cube.y;
-                let tempInterval = setInterval(() => {
-                    cube.rotateZ += rangeDegree;
-                    count++;
-                    let rad = CubeUtil.degreeToRad(count * rangeDegree);
-
-                    cube.x = x * Math.cos(rad) - y * Math.sin(rad);
-                    cube.y = x * Math.sin(rad) + y * Math.cos(rad);
-
-                    if (count === 30) {
-                        clearInterval(tempInterval);
-                    }
-                }, 16);
-            });
+            y = 'z';
         }
+
+        cubes.forEach((cube) => {
+            let count = 0;
+            let _x = cube[x];
+            let _y = cube[y];
+            let tempInterval = setInterval(() => {
+                cube[rotateDirection] += rangeDegree;
+                count++;
+                let rad = CubeUtil.degreeToRad(count * rangeDegree);
+
+                cube[x] = _x * Math.cos(rad) - _y * Math.sin(rad);
+                cube[y] = _x * Math.sin(rad) + _y * Math.cos(rad);
+
+                if (count === 30) {
+                    clearInterval(tempInterval);
+                }
+            }, 16);
+        });
 
         cubes.forEach((cube) => {
             cube.x = ~~cube.x;
@@ -193,5 +138,4 @@ let vm = avalon.define({
 
     }
 });
-CubeUtil.paint(vm.cubes);
 avalon.scan();
