@@ -1,9 +1,14 @@
 const {
-    getFilesByPath
+    getFilesByPath,
+    getSafeFilesByPath
 } = require('../util/fileUtil');
 
-let path1 = 'G:\\temp';
+let path1 = 'F:\\';
 
-let result = getFilesByPath(path1);
+// console.time('a');
+// let result = getFilesByPath(path1);
+// console.timeEnd('a');
 
-console.log(result.length);
+console.time('b');
+let result2 = getSafeFilesByPath(path1);
+console.timeEnd('b');

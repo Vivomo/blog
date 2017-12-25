@@ -44,8 +44,37 @@ function getFilesByPath(root){
     return result;
 }
 
+/**
+ * 获取一个路径下的所有文件(忽略没有权限的文件)
+ * @param root 路径
+ * @return []
+ */
+function getSafeFilesByPath(root) {
+    let result = [], files = [];
+    try {
+        files = fs.readdirSync(root);
+    } catch (e) {} // ignore
+
+    files.forEach((file) => {
+        let filePath = path.join(root, file);
+        let stat;
+        try {
+            stat = fs.lstatSync(filePath);
+        } catch (e) {
+            return result.push(filePath);
+        }
+        if (stat.isDirectory()) {
+            result = result.concat(getFilesByPath(filePath));
+        } else {
+            result.push(filePath);
+        }
+    });
+    return result;
+}
+
 Object.assign(exports, {
     simpleLock,
     simpleUnLock,
-    getFilesByPath
+    getFilesByPath,
+    getSafeFilesByPath
 });
