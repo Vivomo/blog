@@ -1,9 +1,6 @@
 avalon.config({
     interpolate: ["[[","]]"]
 });
-Math.radian = function (degree) {
-    return degree * Math.PI / 180;
-};
 
 const COLOR_MAP = {
     up: 'yellow',
