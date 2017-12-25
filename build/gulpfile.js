@@ -4,11 +4,11 @@ var gulp = require('gulp'),
     scssSrc = '../scss/**/*.scss';
     // scssSrc = '../scss/calendar.scss';
 
-gulp.task('testLess', function () {
-    gulp.src('../less/questionnaire-survey.less')
-        .pipe(less())
-        .pipe(gulp.dest('../css'));
-});
+// gulp.task('testLess', function () {
+//     gulp.src('../less/questionnaire-survey.less')
+//         .pipe(less())
+//         .pipe(gulp.dest('../css'));
+// });
 /**
  * 安装scss 报错参照此网址, 推荐方法2
  * https://github.com/lmk123/blog/issues/28
