@@ -21,7 +21,85 @@ const CubeUtil = (() => {
         up = 8,
         bottom = 4,
         left = 2,
-        right = 1;
+        right = 1,
+
+    indexMap = {
+        x: {
+            direction: ['back', 'bottom', 'front', 'up'],
+            side: {
+                '1': 'left',
+                '3': 'right'
+            },
+            '1': [
+                [0, 3, 6],
+                [6, 15, 24],
+                [24, 21, 18],
+                [18, 9, 0]
+            ],
+            '2': [
+                [1, 4, 7],
+                [7, 16, 25],
+                [25, 22, 19],
+                [19, 10, 1]
+            ],
+                '3': [
+                [2, 5, 8],
+                [8, 17, 26],
+                [26, 23, 20],
+                [20, 11, 2]
+            ],
+        },
+        y: {
+            direction: ['back', 'left', 'front', 'right'],
+            side: {
+                '1': 'up',
+                '3': 'bottom'
+            },
+            '1': [
+                [0, 1, 2],
+                [18, 9, 0],
+                [20, 19, 18],
+                [2, 11, 20],
+            ],
+            '2': [
+                [3, 4, 5],
+                [21, 12, 3],
+                [23, 22, 21],
+                [5, 14, 23],
+            ],
+            '3': [
+                [6, 7, 8],
+                [24, 15, 6],
+                [26, 25, 24],
+                [8, 17, 26],
+            ],
+        },
+        z: {
+            direction: ['up', 'right', 'bottom', 'left'],
+            side: {
+                '1': 'back',
+                '3': 'front'
+            },
+            '1': [
+                [0, 1, 2],
+                [2, 5, 8],
+                [8, 7, 6],
+                [6, 3, 0]
+            ],
+            '2': [
+                [9, 10, 11],
+                [11, 14, 17],
+                [17, 16, 15],
+                [15, 12, 9]
+            ],
+            '3': [
+                [18, 19, 20],
+                [20, 23, 26],
+                [26, 25, 24],
+                [24, 21, 18]
+            ],
+        }
+    };
     return {
         front,
         back,
@@ -32,7 +110,7 @@ const CubeUtil = (() => {
         xDirection: [front, up, back, bottom],
         yDirection: [front, left, back, right],
         zDirection: [up, right, bottom, left],
-   
+
         createCubes: function() {
             return avalon.range(0, 27).map((index) => {
                 let x = (index % 3 - 1) * CUBE_WIDTH,
@@ -83,6 +161,49 @@ const CubeUtil = (() => {
             cubes.filter(cube => cube.y === -CUBE_WIDTH).forEach(cube => cube.bg.up = COLOR_MAP.up);
             cubes.filter(cube => cube.y === CUBE_WIDTH).forEach(cube => cube.bg.bottom = COLOR_MAP.bottom);
             return cubes;
+        },
+        /**
+         * 颜色转换, (可优化空间: indexArr的多次遍历)
+         * @param cubes
+         * @param direction
+         * @param num
+         * @param isClockwise
+         */
+        swapColor: function (cubes, direction, num, isClockwise) {
+            let indexGroup = indexMap[direction];
+            let indexArr = indexGroup[num];
+            let directionArr = indexGroup.direction;
+
+            let colorMap = indexArr.map((arr, outerIndex) => {
+                return arr.map(cubeIndex => cubes[cubeIndex].bg[directionArr[outerIndex]]);
+            });
+            if (isClockwise) {
+                colorMap.unshift(colorMap.pop());
+            } else {
+                colorMap.push(colorMap.shift());
+            }
+
+            if (num != 2) {
+                let sideDirection = indexGroup.side[num];
+                let sideColorMap = indexArr.map((arr) => {
+                    return arr.map(cubeIndex => cubes[cubeIndex].bg[sideDirection]);
+                });
+                if (isClockwise) {
+                    sideColorMap.unshift(sideColorMap.pop());
+                } else {
+                    sideColorMap.push(sideColorMap.shift());
+                }
+                indexArr.forEach((arr, outerIndex) => {
+                    arr.forEach((cubeIndex, index) => {
+                        cubes[cubeIndex].bg[sideDirection] = sideColorMap[outerIndex][index];
+                    })
+                });
+            }
+            indexArr.forEach((arr, outerIndex) => {
+                arr.forEach((cubeIndex, index) => {
+                    cubes[cubeIndex].bg[directionArr[outerIndex]] = colorMap[outerIndex][index];
+                })
+            });
         }
     }
 })();
@@ -118,26 +239,25 @@ let vm = avalon.define({
             let _x = cube[x];
             let _y = cube[y];
             let tempInterval = setInterval(() => {
-                cube[rotateDirection] += rangeDegree;
                 count++;
                 let rad = CubeUtil.degreeToRad(count * rangeDegree);
                 if (direction !== 'z') {
                     rad = -rad;
                 }
+
+                cube[rotateDirection] += rangeDegree;
                 cube[x] = _x * Math.cos(rad) - _y * Math.sin(rad);
                 cube[y] = _x * Math.sin(rad) + _y * Math.cos(rad);
 
                 if (count === 30) {
                     clearInterval(tempInterval);
+                    cube[x] = _x;
+                    cube[y] = _y;
+                    cube[rotateDirection] = 0;
+                    CubeUtil.swapColor(vm.cubes, direction, num, isClockwise);
                 }
             }, 16);
         });
-
-        cubes.forEach((cube) => {
-            cube.x = ~~cube.x;
-            cube.y = ~~cube.y;
-            cube.z = ~~cube.z;
-        })
 
     }
 });

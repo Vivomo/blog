@@ -37,7 +37,6 @@ body {
   height: 100px;
   outline: 1px solid;
   background: #ccc;
-  transition: all 0.5s;
   list-style: none;
   opacity: 0.8; }
 
