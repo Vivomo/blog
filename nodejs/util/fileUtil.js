@@ -35,10 +35,9 @@ function getFilesByPath(root){
     files.forEach((file) => {
         let filePath = path.join(root, file);
         let stat = fs.lstatSync(filePath);
+        result.push(filePath);
         if (stat.isDirectory()) {
             result = result.concat(getFilesByPath(filePath));
-        } else {
-            result.push(filePath);
         }
     });
     return result;
@@ -61,11 +60,10 @@ function getSafeFilesByPath(root) {
         try {
             stat = fs.lstatSync(filePath);
         } catch (e) {
-            return result.push(filePath);
-        }
-        if (stat.isDirectory()) {
-            result = result.concat(getFilesByPath(filePath));
-        } else {
+        } finally {
+            if (stat.isDirectory()) {
+                result = result.concat(getFilesByPath(filePath));
+            }
             result.push(filePath);
         }
     });
