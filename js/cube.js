@@ -32,6 +32,7 @@ const CubeUtil = (() => {
         xDirection: [front, up, back, bottom],
         yDirection: [front, left, back, right],
         zDirection: [up, right, bottom, left],
+   
         createCubes: function() {
             return avalon.range(0, 27).map((index) => {
                 let x = (index % 3 - 1) * CUBE_WIDTH,
@@ -120,7 +121,9 @@ let vm = avalon.define({
                 cube[rotateDirection] += rangeDegree;
                 count++;
                 let rad = CubeUtil.degreeToRad(count * rangeDegree);
-
+                if (direction !== 'z') {
+                    rad = -rad;
+                }
                 cube[x] = _x * Math.cos(rad) - _y * Math.sin(rad);
                 cube[y] = _x * Math.sin(rad) + _y * Math.cos(rad);
 
