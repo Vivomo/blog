@@ -1,7 +1,11 @@
-html{
+p, body {
+    margin: 0;
+}
+html, body{
     height: 100%;
 }
 body{
+    box-sizing: border-box;
     color: #FFF;
     background: radial-gradient(ellipse at center, #444 0%,#000000 90%);
 }

@@ -97,6 +97,7 @@ const CubeUtil = (() => {
             ],
         }
     };
+
     return {
         front,
         back,
@@ -201,6 +202,47 @@ const CubeUtil = (() => {
                     cubes[cubeIndex].bg[directionArr[outerIndex]] = colorMap[outerIndex][index];
                 })
             });
+        },
+    }
+})();
+
+const CubeListener = (function () {
+
+    let body = document.body;
+    let cube = document.getElementById('cube-box');
+
+    function listenKey(vm) {
+        body.addEventListener('keydown', (e) => {
+            let keyCode = e.keyCode;
+            if (keyCode < 58) {
+                keyCode -= 48
+            } else {
+                keyCode -= 96;
+            }
+            if (keyCode < 1 || keyCode > 9) { // not number
+                return;
+            }
+            let direction = 'xyz'[Math.ceil(keyCode / 3) - 1];
+            let num = (keyCode - 1) % 3 + 1;
+            vm.rotate(direction, num, !e.altKey);
+        });
+    }
+
+    function listenMouse(vm) {
+        body.addEventListener('mousedown', (e) => {
+            console.log(e, 'body');
+        });
+
+        cube.addEventListener('mousedown', (e) => {
+            console.log(e, 'cube');
+            e.stopPropagation();
+        });
+    }
+
+    return {
+        listen: function (vm) {
+            listenKey(vm);
+            listenMouse(vm);
         }
     }
 })();
@@ -209,6 +251,11 @@ const CubeUtil = (() => {
 let vm = avalon.define({
     $id: 'cube',
     cubes: CubeUtil.paint(CubeUtil.createCubes()),
+    visualAngle: {
+        x: 0,
+        y: 0,
+        z: 0
+    },
     $rotating: false,
     /**
      * 一个点绕一个圆心(0, 0)旋转后的坐标
@@ -266,21 +313,19 @@ let vm = avalon.define({
             }, 10);
         });
 
+    },
+    /**
+     * 视角旋转
+     * @param direction
+     * @param isClockwise
+     */
+    rotateVisualAngle: function (direction, isClockwise = true) {
+
     }
+
 });
 avalon.scan();
 
-document.body.addEventListener('keydown', (e) => {
-    let keyCode = e.keyCode;
-    if (keyCode < 58) {
-        keyCode -= 48
-    } else {
-        keyCode -= 96;
-    }
-    if (keyCode < 1 || keyCode > 9) { // not number
-        return;
-    }
-    let direction = 'xyz'[Math.ceil(keyCode / 3) - 1];
-    let num = (keyCode - 1) % 3 + 1;
-    vm.rotate(direction, num, !e.altKey);
-});
+CubeListener.listen(vm);
+
+

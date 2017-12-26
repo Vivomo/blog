@@ -8,7 +8,7 @@ css: cube
 <div ms-controller="cube" class="outer-wrap">
 
     <div class="cube-content">
-        <div class="outer-box">
+        <div class="outer-box" id="cube-box">
             <div ms-repeat="cubes" class="cubes"
                  ms-css-transform="translate3d([[el.x]]px, [[el.y]]px, [[el.z]]px) rotateX([[el.rotateX]]deg) rotateY([[el.rotateY]]deg) rotateZ([[el.rotateZ]]deg)"
             >
