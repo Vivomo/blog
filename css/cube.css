@@ -12,6 +12,10 @@ body {
   margin: 0 auto;
   perspective: 1600px; }
 
+.cube-content {
+  transform: rotateX(-30deg) rotateY(-45deg) rotateZ(0deg);
+  transform-style: preserve-3d; }
+
 .outer-box {
   position: relative;
   margin: auto;
@@ -20,7 +24,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: rotateX(-15deg) rotateY(-33deg) rotateZ(2deg);
+  transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
   transform-style: preserve-3d; }
 
 .cubes {

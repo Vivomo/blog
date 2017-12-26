@@ -272,7 +272,6 @@ avalon.scan();
 
 document.body.addEventListener('keydown', (e) => {
     let keyCode = e.keyCode;
-    console.log(keyCode);
     if (keyCode < 58) {
         keyCode -= 48
     } else {
@@ -283,5 +282,5 @@ document.body.addEventListener('keydown', (e) => {
     }
     let direction = 'xyz'[Math.ceil(keyCode / 3) - 1];
     let num = (keyCode - 1) % 3 + 1;
-    vm.rotate(direction, num, !e.shiftKey);
+    vm.rotate(direction, num, !e.altKey);
 });

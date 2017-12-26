@@ -1,5 +1,4 @@
 var gulp = require('gulp'),
-    less = require('gulp-less'),
     scss = require('gulp-sass'),
     scssSrc = '../scss/**/*.scss';
     // scssSrc = '../scss/calendar.scss';
@@ -12,6 +11,11 @@ var gulp = require('gulp'),
 /**
  * 安装scss 报错参照此网址, 推荐方法2
  * https://github.com/lmk123/blog/issues/28
+ *
+ * 如果是下面的异常 Error: Node Sass does not yet support your current environment: Windows 64-bit with Unsupported runtime (59)
+ * For more information on which environments are supported please see:
+ * https://github.com/sass/node-sass/releases/tag/v4.5.3
+ * 则npm rebuild node-sass
  */
 gulp.task('scss', function () {
     gulp.src(scssSrc)
