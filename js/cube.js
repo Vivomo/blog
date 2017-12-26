@@ -209,6 +209,7 @@ const CubeUtil = (() => {
 let vm = avalon.define({
     $id: 'cube',
     cubes: CubeUtil.paint(CubeUtil.createCubes()),
+    $rotating: false,
     /**
      * 一个点绕一个圆心(0, 0)旋转后的坐标
      * 未完待续
@@ -219,6 +220,11 @@ let vm = avalon.define({
      * @param isClockwise
      */
     rotate: (direction, num, isClockwise = true) => {
+        if (this.$rotating) {
+            return;
+        } else {
+            this.$rotating = true;
+        }
         let rangeDegree = isClockwise ? 3 : -3;
         let cubes = vm.cubes.filter((cube) => {
             return (cube[direction] + CUBE_WIDTH * 2) / CUBE_WIDTH === num;
@@ -231,7 +237,7 @@ let vm = avalon.define({
             y = 'z';
         }
 
-        cubes.forEach((cube) => {
+        cubes.forEach((cube, index) => {
             let count = 0;
             let _x = cube[x];
             let _y = cube[y];
@@ -252,10 +258,30 @@ let vm = avalon.define({
                     cube[y] = _y;
                     cube[rotateDirection] = 0;
                     CubeUtil.swapColor(vm.cubes, direction, num, isClockwise);
+
+                    if (index === 8) { // last
+                        this.$rotating = false;
+                    }
                 }
-            }, 16);
+            }, 10);
         });
 
     }
 });
 avalon.scan();
+
+document.body.addEventListener('keydown', (e) => {
+    let keyCode = e.keyCode;
+    console.log(keyCode);
+    if (keyCode < 58) {
+        keyCode -= 48
+    } else {
+        keyCode -= 96;
+    }
+    if (keyCode < 1 || keyCode > 9) { // not number
+        return;
+    }
+    let direction = 'xyz'[Math.ceil(keyCode / 3) - 1];
+    let num = (keyCode - 1) % 3 + 1;
+    vm.rotate(direction, num, !e.shiftKey);
+});

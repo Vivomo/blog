@@ -7,14 +7,17 @@
 // });
 
 
-var f = function () {
-    console.log(this.name, arguments);
-};
+
 
 var a = {
-    name: 'a'
+    get b() {
+        return 2;
+    }
 };
 
-f.bind(a);
+console.log(a.b);
+console.log(a.b);
+
+
 
 
