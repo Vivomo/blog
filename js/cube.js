@@ -210,6 +210,8 @@ const CubeListener = (function () {
 
     let body = document.body;
     let cube = document.getElementById('cube-box');
+    let startX = e.pageX;
+    let startY = e.pageY;
 
     function listenKey(vm) {
         body.addEventListener('keydown', (e) => {
@@ -228,9 +230,23 @@ const CubeListener = (function () {
         });
     }
 
+    function onBodyMouseMove(e) {
+        let {pageX, pageY} = e;
+
+    }
+
     function listenMouse(vm) {
         body.addEventListener('mousedown', (e) => {
+            startX = e.pageX;
+            startY = e.pageY;
+
+            body.addEventListener('mousemove', onBodyMouseMove);
+
             console.log(e, 'body');
+        });
+
+        body.addEventListener('mouseup', () => {
+            body.removeEventListener('mousemove', onBodyMouseMove);
         });
 
         cube.addEventListener('mousedown', (e) => {
