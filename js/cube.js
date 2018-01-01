@@ -210,8 +210,8 @@ const CubeListener = (function () {
 
     let body = document.body;
     let cube = document.getElementById('cube-box');
-    let startX = e.pageX;
-    let startY = e.pageY;
+    let startX = 0;
+    let startY = 0;
 
     function listenKey(vm) {
         body.addEventListener('keydown', (e) => {
@@ -258,7 +258,7 @@ const CubeListener = (function () {
     return {
         listen: function (vm) {
             listenKey(vm);
-            listenMouse(vm);
+            // listenMouse(vm);
         }
     }
 })();
