@@ -97,3 +97,15 @@
     .util-wrap .scroll-wrap .scroll-content {
       height: 120px;
       background: rgba(153, 153, 153, 0.5); }
+  .util-wrap .css-square {
+    overflow: hidden;
+    border: 1px solid #1EEDFF;
+    background: #ccc; }
+  .util-wrap .css-square2:after {
+    content: '';
+    display: block;
+    padding-bottom: 100%; }
+  .util-wrap .css-square3 {
+    content: '';
+    display: block;
+    margin-bottom: 100%; }

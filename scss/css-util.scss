@@ -124,4 +124,22 @@
             background: rgba(#999, 0.5);
         }
     }
+
+    .css-square {
+        overflow: hidden;
+        border: 1px solid $theme1;
+        background: #ccc;
+    }
+
+    .css-square2:after {
+        content: '';
+        display: block;
+        padding-bottom: 100%;
+    }
+
+    .css-square3 {
+        content: '';
+        display: block;
+        margin-bottom: 100%;
+    }
 }
