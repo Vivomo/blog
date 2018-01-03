@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS 自适应正方形</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        div {
+            border: 10px solid #00aa00;
+            background: #ccc;
+        }
+        .square {
+            width: 100%;
+            height: 100vw;
+        }
+        .square1 {
+             width: 300px;
+         }
+        .square1:after {
+            content: '';
+            display: block;
+            padding-bottom: 100%;
+        }
+
+        .square2 {
+            width: 300px;
+            overflow: hidden;
+        }
+        .square2:after {
+            content: '';
+            display: block;
+            margin-bottom: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="square2"></div>
+    <div class="square1"></div>
+    <div class="square"></div>
+</body>
+</html>
