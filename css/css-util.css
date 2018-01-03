@@ -105,7 +105,7 @@
     content: '';
     display: block;
     padding-bottom: 100%; }
-  .util-wrap .css-square3 {
+  .util-wrap .css-square3:after {
     content: '';
     display: block;
     margin-bottom: 100%; }
