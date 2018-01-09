@@ -12,3 +12,8 @@ build.command=npm --python=/usr/alibaba/install/python-3.5.0/bin/python3 --regis
 
 build.output=www/
 ``` 
+
+* vue项目中第三方样式无法覆盖
+```
+如mt-ui, 覆盖的样式不要写在scope里面就好了
+```
