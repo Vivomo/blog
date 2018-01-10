@@ -17,3 +17,9 @@ build.output=www/
 ```
 如mt-ui, 覆盖的样式不要写在scope里面就好了
 ```
+
+* webpack本地服务可以访问 localhost:port 但不能访问 本地路由IP:port
+```
+script
+"dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --port 8080 --host 0.0.0.0",
+```
