@@ -23,3 +23,5 @@ build.output=www/
 script
 "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --port 8080 --host 0.0.0.0",
 ```
+
+* ios 不支持window.outerHeight  用 window.innerHeight 代替
