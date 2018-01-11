@@ -25,3 +25,8 @@ script
 ```
 
 * ios 不支持window.outerHeight  用 window.innerHeight 代替
+
+* Vue-loader 在dev上不能转es5 可以不用管, 只要build可以就好了
+```
+有的时候dev上的问题可以对比下build之后
+```
