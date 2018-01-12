@@ -16,6 +16,16 @@ mock数据 如rap
 ```
 ## 代码格式统一
 ```
-tabsize 推荐4
-eslint配置
+tabsize 多少空格
+分号 有无
+JS版本选择(es6/ts)
+由eslint配置
+```
+
+## 前端监控
+```
+2017 D2 
+总结:https://zhuanlan.zhihu.com/p/32262716
+PDF:https://files.alicdn.com/tpsservice/39299d06993224a40767f1d29c6345e7.pdf
+视频:https://tianchi.aliyun.com/competition/videoStream.html#postsId=3631
 ```
