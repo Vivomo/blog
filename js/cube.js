@@ -342,7 +342,7 @@ let vm = avalon.define({
                         this.$rotating = false;
                     }
                 }
-            }, 10);
+            }, 16);
         });
 
     },
