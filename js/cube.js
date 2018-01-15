@@ -209,10 +209,18 @@ const CubeUtil = (() => {
 const CubeListener = (function () {
 
     let body = document.body;
+    let bodyWidth = body.getBoundingClientRect().width;
     let cube = document.getElementById('cube-box');
     let startX = 0;
     let startY = 0;
+    let mouseX = 0;
+    let mouseY = 0;
 
+
+    /**
+     * 监听键盘1-9 + alt 来驱动cube所有方向的旋转
+     * @param vm
+     */
     function listenKey(vm) {
         body.addEventListener('keydown', (e) => {
             let keyCode = e.keyCode;
@@ -232,7 +240,8 @@ const CubeListener = (function () {
 
     function onBodyMouseMove(e) {
         let {pageX, pageY} = e;
-
+        mouseX = pageX;
+        mouseY = pageY;
     }
 
     function listenMouse(vm) {
@@ -242,15 +251,19 @@ const CubeListener = (function () {
 
             body.addEventListener('mousemove', onBodyMouseMove);
 
-            console.log(e, 'body');
         });
 
         body.addEventListener('mouseup', () => {
+            if (Math.abs(mouseX - startX) > Math.abs(mouseY - startY)) {
+                vm.rotateVisualAngle('y', mouseX > startX)
+            } else {
+                let isX = startX < bodyWidth / 2;
+                vm.rotateVisualAngle( isX ? 'x' : 'z', isX ? mouseY < startY : mouseY > startY);
+            }
             body.removeEventListener('mousemove', onBodyMouseMove);
         });
 
         cube.addEventListener('mousedown', (e) => {
-            console.log(e, 'cube');
             e.stopPropagation();
         });
     }
@@ -258,7 +271,7 @@ const CubeListener = (function () {
     return {
         listen: function (vm) {
             listenKey(vm);
-            // listenMouse(vm);
+            listenMouse(vm);
         }
     }
 })();
@@ -281,10 +294,13 @@ let vm = avalon.define({
      * @param direction
      * @param num
      * @param isClockwise
+     * @param async 是否是异步旋转, 默认false, 旋转未停止时调用rotate无效
      */
-    rotate: (direction, num, isClockwise = true) => {
+    rotate: (direction, num, isClockwise, async = false) => {
         if (this.$rotating) {
-            return;
+            if (!async) {
+                return;
+            }
         } else {
             this.$rotating = true;
         }
@@ -336,7 +352,11 @@ let vm = avalon.define({
      * @param isClockwise
      */
     rotateVisualAngle: function (direction, isClockwise = true) {
-
+        this.rotate(direction, 1, isClockwise, true);
+        this.$rotating = false;
+        this.rotate(direction, 2, isClockwise, true);
+        this.$rotating = false;
+        this.rotate(direction, 3, isClockwise, true);
     }
 
 });
