@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>虚线曲线</title>
+</head>
+<body>
+    <canvas width="600" height="400" id="canvas"></canvas>
+
+    <script>
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext('2d');
+
+        ctx.setLineDash([2, 20]);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = '#000';
+
+        ctx.arc(200, 200, 100, 0, Math.PI * 2 );
+        // ctx.moveTo(400, 200);
+        ctx.stroke()
+        ctx.beginPath()
+        ctx.arc(400, 200, 100, 0, Math.PI * 2 );
+        ctx.stroke()
+    </script>
+</body>
+</html>
