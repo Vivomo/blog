@@ -1,5 +1,5 @@
 /* eslint-disable */
-import allColors from '../Chart/options/colors';
+import allColors from './Chart/options/colors';
 
 const d3 = require('d3');
 const colors = allColors.colors;
@@ -13,7 +13,7 @@ const radialPoint = (x, y) => {
 
 const zoomSvg = (svg, view, width, height) => {
 
-    var zoom = d3.zoom()
+    let zoom = d3.zoom()
         .scaleExtent([-3, 3])
         .translateExtent([[-500, -500], [width + 500, height + 500]])
         .on("zoom", zoomed);
@@ -29,7 +29,7 @@ const zoomSvg = (svg, view, width, height) => {
  */
 const initSankey = () => {
     d3.sankey = function() {
-        var sankey = {},
+        let sankey = {},
             nodeWidth = 24,
             nodePadding = 8,
             size = [1, 1],
@@ -81,10 +81,10 @@ const initSankey = () => {
         };
 
         sankey.link = function() {
-            var curvature = .5;
+            let curvature = .5;
 
             function link(d) {
-                var x0 = d.source.x + d.source.dx,
+                let x0 = d.source.x + d.source.dx,
                     x1 = d.target.x,
                     xi = d3.interpolateNumber(x0, x1),
                     x2 = xi(curvature),
@@ -114,7 +114,7 @@ const initSankey = () => {
                 node.targetLinks = [];
             });
             links.forEach(function(link) {
-                var source = link.source,
+                let source = link.source,
                     target = link.target;
                 if (typeof source === "number") source = link.source = nodes[link.source];
                 if (typeof target === "number") target = link.target = nodes[link.target];
@@ -138,7 +138,7 @@ const initSankey = () => {
         // nodes with no incoming links are assigned breadth zero, while
         // nodes with no outgoing links are assigned the maximum breadth.
         function computeNodeBreadths() {
-            var remainingNodes = nodes,
+            let remainingNodes = nodes,
                 nextNodes,
                 x = 0;
 
@@ -185,7 +185,7 @@ const initSankey = () => {
         }
 
         function computeNodeDepths(iterations) {
-            var nodesByBreadth = d3.nest()
+            let nodesByBreadth = d3.nest()
                 .key(function(d) { return d.x; })
                 .sortKeys(d3.ascending)
                 .entries(nodes)
@@ -194,7 +194,7 @@ const initSankey = () => {
             //
             initializeNodeDepth();
             resolveCollisions();
-            for (var alpha = 1; iterations > 0; --iterations) {
+            for (let alpha = 1; iterations > 0; --iterations) {
                 relaxRightToLeft(alpha *= .99);
                 resolveCollisions();
                 relaxLeftToRight(alpha);
@@ -202,7 +202,7 @@ const initSankey = () => {
             }
 
             function initializeNodeDepth() {
-                var ky = d3.min(nodesByBreadth, function(nodes) {
+                let ky = d3.min(nodesByBreadth, function(nodes) {
                     return (size[1] - (nodes.length - 1) * nodePadding) / d3.sum(nodes, value);
                 });
 
@@ -222,7 +222,7 @@ const initSankey = () => {
                 nodesByBreadth.forEach(function(nodes, breadth) {
                     nodes.forEach(function(node) {
                         if (node.targetLinks.length) {
-                            var y = d3.sum(node.targetLinks, weightedSource) / d3.sum(node.targetLinks, value);
+                            let y = d3.sum(node.targetLinks, weightedSource) / d3.sum(node.targetLinks, value);
                             node.y += (y - center(node)) * alpha;
                         }
                     });
@@ -237,7 +237,7 @@ const initSankey = () => {
                 nodesByBreadth.slice().reverse().forEach(function(nodes) {
                     nodes.forEach(function(node) {
                         if (node.sourceLinks.length) {
-                            var y = d3.sum(node.sourceLinks, weightedTarget) / d3.sum(node.sourceLinks, value);
+                            let y = d3.sum(node.sourceLinks, weightedTarget) / d3.sum(node.sourceLinks, value);
                             node.y += (y - center(node)) * alpha;
                         }
                     });
@@ -250,7 +250,7 @@ const initSankey = () => {
 
             function resolveCollisions() {
                 nodesByBreadth.forEach(function(nodes) {
-                    var node,
+                    let node,
                         dy,
                         y0 = 0,
                         n = nodes.length,
@@ -292,7 +292,7 @@ const initSankey = () => {
                 node.targetLinks.sort(ascendingSourceDepth);
             });
             nodes.forEach(function(node) {
-                var sy = 0, ty = 0;
+                let sy = 0, ty = 0;
                 node.sourceLinks.forEach(function(link) {
                     link.sy = sy;
                     sy += link.dy;
@@ -961,7 +961,7 @@ const D3Proxy = {
         const width = elem.clientWidth - margin.left - margin.right;
         const height = elem.clientHeight - margin.top - margin.bottom;
 
-        // format variables
+        // format letiables
         const formatNumber = d3.format(',.0f');    // zero decimal places
         const format = d => `${formatNumber(d)} ${units}`;
         let nodeIndex = 0;

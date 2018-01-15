@@ -1,9 +1,31 @@
 /* eslint-disable import/no-dynamic-require */
-import jsplumb from 'jsplumb';
-import D3Proxy from '../D3/D3Proxy';
-import {
-    CHART_TYPE
-} from '../../redux/constant';
+import D3Proxy from './D3Proxy';
+
+const CHART_TYPE = {
+    BAR: 'BAR',
+    MAP: 'MAP',
+    SCATTER: 'SCATTER',
+    CANDLESTICK: 'CANDLESTICK',
+    LINE: 'LINE',
+    STASH_BAR_01: 'STASH_BAR_01',
+    STASH_BAR_02: 'STASH_BAR_02',
+    STASH_BAR_03: 'STASH_BAR_03',
+    HORIZONTAL_BAR: 'HORIZONTAL_BAR',
+    LINE_AREA: 'LINE_AREA',
+    PIE: 'PIE',
+    ROSE_PIE: 'ROSE_PIE',
+    NEST_PIE: 'NEST_PIE',
+    SANKEY: 'SANKEY',
+    RADAR: 'RADAR',
+    HEATMAP: 'HEATMAP',
+    EDGE_BUNDLE: 'EDGE_BUNDLE',
+    KNOWLEDGE_TOPOLOGY: 'KNOWLEDGE_TOPOLOGY', // 知识图谱, 力向图
+    BUBBLE: 'BUBBLE',
+    RADIAL_TIDY_TREE: 'RADIAL_TIDY_TREE',
+    DENDROGRAM: 'DENDROGRAM',
+    SUNBURST: 'SUNBURST',
+    TABLE: 'TABLE'
+};
 
 const echarts = require('echarts/lib/echarts');
 require('echarts/lib/component/grid');
@@ -14,10 +36,10 @@ require('echarts/lib/component/dataZoom');
 require('echarts/lib/component/timeline');
 
 export const ECHARTS_OPTION_MAP = {
-    [CHART_TYPE.map]: 'MapOptions',
-    [CHART_TYPE.scatter]: 'ScatterOptions',
-    [CHART_TYPE.candlestick]: 'CandlestickOptions',
-    [CHART_TYPE.line]: 'LineOptions',
+    [CHART_TYPE.MAP]: 'MapOptions',
+    [CHART_TYPE.SCATTER]: 'ScatterOptions',
+    [CHART_TYPE.CANDLESTICK]: 'CandlestickOptions',
+    [CHART_TYPE.LINE]: 'LineOptions',
     [CHART_TYPE.STASH_BAR_01]: 'StashBar01Options',
     [CHART_TYPE.STASH_BAR_02]: 'StashBar02Options',
     [CHART_TYPE.STASH_BAR_03]: 'StashBar03Options',
@@ -26,7 +48,7 @@ export const ECHARTS_OPTION_MAP = {
     [CHART_TYPE.PIE]: 'PieOptions',
     [CHART_TYPE.ROSE_PIE]: 'RosePieOptions',
     [CHART_TYPE.NEST_PIE]: 'NestPieOptions',
-    [CHART_TYPE.bar]: 'BarOptions',
+    [CHART_TYPE.BAR]: 'BarOptions',
     [CHART_TYPE.EDGE_BUNDLE]: 'EdgeBundleOptions',
     [CHART_TYPE.KNOWLEDGE_TOPOLOGY]: 'KnowledgeTopologyOptions',
     [CHART_TYPE.HEATMAP]: 'HeatmapOptions',
@@ -56,7 +78,7 @@ export default class Painter {
     constructor(cfg) {
         Object.assign(this, cfg);
         this.chart = null;
-        this.type = this.type || CHART_TYPE.line;
+        this.type = this.type || CHART_TYPE.LINE;
         this.optionConfig = this.optionConfig || {};
         this.option = this.option || {};
         if (typeof this.elem === 'string') {
@@ -79,87 +101,10 @@ export default class Painter {
         if (Painter.isD3Type(type)) {
             this.drawD3(type, data, elem);
         } else {
-            if (type === CHART_TYPE.TABLE) {
-                this.drawTable(data, elem);
-            } else {
-                this.drawEchart();
-            }
+            this.drawEchart();
         }
     }
 
-    static connectionStyle = {
-        strokeWidth: 2,
-        stroke: '#5c96bc',
-        outlineStroke: 'transparent',
-        outlineWidth: 2
-    }
-    /**
-     *
-     * @param wrapper DOM Element or selector
-     */
-    static getConnector = (wrapper) => {
-        const instance = jsplumb.jsPlumb.getInstance({
-            Endpoint: ['Dot', {
-                radius: 2
-            }],
-            Connector: 'StateMachine',
-            // 控制连线的颜色和粗细
-            PaintStyle: Painter.connectionStyle,
-            ConnectionOverlays: [
-                ['Arrow', {
-                    location: 1,
-                    id: 'arrow',
-                    length: 12,
-                    foldback: 0.8,
-                    paintStyle: {}
-                }],
-            ],
-            Container: wrapper
-        });
-        instance.registerConnectionType('basic', {
-            anchor: 'Continuous',
-            connector: 'StateMachine'
-        });
-        return instance;
-    }
-
-    /**
-     * @param data {Array} 数据结构为：[{ time, [{ name, value }] }]
-     * @param elem {} 容器，data数据生成的table将被放到该容器中
-     * @memberof Painter
-     */
-    drawTable = (data, elem) => {
-        const headers = ['日期'];
-        const rowDatas = [];
-        
-        const firstRowData = data[0].data;
-        firstRowData.forEach(item => headers.push(item.name));
-        
-        data.forEach((item) => {
-            const rowData = [];
-            rowData.push(item.time);
-            item.data.forEach(ele => rowData.push(ele.value));
-            rowDatas.push(rowData);
-        });
-        
-        // 遍历data，生成table
-        let table = '<table><thead><tr>';
-        // 生成表头
-        headers.forEach((header) => {
-            table += `<th>${header}</th>`;
-        });
-        table += '</tr></thead><tbody>';
-        // 生成行
-        rowDatas.forEach((rowData) => {
-            table += '<tr>';
-            rowData.forEach((item) => {
-                table += `<td>${item}</td>`;
-            });
-            table += '</tr>';
-        });
-        table += '</tbody></table>';
-        elem.innerHTML = table;
-    }
 
     drawD3 = (type, data, elem) => {
         D3Proxy.init(elem);
@@ -208,21 +153,21 @@ export default class Painter {
      */
     requireEchartLib = () => {
         switch (this.type) {
-            case CHART_TYPE.map:
+            case CHART_TYPE.MAP:
                 require('echarts/lib/chart/map');
                 require('echarts/map/js/china');
                 break;
 
-            case CHART_TYPE.scatter:
+            case CHART_TYPE.SCATTER:
                 // 散点 & 气泡
                 require('echarts/lib/chart/scatter');
                 break;
 
-            case CHART_TYPE.candlestick:
+            case CHART_TYPE.CANDLESTICK:
                 require('echarts/lib/chart/candlestick');
                 break;
 
-            case CHART_TYPE.line:
+            case CHART_TYPE.LINE:
                 require('echarts/lib/chart/line');
                 break;
 
@@ -258,7 +203,7 @@ export default class Painter {
                 require('echarts/lib/chart/pie');
                 break;
 
-            case CHART_TYPE.bar:
+            case CHART_TYPE.BAR:
                 require('echarts/lib/chart/bar');
                 break;
             case CHART_TYPE.EDGE_BUNDLE:
@@ -303,114 +248,6 @@ export default class Painter {
         }
         return option;
     }
-    /**
-     * 绘制场景的节点
-     * @param cfg
-     */
-    static createSceneNode = (cfg) => {
-        const { wrapper, id, className, html, style, data } = cfg;
-        const div = document.createElement('div');
-        div.id = id;
-        div.className = className;
-        div.innerHTML = html;
-        if (style) {
-            Object.assign(div.style, style);
-        }
-        if (data) {
-            Object.assign(div.dataset, data);
-        }
-        wrapper.appendChild(div);
-        return div;
-    }
-
-    static drawSceneLines = (wrapper, data, connector) => {
-        data.forEach((line) => {
-            const { relationFrom, relationTo } = line;
-            connector.connect({
-                source: relationFrom,
-                target: relationTo,
-                type: 'basic'
-            });
-        });
-    }
-
-    static drawScene = (wrapper, data) => {
-        wrapper.innerHTML = '';
-        const { nodeList, nodeRelationList } = data;
-        const connector = Painter.getConnector(wrapper);
-
-        nodeList.forEach((node) => {
-            const { nodeType, leftMargin, topMargin, nodeId, nodeName,
-                inputSequence,
-                inputValue,
-                outputSequence,
-                outputValue,
-                ossInfo,
-                outputContent } = node;
-            Painter.createSceneNode({
-                wrapper: wrapper,
-                id: nodeId,
-                className: nodeType === 'start' ? 'window start-node' : 'window',
-                html: `${nodeName} <div class='close'></div><div class='ep'></div><input type='checkbox' value='0' />`,
-                style: {
-                    left: leftMargin,
-                    top: topMargin
-                },
-                data: {
-                    nodeId,
-                    nodeType,
-                    inputSequence,
-                    inputValue,
-                    outputSequence,
-                    outputValue,
-                    ossInfo,
-                    outputContent
-                }
-            });
-            // Painter.initSceneNode(div, nodeType, connector);
-        });
-
-        Painter.drawSceneLines(wrapper, nodeRelationList, connector);
-    }
-
-
-    /**
-     * 为节点初始化一些属性
-     * @param {Object} el          要初始化的元素
-     * @param {String} nodeType    节点类型
-     * @param {Object} connector   连线器
-     */
-    static initSceneNode = (el, nodeType, connector) => {
-        /**
-         * 条件判断：
-         * 如果新节点是开始节点，那么该节点只能是source，不能是target
-         * 如果新节点是工具节点，那么该节点既是source，也是target，连接时需要进行入参校验
-         * 如果新节点是结束节点，那么该节点只能是target，不能是source
-         */
-        switch (nodeType) {
-            case 'start':
-            case 'constant':
-                connector.makeSource(el, {
-                    filter: '.ep',
-                    anchor: 'Continuous',
-                    connectorStyle: Painter.connectionStyle
-                });
-                break;
-            default:
-                connector.makeSource(el, {
-                    filter: '.ep',
-                    anchor: 'Continuous',
-                    connectorStyle: Painter.connectionStyle
-                });
-                connector.makeTarget(el, {
-                    dropOptions: {
-                        hoverClass: 'dragHover'
-                    },
-                    anchor: 'Continuous',
-                    allowLoopback: false
-                });
-        }
-    };
 
     dispose = () => {
         if (this.chart) {
