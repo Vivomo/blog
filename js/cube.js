@@ -216,6 +216,8 @@ const CubeListener = (function () {
     let mouseX = 0;
     let mouseY = 0;
 
+    const MIN_DISTANCE = 50; // 最小移动距离
+
 
     /**
      * 监听键盘1-9 + alt 来驱动cube所有方向的旋转
@@ -254,9 +256,17 @@ const CubeListener = (function () {
         });
 
         body.addEventListener('mouseup', () => {
-            if (Math.abs(mouseX - startX) > Math.abs(mouseY - startY)) {
+            let changedX = Math.abs(mouseX - startX);
+            let changedY = Math.abs(mouseY - startY);
+            if (changedX > changedY) {
+                if (changedX < MIN_DISTANCE) {
+                    return;
+                }
                 vm.rotateVisualAngle('y', mouseX > startX)
             } else {
+                if (changedY < MIN_DISTANCE) {
+                    return;
+                }
                 let isX = startX < bodyWidth / 2;
                 vm.rotateVisualAngle( isX ? 'x' : 'z', isX ? mouseY < startY : mouseY > startY);
             }
@@ -286,6 +296,7 @@ let vm = avalon.define({
         z: 0
     },
     $rotating: false,
+    rotatingVisualAngle: false,
     /**
      * 一个点绕一个圆心(0, 0)旋转后的坐标
      * 未完待续
@@ -342,7 +353,7 @@ let vm = avalon.define({
                         this.$rotating = false;
                     }
                 }
-            }, 16);
+            }, 10);
         });
 
     },
@@ -352,11 +363,19 @@ let vm = avalon.define({
      * @param isClockwise
      */
     rotateVisualAngle: function (direction, isClockwise = true) {
-        this.rotate(direction, 1, isClockwise, true);
-        this.$rotating = false;
-        this.rotate(direction, 2, isClockwise, true);
-        this.$rotating = false;
-        this.rotate(direction, 3, isClockwise, true);
+        let rangeDegree = isClockwise ? 90 : -90;
+        this.visualAngle[direction] += rangeDegree;
+
+        setTimeout(() => {
+            this.rotatingVisualAngle = true;
+            this.visualAngle[direction] = 0;
+            CubeUtil.swapColor(this.cubes, direction, 1, isClockwise);
+            CubeUtil.swapColor(this.cubes, direction, 2, isClockwise);
+            CubeUtil.swapColor(this.cubes, direction, 3, isClockwise);
+            setTimeout(() => {
+                this.rotatingVisualAngle = false;
+            }, 30);
+        }, 300);
     }
 
 });

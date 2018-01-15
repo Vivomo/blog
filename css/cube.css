@@ -30,7 +30,10 @@ body {
   justify-content: center;
   align-items: center;
   transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  transition: transform 0.3s;
   transform-style: preserve-3d; }
+  .outer-box.no-animate {
+    transition: none; }
 
 .cubes {
   position: absolute;
