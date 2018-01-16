@@ -5,11 +5,16 @@
     <title>虚线曲线</title>
     <style>
         body {
-            background: #5a7dda;
+
         }
+
         .canvas-wrap {
             position: relative;
+            width: 600px;
+            height: 400px;
+            background: #5a7dda;
         }
+
         .canvas-wrap canvas {
             position: absolute;
             left: 0;
@@ -23,25 +28,93 @@
     <canvas width="600" height="400" id="canvas2"></canvas>
 </div>
 
-    <script>
-        let canvas = document.getElementById('canvas');
-        drawBg(canvas.getContext('2d'));
-
-        function drawBg(ctx) {
-            let {width, height} = ctx.canvas;
-            let r1 = width / 4;
-            let r2 = r1 * 1.2;
-
-            ctx.setLineDash([2, 8]);
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-            ctx.arc(width / 2, height * 0.75, r1, -Math.PI * 1.25, Math.PI * 0.25 );
-            ctx.stroke()
+<script>
+    let gauge = (() => {
+        function arc(ctx, ...args) {
             ctx.setLineDash([]);
-            ctx.beginPath()
-            ctx.arc(width / 2, height * 0.75, r2, -Math.PI * 1.25, Math.PI * 0.25 );
-            ctx.stroke()
+            _arc(ctx, ...args);
         }
-    </script>
+
+        function arcDash(ctx, ...args) {
+            ctx.setLineDash([2, 8]);
+            _arc(ctx, ...args);
+        }
+
+        function _arc(ctx, ...args) {
+            ctx.beginPath();
+            ctx.arc(...args);
+            ctx.stroke();
+        }
+
+        
+
+        return {
+            bgCtx: document.getElementById('canvas').getContext('2d'),
+            arcCtx: document.getElementById('canvas2').getContext('2d'),
+            lineWidth: 1,
+            bgColor: 'rgba(255, 255, 255, 0.3)',
+            arcColor: 'rgba(255, 255, 255, 0.7)',
+            min: 0,
+            max: 10,
+            step: 0.05,
+            beginRad: -Math.PI * 1.25,
+            endRad: Math.PI * 0.25,
+            drawBg: function () {
+                let ctx = this.bgCtx;
+                let {width, height} = ctx.canvas;
+                let r1 = width / 4;
+                let r2 = r1 * 1.2;
+
+                ctx.lineWidth = this.lineWidth;
+                ctx.strokeStyle = this.bgColor;
+                // 外圈实线
+                arc(ctx, width / 2, height * 0.75, r2, this.beginRad, this.endRad);
+                // 内圈虚线
+                arcDash(ctx, width / 2, height * 0.75, r1, -Math.PI * 1.25, Math.PI * 0.25);
+            },
+            setValue: function (value) {
+                let ctx = this.arcCtx;
+                let {width, height} = ctx.canvas;
+                let r1 = width / 4;
+                let r2 = r1 * 1.2;
+                let prec = value / this.max;
+                let sectionValue = this.max - this.min;
+                let sectionRad = this.endRad - this.beginRad;
+
+                let num = this.min;
+                ctx.lineWidth = this.lineWidth;
+                ctx.strokeStyle = this.arcColor;
+                let interval = setInterval(() => {
+                    num += this.step;
+                    if (num > value) {
+                        num = value;
+                    }
+                    let numStr = num.toFixed(1);
+                    let prec = (num - this.min) / sectionValue;
+                    ctx.clearRect(0, 0, width, height);
+                    // 虚线
+                    arcDash(ctx, width / 2, height * 0.75, r1, this.beginRad, this.beginRad + sectionRad * prec);
+                    // 实线
+                    arc(ctx, width / 2, height * 0.75, r2, this.beginRad, this.beginRad + sectionRad * prec);
+
+                    if (num === value) {
+                        clearInterval(interval);
+                    }
+                }, 16);
+
+
+            },
+            init: function () {
+                this.drawBg()
+            }
+        }
+    })();
+
+    gauge.init();
+    gauge.setValue(8);
+
+
+
+</script>
 </body>
 </html>
