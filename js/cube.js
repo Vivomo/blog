@@ -209,10 +209,20 @@ const CubeUtil = (() => {
 const CubeListener = (function () {
 
     let body = document.body;
+    let bodyWidth = body.getBoundingClientRect().width;
     let cube = document.getElementById('cube-box');
     let startX = 0;
     let startY = 0;
+    let mouseX = 0;
+    let mouseY = 0;
 
+    const MIN_DISTANCE = 50; // 最小移动距离
+
+
+    /**
+     * 监听键盘1-9 + alt 来驱动cube所有方向的旋转
+     * @param vm
+     */
     function listenKey(vm) {
         body.addEventListener('keydown', (e) => {
             let keyCode = e.keyCode;
@@ -232,7 +242,8 @@ const CubeListener = (function () {
 
     function onBodyMouseMove(e) {
         let {pageX, pageY} = e;
-
+        mouseX = pageX;
+        mouseY = pageY;
     }
 
     function listenMouse(vm) {
@@ -242,15 +253,27 @@ const CubeListener = (function () {
 
             body.addEventListener('mousemove', onBodyMouseMove);
 
-            console.log(e, 'body');
         });
 
         body.addEventListener('mouseup', () => {
+            let changedX = Math.abs(mouseX - startX);
+            let changedY = Math.abs(mouseY - startY);
+            if (changedX > changedY) {
+                if (changedX < MIN_DISTANCE) {
+                    return;
+                }
+                vm.rotateVisualAngle('y', mouseX > startX)
+            } else {
+                if (changedY < MIN_DISTANCE) {
+                    return;
+                }
+                let isX = startX < bodyWidth / 2;
+                vm.rotateVisualAngle( isX ? 'x' : 'z', isX ? mouseY < startY : mouseY > startY);
+            }
             body.removeEventListener('mousemove', onBodyMouseMove);
         });
 
         cube.addEventListener('mousedown', (e) => {
-            console.log(e, 'cube');
             e.stopPropagation();
         });
     }
@@ -258,7 +281,7 @@ const CubeListener = (function () {
     return {
         listen: function (vm) {
             listenKey(vm);
-            // listenMouse(vm);
+            listenMouse(vm);
         }
     }
 })();
@@ -273,6 +296,7 @@ let vm = avalon.define({
         z: 0
     },
     $rotating: false,
+    rotatingVisualAngle: false,
     /**
      * 一个点绕一个圆心(0, 0)旋转后的坐标
      * 未完待续
@@ -281,10 +305,13 @@ let vm = avalon.define({
      * @param direction
      * @param num
      * @param isClockwise
+     * @param async 是否是异步旋转, 默认false, 旋转未停止时调用rotate无效
      */
-    rotate: (direction, num, isClockwise = true) => {
+    rotate: (direction, num, isClockwise, async = false) => {
         if (this.$rotating) {
-            return;
+            if (!async) {
+                return;
+            }
         } else {
             this.$rotating = true;
         }
@@ -336,7 +363,19 @@ let vm = avalon.define({
      * @param isClockwise
      */
     rotateVisualAngle: function (direction, isClockwise = true) {
+        let rangeDegree = isClockwise ? 90 : -90;
+        this.visualAngle[direction] += rangeDegree;
 
+        setTimeout(() => {
+            this.rotatingVisualAngle = true;
+            this.visualAngle[direction] = 0;
+            CubeUtil.swapColor(this.cubes, direction, 1, isClockwise);
+            CubeUtil.swapColor(this.cubes, direction, 2, isClockwise);
+            CubeUtil.swapColor(this.cubes, direction, 3, isClockwise);
+            setTimeout(() => {
+                this.rotatingVisualAngle = false;
+            }, 30);
+        }, 300);
     }
 
 });

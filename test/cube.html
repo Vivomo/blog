@@ -9,11 +9,13 @@
 </head>
 
 <body>
-<p>键盘1-9控制9种旋转, 同时按住Alt则反转</p>
+<p>键盘1-9控制9种旋转, 同时按住Alt则反转, 鼠标暂时只支持调视角</p>
 <div ms-controller="cube" class="outer-wrap">
 
     <div class="cube-content">
-        <div class="outer-box" id="cube-box">
+        <div class="outer-box" id="cube-box"
+             ms-class="[[rotatingVisualAngle ? 'no-animate': '']]"
+             ms-css-transform="rotateX([[visualAngle.x]]deg) rotateY([[visualAngle.y]]deg) rotateZ([[visualAngle.z]]deg)">
             <div ms-repeat="cubes" class="cubes"
                  ms-css-transform="translate3d([[el.x]]px, [[el.y]]px, [[el.z]]px) rotateX([[el.rotateX]]deg) rotateY([[el.rotateY]]deg) rotateZ([[el.rotateZ]]deg)"
             >
