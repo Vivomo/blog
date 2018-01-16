@@ -25,23 +25,23 @@
 
     <script>
         let canvas = document.getElementById('canvas');
-        let ctx = canvas.getContext('2d');
-        let width = canvas.width;
-        let height = canvas.height;
-        let r1 = width / 4;
-        let r2 = r1 * 1.2;
+        drawBg(canvas.getContext('2d'));
 
-        ctx.setLineDash([2, 8]);
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        function drawBg(ctx) {
+            let {width, height} = ctx.canvas;
+            let r1 = width / 4;
+            let r2 = r1 * 1.2;
 
-        ctx.arc(width / 2, height * 0.75, r1, -Math.PI * 1.25, Math.PI * 0.25 );
-        // ctx.moveTo(400, 200);
-        ctx.stroke()
-        ctx.setLineDash([]);
-        ctx.beginPath()
-        ctx.arc(width / 2, height * 0.75, r2, -Math.PI * 1.25, Math.PI * 0.25 );
-        ctx.stroke()
+            ctx.setLineDash([2, 8]);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.arc(width / 2, height * 0.75, r1, -Math.PI * 1.25, Math.PI * 0.25 );
+            ctx.stroke()
+            ctx.setLineDash([]);
+            ctx.beginPath()
+            ctx.arc(width / 2, height * 0.75, r2, -Math.PI * 1.25, Math.PI * 0.25 );
+            ctx.stroke()
+        }
     </script>
 </body>
 </html>
