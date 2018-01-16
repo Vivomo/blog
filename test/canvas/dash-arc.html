@@ -46,43 +46,77 @@
             ctx.stroke();
         }
 
-        
+        function drawCircle(ctx, x, y, r, fillColor) {
+            ctx.fillStyle = fillColor;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawMark(ctx, x, y, x1, y1, rad) {
+            ctx.beginPath();
+            ctx.arc(x, y, 3, -0.5 * Math.PI + rad, 0.5 * Math.PI + rad);
+            ctx.lineTo(x1, y1);
+            ctx.fillStyle = '#f2f4f7';
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        function drawValue(ctx, x, y, str) {
+            ctx.font = '100px Arial, Microsoft Yahei, serif';
+            let text = ctx.measureText(str);
+            ctx.fillText(str, x - text.width / 2, y + 50)
+        }
 
         return {
             bgCtx: document.getElementById('canvas').getContext('2d'),
             arcCtx: document.getElementById('canvas2').getContext('2d'),
-            lineWidth: 1,
+            innerLineWidth: 2,
+            outerLineWidth: 1,
             bgColor: 'rgba(255, 255, 255, 0.3)',
             arcColor: 'rgba(255, 255, 255, 0.7)',
             min: 0,
             max: 10,
-            step: 0.05,
+            step: 0.1,
+            unit: '分',
             beginRad: -Math.PI * 1.25,
             endRad: Math.PI * 0.25,
             drawBg: function () {
                 let ctx = this.bgCtx;
-                let {width, height} = ctx.canvas;
-                let r1 = width / 4;
-                let r2 = r1 * 1.2;
+                let {innerRadius, outerRadius, centerX, centerY, width, height} = this;
 
-                ctx.lineWidth = this.lineWidth;
+                ctx.lineWidth = this.innerLineWidth;
                 ctx.strokeStyle = this.bgColor;
                 // 外圈实线
-                arc(ctx, width / 2, height * 0.75, r2, this.beginRad, this.endRad);
+                arc(ctx, centerX, centerY, outerRadius, this.beginRad, this.endRad);
                 // 内圈虚线
-                arcDash(ctx, width / 2, height * 0.75, r1, -Math.PI * 1.25, Math.PI * 0.25);
+                arcDash(ctx, centerX, centerY, innerRadius, -Math.PI * 1.25, Math.PI * 0.25);
+
+                // 最小值 和最大值
+                ctx.font = '24px Arial, Microsoft Yahei, serif';
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                let maxText = ctx.measureText(this.max + this.unit);
+                ctx.fillText(this.min + this.unit, width / 10, height - 24);
+                ctx.fillText(this.max + this.unit, width * 0.9 - maxText.width, height - 24);
+            },
+            drawLV: function () {
+                let lv = this.value < this.max / 2 ? '较差' : '较好';
+                let ctx = this.arcCtx;
+                ctx.font = '36px Microsoft Yahei, PingFangSC-Regular';
+                let text = ctx.measureText(lv);
+                ctx.fillText(lv, this.width / 2 - text.width / 2, this.height / 2 + 30);
             },
             setValue: function (value) {
+                this.value = value;
                 let ctx = this.arcCtx;
-                let {width, height} = ctx.canvas;
-                let r1 = width / 4;
-                let r2 = r1 * 1.2;
+                let {innerRadius, outerRadius, centerX, centerY, width, height} = this;
+
                 let prec = value / this.max;
                 let sectionValue = this.max - this.min;
                 let sectionRad = this.endRad - this.beginRad;
 
                 let num = this.min;
-                ctx.lineWidth = this.lineWidth;
+                ctx.lineWidth = this.outerLineWidth;
                 ctx.strokeStyle = this.arcColor;
                 let interval = setInterval(() => {
                     num += this.step;
@@ -91,21 +125,39 @@
                     }
                     let numStr = num.toFixed(1);
                     let prec = (num - this.min) / sectionValue;
+                    let endRad = this.beginRad + sectionRad * prec;
+
                     ctx.clearRect(0, 0, width, height);
                     // 虚线
-                    arcDash(ctx, width / 2, height * 0.75, r1, this.beginRad, this.beginRad + sectionRad * prec);
+                    arcDash(ctx, centerX, centerY, innerRadius, this.beginRad, endRad);
                     // 实线
-                    arc(ctx, width / 2, height * 0.75, r2, this.beginRad, this.beginRad + sectionRad * prec);
+                    arc(ctx, centerX, centerY, outerRadius, this.beginRad, endRad);
 
+                    let innerX = Math.cos(endRad) * innerRadius + centerX;
+                    let innerY = Math.sin(endRad) * innerRadius + centerY;
+                    drawCircle(ctx, innerX, innerY, 8, 'rgba(255, 255, 255, 0.3)');
+                    drawCircle(ctx, Math.cos(endRad) * outerRadius + centerX, Math.sin(endRad) * outerRadius + centerY, 4, '#ffffff');
+                    drawMark(ctx, innerX, innerY, Math.cos(endRad) * (innerRadius - 15) + centerX, Math.sin(endRad) * (innerRadius - 15) + centerY, endRad);
+                    drawValue(ctx, centerX, centerY, numStr)
                     if (num === value) {
+                        this.drawLV();
                         clearInterval(interval);
                     }
                 }, 16);
-
-
+            },
+            initData: function () {
+                let ctx = this.arcCtx;
+                let {width, height} = ctx.canvas;
+                this.innerRadius = width / 4;
+                this.outerRadius = this.innerRadius * 1.2;
+                this.centerX = width / 2;
+                this.centerY = height * 0.75;
+                this.width = width;
+                this.height = height;
             },
             init: function () {
-                this.drawBg()
+                this.initData();
+                this.drawBg();
             }
         }
     })();
