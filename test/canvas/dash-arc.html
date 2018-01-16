@@ -3,23 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>虚线曲线</title>
+    <style>
+        body {
+            background: #5a7dda;
+        }
+        .canvas-wrap {
+            position: relative;
+        }
+        .canvas-wrap canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
 </head>
 <body>
+<div class="canvas-wrap">
     <canvas width="600" height="400" id="canvas"></canvas>
+    <canvas width="600" height="400" id="canvas2"></canvas>
+</div>
 
     <script>
         let canvas = document.getElementById('canvas');
         let ctx = canvas.getContext('2d');
+        let width = canvas.width;
+        let height = canvas.height;
+        let r1 = width / 4;
+        let r2 = r1 * 1.2;
 
-        ctx.setLineDash([2, 20]);
+        ctx.setLineDash([2, 8]);
         ctx.lineWidth = 1;
-        ctx.strokeStyle = '#000';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
 
-        ctx.arc(200, 200, 100, 0, Math.PI * 2 );
+        ctx.arc(width / 2, height * 0.75, r1, -Math.PI * 1.25, Math.PI * 0.25 );
         // ctx.moveTo(400, 200);
         ctx.stroke()
+        ctx.setLineDash([]);
         ctx.beginPath()
-        ctx.arc(400, 200, 100, 0, Math.PI * 2 );
+        ctx.arc(width / 2, height * 0.75, r2, -Math.PI * 1.25, Math.PI * 0.25 );
         ctx.stroke()
     </script>
 </body>
