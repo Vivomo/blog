@@ -39,7 +39,7 @@ chrome.tabs.query({
         canvas.toBlob((blob) => {
             var a = document.createElement('a');
             a.href = window.URL.createObjectURL(blob);
-            a.download = 'download.png';
+            a.download = 'qrcode' + +new Date + '.png';
             a.click();
         }, 'image/png');
     });
