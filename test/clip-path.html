@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>clip path</title>
+    <style>
+        body {
+            background: #000;
+            width: 100vw;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        .frame {
+            cursor: none;
+            background: url(https://hacks.mozilla.org/files/2017/06/benko-game.png) repeat-x left center;
+            width: 100%;
+            height: 100%;
+            clip-path: circle(80px);
+        }
+
+        .message {
+            position: absolute;
+            color: #fff;
+            top: 20px;
+            left: 20px;
+            font-family: monospace;
+            font-size: 1.2em;
+            background: #0006;
+            padding: 1em;
+        }
+    </style>
+</head>
+<body>
+<article class="frame"></article>
+<p class="message">移动鼠标…</p>
+</body>
+<script>
+    let container = document.querySelector('.frame');
+    const RADIUS = 80;
+
+    document.addEventListener('mousemove', function (event) {
+        container.style['clip-path'] = `circle(${RADIUS}px at ${event.clientX}px ${event.clientY}px)`;
+    });
+</script>
+</html>
