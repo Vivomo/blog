@@ -4,6 +4,8 @@ js中的表达式
 js中的数组
 解构赋值
 LHS & RHS
+web audio -> piano
+canvas util
 
 开源计划
 Python3+Django =>博客 0.5
