@@ -1,6 +1,7 @@
 # React Native 踩过的那些坑
 
 ## 一个RN学习笔记, [地址](https://github.com/crazycodeboy/RNStudyNotes/) 
+## react-native 技术栈 & 开发链路总结 [地址](https://jeremyzj.github.io/rnstarter/)
 ## 一些常用组件库 [地址](http://www.jianshu.com/p/d9cd9a868764)
 
 ## 环境搭建(比较简单的方式)
