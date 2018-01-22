@@ -51,3 +51,9 @@ function pxToDp(uiElementPx) {
 
 ### 盒模型
 RN的盒模型相当于CSS中的box-sizing: border-box;
+
+## 其他
+```
+在第一次 react-native run-Android的时候, 下面那一步比较慢,要耐心等待, (我等了18分钟)
+Downloading https://services.gradle.org/distributions/gradle-4.0-milestone-1-all.zip
+```
