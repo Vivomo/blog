@@ -5,10 +5,11 @@
 ## 一些常用组件库 [地址](http://www.jianshu.com/p/d9cd9a868764)
 
 ## 环境搭建(比较简单的方式)
-* 用AndroidStudio 来配置安卓环境
+* 用AndroidStudio 来配置安卓环境 (配好在命令行确认下adb是否可执行)
 * 模拟器用 Genymotion
+* create-react-native-app 来初始化项目 (这是最简单的方式, RN官方推荐)
 * Webstorm 开发
-* [RN中文文档](https://reactnative.cn/docs/0.47/getting-started.html)
+* [RN中文文档](https://reactnative.cn)
 
 ## 项目规定
 * 统一tab size
@@ -51,6 +52,7 @@ function pxToDp(uiElementPx) {
 
 ### 盒模型
 RN的盒模型相当于CSS中的box-sizing: border-box;
+
 
 ## 其他
 ```
