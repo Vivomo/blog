@@ -92,12 +92,38 @@ complement(#cc3) // #33c
 @import url("file's url")
 ```
 
-### for使用示例
+### 条件判断
+``` 
+@if lightness($color) > 30% {
+　　background-color: #000;
+} @else {
+　　background-color: #fff;
+}
+```
+
+### 遍历
 ```text
 // 生成 .f12 {font-size: 12px} .... .f30 {font-size: 30px}
 @for $i from 12 through 30 {
   .f#{$i} {
     font-size: #{$i}px;
   }
+}
+
+@each $member in a, b, c, d {
+　　.#{$member} {
+　　　　background-image: url("/image/#{$member}.jpg");
+　　}
+}
+```
+
+### 自定义函数
+```
+@function double($n) {
+　　@return $n * 2;
+}
+
+#sidebar {
+　　width: double(5px);
 }
 ```
