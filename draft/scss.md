@@ -22,20 +22,66 @@ body {
 ### 嵌套
 ``` 
 div {
-　　hi {
+　　h1 {
 　　　　color:red;
 　　}
 }
 属性也可嵌套(用的较少)
-p {
+div {
 　　border: {
 　　　　color: red;
 　　}
 }
 在嵌套的代码块内，可以使用&引用父元素。比如a:hover伪类，可以写成：
 a {
-　　&:hover { color: #ffb3ff; }
+　　&:hover { color: #f00; }
 }
+```
+### 继承
+``` 
+.super {
+    color: red;
+}
+.sub {
+    @extend .super;
+    font-size: 12px;
+}
+```
+### Mixin, 类似于C的宏
+```
+// 我常用的省略号
+
+//定义了一个含参数和默认值的mixin, 没参数可以省略括号
+@mixin ellipsis($line:1){
+    overflow: hidden;
+    text-overflow: ellipsis;
+	@if $line == 1{
+		white-space: nowrap;
+		word-wrap: normal;
+	} @else {
+		display: -webkit-box;
+		-webkit-line-clamp: $line;
+		-webkit-box-orient: vertical;
+	}
+
+}
+
+// 使用
+.title {
+    @include ellipsis;
+}
+.content {
+    @include ellipsis(3); // 3行省略
+}
+```
+
+### 内置函数 (目前没有三角函数, 郁闷)
+```
+// 如颜色的
+lighten(#cc3, 10%) // #d6d65c
+darken(#cc3, 10%) // #a3a329
+grayscale(#cc3) // #808080
+complement(#cc3) // #33c
 ```
 
 ### 引入css
