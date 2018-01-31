@@ -30,3 +30,8 @@ script
 ```
 有的时候dev上的问题可以对比下build之后
 ```
+
+* transform 在 inline元素上不支持
+```
+https://www.w3.org/TR/css-transforms-1/#transformable-element
+```
