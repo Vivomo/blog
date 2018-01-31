@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>svg circle</title>
+    <style>
+        #ani-c-1{
+            animation: rotate 1s linear infinite;
+        }
+        #ani-c-2 {
+            animation: rotate 1.5s linear infinite;
+        }
+        #ani-c-3 {
+            animation: rotate 1.8s linear infinite;
+        }
+
+        #ani-scale-1, #ani-scale-2 {
+            opacity: 0;
+            animation: scale 1.5s linear infinite;
+        }
+
+        #ani-scale-2 {
+            animation-delay: 0.3s;
+        }
+
+
+        @keyframes rotate {
+            0% {
+                transform: translate3d(150px, 150px, 0) rotateZ(0);
+            }
+            100% {
+                transform: translate3d(150px, 150px, 0) rotateZ(360deg);
+            }
+        }
+
+        @keyframes scale {
+            0% {
+                opacity: 0.5;
+                transform: translate3d(150px, 150px, 0) scale(1);
+            }
+            100% {
+                opacity: 0.1;
+                transform: translate3d(150px, 150px, 0) scale(3);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="ani-rotate-circle-wrap">
+    <div class="circle circle1"></div>
+    <div class="circle circle2"></div>
+    <svg width="300" height="300">
+    <defs>
+        <linearGradient id="linear" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#363b4d"/>
+            <stop offset="100%" stop-color="#495d86"/>
+        </linearGradient>
+    </defs>
+    <circle
+            id="ani-c-1"
+        cx="0"
+        cy="0"
+        r="50"
+        stroke="url(#linear)"
+        fill="none"
+    >
+    </circle>
+    <circle
+            id="ani-c-2"
+            cx="0"
+            cy="0"
+            r="60"
+            stroke="url(#linear)"
+            fill="none"
+    >
+    </circle>
+    <circle
+            id="ani-c-3"
+            cx="0"
+            cy="0"
+            r="70"
+            stroke="url(#linear)"
+            fill="none"
+    />
+
+        <circle
+                id="ani-scale-1"
+                cx="0"
+                cy="0"
+                r="90"
+                stroke="url(#linear)"
+                fill="none"
+        />
+        <circle
+                id="ani-scale-2"
+                cx="0"
+                cy="0"
+                r="90"
+                stroke="url(#linear)"
+                fill="none"
+        />
+    </circle>
+    <!--<rect x="10" y="10" width="600" height="200" stroke="url(#linear)" fill="transparent"/>-->
+
+</svg>
+</div>
+</body>
+</html>
