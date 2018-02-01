@@ -1,5 +1,17 @@
 define('lib/editor', function () {
 
+    var listenContenteditable =  function (element, callback) {
+        if ("WebkitAppearance" in document.body.style) {
+            element.addEventListener("webkitEditableContentChanged", cb)
+        } else {
+            element.addEventListener("DOMCharacterDataModified", cb)
+        }
+
+        function cb() {
+            callback.call(element)
+        }
+    }
+
     var editor = function (cfg) {
         if (!this instanceof editor) {
             return new editor(cfg)
@@ -59,14 +71,9 @@ define('lib/editor', function () {
                 me.$textLength = $('#textLength');
                 me.$counter = $('.editor-counter');
 
-                //change div做的编辑器不支持原生change方法 手机第三方输入法不触发keyup事件
-                setInterval(function(){
-                    var html = me.getContent();
-                    if (html != me.historyHtml) {
-                        me.historyHtml = html;
-                        me.setTextLength(html.length);
-                    }
-                },300);
+                listenContenteditable($editor, function () {
+                    me.setTextLength(this.innerHTML.length);
+                });
             }
 
             //toolbar
