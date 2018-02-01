@@ -33,12 +33,35 @@
         123123 <span contentEditable="false">123</span>
     </div>
 
-    <div contentEditable="false">
-        不可编辑区
-    </div>
 </div>
 
 <script>
+    var duplexContenteditable = new function() {
+        return function(element, callback) {
+            element.addEventListener("webkitEditableContentChanged", cb)
+            element.addEventListener("DOMCharacterDataModified", cb)
+            function cb() {
+                callback.call(element)
+            }
+        }
+    }
+
+    var duplexContenteditable2 = function(element, callback) {
+        if ("WebkitAppearance" in document.body.style) {
+            element.addEventListener("webkitEditableContentChanged", cb)
+        } else {
+            element.addEventListener("DOMCharacterDataModified", cb)
+        }
+        function cb() {
+            callback.call(element)
+        }
+    }
+
+    duplexContenteditable2(wrap, function() {
+        console.log(this.innerText.length)
+    })
+
+
 //    wrap.focus();
     wrap.addEventListener('blur', function (e) {
         console.log(e);
