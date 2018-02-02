@@ -21,6 +21,7 @@ mock数据 如rap
 ```
 ## 代码格式统一
 ```
+CSS规范
 tabsize 多少空格
 分号 有无
 JS版本选择(es6/ts)
