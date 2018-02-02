@@ -14,6 +14,7 @@ keywords: CSS 编程规范
 >* 属性尽量简写 如`background, font, margin` [参考文章](https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties)
 >* 避免不必要的嵌套。可以进行嵌套，不意味着你应该这样做。只有在需要给父元素增加样式并且同时存在多个子元素时才需要考虑嵌套。
 >* 对于可能涉及到重构的数值或用于计算的数值则用变量保存(`LESS/SASS`), 如`padding-top: @scrollNavHeight;` 不推荐`height: calc(~'100% - 80px');`
+>* 做好`zIndex`管理,根据视觉稿整理出层级, 借助`SCSS`等工具声明变量或定义类名,不要随意定义数值,避免多人合作`zIndex`导致样式bug
 >* 属性声明顺序, 以此来优化渲染性能
 >>* Positioning
 >>* Box model 盒模型
