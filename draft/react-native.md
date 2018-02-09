@@ -1,5 +1,12 @@
 # React Native 踩过的那些坑
 
+# 学习RN 之前
+* React的jsx语法
+* React的生命周期和渲染原理
+```text
+以前用angular 或 vue MVVM框架的思想要转变一下, 这个没有双向绑定, 需要深入了解 render函数
+```
+
 ## 一个RN学习笔记, [地址](https://github.com/crazycodeboy/RNStudyNotes/) 
 ## react-native 技术栈 & 开发链路总结 [地址](https://jeremyzj.github.io/rnstarter/)
 ## 一些常用组件库 [地址](http://www.jianshu.com/p/d9cd9a868764)
@@ -7,7 +14,7 @@
 ## 环境搭建(比较简单的方式)
 * 用AndroidStudio 来配置安卓环境 (配好在命令行确认下adb是否可执行)
 * 模拟器用 Genymotion
-* create-react-native-app 来初始化项目 (这是最简单的方式, RN官方推荐)
+* create-react-native-app 来初始化项目 (这是最简单的方式, RN官方推荐) [expo](http://expo.io)这个工具可以让开发省很多事
 * Webstorm 开发
 * [RN中文文档](https://reactnative.cn)
 
@@ -24,6 +31,7 @@
 * 项目初期就把组件尽量抽取完毕, 抽取了组件就等于抽取了样式(如 分割线, 容器, 各种按钮等), 在多人项目中, 有时组件名比较抽象,可以配一个
     图文代码的文档(建议 .md),以便快速找到需要的组件, 和知道哪些组件没有开发
 * 组件中用了未定义的函数, 导致异常不会有明显的提示, Node has not been attached to a View. (eg:xzb)
+* 千万不要在RN项目里面用 import * as .... 这种方式 引用组件, 会导致过期不推荐的也被引入, 导致报错(如 react-navigator已替代了react-native里面的Navigator)
 
 ## iconfont
 利用www.iconfont.com 生成的.ttf 放置对应的资源文件, 在用的时候输入编码,同时声明fontFamily
@@ -56,6 +64,6 @@ RN的盒模型相当于CSS中的box-sizing: border-box;
 
 ## 其他
 ```
-在第一次 react-native run-Android的时候, 下面那一步比较慢,要耐心等待, (我等了18分钟)
-Downloading https://services.gradle.org/distributions/gradle-4.0-milestone-1-all.zip
+在第一次 react-native run-Android的时候, 下面那一步比较慢,要耐心等待, (我等了18分钟, 用expo没这问题)
+Downloading https://services.gradle.org/distributions/gradle-4.0-milestone-1-all.zip 
 ```
