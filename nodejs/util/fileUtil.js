@@ -85,5 +85,6 @@ Object.assign(exports, {
     simpleLock,
     simpleUnLock,
     getFilesByPath,
-    getSafeFilesByPath
+    getSafeFilesByPath,
+    copy
 });
