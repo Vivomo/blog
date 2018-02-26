@@ -26,9 +26,20 @@ gulp.task('scss', function () {
         .pipe(gulp.dest('../css'));
 });
 
-
-gulp.task('testWatch', function () {
-    gulp.watch(scssSrc, ['scss']);
+let shareCss = '../ignore/share/scss/share.scss'
+gulp.task('share', function () {
+    gulp.src(shareCss)
+        .pipe(scss({
+            // outputStyle: 'expanded',
+            // indentWidth: 4
+        }))
+        .pipe(gulp.dest('../ignore/share/css'));
 });
 
-gulp.task('default', ['scss', 'testWatch']);
+
+
+gulp.task('testWatch', function () {
+    gulp.watch(shareCss, ['scss', 'share']);
+});
+
+gulp.task('default', ['scss', 'testWatch', 'share']);
