@@ -67,3 +67,9 @@ RN的盒模型相当于CSS中的box-sizing: border-box;
 在第一次 react-native run-Android的时候, 下面那一步比较慢,要耐心等待, (我等了18分钟, 用expo没这问题)
 Downloading https://services.gradle.org/distributions/gradle-4.0-milestone-1-all.zip 
 ```
+
+
+# 分享朋友圈
+```text
+http://www.lcode.org/%E8%B6%85%E8%AF%A6%E7%BB%86react-native%E5%AE%9E%E7%8E%B0%E5%BE%AE%E4%BF%A1%E5%A5%BD%E5%8F%8B%E6%9C%8B%E5%8F%8B%E5%9C%88%E5%88%86%E4%BA%AB%E5%8A%9F%E8%83%BD-androidios%E5%8F%8C%E5%B9%B3%E5%8F%B0/
+```
