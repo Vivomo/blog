@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas letter</title>
+</head>
+<body>
+<canvas width="800" height="600" id="cav"></canvas>
+
+<script>
+    let config = {
+        space: 10,
+        w: 800,
+        h: 600
+    };
+
+    let canvas = document.getElementById('cav');
+    let ctx = canvas.getContext('2d');
+    let img = new Image;
+    img.onload = function () {
+        ctx.drawImage(img, 0, 0);
+        let points = getPoint(ctx.getImageData(0, 0, 800, 600).data);
+        ctx.fillStyle = '#f00';
+        points.forEach((point) => {
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, 3, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
+        });
+    };
+    img.src = '../src/letter.png';
+
+    function getPoint(colorData) {
+        let points = [];
+        for (let h = 0; h < config.h; h += config.space) {
+            for (let w = 0; w < config.w; w += config.space) {
+                let index = (h * config.w + w) * 4;
+                let color = colorData[index]
+                if (color < 255 && color > 0) {
+                    points.push({
+                        x: w,
+                        y: h
+                    })
+                }
+            }
+        }
+        return points;
+    }
+
+</script>
+</body>
+</html>
