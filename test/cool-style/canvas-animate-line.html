@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Canvas animate line</title>
+    <style>
+        canvas {
+            background: #222;
+        }
+    </style>
 </head>
 <body>
 <canvas width="1000" height="600" id="canvas"></canvas>
@@ -19,15 +24,12 @@
 
             //YOU CAN CHANGE OPTIONS HERE. DO NOT REALLY MESS WITH STUFF BELOW THAT
             opts = { //Options, you can change those
-                backgroundColor: "#222",
                 particleColor: "#fcfcfc",
                 particleAmount: 30,
                 defaultSpeed: 0.5,
                 addedSpeed: 2,
-
                 defaultRadius: 2,
                 addedRadius: 2,
-
                 communicationRadius: 150, //The radius for the line
             },
             particles = [],
@@ -104,10 +106,7 @@
         function loop(){ //Function of loop that will be called for a frame of the animation
             window.requestAnimationFrame(loop);
             tick++;
-
-            //Drawing the background. Basically clearing the frame that was before
-            canvas.fillStyle = opts.backgroundColor;
-            canvas.fillRect(0,0,w,h);
+            canvas.clearRect(0, 0, w, h)
 
             //Executing particle functions
             for(var i = 0; i < particles.length; i++){
