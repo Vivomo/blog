@@ -70,9 +70,21 @@ function getSafeFilesByPath(root) {
     return result;
 }
 
+/**
+ * 复制文件
+ * @param from
+ * @param to
+ */
+const copy = (from, to) => {
+    let readStream = fs.createReadStream(from);
+    let writeStream = fs.createWriteStream(to);
+    readStream.pipe(writeStream);
+};
+
 Object.assign(exports, {
     simpleLock,
     simpleUnLock,
     getFilesByPath,
-    getSafeFilesByPath
+    getSafeFilesByPath,
+    copy
 });

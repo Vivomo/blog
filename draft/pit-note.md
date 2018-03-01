@@ -35,3 +35,10 @@ script
 ```
 https://www.w3.org/TR/css-transforms-1/#transformable-element
 ```
+
+* import * 慎用
+```text
+import * as Alert from 'react-native'
+导致把老的Navigator 也引入了
+和推荐的react-navigator 不兼容
+``` 

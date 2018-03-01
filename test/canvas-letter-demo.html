@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas letter</title>
+    <style>
+        canvas {
+            background: #222;
+        }
+    </style>
+</head>
+<body>
+<canvas id="cav"></canvas>
+
+<script>
+    const particleLogo = (function () {
+        let config = {
+            space: 10,
+            w: 1200,
+            h: 600,
+            moveDistance: 5
+        };
+
+        let canvas = document.getElementById('cav');
+        canvas.width = config.w;
+        canvas.height = config.h;
+        let ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'rgba(255,255,255,0.6)';
+
+        let points = []
+        let pointsCount = 0;
+        let finishedPointsCount = 0;
+
+        function createPoint(colorData) {
+            for (let h = 0; h < config.h; h += config.space) {
+                for (let w = 0; w < config.w; w += config.space) {
+                    let index = (h * config.w + w) * 4;
+                    let color = colorData[index]
+                    if (color === 255) {
+                        let point = {
+                            x: w,
+                            y: h,
+                            startX: ~~(Math.random() * config.w),
+                            startY: ~~(Math.random() * config.h)
+                        };
+                        let absX = Math.abs(point.x - point.startX);
+                        let absY = Math.abs(point.y - point.startY)
+                        point.xMove = absX > absY;
+                        point.slope = absX / absY;
+                        points.push(point);
+                    }
+                }
+            }
+        }
+
+        function drawPoints() {
+            if (finishedPointsCount < pointsCount) {
+                requestAnimationFrame(drawPoints)
+            } else {
+                console.log('finish')
+            }
+            ctx.clearRect(0, 0, config.w, config.h);
+            points.forEach((point) => {
+                updatePoint(point);
+                drawPoint(point);
+            });
+        }
+
+        function loadLogo() {
+            let img = new Image;
+            img.onload = function () {
+                ctx.drawImage(img, (config.w - img.width) / 2, (config.h - img.height) / 2);
+                createPoint(ctx.getImageData(0, 0, config.w, config.h).data);
+                pointsCount = points.length;
+                drawPoints()
+            };
+            img.src = '../src/logo.png';
+        }
+
+        function updatePoint(point) {
+            if (point.startX === point.x && point.startY === point.y) {
+                return;
+            }
+            if (point.xMove) {
+                if (Math.abs(point.startX - point.x) <= config.moveDistance) {
+                    point.startX = point.x;
+                    point.startY = point.y;
+                } else {
+                    if (point.startX > point.x) {
+                        point.startX -= config.moveDistance;
+                    } else {
+                        point.startX += config.moveDistance;
+                    }
+                    if (point.startY > point.y) {
+                        point.startY -= config.moveDistance / point.slope;
+                    } else {
+                        point.startY += config.moveDistance / point.slope;
+                    }
+                }
+            } else {
+                if (Math.abs(point.startY - point.y) <= config.moveDistance) {
+                    point.startX = point.x;
+                    point.startY = point.y;
+                } else {
+                    if (point.startX > point.x) {
+                        point.startX -= config.moveDistance * point.slope;
+                    } else {
+                        point.startX += config.moveDistance * point.slope;
+                    }
+                    if (point.startY > point.y) {
+                        point.startY -= config.moveDistance;
+                    } else {
+                        point.startY += config.moveDistance
+                    }
+                }
+            }
+
+
+            if (point.startX === point.x && point.startY === point.y) {
+                finishedPointsCount ++
+            }
+        }
+
+        function drawPoint(point) {
+            ctx.beginPath();
+            ctx.arc(point.startX, point.startY, 3, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        return {
+            points,
+            init: function () {
+                loadLogo();
+            }
+        }
+    })();
+
+    particleLogo.init();
+
+</script>
+</body>
+</html>
