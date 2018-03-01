@@ -3,22 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Canvas letter</title>
+    <style>
+        canvas {
+            background: #222;
+        }
+    </style>
 </head>
 <body>
-<canvas width="800" height="600" id="cav"></canvas>
+<canvas id="cav"></canvas>
 
 <script>
     const particleLogo = (function () {
         let config = {
             space: 10,
-            w: 800,
+            w: 1200,
             h: 600,
-            moveDistance: 4
+            moveDistance: 5
         };
 
         let canvas = document.getElementById('cav');
+        canvas.width = config.w;
+        canvas.height = config.h;
         let ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#f00';
+        ctx.fillStyle = 'rgba(255,255,255,0.6)';
 
         let points = []
         let pointsCount = 0;
@@ -31,12 +38,17 @@
                     let index = (h * config.w + w) * 4;
                     let color = colorData[index]
                     if (color === 255) {
-                        points.push({
+                        let point = {
                             x: w,
                             y: h,
                             startX: ~~(Math.random() * config.w),
                             startY: ~~(Math.random() * config.h)
-                        })
+                        };
+                        let absX = Math.abs(point.x - point.startX);
+                        let absY = Math.abs(point.y - point.startY)
+                        point.xMove = absX > absY;
+                        point.slope = absX / absY;
+                        points.push(point);
                     }
                 }
             }
@@ -71,28 +83,42 @@
             if (point.startX === point.x && point.startY === point.y) {
                 return;
             }
-            if (Math.abs(point.startX - point.x) <= config.moveDistance) {
-                point.startX = point.x;
-            } else {
-                if (point.startX > point.x) {
-                    point.startX -= config.moveDistance;
+            if (point.xMove) {
+                if (Math.abs(point.startX - point.x) <= config.moveDistance) {
+                    point.startX = point.x;
+                    point.startY = point.y;
                 } else {
-                    point.startX += config.moveDistance;
+                    if (point.startX > point.x) {
+                        point.startX -= config.moveDistance;
+                    } else {
+                        point.startX += config.moveDistance;
+                    }
+                    if (point.startY > point.y) {
+                        point.startY -= config.moveDistance / point.slope;
+                    } else {
+                        point.startY += config.moveDistance / point.slope;
+                    }
+                }
+            } else {
+                if (Math.abs(point.startY - point.y) <= config.moveDistance) {
+                    point.startX = point.x;
+                    point.startY = point.y;
+                } else {
+                    if (point.startX > point.x) {
+                        point.startX -= config.moveDistance * point.slope;
+                    } else {
+                        point.startX += config.moveDistance * point.slope;
+                    }
+                    if (point.startY > point.y) {
+                        point.startY -= config.moveDistance;
+                    } else {
+                        point.startY += config.moveDistance
+                    }
                 }
             }
 
-            if (Math.abs(point.startY - point.y) <= config.moveDistance) {
-                point.startY = point.y;
-            } else {
-                if (point.startY > point.y) {
-                    point.startY -= config.moveDistance;
-                } else {
-                    point.startY += config.moveDistance
-                }
-            }
 
-
-            if (point.startX === point.x && point.startY === point.y) {
+            if (point.startX === point.x) {
                 finishedPointsCount ++
             }
         }
