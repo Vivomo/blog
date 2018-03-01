@@ -31,8 +31,7 @@
         let pointsCount = 0;
         let finishedPointsCount = 0;
 
-        function getPoint(colorData) {
-            let points = [];
+        function createPoint(colorData) {
             for (let h = 0; h < config.h; h += config.space) {
                 for (let w = 0; w < config.w; w += config.space) {
                     let index = (h * config.w + w) * 4;
@@ -52,7 +51,6 @@
                     }
                 }
             }
-            return points;
         }
 
         function drawPoints() {
@@ -72,7 +70,7 @@
             let img = new Image;
             img.onload = function () {
                 ctx.drawImage(img, (config.w - img.width) / 2, (config.h - img.height) / 2);
-                points = getPoint(ctx.getImageData(0, 0, config.w, config.h).data);
+                createPoint(ctx.getImageData(0, 0, config.w, config.h).data);
                 pointsCount = points.length;
                 drawPoints()
             };
@@ -118,7 +116,7 @@
             }
 
 
-            if (point.startX === point.x) {
+            if (point.startX === point.x && point.startY === point.y) {
                 finishedPointsCount ++
             }
         }
