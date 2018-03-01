@@ -8,44 +8,61 @@
 <canvas width="800" height="600" id="cav"></canvas>
 
 <script>
-    let config = {
-        space: 10,
-        w: 800,
-        h: 600
-    };
+    const particleLogo = (function () {
+        let config = {
+            space: 10,
+            w: 800,
+            h: 600
+        };
 
-    let canvas = document.getElementById('cav');
-    let ctx = canvas.getContext('2d');
-    let img = new Image;
-    img.onload = function () {
-        ctx.drawImage(img, 0, 0);
-        let points = getPoint(ctx.getImageData(0, 0, 800, 600).data);
-        ctx.fillStyle = '#f00';
-        points.forEach((point) => {
-            ctx.beginPath();
-            ctx.arc(point.x, point.y, 3, 0, Math.PI * 2);
-            ctx.closePath();
-            ctx.fill();
-        });
-    };
-    img.src = '../src/letter.png';
+        let canvas = document.getElementById('cav');
+        let ctx = canvas.getContext('2d');
 
-    function getPoint(colorData) {
-        let points = [];
-        for (let h = 0; h < config.h; h += config.space) {
-            for (let w = 0; w < config.w; w += config.space) {
-                let index = (h * config.w + w) * 4;
-                let color = colorData[index]
-                if (color < 255 && color > 0) {
-                    points.push({
-                        x: w,
-                        y: h
-                    })
+        function getPoint(colorData) {
+            let points = [];
+            for (let h = 0; h < config.h; h += config.space) {
+                for (let w = 0; w < config.w; w += config.space) {
+                    let index = (h * config.w + w) * 4;
+                    let color = colorData[index]
+                    if (color === 255) {
+                        points.push({
+                            x: w,
+                            y: h
+                        })
+                    }
                 }
             }
+            return points;
         }
-        return points;
-    }
+
+        function drawPoints(points) {
+            points.forEach((point) => {
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 3, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+            });
+        }
+
+        function loadLogo() {
+            let img = new Image;
+            img.onload = function () {
+                ctx.drawImage(img, (config.w - img.width) / 2, (config.h - img.height) / 2);
+                let points = getPoint(ctx.getImageData(0, 0, config.w, config.h).data);
+                ctx.fillStyle = '#f00';
+                drawPoints(points)
+            };
+            img.src = '../src/logo.png';
+        }
+
+        return {
+            init: function () {
+                loadLogo();
+            }
+        }
+    })();
+
+    particleLogo.init();
 
 </script>
 </body>
