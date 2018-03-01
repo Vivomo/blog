@@ -17,6 +17,7 @@
         var canvasBody = document.getElementById("canvas"),
             canvas = canvasBody.getContext("2d"),
 
+
             w = canvasBody.width = window.innerWidth, //Full width
             h = canvasBody.height = window.innerHeight, //Full height
 
@@ -39,7 +40,6 @@
                 this.y = Ypos ? Ypos : Math.random()*h; //Same here
                 this.speed = opts.defaultSpeed + Math.random()*opts.addedSpeed; //Speed + a bit of random one
                 this.directionAngle = Math.floor(Math.random()*360); //The angle of this particle its moving. !!!! TRUE ONLY ON INIT
-                this.color = opts.particleColor;
                 this.radius = opts.defaultRadius + Math.random()*opts.addedRadius; //Radius + a bit of random radius
                 this.d = { //Object, stores directions. Computes directions according to the random this.directionAngle
                     x: Math.cos(this.directionAngle)*this.speed,
@@ -70,7 +70,6 @@
                     canvas.beginPath();
                     canvas.arc(this.x, this.y, this.radius, 0, Math.PI*2);
                     canvas.closePath();
-                    canvas.fillStyle = this.color;
                     canvas.fill();
                 };
             },
@@ -97,6 +96,8 @@
             };
 
         function setup(){ //Function called once to set everything up
+            canvas.fillStyle = opts.particleColor;
+
             for(var i = 0; i < opts.particleAmount; i++){
                 particles.push( new Particle() );
             }
@@ -109,10 +110,11 @@
             canvas.clearRect(0, 0, w, h)
 
             //Executing particle functions
-            for(var i = 0; i < particles.length; i++){
-                particles[i].update();
-                particles[i].draw();
-            }
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw()
+            });
+
             //Executing lines
             for(var a = 0; a < particles.length; a++){
                 communicatePoints(particles[a], particles);
