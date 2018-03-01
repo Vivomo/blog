@@ -12,11 +12,17 @@
         let config = {
             space: 10,
             w: 800,
-            h: 600
+            h: 600,
+            moveDistance: 4
         };
 
         let canvas = document.getElementById('cav');
         let ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#f00';
+
+        let points = []
+        let pointsCount = 0;
+        let finishedPointsCount = 0;
 
         function getPoint(colorData) {
             let points = [];
@@ -27,7 +33,9 @@
                     if (color === 255) {
                         points.push({
                             x: w,
-                            y: h
+                            y: h,
+                            startX: ~~(Math.random() * config.w),
+                            startY: ~~(Math.random() * config.h)
                         })
                     }
                 }
@@ -35,12 +43,16 @@
             return points;
         }
 
-        function drawPoints(points) {
+        function drawPoints() {
+            if (finishedPointsCount < pointsCount) {
+                requestAnimationFrame(drawPoints)
+            } else {
+                console.log('finish')
+            }
+            ctx.clearRect(0, 0, config.w, config.h);
             points.forEach((point) => {
-                ctx.beginPath();
-                ctx.arc(point.x, point.y, 3, 0, Math.PI * 2);
-                ctx.closePath();
-                ctx.fill();
+                updatePoint(point);
+                drawPoint(point);
             });
         }
 
@@ -48,11 +60,48 @@
             let img = new Image;
             img.onload = function () {
                 ctx.drawImage(img, (config.w - img.width) / 2, (config.h - img.height) / 2);
-                let points = getPoint(ctx.getImageData(0, 0, config.w, config.h).data);
-                ctx.fillStyle = '#f00';
-                drawPoints(points)
+                points = getPoint(ctx.getImageData(0, 0, config.w, config.h).data);
+                pointsCount = points.length;
+                drawPoints()
             };
             img.src = '../src/logo.png';
+        }
+
+        function updatePoint(point) {
+            if (point.startX === point.x && point.startY === point.y) {
+                return;
+            }
+            if (Math.abs(point.startX - point.x) <= config.moveDistance) {
+                point.startX = point.x;
+            } else {
+                if (point.startX > point.x) {
+                    point.startX -= config.moveDistance;
+                } else {
+                    point.startX += config.moveDistance;
+                }
+            }
+
+            if (Math.abs(point.startY - point.y) <= config.moveDistance) {
+                point.startY = point.y;
+            } else {
+                if (point.startY > point.y) {
+                    point.startY -= config.moveDistance;
+                } else {
+                    point.startY += config.moveDistance
+                }
+            }
+
+
+            if (point.startX === point.x && point.startY === point.y) {
+                finishedPointsCount ++
+            }
+        }
+
+        function drawPoint(point) {
+            ctx.beginPath();
+            ctx.arc(point.startX, point.startY, 3, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
         }
 
         return {
