@@ -10,7 +10,7 @@
   "author": "Vimo",
   "license": "ISC",
   "devDependencies": {
-    "webpack": "^3.9.1"
+    "webpack": "^4.0.1"
   },
   "dependencies": {
     "jquery": "^3.2.1",
