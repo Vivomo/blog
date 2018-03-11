@@ -2,6 +2,7 @@ class Carousel {
     constructor(opt) {
         this.config = {
             interval: opt.interval || 3000,
+            transitionTime: opt.transitionTime || 300,
         };
 
         this.init(opt);
@@ -12,6 +13,11 @@ class Carousel {
         this.width = elem[0].clientWidth;
         this.elem = elem.map((elem, index) => ({ elem, index }));
         this.elem[this.elem.length - 1].index = -1;
+        this.updatePosition();
+        elem.forEach((elem) => {
+            elem.style.transition = `all ${this.config.transitionTime}ms`;
+            elem.style.webkitTransition = `all ${this.config.transitionTime}ms`;
+        });
         this.start();
     }
 
@@ -20,7 +26,7 @@ class Carousel {
      */
     updatePosition() {
         this.elem.forEach((item) => {
-            item.elem.style.left = item.index * this.width + 'px'
+            item.elem.style.left = item.index * this.width + 'px';
             item.elem.style.zIndex = item.index
         })
     }
@@ -30,7 +36,7 @@ class Carousel {
      */
     updateIndex() {
         this.elem.forEach((item) => {
-            item.index = (item.index + 2) % this.elem.length - 1;
+            item.index = (item.index + this.elem.length) % this.elem.length - 1;
         });
     }
 
