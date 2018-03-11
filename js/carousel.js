@@ -9,15 +9,13 @@ class Carousel {
     }
 
     init(opt) {
-        let elem = typeof opt.elem === 'string' ? Array.from(document.querySelectorAll(opt.elem)) : opt.elem;
-        this.width = elem[0].clientWidth;
-        this.elem = elem.map((elem, index) => ({ elem, index }));
+        let wrap = typeof opt.elem === 'string' ? document.querySelector(opt.elem) : opt.elem;
+        this.width = wrap.clientWidth;
+        this.elem = Array.from(wrap.children).map((elem, index) => ({ elem, index }));
         this.elem[this.elem.length - 1].index = -1;
         this.updatePosition();
-        elem.forEach((elem) => {
-            elem.style.transition = `all ${this.config.transitionTime}ms`;
-            elem.style.webkitTransition = `all ${this.config.transitionTime}ms`;
-        });
+        wrap.style.transition = `all ${this.config.transitionTime}ms`;
+        wrap.style.webkitTransition = `all ${this.config.transitionTime}ms`;
         this.start();
     }
 
