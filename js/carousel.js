@@ -27,7 +27,7 @@ class Carousel {
     updatePosition() {
         this.elem.forEach((item) => {
             item.elem.style.left = item.index * this.width + 'px';
-            item.elem.style.zIndex = item.index
+            item.elem.style.zIndex = this.elem.length - Math.abs(item.index);
         })
     }
 

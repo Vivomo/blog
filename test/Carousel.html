@@ -22,16 +22,16 @@
 
         .banner li:nth-child(1) {
             z-index: 1;
-            background: #00aa00;
+            background: url("../src/bg1.png");
         }
         .banner li:nth-child(2) {
-            background: #00aced;
+            background: url("../src/bg2.png");
         }
         .banner li:nth-child(3) {
-            background: #9f4897;
+            background: url("../src/bg3.png");
         }
         .banner li:nth-child(4) {
-            background: #99cc99;
+            background: url("../src/bg4.png");
         }
     </style>
 </head>
@@ -46,7 +46,8 @@
 
 <script>
     new Carousel({
-        elem: '.banner li'
+        elem: '.banner li',
+        transitionTime: 2000
     });
 </script>
 </body>
