@@ -12,6 +12,7 @@ class Carousel {
         let wrap = typeof opt.elem === 'string' ? document.querySelector(opt.elem) : opt.elem;
         this.wrap = wrap;
         this.moving = false;
+        this.afterSwitch = opt.afterSwitch || (() => {});
         this.width = wrap.clientWidth;
         this.elem = Array.from(wrap.children);
         this.activeIndex = 0;
@@ -53,6 +54,7 @@ class Carousel {
 
         setTimeout(() => {
             this.moving = false;
+            this.afterSwitch(this.activeIndex, this.prevActiveIndex);
         }, this.config.transitionTime);
     }
 
