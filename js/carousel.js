@@ -12,7 +12,7 @@ class Carousel {
         let wrap = typeof opt.elem === 'string' ? document.querySelector(opt.elem) : opt.elem;
         this.wrap = wrap;
         this.width = wrap.clientWidth;
-        this.elem = Array.from(wrap.children).map((elem, index) => ({ elem, index }));
+        this.elem = Array.from(wrap.children); //.map((elem, index) => ({ elem, index }));
         this.elem[this.elem.length - 1].index = -1;
         this.activeIndex = 0;
         this.prevActiveIndex = this.elem.length - 1;
@@ -27,16 +27,18 @@ class Carousel {
         this.wrap.style.webkitTransition = this.wrap.style.transition = 'none';
         let showArr = [this.prevActiveIndex, this.activeIndex];
         this.elem.filter((item, index) => !showArr.includes(index)).forEach((item) => {
-            item.style.visibile = 'hidden';
+            item.style.visibility = 'hidden';
         });
         let nextElem = this.elem[this.activeIndex];
-        nextElem.style.visibile = 'visibility';
+        nextElem.style.visibility = 'visible';
         this.elem[this.prevActiveIndex].style.left = this.wrap.style.left = 0;
         if (isNext) {
             nextElem.style.left = -this.width + 'px';
         } else {
             nextElem.style.left = this.width + 'px';
         }
+
+        this.move(isNext);
     }
 
     move(isNext = true) {
@@ -57,11 +59,13 @@ class Carousel {
     }
 
     next(target = this.activeIndex + 1) {
-        this.updateIndex(target);
+        this.updateIndex(target % this.elem.length);
+        this.updatePosition();
     }
 
     prev(target = this.activeIndex - 1) {
-        this.updateIndex(target);
+        this.updateIndex((target + this.elem.length) % this.elem.length);
+        this.updatePosition(false);
     }
 
     loop() {
