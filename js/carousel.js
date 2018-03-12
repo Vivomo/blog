@@ -12,8 +12,7 @@ class Carousel {
         let wrap = typeof opt.elem === 'string' ? document.querySelector(opt.elem) : opt.elem;
         this.wrap = wrap;
         this.width = wrap.clientWidth;
-        this.elem = Array.from(wrap.children); //.map((elem, index) => ({ elem, index }));
-        this.elem[this.elem.length - 1].index = -1;
+        this.elem = Array.from(wrap.children);
         this.activeIndex = 0;
         this.prevActiveIndex = this.elem.length - 1;
         this.updatePosition();
@@ -69,6 +68,14 @@ class Carousel {
         this.updatePosition(false);
     }
 
+    targetTo(index) {
+        if (this.activeIndex > index) {
+            this.prev(index);
+        } else if (this.activeIndex < index){
+            this.next(index);
+        }
+    }
+
     loop() {
         this.next();
     }
@@ -82,10 +89,5 @@ class Carousel {
             this.loop();
         }, this.config.interval);
     }
-
-    stop() {
-        clearInterval(this.interval);
-    }
-
 }
 
