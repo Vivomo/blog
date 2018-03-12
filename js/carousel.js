@@ -57,16 +57,15 @@ class Carousel {
     }
 
     next(target = this.activeIndex + 1) {
-
+        this.updateIndex(target);
     }
 
     prev(target = this.activeIndex - 1) {
-
+        this.updateIndex(target);
     }
 
     loop() {
-        this.updateIndex();
-        this.updatePosition();
+        this.next();
     }
 
     start() {
