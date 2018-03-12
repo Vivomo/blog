@@ -31,18 +31,20 @@ class Carousel {
         });
         let nextElem = this.elem[this.activeIndex];
         nextElem.style.visibility = 'visible';
-        this.elem[this.prevActiveIndex].style.left = this.wrap.style.left = 0;
+        this.elem[this.prevActiveIndex].style.left = this.wrap.style.left = '0px';
         if (isNext) {
-            nextElem.style.left = -this.width + 'px';
-        } else {
             nextElem.style.left = this.width + 'px';
+        } else {
+            nextElem.style.left = -this.width + 'px';
         }
-
-        this.move(isNext);
+        setTimeout(() => {
+            this.move(isNext);
+        }, 0);
     }
 
     move(isNext = true) {
         this.wrap.style.webkitTransition = this.wrap.style.transition = `all ${this.config.transitionTime}ms`;
+        console.log(this.wrap.style.left);
         if (isNext) {
             this.wrap.style.left = -this.width + 'px';
         } else {
