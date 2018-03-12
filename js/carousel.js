@@ -44,7 +44,6 @@ class Carousel {
 
     move(isNext = true) {
         this.wrap.style.webkitTransition = this.wrap.style.transition = `all ${this.config.transitionTime}ms`;
-        console.log(this.wrap.style.left);
         if (isNext) {
             this.wrap.style.left = -this.width + 'px';
         } else {
@@ -72,6 +71,10 @@ class Carousel {
 
     loop() {
         this.next();
+    }
+
+    stop() {
+        clearInterval(this.interval);
     }
 
     start() {
