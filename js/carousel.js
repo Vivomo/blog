@@ -40,7 +40,7 @@ class Carousel {
         }
         setTimeout(() => {
             this.move(isNext);
-        }, 0);
+        }, 16);
     }
 
     move(isNext = true) {
@@ -79,9 +79,14 @@ class Carousel {
     targetTo(index) {
         if (this.activeIndex > index) {
             this.prev(index);
+            this.stop();
         } else if (this.activeIndex < index){
             this.next(index);
+            this.stop();
         }
+        setTimeout(() => {
+            this.start();
+        }, 0)
     }
 
     loop() {
