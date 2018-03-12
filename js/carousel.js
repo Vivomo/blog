@@ -10,32 +10,58 @@ class Carousel {
 
     init(opt) {
         let wrap = typeof opt.elem === 'string' ? document.querySelector(opt.elem) : opt.elem;
+        this.wrap = wrap;
         this.width = wrap.clientWidth;
         this.elem = Array.from(wrap.children).map((elem, index) => ({ elem, index }));
         this.elem[this.elem.length - 1].index = -1;
+        this.activeIndex = 0;
+        this.prevActiveIndex = this.elem.length - 1;
         this.updatePosition();
-        wrap.style.transition = `all ${this.config.transitionTime}ms`;
-        wrap.style.webkitTransition = `all ${this.config.transitionTime}ms`;
         this.start();
     }
 
     /**
      * 更新位置
      */
-    updatePosition() {
-        this.elem.forEach((item) => {
-            item.elem.style.left = item.index * this.width + 'px';
-            item.elem.style.zIndex = this.elem.length - Math.abs(item.index);
-        })
+    updatePosition(isNext = true) {
+        this.wrap.style.webkitTransition = this.wrap.style.transition = 'none';
+        let showArr = [this.prevActiveIndex, this.activeIndex];
+        this.elem.filter((item, index) => !showArr.includes(index)).forEach((item) => {
+            item.style.visibile = 'hidden';
+        });
+        let nextElem = this.elem[this.activeIndex];
+        nextElem.style.visibile = 'visibility';
+        this.elem[this.prevActiveIndex].style.left = this.wrap.style.left = 0;
+        if (isNext) {
+            nextElem.style.left = -this.width + 'px';
+        } else {
+            nextElem.style.left = this.width + 'px';
+        }
+    }
+
+    move(isNext = true) {
+        this.wrap.style.webkitTransition = this.wrap.style.transition = `all ${this.config.transitionTime}ms`;
+        if (isNext) {
+            this.wrap.style.left = -this.width + 'px';
+        } else {
+            this.wrap.style.left = this.width + 'px';
+        }
     }
 
     /**
      * 更新Index
      */
-    updateIndex() {
-        this.elem.forEach((item) => {
-            item.index = (item.index + this.elem.length) % this.elem.length - 1;
-        });
+    updateIndex(activeIndex) {
+        this.prevActiveIndex = this.activeIndex;
+        this.activeIndex = activeIndex;
+    }
+
+    next(target = this.activeIndex + 1) {
+
+    }
+
+    prev(target = this.activeIndex - 1) {
+
     }
 
     loop() {
