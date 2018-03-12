@@ -11,6 +11,7 @@ class Carousel {
     init(opt) {
         let wrap = typeof opt.elem === 'string' ? document.querySelector(opt.elem) : opt.elem;
         this.wrap = wrap;
+        this.moving = false;
         this.width = wrap.clientWidth;
         this.elem = Array.from(wrap.children);
         this.activeIndex = 0;
@@ -42,12 +43,17 @@ class Carousel {
     }
 
     move(isNext = true) {
+        this.moving = true;
         this.wrap.style.webkitTransition = this.wrap.style.transition = `all ${this.config.transitionTime}ms`;
         if (isNext) {
             this.wrap.style.left = -this.width + 'px';
         } else {
             this.wrap.style.left = this.width + 'px';
         }
+
+        setTimeout(() => {
+            this.moving = false;
+        }, this.config.transitionTime);
     }
 
     /**
