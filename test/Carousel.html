@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <title>轮播图</title>
     <style>
+
+        .banner-wrap {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
         .banner {
             position: relative;
-            overflow: hidden;
-            width: 800px;
             height: 600px;
         }
 
@@ -17,7 +23,6 @@
             top: 0;
             width: 100%;
             height: 100%;
-            transition: all 300ms;
         }
 
         .banner li:nth-child(1) {
@@ -36,18 +41,20 @@
     </style>
 </head>
 <body>
-<ul class="banner">
-    <li>1</li>
-    <li>2</li>
-    <li>3</li>
-    <li>4</li>
-</ul>
+<div class="banner-wrap">
+    <ul class="banner">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+</div>
 <script src="../js/carousel.js"></script>
 
 <script>
-    new Carousel({
-        elem: '.banner li',
-        transitionTime: 2000
+    let carousel = new Carousel({
+        elem: '.banner',
+        transitionTime: 500
     });
 </script>
 </body>

@@ -10,37 +10,91 @@ class Carousel {
 
     init(opt) {
         let wrap = typeof opt.elem === 'string' ? document.querySelector(opt.elem) : opt.elem;
+        this.wrap = wrap;
+        this.moving = false;
+        this.afterSwitch = opt.afterSwitch || (() => {});
         this.width = wrap.clientWidth;
-        this.elem = Array.from(wrap.children).map((elem, index) => ({ elem, index }));
-        this.elem[this.elem.length - 1].index = -1;
+        this.elem = Array.from(wrap.children);
+        this.activeIndex = 0;
+        this.prevActiveIndex = this.elem.length - 1;
         this.updatePosition();
-        wrap.style.transition = `all ${this.config.transitionTime}ms`;
-        wrap.style.webkitTransition = `all ${this.config.transitionTime}ms`;
         this.start();
     }
 
     /**
      * 更新位置
      */
-    updatePosition() {
-        this.elem.forEach((item) => {
-            item.elem.style.left = item.index * this.width + 'px';
-            item.elem.style.zIndex = this.elem.length - Math.abs(item.index);
-        })
+    updatePosition(isNext = true) {
+        this.wrap.style.webkitTransition = this.wrap.style.transition = 'none';
+        let showArr = [this.prevActiveIndex, this.activeIndex];
+        this.elem.filter((item, index) => !showArr.includes(index)).forEach((item) => {
+            item.style.visibility = 'hidden';
+        });
+        let nextElem = this.elem[this.activeIndex];
+        nextElem.style.visibility = 'visible';
+        this.elem[this.prevActiveIndex].style.left = this.wrap.style.left = '0px';
+        if (isNext) {
+            nextElem.style.left = this.width + 'px';
+        } else {
+            nextElem.style.left = -this.width + 'px';
+        }
+        setTimeout(() => {
+            this.move(isNext);
+        }, 16);
+    }
+
+    move(isNext = true) {
+        this.moving = true;
+        this.wrap.style.webkitTransition = this.wrap.style.transition = `all ${this.config.transitionTime}ms`;
+        if (isNext) {
+            this.wrap.style.left = -this.width + 'px';
+        } else {
+            this.wrap.style.left = this.width + 'px';
+        }
+
+        setTimeout(() => {
+            this.moving = false;
+            this.afterSwitch(this.activeIndex, this.prevActiveIndex);
+        }, this.config.transitionTime);
     }
 
     /**
      * 更新Index
      */
-    updateIndex() {
-        this.elem.forEach((item) => {
-            item.index = (item.index + this.elem.length) % this.elem.length - 1;
-        });
+    updateIndex(activeIndex) {
+        this.prevActiveIndex = this.activeIndex;
+        this.activeIndex = activeIndex;
+    }
+
+    next(target = this.activeIndex + 1) {
+        this.updateIndex(target % this.elem.length);
+        this.updatePosition();
+    }
+
+    prev(target = this.activeIndex - 1) {
+        this.updateIndex((target + this.elem.length) % this.elem.length);
+        this.updatePosition(false);
+    }
+
+    targetTo(index) {
+        if (this.activeIndex > index) {
+            this.prev(index);
+            this.stop();
+        } else if (this.activeIndex < index){
+            this.next(index);
+            this.stop();
+        }
+        setTimeout(() => {
+            this.start();
+        }, 0)
     }
 
     loop() {
-        this.updateIndex();
-        this.updatePosition();
+        this.next();
+    }
+
+    stop() {
+        clearInterval(this.interval);
     }
 
     start() {
@@ -48,10 +102,5 @@ class Carousel {
             this.loop();
         }, this.config.interval);
     }
-
-    stop() {
-        clearInterval(this.interval);
-    }
-
 }
 
