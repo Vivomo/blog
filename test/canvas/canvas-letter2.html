@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<canvas id="test"></canvas>
+<script>
+    // Polyfill for IE
+    if (!Math.sign) {
+        Math.sign = function(x) {
+            return ((x > 0) - (x < 0)) || +x;
+        };
+    }
+
+    // ------------
+
+    let canvas = document.getElementById('test'),
+        ctx = canvas.getContext('2d'),
+        height,
+        width,
+        particles;
+
+    let step = 7;
+
+    let init = () => {
+        height = window.innerHeight;
+        width = window.innerWidth;
+
+        canvas.height = height;
+        canvas.width = width;
+
+
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, width, height);
+        // ctx.fillStyle = '#000';
+
+        // let fontSize = Math.min(height,width)/2.5;
+
+        step = 8;
+
+        // ctx.font = `${fontSize}px Arial`;
+        // ctx.textAlign = 'center';
+
+        // ctx.fillText('Hello', width/2, height/2 + fontSize/4);
+
+        let img = new Image;
+        img.onload = function () {
+            ctx.drawImage(img, 100, 100);
+            const data    = ctx.getImageData(0, 0, width, height).data;
+
+            particles = [];
+
+            for (let h = 0; h < height; h += step) {
+                for (let w = 0; w < width; w += step) {
+                    let index = (h * width + w) * 4;
+                    let color = data[index]
+                    if (color === 255) {
+                        particles.push({ x: w, y: h });
+                    }
+                }
+            }
+
+            drawIt();
+        };
+        img.src = '../../src/logo.png';
+
+
+    }
+
+    init();
+
+    window.onresize = init;
+
+    let counter = 0;
+
+    function drawIt() {
+        ctx.fillStyle = '#1c1c1c';
+        ctx.fillRect(0, 0, width, height);
+
+        for (let i = 0; i < particles.length; i++) {
+            const dY = step * Math.cos(i * 3 + counter),
+                radius = step * 0.5 * (dY < -1 ? 1 / Math.abs(dY) : 1);
+
+            ctx.beginPath();
+            ctx.arc(
+                particles[i].x,
+                particles[i].y + dY,
+                radius,
+                0, 2 * Math.PI,
+                false);
+
+            const color = (18 * Math.sign(dY) + 214) % 360;
+            let s = color === 232 ? 79 : 75;
+            let l = color === 232 ? 56 : 67;
+
+            ctx.fillStyle = `hsl(${color}, ${s}%, ${l}%)`;
+            ctx.fill();
+        }
+
+        counter += .1;
+
+        requestAnimationFrame(drawIt);
+    }
+
+
+</script>
+</body>
+</html>
