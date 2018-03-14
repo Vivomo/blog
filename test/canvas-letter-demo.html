@@ -13,6 +13,7 @@
 <canvas id="canvas-logo"></canvas>
 
 <script>
+    const logoSrc = '../src/logo.png';
     const particleLogo = (function () {
         let config = {
             space: 10,
@@ -23,6 +24,11 @@
             maxR: 4,
             minR: 1,
             normalR: 2,
+            startTime: 0,
+            /* Spring stiffness, in kg / s^2 */
+            k: - 60,
+            /* Damping constant, in kg / s */
+            b: -0.9
         };
 
         let canvas = document.getElementById('canvas-logo');
@@ -56,8 +62,11 @@
                             x: w,
                             y: h,
                             startX: ~~(Math.random() * config.w),
-                            startY: ~~(Math.random() * config.h),
-                            r: randomRadius()
+                            startY: ~~(Math.random() * config.h) / 2 + config.h / 2,
+                            r: randomRadius(),
+                            vx: 0,
+                            vy: 0,
+                            mass: 0.1
                         };
                         let absX = Math.abs(point.x - point.startX);
                         let absY = Math.abs(point.y - point.startY);
@@ -77,9 +86,14 @@
             } else {
                 this.callback && this.callback()
             }
+
+            let now = Date.now();
+            let t = (now - config.startTime) / 1000 / 5;
+            config.startTime = now;
+            
             ctx.clearRect(0, 0, config.w, config.h);
             points.forEach((point) => {
-                updatePoint(point);
+                updatePoint(point, t);
                 drawPoint(point);
             });
         }
@@ -90,51 +104,31 @@
                 ctx.drawImage(img, (config.w - img.width) / 2, (config.h - img.height) / 2 * 0.3);
                 createPoint(ctx.getImageData(0, 0, config.w, config.h).data);
                 pointsCount = points.length;
+                config.startTime = Date.now();
                 this.drawPoints()
             };
-            img.src = '../src/logo.png';
+            img.src = logoSrc;
         }
 
-        function updatePoint(point) {
+        function updatePoint(point, t) {
             if (point.startX === point.x && point.startY === point.y) {
                 return;
             }
-            if (point.xMove) {
-                if (Math.abs(point.startX - point.x) <= config.moveDistance) {
-                    point.startX = point.x;
-                    point.startY = point.y;
-                } else {
-                    if (point.startX > point.x) {
-                        point.startX -= config.moveDistance;
-                    } else {
-                        point.startX += config.moveDistance;
-                    }
-                    if (point.startY > point.y) {
-                        point.startY -= config.moveDistance / point.slope;
-                    } else {
-                        point.startY += config.moveDistance / point.slope;
-                    }
-                }
-            } else {
-                if (Math.abs(point.startY - point.y) <= config.moveDistance) {
-                    point.startX = point.x;
-                    point.startY = point.y;
-                } else {
-                    if (point.startX > point.x) {
-                        point.startX -= config.moveDistance * point.slope;
-                    } else {
-                        point.startX += config.moveDistance * point.slope;
-                    }
-                    if (point.startY > point.y) {
-                        point.startY -= config.moveDistance;
-                    } else {
-                        point.startY += config.moveDistance
-                    }
-                }
-            }
 
+            let spring_x = config.k * (point.startX - point.x);
+            let damper_x = config.b * point.vx;
 
-            if (point.startX === point.x && point.startY === point.y) {
+            point.ax = ( spring_x + damper_x ) / point.mass;
+            point.vx += point.ax * t;
+            point.startX += (point.vx * t);
+
+            let spring_y = config.k * ( (point.startY - point.y));
+            let damper_y = config.b * point.vy;
+            point.ay = ( spring_y + damper_y ) / point.mass;
+            point.vy += point.ay * t;
+            point.startY += (point.vy * t);
+            
+            if (~~point.startX === point.x && ~~point.startY === point.y) {
                 finishedPointsCount ++
             }
         }

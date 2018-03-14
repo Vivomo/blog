@@ -40,7 +40,7 @@
 
     function loop() {
         var now = Date.now();
-        var t = (now - _t) / 1000;
+        var t = (now - _t) / 1000 / 2;
         _t = now;
 
         ctx.clearRect(0,0,width,height);
