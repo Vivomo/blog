@@ -10,26 +10,41 @@
     </style>
 </head>
 <body>
-<canvas id="cav"></canvas>
+<canvas id="canvas-logo"></canvas>
 
 <script>
     const particleLogo = (function () {
         let config = {
             space: 10,
-            w: 1200,
-            h: 600,
-            moveDistance: 5
+            w: window.innerWidth,
+            h: window.innerHeight,
+            moveDistance: 5, // 影响速度
+            pointRadius: 2,
+            maxR: 4,
+            minR: 1,
+            normalR: 2,
         };
 
-        let canvas = document.getElementById('cav');
+        let canvas = document.getElementById('canvas-logo');
         canvas.width = config.w;
         canvas.height = config.h;
         let ctx = canvas.getContext('2d');
-        ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        ctx.fillStyle = 'rgba(255,255,255, 1)';
 
-        let points = []
+        let points = [];
         let pointsCount = 0;
         let finishedPointsCount = 0;
+
+        function randomRadius() {
+            let r = Math.random();
+            if (r < 0.85) {
+                return config.normalR;
+            } else if (r < 0.95) {
+                return config.minR
+            } else {
+                return config.maxR;
+            }
+        }
 
         function createPoint(colorData) {
             for (let h = 0; h < config.h; h += config.space) {
@@ -41,10 +56,11 @@
                             x: w,
                             y: h,
                             startX: ~~(Math.random() * config.w),
-                            startY: ~~(Math.random() * config.h)
+                            startY: ~~(Math.random() * config.h),
+                            r: randomRadius()
                         };
                         let absX = Math.abs(point.x - point.startX);
-                        let absY = Math.abs(point.y - point.startY)
+                        let absY = Math.abs(point.y - point.startY);
                         point.xMove = absX > absY;
                         point.slope = absX / absY;
                         points.push(point);
@@ -55,9 +71,11 @@
 
         function drawPoints() {
             if (finishedPointsCount < pointsCount) {
-                requestAnimationFrame(drawPoints)
+                requestAnimationFrame(() => {
+                    this.drawPoints()
+                })
             } else {
-                console.log('finish')
+                this.callback && this.callback()
             }
             ctx.clearRect(0, 0, config.w, config.h);
             points.forEach((point) => {
@@ -68,11 +86,11 @@
 
         function loadLogo() {
             let img = new Image;
-            img.onload = function () {
-                ctx.drawImage(img, (config.w - img.width) / 2, (config.h - img.height) / 2);
+            img.onload = () => {
+                ctx.drawImage(img, (config.w - img.width) / 2, (config.h - img.height) / 2 * 0.3);
                 createPoint(ctx.getImageData(0, 0, config.w, config.h).data);
                 pointsCount = points.length;
-                drawPoints()
+                this.drawPoints()
             };
             img.src = '../src/logo.png';
         }
@@ -123,16 +141,19 @@
 
         function drawPoint(point) {
             ctx.beginPath();
-            ctx.arc(point.startX, point.startY, 3, 0, Math.PI * 2);
+            ctx.arc(point.startX, point.startY, point.r, 0, Math.PI * 2);
             ctx.closePath();
             ctx.fill();
         }
 
         return {
             points,
-            init: function () {
-                loadLogo();
-            }
+            drawPoints,
+            loadLogo,
+            init: function (callback) {
+                this.loadLogo();
+                this.callback = callback;
+            },
         }
     })();
 
