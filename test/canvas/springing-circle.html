@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>弹簧圆圈</title>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+
+<script>
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    var _t = Date.now();
+    let P2 = Math.PI * 2;
+    var width, height;
+
+    resize();
+    addListeners();
+
+    /* Spring stiffness, in kg / s^2 */
+    var k = -30;
+    /* Damping constant, in kg / s */
+    var b = -0.97;
+
+    var circle = {
+        radius: 20,
+        x: 0,
+        y: 0,
+        vx: 0,
+        vy: 0,
+        mass: 0.1
+    }
+
+    var target = {
+        x: window.innerWidth/2 - circle.radius,
+        y: window.innerHeight/2 - circle.radius,
+    }
+
+    ctx.fillStyle = '#7e2d73';
+
+    function loop() {
+        var now = Date.now();
+        var t = (now - _t) / 1000;
+        _t = now;
+
+        ctx.clearRect(0,0,width,height);
+
+        var spring_x = k * ( (circle.x - target.x));
+        var damper_x = b * ( circle.vx );
+        circle.ax = ( spring_x + damper_x ) / circle.mass;
+        circle.vx += circle.ax * t;
+        circle.x += ~~(circle.vx * t);
+
+        var spring_y = k * ( (circle.y - target.y));
+        var damper_y = b * ( circle.vy );
+        circle.ay = ( spring_y + damper_y ) / circle.mass;
+        circle.vy += circle.ay * t;
+        circle.y += ~~(circle.vy * t);
+
+        ctx.beginPath();
+        ctx.arc(circle.x, circle.y, circle.radius, 0, P2);
+        ctx.fill();
+
+        if (circle.x - target.x + (circle.y - target.y) === 0) {
+            console.log('finish')
+        } else {
+            requestAnimationFrame(loop);
+        }
+
+    }
+
+    loop();
+
+    function addListeners() {
+        canvas.addEventListener('click', function(e) {
+            target.x = e.pageX - circle.radius;
+            target.y = e.pageY - circle.radius;
+        })
+
+        canvas.addEventListener('touchstart', function(e) {
+            target.x = e.touches[0].pageX - circle.radius;
+            target.y = e.touches[0].pageY - circle.radius;
+        })
+
+        window.addEventListener('resize', resize);
+    }
+
+    function resize() {
+        canvas.width = width = window.innerWidth;
+        canvas.height = height = window.innerHeight;
+    }
+</script>
+</body>
+</html>
