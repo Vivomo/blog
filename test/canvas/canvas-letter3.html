@@ -19,16 +19,15 @@
             space: 8,
             w: window.innerWidth,
             h: window.innerHeight,
-            moveDistance: 5, // 影响速度
+            moveDistance: 4, // 影响速度
             pointRadius: 2,
             maxR: 6,
             minR: 1,
             normalR: 2,
-            totalTime: 1200, // ms
+            totalTime: 1500, // ms
             startTime: 0,
             minDistance: 50, // 随机生成点最短距离
         };
-        config.qualifiedDistance = config.space * 1.414;
 
         let canvas = document.getElementById('canvas-logo');
         canvas.width = config.w;
@@ -44,7 +43,7 @@
             let r = Math.random();
             if (r < 0.88) {
                 return config.normalR;
-            } else if (r < 0.97) {
+            } else if (r < 0.98) {
                 return config.minR
             } else {
                 return config.maxR;
@@ -139,7 +138,7 @@
                 createPoint(ctx.getImageData(0, 0, config.w, config.h).data);
                 filterPoints();
                 pointsCount = points.length;
-                config.startTime = Date.now();
+                config.begin = config.startTime = Date.now();
                 this.drawPoints()
             };
             img.src = imgSrc;
@@ -167,13 +166,14 @@
                     let sy = point.v * diffTime;
                     let sx = sy * point.slope;
                     point.startX += point.startX > point.x ? -sx : sx;
-                    point.startY += point.startY > point.y ? -sy : sx;
+                    point.startY += point.startY > point.y ? -sy : sy;
                 }
             }
 
 
             if (point.startX === point.x && point.startY === point.y) {
                 finishedPointsCount ++
+                console.log(point, Date.now() - config.begin);
             }
         }
 
