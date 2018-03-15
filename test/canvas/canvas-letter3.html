@@ -25,6 +25,7 @@
             minR: 1,
             normalR: 2,
             totalTime: 1500, // ms
+            maxTime: 3000,
             startTime: 0,
             minDistance: 50, // 随机生成点最短距离
         };
@@ -119,6 +120,7 @@
                     this.drawPoints()
                 })
             } else {
+                console.log('finish')
                 this.callback && this.callback()
             }
             ctx.clearRect(0, 0, config.w, config.h);
@@ -138,8 +140,16 @@
                 createPoint(ctx.getImageData(0, 0, config.w, config.h).data);
                 filterPoints();
                 pointsCount = points.length;
+                this.points = points;
+                console.log(pointsCount);
                 config.begin = config.startTime = Date.now();
-                this.drawPoints()
+                this.drawPoints();
+                setTimeout(() => {
+                    if (finishedPointsCount !== pointsCount) {
+                        finishedPointsCount = pointsCount;
+                        console.log('error finished');
+                    }
+                }, config.maxTime);
             };
             img.src = imgSrc;
         }
@@ -173,7 +183,8 @@
 
             if (point.startX === point.x && point.startY === point.y) {
                 finishedPointsCount ++
-                console.log(point, Date.now() - config.begin);
+                point.finished = true;
+                console.log(finishedPointsCount);
             }
         }
 
