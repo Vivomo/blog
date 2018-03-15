@@ -19,6 +19,14 @@ class Carousel {
         this.prevActiveIndex = this.elem.length - 1;
         this.updatePosition();
         this.start();
+
+        wrap.addEventListener('mouseenter', () => {
+            this.stop();
+        });
+
+        wrap.addEventListener('mouseleave', () => {
+            this.start();
+        })
     }
 
     /**
@@ -45,7 +53,7 @@ class Carousel {
 
     move(isNext = true) {
         this.moving = true;
-        this.wrap.style.webkitTransition = this.wrap.style.transition = `all ${this.config.transitionTime}ms`;
+        this.wrap.style.webkitTransition = this.wrap.style.transition = `all ${this.config.transitionTime}ms cubic-bezier(0.94,-0.01, 0.11, 0.97)`;
         if (isNext) {
             this.wrap.style.left = -this.width + 'px';
         } else {
