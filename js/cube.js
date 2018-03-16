@@ -11,6 +11,7 @@ const COLOR_MAP = {
     back: 'green'
 };
 const CUBE_WIDTH = 100;
+const A_DEGREE_RAD = Math.PI / 180;
 
 const CubeUtil = (() => {
     const front = 32,
@@ -149,7 +150,7 @@ const CubeUtil = (() => {
             return -translate + CUBE_WIDTH / 2;
         },
         degreeToRad: function (degree) {
-            return degree * Math.PI / 180;
+            return degree * A_DEGREE_RAD;
         },
         paint: function (cubes) {
             cubes.filter(cube => cube.z === -CUBE_WIDTH).forEach(cube => cube.bg.back = COLOR_MAP.back);
@@ -384,3 +385,28 @@ avalon.scan();
 CubeListener.listen(vm);
 
 
+let Method = {
+    leftFish: [
+        ['z', 3, true],
+        ['y', 1, true],
+        ['y', 1, true],
+        ['z', 3, false],
+        ['y', 1, true],
+        ['z', 3, true],
+        ['y', 1, true],
+        ['z', 3, false],
+    ],
+    rightFish: [
+        ['x', 3, true],
+        ['y', 1, true],
+        ['y', 1, true],
+        ['z', 3, true],
+        ['y', 1, true],
+        ['z', 3, true],
+        ['y', 1, true],
+        ['z', 3, true],
+    ],
+    l: [
+        
+    ]
+};
