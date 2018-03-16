@@ -358,14 +358,14 @@ let vm = avalon.define({
         });
     },
 
-    rotateMethod: (method) => {
+    rotateMethod: (method, time = 1000) => {
         let index = 0;
         let interval = setInterval(() => {
             vm.rotate(...method[index++]);
             if (index === method.length) {
                 clearInterval(interval);
             }
-        }, 1000);
+        }, time);
     },
     /**
      * 视角旋转
