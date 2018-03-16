@@ -19,7 +19,7 @@
             space: 8,
             w: window.innerWidth,
             h: window.innerHeight,
-            moveDistance: 4, // 影响速度
+            minNearDistance: 4, // 归零点
             pointRadius: 2,
             maxR: 6,
             minR: 1,
@@ -91,7 +91,7 @@
             for (let h = 0; h < config.h; h += config.space) {
                 for (let w = 0; w < config.w; w += config.space) {
                     let index = (h * config.w + w) * 4;
-                    let color = colorData[index]
+                    let color = colorData[index];
                     if (color === 255) {
                         let point = {
                             x: w,
@@ -120,7 +120,6 @@
                     this.drawPoints()
                 })
             } else {
-                console.log('finish')
                 this.callback && this.callback()
             }
             ctx.clearRect(0, 0, config.w, config.h);
@@ -141,17 +140,19 @@
                 filterPoints();
                 pointsCount = points.length;
                 this.points = points;
-                console.log(pointsCount);
                 config.begin = config.startTime = Date.now();
                 this.drawPoints();
                 setTimeout(() => {
                     if (finishedPointsCount !== pointsCount) {
                         finishedPointsCount = pointsCount;
-                        console.log('error finished');
                     }
                 }, config.maxTime);
             };
             img.src = imgSrc;
+        }
+
+        function overTarget(point) {
+            return (point.startX - point.x) * (point._x - point.x) < 0 && (point.startY - point.y) * (point._y - point.y) < 0;
         }
 
         function updatePoint(point, diffTime) {
@@ -159,7 +160,7 @@
                 return;
             }
             if (point.xMove) {
-                if (Math.abs(point.startX - point.x) <= config.moveDistance) {
+                if (Math.abs(point.startX - point.x) <= config.minNearDistance || overTarget(point)) {
                     point.startX = point.x;
                     point.startY = point.y;
                 } else {
@@ -169,7 +170,7 @@
                     point.startY += point.startY > point.y ? -sy : sx;
                 }
             } else {
-                if (Math.abs(point.startY - point.y) <= config.moveDistance) {
+                if (Math.abs(point.startY - point.y) <= config.minNearDistance || overTarget(point)) {
                     point.startX = point.x;
                     point.startY = point.y;
                 } else {
@@ -184,7 +185,6 @@
             if (point.startX === point.x && point.startY === point.y) {
                 finishedPointsCount ++
                 point.finished = true;
-                console.log(finishedPointsCount);
             }
         }
 
