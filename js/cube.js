@@ -356,7 +356,16 @@ let vm = avalon.define({
                 }
             }, 10);
         });
+    },
 
+    rotateMethod: (method) => {
+        let index = 0;
+        let interval = setInterval(() => {
+            vm.rotate(...method[index++]);
+            if (index === method.length) {
+                clearInterval(interval);
+            }
+        }, 1000);
     },
     /**
      * 视角旋转
@@ -397,16 +406,25 @@ let Method = {
         ['z', 3, false],
     ],
     rightFish: [
+        ['x', 3, false],
+        ['y', 1, false],
+        ['y', 1, false],
         ['x', 3, true],
-        ['y', 1, true],
-        ['y', 1, true],
-        ['z', 3, true],
-        ['y', 1, true],
-        ['z', 3, true],
-        ['y', 1, true],
-        ['z', 3, true],
+        ['y', 1, false],
+        ['x', 3, false],
+        ['y', 1, false],
+        ['x', 3, true]
     ],
     l: [
-        
+
+    ],
+    //Three inverse Sangem
+    tis: [
+        ['x', 3, false],
+        ['y', 1, true],
+        ['z', 3, false],
+        ['y', 1, false],
+        ['z', 3, true],
+        ['x', 3, true]
     ]
 };
