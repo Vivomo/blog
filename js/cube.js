@@ -247,33 +247,48 @@ const CubeListener = (function () {
         mouseY = pageY;
     }
 
+    function onBodyTouchMove(e) {
+        let {pageX, pageY} = e.touches[0];
+        mouseX = pageX;
+        mouseY = pageY;
+    }
+
+    function onBodyTouchEnd() {
+        let changedX = Math.abs(mouseX - startX);
+        let changedY = Math.abs(mouseY - startY);
+        if (changedX > changedY) {
+            if (changedX < MIN_DISTANCE) {
+                return;
+            }
+            vm.rotateVisualAngle('y', mouseX > startX)
+        } else {
+            if (changedY < MIN_DISTANCE) {
+                return;
+            }
+            let isX = startX < bodyWidth / 2;
+            vm.rotateVisualAngle( isX ? 'x' : 'z', isX ? mouseY < startY : mouseY > startY);
+        }
+        body.removeEventListener('mousemove', onBodyMouseMove);
+        body.removeEventListener('touchmove', onBodyTouchMove);
+    }
+
     function listenMouse(vm) {
         body.addEventListener('mousedown', (e) => {
             mouseX = startX = e.pageX;
             mouseY = startY = e.pageY;
-
             body.addEventListener('mousemove', onBodyMouseMove);
-
         });
 
-        body.addEventListener('mouseup', () => {
-            let changedX = Math.abs(mouseX - startX);
-            let changedY = Math.abs(mouseY - startY);
-            console.log(changedX, changedY);
-            if (changedX > changedY) {
-                if (changedX < MIN_DISTANCE) {
-                    return;
-                }
-                vm.rotateVisualAngle('y', mouseX > startX)
-            } else {
-                if (changedY < MIN_DISTANCE) {
-                    return;
-                }
-                let isX = startX < bodyWidth / 2;
-                vm.rotateVisualAngle( isX ? 'x' : 'z', isX ? mouseY < startY : mouseY > startY);
-            }
-            body.removeEventListener('mousemove', onBodyMouseMove);
+        body.addEventListener('touchstart', (event) => {
+            let e = event.touches[0];
+            mouseX = startX = e.pageX;
+            mouseY = startY = e.pageY;
+            body.addEventListener('touchmove', onBodyTouchMove);
         });
+
+        body.addEventListener('touchend', onBodyTouchEnd);
+
+        body.addEventListener('mouseup', onBodyTouchEnd);
 
         cube.addEventListener('mousedown', (e) => {
             e.stopPropagation();
