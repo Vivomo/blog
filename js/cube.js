@@ -249,8 +249,8 @@ const CubeListener = (function () {
 
     function listenMouse(vm) {
         body.addEventListener('mousedown', (e) => {
-            startX = e.pageX;
-            startY = e.pageY;
+            mouseX = startX = e.pageX;
+            mouseY = startY = e.pageY;
 
             body.addEventListener('mousemove', onBodyMouseMove);
 
@@ -259,6 +259,7 @@ const CubeListener = (function () {
         body.addEventListener('mouseup', () => {
             let changedX = Math.abs(mouseX - startX);
             let changedY = Math.abs(mouseY - startY);
+            console.log(changedX, changedY);
             if (changedX > changedY) {
                 if (changedX < MIN_DISTANCE) {
                     return;
@@ -283,6 +284,12 @@ const CubeListener = (function () {
         listen: function (vm) {
             listenKey(vm);
             listenMouse(vm);
+
+            [...document.querySelectorAll('.method-wrap button')].forEach(function (button) {
+                button.addEventListener('click', function () {
+                    vm.rotateMethod(Method[this.dataset.method])
+                });
+            });
         }
     }
 })();
@@ -439,3 +446,4 @@ let Method = {
         ['x', 3, true]
     ]
 };
+
