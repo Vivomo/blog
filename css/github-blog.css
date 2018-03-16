@@ -1,7 +1,8 @@
 body {
+  margin: 0;
   font-size: 14px;
   line-height: 1.6;
-  padding: 30px; }
+  padding: 3%; }
 
 body > *:first-child {
   margin-top: 0 !important; }
