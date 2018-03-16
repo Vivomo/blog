@@ -32,6 +32,7 @@ header{
 .box{
     margin: 0 auto;
     width: 1024px;
+    max-width: 100%;
 }
 .u-content{
     position: relative;
@@ -73,7 +74,7 @@ header{
     will-change: transform;
 }
 .no-animate{
-    transition: all 0s!important;
+    transition: none!important;
 }
 
 .theme {
