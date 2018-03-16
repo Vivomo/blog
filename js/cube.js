@@ -416,7 +416,18 @@ let Method = {
         ['x', 3, true]
     ],
     l: [
-
+        ['z', 3, true],
+        ['x', 3, false],
+        ['z', 3, true],
+        ['x', 1, true],
+        ['x', 1, true],
+        ['z', 3, false],
+        ['x', 3, true],
+        ['z', 3, true],
+        ['x', 1, true],
+        ['x', 1, true],
+        ['z', 3, false],
+        ['z', 3, false]
     ],
     //Three inverse Sangem
     tis: [
