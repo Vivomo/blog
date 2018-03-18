@@ -21,6 +21,38 @@ const Canvas = (function () {
         }
     }
 
+    /**
+     * 获取创建时间
+     * @returns {string}
+     */
+    function getCreateTime() {
+        let date = new Date;
+        return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    }
+
+    /**
+     * 下载图片
+     * @param data
+     * @param name
+     */
+    function downloadImgByImgData(data, name = 'download.png'){
+        let canvas = document.createElement('canvas');
+        let ctx = canvas.getContext('2d');
+        let img = new Image;
+        img.src = data;
+        img.onload = function(){
+            canvas.width = this.width;
+            canvas.height = this.height;
+            ctx.drawImage(this, 0, 0);
+            canvas.toBlob((blob) => {
+                var a = document.createElement('a');
+                a.href = window.URL.createObjectURL(blob);
+                a.download = name;
+                a.click();
+            }, 'image/png');
+        };
+    }
+
     // noinspection JSUnusedGlobalSymbols
     const commands = {
         drawImgByFile: function (e) {
@@ -137,18 +169,28 @@ const Canvas = (function () {
             tempCanvas.width = ~~ (width / 3);
             tempCanvas.height = ~~ (height / 3);
             let tempCtx = tempCanvas.getContext('2d');
-            let imgArr = [];
+            let imgDataArr = this.wechatImgData = [];
             for (let row = 0; row < 3; row ++) {
                 for (let col = 0; col < 3; col ++) {
                     let imgData = this.getImageData(~~(width / 3 * col), ~~(height / 3 * row),
                         ~~(width / 3 * (col + 1)), ~~(height / 3 * (row + 1)));
                     tempCtx.putImageData(imgData, 0, 0);
-                    imgArr.push(`<img src="${tempCanvas.toDataURL('images/png')}"/>`);
+                    imgDataArr.push(tempCanvas.toDataURL('images/png'));
                 }
             }
 
-            weChatNine.innerHTML = imgArr.map((img) => `<li>${img}</li>`).join('');
-        }
+            weChatNine.innerHTML = imgDataArr.map((data) => `<li><img src="${data}"/></li>`).join('');
+        },
+        downloadWechat: function () {
+            if (this.wechatImgData.length === 0) {
+                return false;
+            }
+            let createTime = getCreateTime();
+            this.wechatImgData.forEach((data, index) => {
+                let imgName = `wx${createTime}-${(index + 1)}.png`;
+                downloadImgByImgData(data, imgName);
+            })
+        },
     };
 
     return {
