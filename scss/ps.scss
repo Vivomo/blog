@@ -7,6 +7,10 @@
 
 fieldset {
     border-width: 1px;
+
+    input, button, select {
+        margin: 3px;
+    }
 }
 
 .v-input {

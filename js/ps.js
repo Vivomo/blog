@@ -165,15 +165,22 @@ const Canvas = (function () {
          */
         cutNine: function () {
             let {width, height} = this.canvas;
+            let sideWidth = ~~(Math.min(width, height) / 3);
+            let skewX = 0;
+            let skewY = 0;
+            if (width > height) {
+                skewX = ~~((width - height) / 2)
+            } else {
+                skewY = ~~((height - width) / 2)
+            }
             let tempCanvas = document.createElement('canvas');
-            tempCanvas.width = ~~ (width / 3);
-            tempCanvas.height = ~~ (height / 3);
+            tempCanvas.height = tempCanvas.width = sideWidth;
             let tempCtx = tempCanvas.getContext('2d');
             let imgDataArr = this.wechatImgData = [];
             for (let row = 0; row < 3; row ++) {
                 for (let col = 0; col < 3; col ++) {
-                    let imgData = this.getImageData(~~(width / 3 * col), ~~(height / 3 * row),
-                        ~~(width / 3 * (col + 1)), ~~(height / 3 * (row + 1)));
+                    let imgData = this.getImageData(sideWidth * col + skewX, sideWidth * row + skewY,
+                        sideWidth * (col + 1) + skewX, sideWidth * (row + 1) + skewY);
                     tempCtx.putImageData(imgData, 0, 0);
                     imgDataArr.push(tempCanvas.toDataURL('images/png'));
                 }
