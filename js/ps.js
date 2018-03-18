@@ -134,6 +134,8 @@ const Canvas = (function () {
         cutNine: function () {
             let {width, height} = this.canvas;
             let tempCanvas = document.createElement('canvas');
+            tempCanvas.width = ~~ (width / 3);
+            tempCanvas.height = ~~ (height / 3);
             let tempCtx = tempCanvas.getContext('2d');
             let imgArr = [];
             for (let row = 0; row < 3; row ++) {

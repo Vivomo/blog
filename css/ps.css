@@ -10,3 +10,14 @@ fieldset {
 .v-input {
   height: 26px;
   width: 100px; }
+
+.wechat-nine {
+  display: flex;
+  flex-wrap: wrap; }
+  .wechat-nine li {
+    width: 33.3333%;
+    padding: 2px;
+    box-sizing: border-box; }
+    .wechat-nine li img {
+      display: block;
+      max-width: 100%; }

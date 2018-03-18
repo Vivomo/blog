@@ -13,3 +13,18 @@ fieldset {
     height: 26px;
     width: 100px;
 }
+
+.wechat-nine {
+    display: flex;
+    flex-wrap: wrap;
+
+    li {
+        width: 33.3333%;
+        padding: 2px;
+        box-sizing: border-box;
+        img {
+            display: block;
+            max-width: 100%;
+        }
+    }
+}
