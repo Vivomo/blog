@@ -4,20 +4,7 @@
     <meta charset="UTF-8">
     <title>PS</title>
     <link rel="stylesheet" href="../css/common.css">
-    <style>
-        #canvas {
-            margin: 50px auto;
-            box-shadow: 0 0 10px currentColor;
-            background: #FFF;
-        }
-        fieldset {
-            border-width: 1px;
-        }
-        .v-input {
-            height: 26px;
-            width: 100px;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/ps.css">
 </head>
 <body>
 
@@ -50,11 +37,14 @@
         <button class="btn" data-cmd="inverse">反色</button>
         <button class="btn" data-cmd="hFlip">水平翻转</button>
         <button class="btn" data-cmd="vFlip">垂直翻转</button>
+        <button class="btn" data-cmd="cutNine">生成微信九宫格</button>
     </fieldset>
 
     <div class="canvas-wrap" id="canvas-wrap">
         <canvas id="canvas" class="theme"></canvas>
     </div>
+
+    <ul class="wechat-nine" id="weChatNine"></ul>
 </div>
 
 <script src="../js/ps.js"></script>

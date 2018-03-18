@@ -2,7 +2,8 @@
 const Canvas = (function () {
 
     var canvas = document.getElementById('canvas'),
-        base64Content = document.getElementById('base64Content');
+        base64Content = document.getElementById('base64Content'),
+        weChatNine = document.getElementById('weChatNine');
 
     /**
      * 交换两个坐标像素信息
@@ -126,6 +127,25 @@ const Canvas = (function () {
                 data[i + 2] = 255 - data[i + 2];
             }
             this.pen.putImageData(imageData, 0, 0);
+        },
+        /**
+         * 图片生成9份
+         */
+        cutNine: function () {
+            let {width, height} = this.canvas;
+            let tempCanvas = document.createElement('canvas');
+            let tempCtx = tempCanvas.getContext('2d');
+            let imgArr = [];
+            for (let row = 0; row < 3; row ++) {
+                for (let col = 0; col < 3; col ++) {
+                    let imgData = this.getImageData(~~(width / 3 * col), ~~(height / 3 * row),
+                        ~~(width / 3 * (col + 1)), ~~(height / 3 * (row + 1)));
+                    tempCtx.putImageData(imgData, 0, 0);
+                    imgArr.push(`<img src="${tempCanvas.toDataURL('images/png')}"/>`);
+                }
+            }
+
+            weChatNine.innerHTML = imgArr.map((img) => `<li>${img}</li>`).join('');
         }
     };
 
@@ -134,8 +154,8 @@ const Canvas = (function () {
         commands,
         base64Content,
         pen: canvas.getContext('2d'),
-        getImageData: function () {
-            return this.pen.getImageData(0, 0, this.canvas.width, this.canvas.height);
+        getImageData: function (startX = 0, startY = 0, endX = this.canvas.width, endY = this.canvas.height) {
+            return this.pen.getImageData(startX, startY, endX, endY);
         },
         drawImgOnCanvas: function(src) {
             let img = new Image,
