@@ -18,6 +18,8 @@ class Carousel {
     }
 
     init(opt) {
+        this.transitionStyleName = 'transition' in document.body.style ? 'transition' : 'webKitTransition';
+
         let wrap = typeof opt.elem === 'string' ? document.querySelector(opt.elem) : opt.elem;
         this.wrap = wrap;
         this.moving = false;
@@ -47,7 +49,7 @@ class Carousel {
         if (!this.config.looped) {
             return false;
         }
-        this.wrap.style.webkitTransition = this.wrap.style.transition = 'none';
+        this.wrap.style[this.transitionStyleName] = 'none';
         let showArr = [this.prevActiveIndex, this.activeIndex];
         this.elem.filter((item, index) => !showArr.includes(index)).forEach((item) => {
             item.style.visibility = 'hidden';
@@ -67,7 +69,7 @@ class Carousel {
 
     move(isNext = true) {
         this.moving = true;
-        this.wrap.style.webkitTransition = this.wrap.style.transition = `all ${this.config.transitionTime}ms cubic-bezier(0.94,-0.01, 0.11, 0.97)`;
+        this.wrap.style[this.transitionStyleName] = `all ${this.config.transitionTime}ms cubic-bezier(0.94,-0.01, 0.11, 0.97)`;
         if (isNext) {
             this.wrap.style.left = -this.width + 'px';
         } else {
