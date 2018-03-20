@@ -75,13 +75,12 @@ class Carousel {
     move(isNext = true) {
         this.moving = true;
         this.toggleTransition(true);
-        let moveDistance = 0;
         if (this.config.looped) {
-            moveDistance = isNext ? - (this.width + this.config.margin) : this.width + this.config.margin;
+            this.translateX = isNext ? - (this.width + this.config.margin) : this.width + this.config.margin;
         } else {
-            moveDistance = (this.width + this.config.margin) * this.activeIndex;
+            this.translateX = (this.width + this.config.margin) * this.activeIndex;
         }
-        this.wrap.style[this.transformStyleName] = `translate3d(${moveDistance}px, 0, 0)`;
+        this.wrap.style[this.transformStyleName] = `translate3d(${this.translateX}px, 0, 0)`;
 
         setTimeout(() => {
             this.moving = false;
