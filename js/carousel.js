@@ -27,21 +27,26 @@ class Carousel {
         this.activeIndex = 0;
         this.prevActiveIndex = this.elem.length - 1;
         this.updatePosition();
-        this.start();
-
-        wrap.addEventListener('mouseenter', () => {
-            this.stop();
-        });
-
-        wrap.addEventListener('mouseleave', () => {
+        if (this.config.auto) {
             this.start();
-        })
+
+            wrap.addEventListener('mouseenter', () => {
+                this.stop();
+            });
+
+            wrap.addEventListener('mouseleave', () => {
+                this.start();
+            })
+        }
     }
 
     /**
      * 更新位置
      */
     updatePosition(isNext = true) {
+        if (!this.config.looped) {
+            return false;
+        }
         this.wrap.style.webkitTransition = this.wrap.style.transition = 'none';
         let showArr = [this.prevActiveIndex, this.activeIndex];
         this.elem.filter((item, index) => !showArr.includes(index)).forEach((item) => {
@@ -73,6 +78,31 @@ class Carousel {
             this.moving = false;
             this.afterSwitch(this.activeIndex, this.prevActiveIndex);
         }, this.config.transitionTime);
+    }
+
+    /**
+     * 监听touch 事件
+     */
+    listenTouch() {
+        let startX = 0;
+        let startY = 0;
+        let movedX = 0;
+        this.wrap.addEventListener('touchstart', (e) => {
+            let point = e.touches[0];
+            startX = point.pageX;
+            startY = point.pageY;
+
+            this.wrap.addEventListener('touchmove', touchMove);
+        });
+
+        this.wrap.addEventListener('touchend', () => {
+             this.wrap.removeEventListener('touchmove', touchMove);
+        });
+
+        function touchMove(e) {
+            let point = e.touches[0];
+            movedX = point.pageX - startX;
+        }
     }
 
     /**
