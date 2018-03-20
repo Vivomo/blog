@@ -1,9 +1,18 @@
 class Carousel {
     constructor(opt) {
         this.config = {
-            interval: opt.interval || 3000,
-            transitionTime: opt.transitionTime || 300,
+            interval: 3000,
+            transitionTime: 300,
+            looped: true,
+            auto: true,
+            touchable: false
         };
+
+        for (let key of this.config) {
+            if (key in opt) {
+                this.config[key] = opt[key];
+            }
+        }
 
         this.init(opt);
     }
