@@ -29,6 +29,7 @@ class Carousel {
         this.width = wrap.clientWidth;
         this.elem = Array.from(wrap.children);
         this.activeIndex = 0;
+        this.translateX = 0;
         this.prevActiveIndex = this.elem.length - 1;
         if (this.config.touchable) {
             this.listenTouch();
@@ -78,7 +79,7 @@ class Carousel {
         if (this.config.looped) {
             this.translateX = isNext ? - (this.width + this.config.margin) : this.width + this.config.margin;
         } else {
-            this.translateX = (this.width + this.config.margin) * this.activeIndex;
+            this.translateX = (this.width + this.config.margin) * -this.activeIndex;
         }
         this.wrap.style[this.transformStyleName] = `translate3d(${this.translateX}px, 0, 0)`;
 
@@ -88,13 +89,27 @@ class Carousel {
         }, this.config.transitionTime);
     }
 
+    /**
+     * 归位复原
+     */
+    restore() {
+        this.toggleTransition(true);
+        setTimeout(() => {
+            this.wrap.style[this.transformStyleName] = `translate3d(${this.translateX}px, 0, 0)`;
+        }, 16);
+    }
+
     toggleTransition(isAdd) {
-        if (isAdd || this.wrap.style[this.transitionStyleName] === '' ||
-            this.wrap.style[this.transitionStyleName] === 'none') {
-            this.wrap.style[this.transitionStyleName] =
-                `all ${this.config.transitionTime}ms cubic-bezier(0.94,-0.01, 0.11, 0.97)`;
-        } else {
+        if (isAdd === false) {
             this.wrap.style[this.transitionStyleName] = 'none';
+        } else {
+            if (isAdd || this.wrap.style[this.transitionStyleName] === '' ||
+                this.wrap.style[this.transitionStyleName] === 'none') {
+                this.wrap.style[this.transitionStyleName] =
+                    `all ${this.config.transitionTime}ms cubic-bezier(0.94,-0.01, 0.11, 0.97)`;
+            } else {
+                this.wrap.style[this.transitionStyleName] = 'none';
+            }
         }
     }
 
@@ -106,14 +121,17 @@ class Carousel {
         let startY = 0;
         let movedX = 0;
         let touchMove = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             let point = e.touches[0];
             movedX = point.pageX - startX;
-            this.wrap.style[this.transformStyleName] = `translate3d(${movedX}px, 0, 0)`;
+            this.wrap.style[this.transformStyleName] = `translate3d(${this.translateX + movedX}px, 0, 0)`;
         };
         this.wrap.addEventListener('touchstart', (e) => {
             if (this.moving) {
                 return;
             }
+            this.toggleTransition(false);
             let point = e.touches[0];
             startX = point.pageX;
             startY = point.pageY;
@@ -122,7 +140,24 @@ class Carousel {
         });
 
         this.wrap.addEventListener('touchend', () => {
-             this.wrap.removeEventListener('touchmove', touchMove);
+            if (Math.abs(movedX) > this.width / 4) {
+                if (movedX < 0) {
+                    if (this.activeIndex === this.elem.length - 1) {
+                        this.restore()
+                    } else {
+                        this.next();
+                    }
+                } else {
+                    if (this.activeIndex === 0) {
+                        this.restore();
+                    } else {
+                        this.prev();
+                    }
+                }
+            } else {
+                this.restore()
+            }
+            this.wrap.removeEventListener('touchmove', touchMove);
         });
 
 
