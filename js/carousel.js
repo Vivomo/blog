@@ -121,7 +121,6 @@ class Carousel {
         let startY = 0;
         let movedX = 0;
         let touchMove = (e) => {
-            e.preventDefault();
             e.stopPropagation();
             let point = e.touches[0];
             movedX = point.pageX - startX;
