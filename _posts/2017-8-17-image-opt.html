@@ -25,6 +25,10 @@ css: ps
 
         <button class="btn" id="toJpg" data-cmd="downloadJPG">下载JPG</button>
         <button class="btn" id="toPng" data-cmd="downloadPNG">下载PNG</button>
+        <div>
+            <button class="btn" data-cmd="downloadWechat">下载微信九宫格</button>
+            (如果没有反应多半是手机浏览器没有权限, 只能长按生成的图片一个个保存)
+        </div>
     </fieldset>
 
 
@@ -34,9 +38,12 @@ css: ps
         <button class="btn" data-cmd="inverse">反色</button>
         <button class="btn" data-cmd="hFlip">水平翻转</button>
         <button class="btn" data-cmd="vFlip">垂直翻转</button>
+        <button class="btn" data-cmd="cutNine">生成微信九宫格</button>
     </fieldset>
 
     <div class="canvas-wrap" id="canvas-wrap">
         <canvas id="canvas" class="theme"></canvas>
     </div>
+
+    <ul class="wechat-nine" id="weChatNine"></ul>
 </div>

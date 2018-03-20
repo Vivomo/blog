@@ -2,7 +2,8 @@
 const Canvas = (function () {
 
     var canvas = document.getElementById('canvas'),
-        base64Content = document.getElementById('base64Content');
+        base64Content = document.getElementById('base64Content'),
+        weChatNine = document.getElementById('weChatNine');
 
     /**
      * 交换两个坐标像素信息
@@ -18,6 +19,38 @@ const Canvas = (function () {
             arr[index1] = arr[index2];
             arr[index2] = temp;
         }
+    }
+
+    /**
+     * 获取创建时间
+     * @returns {string}
+     */
+    function getCreateTime() {
+        let date = new Date;
+        return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    }
+
+    /**
+     * 下载图片
+     * @param data
+     * @param name
+     */
+    function downloadImgByImgData(data, name = 'download.png'){
+        let canvas = document.createElement('canvas');
+        let ctx = canvas.getContext('2d');
+        let img = new Image;
+        img.src = data;
+        img.onload = function(){
+            canvas.width = this.width;
+            canvas.height = this.height;
+            ctx.drawImage(this, 0, 0);
+            canvas.toBlob((blob) => {
+                var a = document.createElement('a');
+                a.href = window.URL.createObjectURL(blob);
+                a.download = name;
+                a.click();
+            }, 'image/png');
+        };
     }
 
     // noinspection JSUnusedGlobalSymbols
@@ -126,7 +159,45 @@ const Canvas = (function () {
                 data[i + 2] = 255 - data[i + 2];
             }
             this.pen.putImageData(imageData, 0, 0);
-        }
+        },
+        /**
+         * 图片生成9份
+         */
+        cutNine: function () {
+            let {width, height} = this.canvas;
+            let sideWidth = ~~(Math.min(width, height) / 3);
+            let skewX = 0;
+            let skewY = 0;
+            if (width > height) {
+                skewX = ~~((width - height) / 2)
+            } else {
+                skewY = ~~((height - width) / 2)
+            }
+            let tempCanvas = document.createElement('canvas');
+            tempCanvas.height = tempCanvas.width = sideWidth;
+            let tempCtx = tempCanvas.getContext('2d');
+            let imgDataArr = this.wechatImgData = [];
+            for (let row = 0; row < 3; row ++) {
+                for (let col = 0; col < 3; col ++) {
+                    let imgData = this.getImageData(sideWidth * col + skewX, sideWidth * row + skewY,
+                        sideWidth * (col + 1) + skewX, sideWidth * (row + 1) + skewY);
+                    tempCtx.putImageData(imgData, 0, 0);
+                    imgDataArr.push(tempCanvas.toDataURL('images/png'));
+                }
+            }
+
+            weChatNine.innerHTML = imgDataArr.map((data) => `<li><img src="${data}"/></li>`).join('');
+        },
+        downloadWechat: function () {
+            if (this.wechatImgData.length === 0) {
+                return false;
+            }
+            let createTime = getCreateTime();
+            this.wechatImgData.forEach((data, index) => {
+                let imgName = `wx${createTime}-${(index + 1)}.png`;
+                downloadImgByImgData(data, imgName);
+            })
+        },
     };
 
     return {
@@ -134,8 +205,8 @@ const Canvas = (function () {
         commands,
         base64Content,
         pen: canvas.getContext('2d'),
-        getImageData: function () {
-            return this.pen.getImageData(0, 0, this.canvas.width, this.canvas.height);
+        getImageData: function (startX = 0, startY = 0, endX = this.canvas.width, endY = this.canvas.height) {
+            return this.pen.getImageData(startX, startY, endX, endY);
         },
         drawImgOnCanvas: function(src) {
             let img = new Image,

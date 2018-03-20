@@ -1,11 +1,25 @@
 #canvas {
+  max-width: 100%;
   margin: 50px auto;
   box-shadow: 0 0 10px currentColor;
   background: #FFF; }
 
 fieldset {
   border-width: 1px; }
+  fieldset input, fieldset button, fieldset select {
+    margin: 3px; }
 
 .v-input {
   height: 26px;
   width: 100px; }
+
+.wechat-nine {
+  display: flex;
+  flex-wrap: wrap; }
+  .wechat-nine li {
+    width: 33.3333%;
+    padding: 2px;
+    box-sizing: border-box; }
+    .wechat-nine li img {
+      display: block;
+      max-width: 100%; }

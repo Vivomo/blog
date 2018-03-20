@@ -11,6 +11,7 @@ const COLOR_MAP = {
     back: 'green'
 };
 const CUBE_WIDTH = 100;
+const A_DEGREE_RAD = Math.PI / 180;
 
 const CubeUtil = (() => {
     const front = 32,
@@ -149,7 +150,7 @@ const CubeUtil = (() => {
             return -translate + CUBE_WIDTH / 2;
         },
         degreeToRad: function (degree) {
-            return degree * Math.PI / 180;
+            return degree * A_DEGREE_RAD;
         },
         paint: function (cubes) {
             cubes.filter(cube => cube.z === -CUBE_WIDTH).forEach(cube => cube.bg.back = COLOR_MAP.back);
@@ -246,32 +247,48 @@ const CubeListener = (function () {
         mouseY = pageY;
     }
 
+    function onBodyTouchMove(e) {
+        let {pageX, pageY} = e.touches[0];
+        mouseX = pageX;
+        mouseY = pageY;
+    }
+
+    function onBodyTouchEnd() {
+        let changedX = Math.abs(mouseX - startX);
+        let changedY = Math.abs(mouseY - startY);
+        if (changedX > changedY) {
+            if (changedX < MIN_DISTANCE) {
+                return;
+            }
+            vm.rotateVisualAngle('y', mouseX > startX)
+        } else {
+            if (changedY < MIN_DISTANCE) {
+                return;
+            }
+            let isX = startX < bodyWidth / 2;
+            vm.rotateVisualAngle( isX ? 'x' : 'z', isX ? mouseY < startY : mouseY > startY);
+        }
+        body.removeEventListener('mousemove', onBodyMouseMove);
+        body.removeEventListener('touchmove', onBodyTouchMove);
+    }
+
     function listenMouse(vm) {
         body.addEventListener('mousedown', (e) => {
-            startX = e.pageX;
-            startY = e.pageY;
-
+            mouseX = startX = e.pageX;
+            mouseY = startY = e.pageY;
             body.addEventListener('mousemove', onBodyMouseMove);
-
         });
 
-        body.addEventListener('mouseup', () => {
-            let changedX = Math.abs(mouseX - startX);
-            let changedY = Math.abs(mouseY - startY);
-            if (changedX > changedY) {
-                if (changedX < MIN_DISTANCE) {
-                    return;
-                }
-                vm.rotateVisualAngle('y', mouseX > startX)
-            } else {
-                if (changedY < MIN_DISTANCE) {
-                    return;
-                }
-                let isX = startX < bodyWidth / 2;
-                vm.rotateVisualAngle( isX ? 'x' : 'z', isX ? mouseY < startY : mouseY > startY);
-            }
-            body.removeEventListener('mousemove', onBodyMouseMove);
+        body.addEventListener('touchstart', (event) => {
+            let e = event.touches[0];
+            mouseX = startX = e.pageX;
+            mouseY = startY = e.pageY;
+            body.addEventListener('touchmove', onBodyTouchMove);
         });
+
+        body.addEventListener('touchend', onBodyTouchEnd);
+
+        body.addEventListener('mouseup', onBodyTouchEnd);
 
         cube.addEventListener('mousedown', (e) => {
             e.stopPropagation();
@@ -282,6 +299,12 @@ const CubeListener = (function () {
         listen: function (vm) {
             listenKey(vm);
             listenMouse(vm);
+
+            [...document.querySelectorAll('.method-wrap button')].forEach(function (button) {
+                button.addEventListener('click', function () {
+                    vm.rotateMethod(Method[this.dataset.method])
+                });
+            });
         }
     }
 })();
@@ -355,7 +378,16 @@ let vm = avalon.define({
                 }
             }, 10);
         });
+    },
 
+    rotateMethod: (method, time = 1000) => {
+        let index = 0;
+        let interval = setInterval(() => {
+            vm.rotate(...method[index++]);
+            if (index === method.length) {
+                clearInterval(interval);
+            }
+        }, time);
     },
     /**
      * 视角旋转
@@ -383,4 +415,50 @@ avalon.scan();
 
 CubeListener.listen(vm);
 
+
+let Method = {
+    leftFish: [
+        ['z', 3, true],
+        ['y', 1, true],
+        ['y', 1, true],
+        ['z', 3, false],
+        ['y', 1, true],
+        ['z', 3, true],
+        ['y', 1, true],
+        ['z', 3, false],
+    ],
+    rightFish: [
+        ['x', 3, false],
+        ['y', 1, false],
+        ['y', 1, false],
+        ['x', 3, true],
+        ['y', 1, false],
+        ['x', 3, false],
+        ['y', 1, false],
+        ['x', 3, true]
+    ],
+    l: [
+        ['z', 3, true],
+        ['x', 3, false],
+        ['z', 3, true],
+        ['x', 1, true],
+        ['x', 1, true],
+        ['z', 3, false],
+        ['x', 3, true],
+        ['z', 3, true],
+        ['x', 1, true],
+        ['x', 1, true],
+        ['z', 3, false],
+        ['z', 3, false]
+    ],
+    //Three inverse Sangem
+    tis: [
+        ['x', 3, false],
+        ['y', 1, true],
+        ['z', 3, false],
+        ['y', 1, false],
+        ['z', 3, true],
+        ['x', 3, true]
+    ]
+};
 
