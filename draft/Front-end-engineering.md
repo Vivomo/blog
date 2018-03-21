@@ -35,3 +35,10 @@ JS版本选择(es6/ts)
 PDF:https://files.alicdn.com/tpsservice/39299d06993224a40767f1d29c6345e7.pdf
 视频:https://tianchi.aliyun.com/competition/videoStream.html#postsId=3631
 ```
+
+## 兼容
+>. JS polyfill shims
+>. CSS 浏览器前缀
+
+## 开发效率
+>. browsersync http://www.browsersync.cn
