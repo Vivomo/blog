@@ -19,8 +19,8 @@ class Carousel {
     }
 
     init(opt) {
-        this.transitionStyleName = 'transition' in document.body.style ? 'transition' : 'webKitTransition';
-        this.transformStyleName = 'transform' in document.body.style ? 'transform' : 'webKitTransform';
+        this.transitionStyleName = 'transition' in document.body.style ? 'transition' : 'webkitTransition';
+        this.transformStyleName = 'transform' in document.body.style ? 'transform' : 'webkitTransform';
 
         let wrap = typeof opt.elem === 'string' ? document.querySelector(opt.elem) : opt.elem;
         this.wrap = wrap;
