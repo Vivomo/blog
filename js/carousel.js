@@ -120,16 +120,38 @@ class Carousel {
         let startX = 0;
         let startY = 0;
         let movedX = 0;
+        let movedY = 0;
+        let monitorDistance = 30; // 监测的移动距离用来判断意图方向
+        let direction = null;
+        let xDirection = 'x';
+        let yDirection = 'y';
         let touchMove = (e) => {
-            e.stopPropagation();
             let point = e.touches[0];
             movedX = point.pageX - startX;
-            this.wrap.style[this.transformStyleName] = `translate3d(${this.translateX + movedX}px, 0, 0)`;
+            movedY = point.pageY - startY;
+            if (direction === null) {
+                if (Math.abs(movedX) > monitorDistance) {
+                    direction = xDirection;
+                } else if (Math.abs(movedY) > monitorDistance) {
+                    direction = yDirection
+                }
+                e.preventDefault();
+                e.stopPropagation();
+            } else {
+                if (direction === xDirection) {
+                    this.wrap.style[this.transformStyleName] = `translate3d(${this.translateX + movedX - monitorDistance}px, 0, 0)`;
+                    e.preventDefault();
+                    e.stopPropagation();
+                } else {
+
+                }
+            }
         };
         this.wrap.addEventListener('touchstart', (e) => {
             if (this.moving) {
                 return;
             }
+            direction = null;
             this.toggleTransition(false);
             let point = e.touches[0];
             startX = point.pageX;
