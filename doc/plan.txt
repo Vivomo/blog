@@ -29,3 +29,7 @@ b^n % m
 八皇后动画
 
 gulp build 版本号
+
+gulp html
+
+wap console
