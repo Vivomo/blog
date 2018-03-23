@@ -73,3 +73,10 @@ Downloading https://services.gradle.org/distributions/gradle-4.0-milestone-1-all
 ```text
 http://www.lcode.org/%E8%B6%85%E8%AF%A6%E7%BB%86react-native%E5%AE%9E%E7%8E%B0%E5%BE%AE%E4%BF%A1%E5%A5%BD%E5%8F%8B%E6%9C%8B%E5%8F%8B%E5%9C%88%E5%88%86%E4%BA%AB%E5%8A%9F%E8%83%BD-androidios%E5%8F%8C%E5%B9%B3%E5%8F%B0/
 ```
+
+# 动画参考
+
+```text
+https://www.jianshu.com/p/3ce1d27fc246 LayoutAnimation
+https://www.jianshu.com/p/2532c0e99c85 Animated
+```

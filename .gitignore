@@ -7,3 +7,4 @@ test/big-screen/
 ignore/
 webpack-test/node_modules/
 webpack-test/dist/
+build/package-lock.json
