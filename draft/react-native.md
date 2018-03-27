@@ -80,3 +80,8 @@ http://www.lcode.org/%E8%B6%85%E8%AF%A6%E7%BB%86react-native%E5%AE%9E%E7%8E%B0%E
 https://www.jianshu.com/p/3ce1d27fc246 LayoutAnimation
 https://www.jianshu.com/p/2532c0e99c85 Animated
 ```
+
+# react native 字体不随系统字体变化而变
+```text
+https://www.jianshu.com/p/bb09b917dadc
+```

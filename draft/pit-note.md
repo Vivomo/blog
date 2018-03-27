@@ -42,3 +42,7 @@ import * as Alert from 'react-native'
 导致把老的Navigator 也引入了
 和推荐的react-navigator 不兼容
 ``` 
+* Git 最著名报错 “ERROR: Permission to XXX.git denied to user”终极解决方案
+```
+https://www.jianshu.com/p/12badb7e6c10
+```
