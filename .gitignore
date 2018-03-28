@@ -8,3 +8,4 @@ ignore/
 webpack-test/node_modules/
 webpack-test/dist/
 build/package-lock.json
+nodejs/node_modules/
