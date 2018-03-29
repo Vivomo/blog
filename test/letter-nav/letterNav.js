@@ -35,12 +35,19 @@ class LetterNav{
         }
 
         this.wrap.addEventListener('touchstart', (e) => {
+            if (this.wrap.classList.contains('touched')) {
+                return;
+            }
             let clientY = e.touches[0].clientY;
             this.refreshTouchView(clientY);
-            body.addEventListener('touchmove', touchMove)
+            body.addEventListener('touchmove', touchMove);
+            setTimeout(() => {
+                this.wrap.classList.add('touched');
+            }, 300)
         });
 
         body.addEventListener('touchend', (e) => {
+            this.restore();
             body.removeEventListener('touchmove', touchMove)
         })
     }
@@ -69,9 +76,19 @@ class LetterNav{
      */
     updateNavItemStyle(index, clientY) {
         let nav = this.navItems[index];
-        let percent = Math.abs(clientY - this.navPositionCache[index]) / (this.activeDistance * 2 * this.extent);
+        let percent = Math.min(Math.abs(clientY - this.navPositionCache[index]) / (this.activeDistance * 2 * this.extent), 1);
         nav.style.opacity = 0.75 + 0.25 * percent;
-        nav.style.transform = `translate3d(${-100 * (1 - percent)}px, 0, 0) scale(${(1-percent) * 2 + 1})`
+        nav.style.transform = `translate3d(${-100 * Math.cos(Math.PI / 2 * percent)}px, 0, 0) scale(${(1-percent) * 2 + 1})`
+    }
 
+    /**
+     * 复原样式
+     */
+    restore() {
+        this.wrap.classList.remove('touched')
+        this.navItems.forEach((nav) => {
+            nav.style.opacity = 1;
+            nav.style.transform = 'translate3d(0, 0, 0) scale(1)';
+        })
     }
 }
