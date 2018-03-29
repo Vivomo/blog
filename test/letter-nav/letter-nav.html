@@ -19,6 +19,7 @@
         }
 
         .letter-nav .item {
+            position: relative;
             font-size: 14px;
             height: 30px;
             line-height: 1.8;
@@ -36,7 +37,9 @@
 <body>
 
 <script src="letterNav.js"></script>
+<!--<script src="console.js"></script>-->
 <script>
+    // new WapConsole()
     let nav = new LetterNav({
         nav: '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
         callback: (nav) => {

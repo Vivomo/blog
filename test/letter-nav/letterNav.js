@@ -46,8 +46,9 @@ class LetterNav{
             }, 300)
         });
 
-        body.addEventListener('touchend', (e) => {
-            this.restore();
+        body.addEventListener('touchend', () => {
+            this.wrap.classList.remove('touched')
+            this.restoreStyle();
             body.removeEventListener('touchmove', touchMove)
         })
     }
@@ -64,6 +65,7 @@ class LetterNav{
         }
         let startIndex = Math.max(0, activeIndex - this.extent);
         let endIndex = Math.min(activeIndex + this.extent, this.navItems.length - 1);
+        // this.restoreStyle();
         for (let i = startIndex; i <= endIndex; i++) {
             this.updateNavItemStyle(i, clientY);
         }
@@ -77,18 +79,19 @@ class LetterNav{
     updateNavItemStyle(index, clientY) {
         let nav = this.navItems[index];
         let percent = Math.min(Math.abs(clientY - this.navPositionCache[index]) / (this.activeDistance * 2 * this.extent), 1);
-        nav.style.opacity = 0.75 + 0.25 * percent;
-        nav.style.transform = `translate3d(${-100 * Math.cos(Math.PI / 2 * percent)}px, 0, 0) scale(${(1-percent) * 2 + 1})`
+        nav.style.opacity = Number((0.75 + 0.25 * percent).toFixed(2));
+        nav.style.left = `${~~(-100 * Math.cos(Math.PI / 2 * percent))}px`;
+        nav.style.transform = `scale(${((1-percent) * 2 + 1).toFixed(2)})`
     }
 
     /**
      * 复原样式
      */
-    restore() {
-        this.wrap.classList.remove('touched')
+    restoreStyle() {
         this.navItems.forEach((nav) => {
             nav.style.opacity = 1;
-            nav.style.transform = 'translate3d(0, 0, 0) scale(1)';
+            nav.style.left = 0;
+            nav.style.transform = 'scale(1)';
         })
     }
 }
