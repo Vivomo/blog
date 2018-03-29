@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>letter-nav</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .letter-nav {
+            position: fixed;
+            padding-left: 20px;
+            z-index: 999;
+            top: 50px;
+            width: 70px;
+            right: 0;
+            box-sizing: border-box;
+            text-align: center;
+            list-style: none;
+        }
+
+        .letter-nav .item {
+            font-size: 14px;
+            height: 30px;
+            line-height: 1.8;
+            color: #999;
+        }
+        .letter-nav .item.active {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<script src="letterNav.js"></script>
+<script>
+    new LetterNav({
+        nav: '#ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
+        callback: (nav) => {
+            console.log(nav)
+        }
+    })
+</script>
+</body>
+</html>
