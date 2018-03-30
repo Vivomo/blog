@@ -5,6 +5,7 @@
 ```
 
 ### 前端开发小型项目一般会用到以下几点
->. css 编译工具 推荐scss
->. es6 -> es5
->. 浏览器自动刷新
+* css 编译工具 推荐scss `gulp-sass`
+* es6 -> es5 `gulp-babel`
+* 浏览器自动刷新 `browser-sync`
+* JS 压缩 `gulp-uglify`
