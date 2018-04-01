@@ -1,5 +1,4 @@
 let max = Math.pow(2, 20);
-console.time('a')
 let a3 = [2, 5, 1, 3];
 for (let i = 0; i < max; i++) {
     let answers = new Array(10).fill(null).map((item, index) => (i >> (index * 2)) % 4);
@@ -46,4 +45,3 @@ for (let i = 0; i < max; i++) {
         break;
     }
 }
-console.timeEnd('a')
