@@ -10,3 +10,4 @@ webpack-test/dist/
 build/package-lock.json
 nodejs/node_modules/
 test/node_modules/
+exportToHTML/
