@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-let filePath = `G:\\`;
+let filePath = `C:\\Users\\Administrator\\AppData`;
 
 class File {
     constructor(data) {
@@ -53,7 +53,7 @@ console.time('f');
 createFilesArray(filePath, tree);
 console.timeEnd('f');
 
-fs.writeFile('../../ignore/c.json', JSON.stringify(tree), (err) => {
+fs.writeFile('../../ignore/AppData.json', JSON.stringify(tree), (err) => {
     if (!err) {
         console.log('write');
     }

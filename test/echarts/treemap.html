@@ -20,7 +20,7 @@
     var myChart = echarts.init(document.getElementById('main'));
     myChart.showLoading();
 
-    $.get('../../ignore/c.json', function (diskData) {
+    $.get('../../ignore/AppData.json', function (diskData) {
         myChart.hideLoading();
 
         var formatUtil = echarts.format;
