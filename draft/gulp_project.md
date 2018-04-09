@@ -10,4 +10,5 @@
 
 * JS 压缩 `gulp-uglify`
 * es6 -> es5 `gulp-babel`
+* gulp-file-include:    include 文件用
 
