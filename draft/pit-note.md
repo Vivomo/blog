@@ -46,3 +46,10 @@ import * as Alert from 'react-native'
 ```
 https://www.jianshu.com/p/12badb7e6c10
 ```
+
+* 浮点数 * 10的整倍数仍会有精度问题
+```js
+console.log(0.29 * 10) // 2.9 ...
+console.log(0.29 * 100) // 28.99999999 ...
+console.log(0.29 * 1000) // 290 ...
+```
