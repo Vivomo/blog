@@ -5,8 +5,8 @@ let browserSync = require("browser-sync").create();
 browserSync.init({
     files: ['./*.*'],
     server: {
-        baseDir: ['./'],
-        index: "./letter-nav.html",
+        baseDir: ['../'],
+        index: "../cool-style/science.html",
         serveStaticOptions: {
             extensions: ["html"]
         }
