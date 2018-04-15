@@ -6,9 +6,40 @@
 
 ### 前端开发项目一般会用到以下几点
 * css 编译工具 推荐scss `gulp-sass`
+* css css3前缀添加 `gulp-autoprefixer`
+
 * 浏览器自动刷新 `browser-sync`
 
 * JS 压缩 `gulp-uglify`
 * es6 -> es5 `gulp-babel`
-* gulp-file-include:    include 文件用
+* 全局替换, 用于不同编译环境 `gulp-replace`
+* include html文件用 `gulp-file-include`
 
+
+### example
+```js
+let path = {
+    input: {
+        css: '',
+        js: '',
+        html: ''    
+    },
+    output: {
+        css: '',
+        js: '',
+        html: ''
+    }   
+};
+let gulp = require('gulp'),
+    scss = require('gulp-sass'),
+    babel = require('gulp-babel'),
+    prefix = require("gulp-autoprefixer"),
+    uglify = require('gulp-uglify'),
+    fileinclude = require('gulp-file-include');
+gulp.src('scssSrc')
+        .pipe(scss({
+            outputStyle: 'compressed',
+        }))
+        .pipe(prefix(["last 2 versions"], { cascade: true }))
+        .pipe(gulp.dest('../share/css'));
+```
