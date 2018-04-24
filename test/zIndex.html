@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box {
+            width: 600px;
+            height: 300px;
+            margin: 0 200px 0 auto;
+            perspective: 1600px;
+        }
+
+        .d {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            color: #fff;
+            transform-style: preserve-3d;
+        }
+
+        .d1 {
+            z-index: 2;
+            background: #000;
+            transform: translateZ(100px);
+        }
+
+        .d2 {
+            z-index: 3;
+            background: #999;
+            transform: translateZ(-100px);
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="d d1">123</div>
+    <div class="d d2">456</div>
+</div>
+</body>
+</html>
