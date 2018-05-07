@@ -84,4 +84,7 @@ https://www.jianshu.com/p/2532c0e99c85 Animated
 # react native 字体不随系统字体变化而变
 ```text
 https://www.jianshu.com/p/bb09b917dadc
+上述链接只适合比较老的RN版本
+在使用.51后. 发现 只要Text设置 allowFontScaling=false 即可, 以前是只有IOS支持
+.51不是明确的版本分割, 具体看官方文档(非翻译版)
 ```
