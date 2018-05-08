@@ -58,6 +58,28 @@ function pxToDp(uiElementPx) {
 }
 ```
 
+一个更好的实践方式是把 `StyleSheet.create` 封装一下, 这个可以省略对每个尺寸的计算
+```js
+// example
+let styleConfig = {
+    fontSize: pxToDp,
+    width: pxToDp
+};
+
+let createStyle = (styleObj) => {
+    let style = {};
+    Object.entries(styleObj).forEach(([key, value]) => {
+        style[key] = styleConfig[key](value) 
+    });
+    return StyleSheet.create(style);
+};
+
+let style = createStyle({
+    fontSize: 10,
+    width: 200,
+})
+```
+
 ### 盒模型
 RN的盒模型相当于CSS中的box-sizing: border-box;
 
