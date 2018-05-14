@@ -1,5 +1,11 @@
 # npm 常用指令
 
+> 卸载
+
+```text
+npm uninstall package-name
+```
+
 > 切换镜像
 ```
 # 默认源
