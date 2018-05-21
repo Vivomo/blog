@@ -33,6 +33,7 @@
 * 组件中用了未定义的函数, 导致异常不会有明显的提示, Node has not been attached to a View. (eg:xzb)
 * 千万不要在RN项目里面用 import * as .... 这种方式 引用组件, 会导致过期不推荐的也被引入, 导致报错(如 react-navigator已替代了react-native里面的Navigator)
 * Android 不支持overflow visible
+* 调试时, 如果模拟器时间和电脑时间时区不一样, setTimeout 和 setInterval 将不会执行
 
 ## iconfont
 利用www.iconfont.com 生成的.ttf 放置对应的资源文件, 在用的时候输入编码,同时声明fontFamily
