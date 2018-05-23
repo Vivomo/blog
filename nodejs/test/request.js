@@ -1,13 +1,6 @@
 let http = require('http');
 let queryString = require('querystring');
 
-let data = {
-    username: 15715776170,
-    password: 'a123456',
-    tenant: 'pampas',
-    provider: 'tenant',
-    grant_type: 'password'
-}
 
 let req = http.request({
     hostname: '10.10.100.56',
