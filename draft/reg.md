@@ -94,4 +94,8 @@ reg = new RegExp(`^[0369]* (
 搜索可以使用正则搜索
 替换文本时, 前面添加\u\l\U\L可以将捕获的进行大小写转换
 
-
+```
+// eg
+'SET_CERTIFICATE' replace '([A-Z]+)_([A-Z])([A-Z]+)'  &  \L$1\U$2\L$3
+  => setCertificate
+```

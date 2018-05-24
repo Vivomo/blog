@@ -32,6 +32,8 @@
     图文代码的文档(建议 .md),以便快速找到需要的组件, 和知道哪些组件没有开发
 * 组件中用了未定义的函数, 导致异常不会有明显的提示, Node has not been attached to a View. (eg:xzb)
 * 千万不要在RN项目里面用 import * as .... 这种方式 引用组件, 会导致过期不推荐的也被引入, 导致报错(如 react-navigator已替代了react-native里面的Navigator)
+* Android 不支持overflow visible
+* 调试时, 如果模拟器时间和电脑时间时区不一样, setTimeout 和 setInterval 将不会执行
 
 ## iconfont
 利用www.iconfont.com 生成的.ttf 放置对应的资源文件, 在用的时候输入编码,同时声明fontFamily
@@ -58,6 +60,28 @@ function pxToDp(uiElementPx) {
 }
 ```
 
+一个更好的实践方式是把 `StyleSheet.create` 封装一下, 这个可以省略对每个尺寸的计算
+```js
+// example
+let styleConfig = {
+    fontSize: pxToDp,
+    width: pxToDp
+};
+
+let createStyle = (styleObj) => {
+    let style = {};
+    Object.entries(styleObj).forEach(([key, value]) => {
+        style[key] = styleConfig[key](value) 
+    });
+    return StyleSheet.create(style);
+};
+
+let style = createStyle({
+    fontSize: 10,
+    width: 200,
+})
+```
+
 ### 盒模型
 RN的盒模型相当于CSS中的box-sizing: border-box;
 
@@ -69,19 +93,35 @@ Downloading https://services.gradle.org/distributions/gradle-4.0-milestone-1-all
 ```
 
 
-# 分享朋友圈
+### 分享朋友圈
 ```text
 http://www.lcode.org/%E8%B6%85%E8%AF%A6%E7%BB%86react-native%E5%AE%9E%E7%8E%B0%E5%BE%AE%E4%BF%A1%E5%A5%BD%E5%8F%8B%E6%9C%8B%E5%8F%8B%E5%9C%88%E5%88%86%E4%BA%AB%E5%8A%9F%E8%83%BD-androidios%E5%8F%8C%E5%B9%B3%E5%8F%B0/
 ```
 
-# 动画参考
+### 动画参考
 
 ```text
 https://www.jianshu.com/p/3ce1d27fc246 LayoutAnimation
 https://www.jianshu.com/p/2532c0e99c85 Animated
 ```
 
-# react native 字体不随系统字体变化而变
+### react native 字体不随系统字体变化而变
 ```text
 https://www.jianshu.com/p/bb09b917dadc
+上述链接只适合比较老的RN版本
+在使用.51后. 发现 只要Text设置 allowFontScaling=false 即可, 以前是只有IOS支持
+.51不是明确的版本分割, 具体看官方文档(非翻译版)
+```
+
+### 组件统一问题
+
+项目可能会用多方的UI组件, 这样会造成组件更换改动多个地方, 代码格式也比较混乱, 如
+```js
+import { Button } from 'some-lib';
+import { Toast } from 'some-lib2';
+// ...
+```
+无论来自哪个库, 都封装一下比较容易管理
+```js
+import { Button, Toast } from 'my-lib';
 ```
