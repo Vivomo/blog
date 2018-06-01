@@ -6,7 +6,9 @@ class Carousel {
             looped: true,
             auto: true,
             touchable: false,
-            margin: 0
+            margin: 0,
+            width: 0,
+            listener: null
         };
 
         for (let key in this.config) {
@@ -23,10 +25,11 @@ class Carousel {
         this.transformStyleName = 'transform' in document.body.style ? 'transform' : 'webkitTransform';
 
         let wrap = typeof opt.elem === 'string' ? document.querySelector(opt.elem) : opt.elem;
+        this.listener = opt.listener ? (typeof opt.listener === 'string' ? document.querySelector(opt.listener) : opt.listener) : null;
         this.wrap = wrap;
         this.moving = false;
         this.afterSwitch = opt.afterSwitch || (() => {});
-        this.width = wrap.clientWidth;
+        this.width = this.config.width || wrap.clientWidth;
         this.elem = Array.from(wrap.children);
         this.activeIndex = 0;
         this.translateX = 0;
@@ -125,6 +128,7 @@ class Carousel {
         let direction = null;
         let xDirection = 'x';
         let yDirection = 'y';
+        let listener = this.listener || this.wrap
         let touchMove = (e) => {
             let point = e.touches[0];
             movedX = point.pageX - startX;
@@ -135,7 +139,7 @@ class Carousel {
                 } else if (Math.abs(movedY) > monitorDistance) {
                     direction = yDirection
                 }
-                e.preventDefault();
+                // e.preventDefault();
                 e.stopPropagation();
             } else {
                 if (direction === xDirection) {
@@ -147,7 +151,7 @@ class Carousel {
                 }
             }
         };
-        this.wrap.addEventListener('touchstart', (e) => {
+        listener.addEventListener('touchstart', (e) => {
             if (this.moving) {
                 return;
             }
@@ -157,10 +161,10 @@ class Carousel {
             startX = point.pageX;
             startY = point.pageY;
 
-            this.wrap.addEventListener('touchmove', touchMove);
+            listener.addEventListener('touchmove', touchMove);
         });
 
-        this.wrap.addEventListener('touchend', () => {
+        listener.addEventListener('touchend', () => {
             if (Math.abs(movedX) > this.width / 4) {
                 if (movedX < 0) {
                     if (this.activeIndex === this.elem.length - 1) {
