@@ -5,6 +5,7 @@ let gulp = require('gulp'),
 gulp.task('scss', function () {
     gulp.src(scssSrc)
         .pipe(scss({
+            linefeed: 'crlf'
             // outputStyle: 'expanded',
             // indentWidth: 4
         }))
