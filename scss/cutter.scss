@@ -1,3 +1,6 @@
+
+$squareWidth: 9px;
+
 #wrap {
     position: relative;
     margin: 0 auto;
@@ -15,55 +18,65 @@
     height: 100px;
     left: 100px;
     top: 100px;
+
+    cursor: move;
 }
 
 .cutter .square {
     position: absolute;
-    width: 5px;
-    height: 5px;
+    width: $squareWidth;
+    height: $squareWidth;
     background: #00eaff;
 }
 
 .cutter .s-lt {
-    left: -3px;
-    top: -3px;
+    left: -$squareWidth / 2;
+    top: -$squareWidth / 2;
+    cursor: se-resize;
 }
 
 .cutter .s-rt {
-    right: -3px;
-    top: -3px;
+    right: -$squareWidth / 2;
+    top: -$squareWidth / 2;
+    cursor: sw-resize;
 }
 
 .cutter .s-t {
-    top: -3px;
+    top: -$squareWidth / 2;
     left: 50%;
-    margin-left: -3px;
+    margin-left: -$squareWidth / 2;
+    cursor: s-resize;
 }
 
 .cutter .s-l {
-    left: -3px;
+    left: -$squareWidth / 2;
     top: 50%;
-    margin-top: -3px;
+    margin-top: -$squareWidth / 2;
+    cursor: e-resize;
 }
 
 .cutter .s-r {
-    right: -3px;
+    right: -$squareWidth / 2;
     top: 50%;
-    margin-top: -3px;
+    margin-top: -$squareWidth / 2;
+    cursor: e-resize;
 }
 
 .cutter .s-lb {
-    left: -3px;
-    bottom: -3px;
+    left: -$squareWidth / 2;
+    bottom: -$squareWidth / 2;
+    cursor: sw-resize;
 }
 
 .cutter .s-rb {
-    right: -3px;
-    bottom: -3px;
+    right: -$squareWidth / 2;
+    bottom: -$squareWidth / 2;
+    cursor: se-resize;
 }
 
 .cutter .s-b {
-    bottom: -3px;
+    bottom: -$squareWidth / 2;
     left: 50%;
-    margin-left: -3px;
+    margin-left: -$squareWidth / 2;
+    cursor: s-resize;
 }

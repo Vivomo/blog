@@ -12,46 +12,55 @@
   width: 100px;
   height: 100px;
   left: 100px;
-  top: 100px; }
+  top: 100px;
+  cursor: move; }
 
 .cutter .square {
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: 9px;
+  height: 9px;
   background: #00eaff; }
 
 .cutter .s-lt {
-  left: -3px;
-  top: -3px; }
+  left: -4.5px;
+  top: -4.5px;
+  cursor: se-resize; }
 
 .cutter .s-rt {
-  right: -3px;
-  top: -3px; }
+  right: -4.5px;
+  top: -4.5px;
+  cursor: sw-resize; }
 
 .cutter .s-t {
-  top: -3px;
+  top: -4.5px;
   left: 50%;
-  margin-left: -3px; }
+  margin-left: -4.5px;
+  cursor: s-resize; }
 
 .cutter .s-l {
-  left: -3px;
+  left: -4.5px;
   top: 50%;
-  margin-top: -3px; }
+  margin-top: -4.5px;
+  cursor: e-resize; }
 
 .cutter .s-r {
-  right: -3px;
+  right: -4.5px;
   top: 50%;
-  margin-top: -3px; }
+  margin-top: -4.5px;
+  cursor: e-resize; }
 
 .cutter .s-lb {
-  left: -3px;
-  bottom: -3px; }
+  left: -4.5px;
+  bottom: -4.5px;
+  cursor: sw-resize; }
 
 .cutter .s-rb {
-  right: -3px;
-  bottom: -3px; }
+  right: -4.5px;
+  bottom: -4.5px;
+  cursor: se-resize; }
 
 .cutter .s-b {
-  bottom: -3px;
+  bottom: -4.5px;
   left: 50%;
-  margin-left: -3px; }
+  margin-left: -4.5px;
+  cursor: s-resize; }
