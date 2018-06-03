@@ -1,0 +1,57 @@
+#wrap {
+  position: relative;
+  margin: 0 auto;
+  width: 600px;
+  height: 600px;
+  background: #333; }
+
+.cutter {
+  position: absolute;
+  outline: 1px solid #00eaff;
+  opacity: 0.5;
+  width: 100px;
+  height: 100px;
+  left: 100px;
+  top: 100px; }
+
+.cutter .square {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: #00eaff; }
+
+.cutter .s-lt {
+  left: -3px;
+  top: -3px; }
+
+.cutter .s-rt {
+  right: -3px;
+  top: -3px; }
+
+.cutter .s-t {
+  top: -3px;
+  left: 50%;
+  margin-left: -3px; }
+
+.cutter .s-l {
+  left: -3px;
+  top: 50%;
+  margin-top: -3px; }
+
+.cutter .s-r {
+  right: -3px;
+  top: 50%;
+  margin-top: -3px; }
+
+.cutter .s-lb {
+  left: -3px;
+  bottom: -3px; }
+
+.cutter .s-rb {
+  right: -3px;
+  bottom: -3px; }
+
+.cutter .s-b {
+  bottom: -3px;
+  left: 50%;
+  margin-left: -3px; }
