@@ -66,8 +66,8 @@ Cutter.prototype = {
     },
     initWrap: function () {
         this.elem = this.options.elem;
-        this.width = this.elem.clientWidth;
-        this.height = this.elem.clientHeight;
+        this.wrapWidth = this.elem.clientWidth;
+        this.wrapHeight = this.elem.clientHeight;
         let wrap = document.createElement('div');
         wrap.className = 'cropper-wrap';
         wrap.style.cssText = 'left: 0; right: 0; top: 0; bottom: 0; position: absolute';
@@ -76,35 +76,28 @@ Cutter.prototype = {
         this.elem.appendChild(wrap);
     },
     initCropperStyle: function () {
-        let width = Math.min(this.width, this.height) / 4;
-        this.right = this.left = ~~((this.width - width) / 2);
-        this.top = this.bottom = ~~((this.height - width) / 2);
+        let width = Math.min(this.wrapWidth, this.wrapHeight) / 4;
+        
+        this.left = ~~((this.wrapWidth - width) / 2);
+        this.top = ~~((this.wrapHeight - width) / 2);
+        this.width = this.height = width;
         this.updateCropperPosition();
     },
     updateCropperPosition: function () {
         this.cropper.style.cssText = `
             left: ${this.left}px;
-            right: ${this.right}px;
+            width: ${this.width}px;
             top: ${this.top}px;
-            bottom: ${this.bottom}px;
+            height: ${this.height}px;
             `;
     },
     move: function (x, y) {
         let left = this.left - x;
-        let right = this.right + x;
         let top = this.top - y;
-        let bottom = this.bottom + y;
-        if (left < 0 || right < 0 || top < 0 || bottom < 0) {
-            return;
-        }
-        this.setPosition('left', this.left - x);
-        this.setPosition('right', this.right + x);
-        this.setPosition('top', this.top - y);
-        this.setPosition('bottom', this.bottom + y);
+        this.left = Math.max(Math.min(this.wrapWidth - this.width, left), 0);
+        this.top = Math.max(Math.min(this.wrapHeight - this.height, top), 0);
         this.updateCropperPosition();
     },
-    setPosition: function(key, value) {
-        this[key] = Math.max(value, 0)
-    }
+
 
 };
