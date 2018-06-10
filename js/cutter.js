@@ -31,11 +31,30 @@ Cutter.prototype = {
     listenCropper: function () {
         let startX = 0;
         let startY = 0;
-        this.cropper.addEventListener('click', (e) => {
+        let startLeft = 0;
+        let startTop = 0;
+
+        this.cropper.addEventListener('mousedown', (e) => {
             startX = e.clientX;
             startY = e.clientY;
+            startLeft = this.left;
+            startTop = this.top;
+
+            this.cropper.addEventListener('mousemove', cropMove);
+            this.cropper.addEventListener('mouseup', () => {
+                this.cropper.removeEventListener('mousemove', cropMove)
+            });
             console.log(e);
         });
+
+        let cropMove = (e) => {
+            let x = e.clientX;
+            let y = e.clientY;
+            this.move(startX - x, startY - y);
+            startX = x;
+            startY = y;
+        };
+
     },
     initStyle: function () {
         this.initWrap();
