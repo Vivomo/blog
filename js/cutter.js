@@ -1,6 +1,7 @@
 
 let Cutter = function (options) {
-    this.init(options)
+    this.options = options;
+    this.init()
 };
 
 Cutter.prototype = {
@@ -20,14 +21,17 @@ Cutter.prototype = {
             <div class="square s-b"></div>
         </div>
     `,
-    init: function (options) {
-        this.elem = options.elem;
-        this.width = this.elem.clientWidth;
-        this.height = this.elem.clientHeight;
+    init: function () {
+        this.initStyle();
+    },
+    initStyle: function () {
         this.initWrap();
         this.initCropperStyle();
     },
     initWrap: function () {
+        this.elem = this.options.elem;
+        this.width = this.elem.clientWidth;
+        this.height = this.elem.clientHeight;
         let wrap = document.createElement('div');
         wrap.className = 'cropper-wrap';
         wrap.style.cssText = 'left: 0; right: 0; top: 0; bottom: 0; position: absolute';
