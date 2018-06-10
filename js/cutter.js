@@ -40,12 +40,16 @@ Cutter.prototype = {
             startLeft = this.left;
             startTop = this.top;
 
-            this.cropper.addEventListener('mousemove', cropMove);
-            this.cropper.addEventListener('mouseup', () => {
-                this.cropper.removeEventListener('mousemove', cropMove)
+            document.body.addEventListener('mousemove', cropMove);
+            document.body.addEventListener('mouseup', () => {
+                document.body.removeEventListener('mousemove', cropMove)
             });
             console.log(e);
         });
+
+        // this.cropper.addEventListener('mouseout', () => {
+        //     document.body.removeEventListener('mousemove', cropMove)
+        // });
 
         let cropMove = (e) => {
             let x = e.clientX;
@@ -86,11 +90,21 @@ Cutter.prototype = {
             `;
     },
     move: function (x, y) {
-        this.left -= x;
-        this.right += x;
-        this.top -= y;
-        this.bottom += y;
+        let left = this.left - x;
+        let right = this.right + x;
+        let top = this.top - y;
+        let bottom = this.bottom + y;
+        if (left < 0 || right < 0 || top < 0 || bottom < 0) {
+            return;
+        }
+        this.setPosition('left', this.left - x);
+        this.setPosition('right', this.right + x);
+        this.setPosition('top', this.top - y);
+        this.setPosition('bottom', this.bottom + y);
         this.updateCropperPosition();
     },
+    setPosition: function(key, value) {
+        this[key] = Math.max(value, 0)
+    }
 
 };
