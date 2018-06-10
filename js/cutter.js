@@ -37,10 +37,12 @@ Cutter.prototype = {
     },
     initCropperStyle: function () {
         let width = Math.min(this.width, this.height) / 4;
+        this.right = this.left = ~~((this.width - width) / 2);
+        this.top = this.bottom = ~~((this.height - width) / 2);
         this.cropper.style.cssText = `position: absolute; 
-            left: ${(this.width - width) / 2}px;
-            right: ${(this.width - width) / 2}px;
-            top: ${(this.height - width) / 2}px;
-            bottom: ${(this.height - width) / 2}px`
+            left: ${this.left}px;
+            right: ${this.right}px;
+            top: ${this.top}px;
+            bottom: ${this.bottom}px;`
     }
 };
