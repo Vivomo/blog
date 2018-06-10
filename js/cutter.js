@@ -23,6 +23,19 @@ Cutter.prototype = {
     `,
     init: function () {
         this.initStyle();
+        this.initListener();
+    },
+    initListener: function () {
+        this.listenCropper();
+    },
+    listenCropper: function () {
+        let startX = 0;
+        let startY = 0;
+        this.cropper.addEventListener('click', (e) => {
+            startX = e.clientX;
+            startY = e.clientY;
+            console.log(e);
+        });
     },
     initStyle: function () {
         this.initWrap();
@@ -43,10 +56,22 @@ Cutter.prototype = {
         let width = Math.min(this.width, this.height) / 4;
         this.right = this.left = ~~((this.width - width) / 2);
         this.top = this.bottom = ~~((this.height - width) / 2);
-        this.cropper.style.cssText = `position: absolute; 
+        this.updateCropperPosition();
+    },
+    updateCropperPosition: function () {
+        this.cropper.style.cssText = `
             left: ${this.left}px;
             right: ${this.right}px;
             top: ${this.top}px;
-            bottom: ${this.bottom}px;`
-    }
+            bottom: ${this.bottom}px;
+            `;
+    },
+    move: function (x, y) {
+        this.left -= x;
+        this.right += x;
+        this.top -= y;
+        this.bottom += y;
+        this.updateCropperPosition();
+    },
+
 };
