@@ -1,24 +1,25 @@
 
 let Cutter = function (options) {
-    this.options = options;
+    this.options = Object.assign({}, this.defaultConfig, options);
     this.init()
 };
 
 Cutter.prototype = {
     constructor: Cutter,
     defaultConfig: {
-
+        minWidth: 5,
+        minHeight: 5
     },
     cropperTemplate: `
         <div class="cutter">
-            <div class="square s-lt"></div>
-            <div class="square s-t"></div>
-            <div class="square s-rt"></div>
-            <div class="square s-l"></div>
-            <div class="square s-r"></div>
-            <div class="square s-lb"></div>
-            <div class="square s-rb"></div>
-            <div class="square s-b"></div>
+            <div class="square s-lt" data-left="1" data-top="1"></div>
+            <div class="square s-t" data-top="1"></div>
+            <div class="square s-rt" data-width="1" data-top="1"></div>
+            <div class="square s-l" data-left="1"></div>
+            <div class="square s-r" data-width="1"></div>
+            <div class="square s-lb" data-left="1" data-height="1"></div>
+            <div class="square s-rb" data-width="1" data-height="1"></div>
+            <div class="square s-b" data-height="1"></div>
         </div>
     `,
     init: function () {
@@ -27,6 +28,7 @@ Cutter.prototype = {
     },
     initListener: function () {
         this.listenCropper();
+        this.listenCropperItem();
     },
     listenCropper: function () {
         let startX = 0;
@@ -54,7 +56,54 @@ Cutter.prototype = {
             startY = y;
         };
     },
+    listenCropperItem: function () {
+        let startX = 0;
+        let startY = 0;
+        let startLeft = 0;
+        let startTop = 0;
+        Array.from(this.cropper.querySelectorAll('.square')).forEach((item) => {
+            item.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+                startX = e.clientX;
+                startY = e.clientY;
+                startLeft = this.left;
+                startTop = this.top;
 
+                let temp = (e) => {
+                    cropUpdate(e, item.dataset)
+                };
+
+                document.body.addEventListener('mousemove', temp);
+                document.body.addEventListener('mouseup', () => {
+                    document.body.removeEventListener('mousemove', temp)
+                });
+            });
+        });
+
+        let cropUpdate = (e, data) => {
+            let x = e.clientX;
+            let y = e.clientY;
+            let offsetX = x - startX;
+            let offsetY = y - startY;
+            if (data.left) {
+                this.setLeft(this.left + offsetX);
+            }
+            if (data.top) {
+                this.setTop(this.top + offsetY);
+            }
+
+            if (data.width) {
+                this.setWidth(this.width + offsetX)
+            }
+
+            if (data.height) {
+                this.setHeight(this.height + offsetY)
+            }
+            this.updateCropperPosition()
+            startX = x;
+            startY = y;
+        };
+    },
     initStyle: function () {
         this.initWrap();
         this.initCropperStyle();
@@ -87,23 +136,50 @@ Cutter.prototype = {
             `;
     },
     move: function (x, y) {
-        this.setLeft(this.left - x);
-        this.setTop(this.top - y, true);
+        this.setLeft(this.left - x, false);
+        this.setTop(this.top - y, false);
         this.updateCropperPosition();
     },
 
-    setLeft: function (left, update = false) {
-        this.left = Math.max(Math.min(this.wrapWidth - this.width, left), 0);
+    setLeft: function (left, fixed = true, update = false) {
+        let max = fixed ? (this.left + this.width - this.options.minWidth) : (this.wrapWidth - this.width);
+        let prevLeft = this.left;
+        this.left = Math.max(Math.min(max, left), 0);
+        if (fixed) {
+            this.setWidth(this.width + (prevLeft - this.left))
+        }
+
         if (update) {
             this.updateCropperPosition()
         }
     },
 
-    setTop: function (top, update = false) {
-        this.top = Math.max(Math.min(this.wrapHeight - this.height, top), 0);
+    setTop: function (top, fixed = true, update = false) {
+        let max = fixed ? (this.top + this.height - this.options.minHeight) : (this.wrapHeight - this.height);
+        let prevTop = this.top;
+        this.top = Math.max(Math.min(max, top), 0);
+        if (fixed) {
+            this.setHeight(this.height + (prevTop - this.top));
+        }
         if (update) {
             this.updateCropperPosition()
         }
-    }
+    },
+
+    setWidth: function (width, update = false) {
+        this.width = Math.max(this.options.minWidth, Math.min(width, this.wrapWidth - this.left));
+        if (update) {
+            this.updateCropperPosition()
+        }
+    },
+
+    setHeight: function (height, update = false) {
+        this.height = Math.max(1, Math.min(height, this.wrapHeight - this.top));
+        if (update) {
+            this.updateCropperPosition()
+        }
+    },
+
+
 
 };
