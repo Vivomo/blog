@@ -42,20 +42,27 @@ Cropper.prototype = {
             startY = e.clientY;
             startLeft = this.left;
             startTop = this.top;
+            this.updateWrapData();
+
+            let cropMove = (e) => {
+                let x = e.clientX;
+                let y = e.clientY;
+                this.move(startX - x, startY - y);
+                startX = x;
+                startY = y;
+                e.preventDefault();
+            };
+
+            let mouseUp = () => {
+                document.body.removeEventListener('mousemove', cropMove);
+                document.body.removeEventListener('mouseup', mouseUp)
+            };
 
             document.body.addEventListener('mousemove', cropMove);
-            document.body.addEventListener('mouseup', () => {
-                document.body.removeEventListener('mousemove', cropMove)
-            });
+            document.body.addEventListener('mouseup', mouseUp);
         });
 
-        let cropMove = (e) => {
-            let x = e.clientX;
-            let y = e.clientY;
-            this.move(startX - x, startY - y);
-            startX = x;
-            startY = y;
-        };
+
     },
     listenCropperItem: function () {
         let startX = 0;
@@ -69,15 +76,20 @@ Cropper.prototype = {
                 startY = e.clientY;
                 startLeft = this.left;
                 startTop = this.top;
+                this.updateWrapData();
 
-                let temp = (e) => {
+                let mouseMove = (e) => {
                     cropUpdate(e, item.dataset)
+                    e.preventDefault();
                 };
 
-                document.body.addEventListener('mousemove', temp);
-                document.body.addEventListener('mouseup', () => {
-                    document.body.removeEventListener('mousemove', temp)
-                });
+                let mouseUp = () => {
+                    document.body.removeEventListener('mousemove', mouseMove)
+                    document.body.removeEventListener('mouseup', mouseUp)
+                };
+
+                document.body.addEventListener('mousemove', mouseMove);
+                document.body.addEventListener('mouseup', mouseUp);
             });
         });
 
@@ -122,8 +134,7 @@ Cropper.prototype = {
         this.elem.appendChild(wrap);
     },
     initCropperStyle: function () {
-        this.wrapWidth = this.elem.clientWidth;
-        this.wrapHeight = this.elem.clientHeight;
+        this.updateWrapData();
         let width = Math.min(this.wrapWidth, this.wrapHeight) / 4;
         
         this.left = ~~((this.wrapWidth - width) / 2);
@@ -138,6 +149,10 @@ Cropper.prototype = {
     show: function () {
         this.hidden = false;
         this.wrap.classList.remove('hide')
+    },
+    updateWrapData: function () {
+        this.wrapWidth = this.elem.clientWidth;
+        this.wrapHeight = this.elem.clientHeight;
     },
     updateCropperPosition: function () {
         this.cropper.style.cssText = `
