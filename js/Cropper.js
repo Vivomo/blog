@@ -1,11 +1,11 @@
 
-let Cutter = function (options) {
+let Cropper = function (options) {
     this.options = Object.assign({}, this.defaultConfig, options);
     this.init()
 };
 
-Cutter.prototype = {
-    constructor: Cutter,
+Cropper.prototype = {
+    constructor: Cropper,
     defaultConfig: {
         minWidth: 5,
         minHeight: 5
