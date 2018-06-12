@@ -9,7 +9,15 @@ body {
   background-image: radial-gradient(ellipse at right, #dc4bc8, #00004b); }
 
 .cropper-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 999;
   overflow: hidden; }
+  .cropper-wrap.hide {
+    display: none; }
 
 .cropper {
   position: absolute;

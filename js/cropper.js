@@ -6,6 +6,7 @@ let Cropper = function (options) {
 
 Cropper.prototype = {
     constructor: Cropper,
+    hidden: false,
     defaultConfig: {
         minWidth: 5,
         minHeight: 5
@@ -110,22 +111,33 @@ Cropper.prototype = {
     },
     initWrap: function () {
         this.elem = this.options.elem;
-        this.wrapWidth = this.elem.clientWidth;
-        this.wrapHeight = this.elem.clientHeight;
-        let wrap = document.createElement('div');
+        
+        let wrap = this.wrap =  document.createElement('div');
         wrap.className = 'cropper-wrap';
-        wrap.style.cssText = 'left: 0; right: 0; top: 0; bottom: 0; position: absolute';
         wrap.innerHTML = this.cropperTemplate;
         this.cropper = wrap.querySelector('.cropper');
+        if (this.options.hide) {
+            this.hide();
+        }
         this.elem.appendChild(wrap);
     },
     initCropperStyle: function () {
+        this.wrapWidth = this.elem.clientWidth;
+        this.wrapHeight = this.elem.clientHeight;
         let width = Math.min(this.wrapWidth, this.wrapHeight) / 4;
         
         this.left = ~~((this.wrapWidth - width) / 2);
         this.top = ~~((this.wrapHeight - width) / 2);
         this.width = this.height = width;
         this.updateCropperPosition();
+    },
+    hide: function () {
+        this.wrap.classList.add('hide');
+        this.hidden = true;
+    },
+    show: function () {
+        this.hidden = false;
+        this.wrap.classList.remove('hide')
     },
     updateCropperPosition: function () {
         this.cropper.style.cssText = `

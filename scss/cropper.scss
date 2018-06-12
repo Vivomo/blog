@@ -12,7 +12,17 @@ $squareWidth: 9px;
     background-image: radial-gradient(ellipse at right, rgb(220, 75, 200),rgb(0, 0, 75));
 }
 .cropper-wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 999;
     overflow: hidden;
+
+    &.hide {
+        display: none;
+    }
 }
 .cropper {
     position: absolute;
