@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<div class="box">
+<div class="opt-menu">
 
     <fieldset>
         <legend>插入图片</legend>
@@ -31,11 +31,6 @@
         <button class="btn" id="toPng" data-cmd="downloadPNG">下载PNG</button>
         <div>
             <button class="btn" data-cmd="downloadWechat">下载微信九宫格</button>
-            <!--<select id="imgAlign" class="v-input">-->
-                <!--<option value="left">左/上</option>-->
-                <!--<option value="center" selected>中</option>-->
-                <!--<option value="right">右/下</option>-->
-            <!--</select>-->
             (如果没有反应多半是手机浏览器没有权限, 只能长按生成的图片一个个保存)
         </div>
     </fieldset>
@@ -49,14 +44,16 @@
         <button class="btn" data-cmd="vFlip">垂直翻转</button>
         <button class="btn" data-cmd="cutNine">生成微信九宫格</button>
     </fieldset>
+</div>
 
+<div class="content-wrap">
     <div class="canvas-wrap" id="canvas-wrap">
         <canvas id="canvas" class="theme"></canvas>
     </div>
 
     <ul class="wechat-nine" id="weChatNine"></ul>
 </div>
-
+<script src="../js/cropper.js"></script>
 <script src="../js/ps.js"></script>
 </body>
 </html>

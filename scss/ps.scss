@@ -1,8 +1,13 @@
 #canvas {
+    display: block;
     max-width: 100%;
-    margin: 50px auto;
     box-shadow: 0 0 10px currentColor;
     background: #FFF;
+}
+
+.canvas-wrap {
+    display: inline-block;
+    position: relative;
 }
 
 fieldset {
@@ -31,4 +36,14 @@ fieldset {
             max-width: 100%;
         }
     }
+}
+
+.opt-menu {
+    float: left;
+    width: 300px;
+}
+
+.content-wrap {
+    padding-top: 20px;
+    margin-left: 320px;
 }
