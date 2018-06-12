@@ -44,12 +44,7 @@ Cutter.prototype = {
             document.body.addEventListener('mouseup', () => {
                 document.body.removeEventListener('mousemove', cropMove)
             });
-            console.log(e);
         });
-
-        // this.cropper.addEventListener('mouseout', () => {
-        //     document.body.removeEventListener('mousemove', cropMove)
-        // });
 
         let cropMove = (e) => {
             let x = e.clientX;
@@ -58,8 +53,8 @@ Cutter.prototype = {
             startX = x;
             startY = y;
         };
-
     },
+
     initStyle: function () {
         this.initWrap();
         this.initCropperStyle();
@@ -92,12 +87,23 @@ Cutter.prototype = {
             `;
     },
     move: function (x, y) {
-        let left = this.left - x;
-        let top = this.top - y;
-        this.left = Math.max(Math.min(this.wrapWidth - this.width, left), 0);
-        this.top = Math.max(Math.min(this.wrapHeight - this.height, top), 0);
+        this.setLeft(this.left - x);
+        this.setTop(this.top - y, true);
         this.updateCropperPosition();
     },
 
+    setLeft: function (left, update = false) {
+        this.left = Math.max(Math.min(this.wrapWidth - this.width, left), 0);
+        if (update) {
+            this.updateCropperPosition()
+        }
+    },
+
+    setTop: function (top, update = false) {
+        this.top = Math.max(Math.min(this.wrapHeight - this.height, top), 0);
+        if (update) {
+            this.updateCropperPosition()
+        }
+    }
 
 };
