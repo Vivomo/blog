@@ -1,3 +1,6 @@
+body {
+    min-height: 100vh;
+}
 
 $squareWidth: 9px;
 
@@ -6,7 +9,7 @@ $squareWidth: 9px;
     margin: 0 auto;
     width: 600px;
     height: 600px;
-    background: #333;
+    background-image: radial-gradient(ellipse at right, rgb(220, 75, 200),rgb(0, 0, 75));
 }
 
 .cutter {
