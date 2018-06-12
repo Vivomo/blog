@@ -180,6 +180,12 @@ Cropper.prototype = {
         }
     },
 
-
-
+    getData: function () {
+        return {
+            left: this.left,
+            top: this.top,
+            width: this.width,
+            height: this.height
+        }
+    }
 };
