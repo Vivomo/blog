@@ -8,57 +8,62 @@ body {
   height: 600px;
   background-image: radial-gradient(ellipse at right, #dc4bc8, #00004b); }
 
-.cutter {
-  position: absolute;
-  outline: 1px solid #00eaff;
-  opacity: 0.5;
-  cursor: move; }
+.cropper-wrap {
+  overflow: hidden; }
 
-.cutter .square {
+.cropper {
+  position: absolute;
+  border: 1px solid #00eaff;
+  opacity: 0.5;
+  cursor: move;
+  box-sizing: border-box;
+  outline: 10000px solid rgba(0, 0, 0, 0.4); }
+
+.cropper .square {
   position: absolute;
   width: 9px;
   height: 9px;
   background: #00eaff; }
 
-.cutter .s-lt {
+.cropper .s-lt {
   left: -4.5px;
   top: -4.5px;
   cursor: se-resize; }
 
-.cutter .s-rt {
+.cropper .s-rt {
   right: -4.5px;
   top: -4.5px;
   cursor: sw-resize; }
 
-.cutter .s-t {
+.cropper .s-t {
   top: -4.5px;
   left: 50%;
   margin-left: -4.5px;
   cursor: s-resize; }
 
-.cutter .s-l {
+.cropper .s-l {
   left: -4.5px;
   top: 50%;
   margin-top: -4.5px;
   cursor: e-resize; }
 
-.cutter .s-r {
+.cropper .s-r {
   right: -4.5px;
   top: 50%;
   margin-top: -4.5px;
   cursor: e-resize; }
 
-.cutter .s-lb {
+.cropper .s-lb {
   left: -4.5px;
   bottom: -4.5px;
   cursor: sw-resize; }
 
-.cutter .s-rb {
+.cropper .s-rb {
   right: -4.5px;
   bottom: -4.5px;
   cursor: se-resize; }
 
-.cutter .s-b {
+.cropper .s-b {
   bottom: -4.5px;
   left: 50%;
   margin-left: -4.5px;

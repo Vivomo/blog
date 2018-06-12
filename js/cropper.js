@@ -11,7 +11,7 @@ Cropper.prototype = {
         minHeight: 5
     },
     cropperTemplate: `
-        <div class="cutter">
+        <div class="cropper">
             <div class="square s-lt" data-left="1" data-top="1"></div>
             <div class="square s-t" data-top="1"></div>
             <div class="square s-rt" data-width="1" data-top="1"></div>
@@ -116,7 +116,7 @@ Cropper.prototype = {
         wrap.className = 'cropper-wrap';
         wrap.style.cssText = 'left: 0; right: 0; top: 0; bottom: 0; position: absolute';
         wrap.innerHTML = this.cropperTemplate;
-        this.cropper = wrap.querySelector('.cutter');
+        this.cropper = wrap.querySelector('.cropper');
         this.elem.appendChild(wrap);
     },
     initCropperStyle: function () {

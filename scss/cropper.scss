@@ -11,67 +11,71 @@ $squareWidth: 9px;
     height: 600px;
     background-image: radial-gradient(ellipse at right, rgb(220, 75, 200),rgb(0, 0, 75));
 }
-
-.cutter {
+.cropper-wrap {
+    overflow: hidden;
+}
+.cropper {
     position: absolute;
-    outline: 1px solid #00eaff;
+    border: 1px solid #00eaff;
     opacity: 0.5;
     cursor: move;
+    box-sizing: border-box;
+    outline: 10000px solid rgba(0, 0, 0, 0.4);
 }
 
-.cutter .square {
+.cropper .square {
     position: absolute;
     width: $squareWidth;
     height: $squareWidth;
     background: #00eaff;
 }
 
-.cutter .s-lt {
+.cropper .s-lt {
     left: -$squareWidth / 2;
     top: -$squareWidth / 2;
     cursor: se-resize;
 }
 
-.cutter .s-rt {
+.cropper .s-rt {
     right: -$squareWidth / 2;
     top: -$squareWidth / 2;
     cursor: sw-resize;
 }
 
-.cutter .s-t {
+.cropper .s-t {
     top: -$squareWidth / 2;
     left: 50%;
     margin-left: -$squareWidth / 2;
     cursor: s-resize;
 }
 
-.cutter .s-l {
+.cropper .s-l {
     left: -$squareWidth / 2;
     top: 50%;
     margin-top: -$squareWidth / 2;
     cursor: e-resize;
 }
 
-.cutter .s-r {
+.cropper .s-r {
     right: -$squareWidth / 2;
     top: 50%;
     margin-top: -$squareWidth / 2;
     cursor: e-resize;
 }
 
-.cutter .s-lb {
+.cropper .s-lb {
     left: -$squareWidth / 2;
     bottom: -$squareWidth / 2;
     cursor: sw-resize;
 }
 
-.cutter .s-rb {
+.cropper .s-rb {
     right: -$squareWidth / 2;
     bottom: -$squareWidth / 2;
     cursor: se-resize;
 }
 
-.cutter .s-b {
+.cropper .s-b {
     bottom: -$squareWidth / 2;
     left: 50%;
     margin-left: -$squareWidth / 2;
