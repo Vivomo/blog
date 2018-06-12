@@ -1,9 +1,14 @@
 
 const Canvas = (function () {
 
-    var canvas = document.getElementById('canvas'),
+    let canvas = document.getElementById('canvas'),
         base64Content = document.getElementById('base64Content'),
         weChatNine = document.getElementById('weChatNine');
+
+    let cropper = new Cropper({
+        elem: document.querySelector('.canvas-wrap'),
+        hide: true
+    });
 
     /**
      * 交换两个坐标像素信息
@@ -12,10 +17,10 @@ const Canvas = (function () {
      * @param p2
      */
     function swipePoint(arr, p1, p2) {
-        for (var i = 0; i < 4; i++) {
-            var index1 = p1 + i;
-            var index2 = p2 + i;
-            var temp = arr[index1];
+        for (let i = 0; i < 4; i++) {
+            let index1 = p1 + i;
+            let index2 = p2 + i;
+            let temp = arr[index1];
             arr[index1] = arr[index2];
             arr[index2] = temp;
         }
@@ -45,7 +50,7 @@ const Canvas = (function () {
             canvas.height = this.height;
             ctx.drawImage(this, 0, 0);
             canvas.toBlob((blob) => {
-                var a = document.createElement('a');
+                let a = document.createElement('a');
                 a.href = window.URL.createObjectURL(blob);
                 a.download = name;
                 a.click();
@@ -59,11 +64,11 @@ const Canvas = (function () {
             this.drawImgOnCanvas(URL.createObjectURL(e.target.files[0]))
         },
         drawImgBySrc: function() {
-            this.drawImgOnCanvas(e.target.value)
+            this.drawImgOnCanvas(document.getElementById('webImg').value)
         },
         drawImgByClipboard: function(e)  {
             // 添加到事件对象中的访问系统剪贴板的接口
-            var clipboardData = e.clipboardData,
+            let clipboardData = e.clipboardData,
                 items, item, types;
 
             if( clipboardData ){
@@ -74,7 +79,7 @@ const Canvas = (function () {
                 item = items[0];
                 // 保存在剪贴板中的数据类型
                 types = clipboardData.types || [];
-                for(var i = 0; i < types.length; i++ ){
+                for(let i = 0; i < types.length; i++ ){
                     if( types[i] === 'Files' ){
                         item = items[i];
                         break;
@@ -95,7 +100,7 @@ const Canvas = (function () {
         },
         downloadJPG: function () {
             this.canvas.toBlob((blob) => {
-                var a = document.createElement('a');
+                let a = document.createElement('a');
                 a.href = window.URL.createObjectURL(blob);
                 a.download = 'download.jpg';
                 a.click();
@@ -103,17 +108,17 @@ const Canvas = (function () {
         },
         downloadPNG: function () {
             this.canvas.toBlob((blob) => {
-                var a = document.createElement('a');
+                let a = document.createElement('a');
                 a.href = window.URL.createObjectURL(blob);
                 a.download = 'download.png';
                 a.click();
             }, 'image/png');
         },
         decolourize: function () {
-            var imageData = this.getImageData();
-            var data = imageData.data;
-            for (var i = 0, l = data.length; i < l; i += 4) {
-                var avg = (data[i] + data[i+1] + data[i+2]) / 3;
+            let imageData = this.getImageData();
+            let data = imageData.data;
+            for (let i = 0, l = data.length; i < l; i += 4) {
+                let avg = (data[i] + data[i+1] + data[i+2]) / 3;
                 data[i] = avg;
                 data[i+1] = avg;
                 data[i+2] = avg;
@@ -121,39 +126,39 @@ const Canvas = (function () {
             this.pen.putImageData(imageData, 0, 0);
         },
         hFlip: function(){
-            var imageData = this.getImageData();
-            var data = imageData.data;
-            var w = this.canvas.width * 4;
-            var h = this.canvas.height;
-            var loop =  ~~(w / 2);
-            for (var i = 0; i < h; i++) {
-                for (var j = 0; j < loop; j += 4) {
-                    var p1 = i * w + j;
-                    var p2 = (i + 1) * w - j - 4;
+            let imageData = this.getImageData();
+            let data = imageData.data;
+            let w = this.canvas.width * 4;
+            let h = this.canvas.height;
+            let loop =  ~~(w / 2);
+            for (let i = 0; i < h; i++) {
+                for (let j = 0; j < loop; j += 4) {
+                    let p1 = i * w + j;
+                    let p2 = (i + 1) * w - j - 4;
                     swipePoint(data, p1, p2);
                 }
             }
             this.pen.putImageData(imageData, 0, 0);
         },
         vFlip: function(){
-            var imageData = this.getImageData();
-            var data = imageData.data;
-            var w = this.canvas.width * 4;
-            var h = this.canvas.height;
-            var loop = ~~(h / 2);
-            for (var i = 0; i < loop; i++) {
-                for (var j = 0; j < w; j += 4) {
-                    var p1 = i * w + j;
-                    var p2 = (h - 1 - i) * w + j;
+            let imageData = this.getImageData();
+            let data = imageData.data;
+            let w = this.canvas.width * 4;
+            let h = this.canvas.height;
+            let loop = ~~(h / 2);
+            for (let i = 0; i < loop; i++) {
+                for (let j = 0; j < w; j += 4) {
+                    let p1 = i * w + j;
+                    let p2 = (h - 1 - i) * w + j;
                     swipePoint(data, p1, p2);
                 }
             }
             this.pen.putImageData(imageData, 0, 0);
         },
         inverse: function(){
-            var imageData = this.getImageData();
-            var data = imageData.data;
-            for (var i = 0, l = data.length; i < l; i += 4) {
+            let imageData = this.getImageData();
+            let data = imageData.data;
+            for (let i = 0, l = data.length; i < l; i += 4) {
                 data[i] = 255 - data[i];
                 data[i + 1] = 255 - data[i + 1];
                 data[i + 2] = 255 - data[i + 2];
@@ -198,6 +203,13 @@ const Canvas = (function () {
                 downloadImgByImgData(data, imgName);
             })
         },
+        toggleSelect: function () {
+            if (cropper.hidden) {
+                cropper.show();
+            } else {
+                cropper.hide();
+            }
+        }
     };
 
     return {
