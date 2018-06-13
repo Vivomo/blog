@@ -9,7 +9,9 @@ Cropper.prototype = {
     hidden: false,
     defaultConfig: {
         minWidth: 5,
-        minHeight: 5
+        minHeight: 5,
+        // 固定比例 width / height
+        ratio: null
     },
     cropperTemplate: `
         <div class="cropper">
@@ -112,7 +114,7 @@ Cropper.prototype = {
             if (data.height) {
                 this.setHeight(this.height + offsetY)
             }
-            this.updateCropperPosition()
+            this.updateCropperPosition();
             startX = x;
             startY = y;
         };
@@ -139,7 +141,13 @@ Cropper.prototype = {
         
         this.left = ~~((this.wrapWidth - width) / 2);
         this.top = ~~((this.wrapHeight - width) / 2);
-        this.width = this.height = width;
+        this.width = width;
+        if (this.options.ratio) {
+            this.height = this.width / this.options.ratio;
+        } else {
+            this.height = this.width;
+        }
+
         this.updateCropperPosition();
     },
     hide: function () {
@@ -193,18 +201,46 @@ Cropper.prototype = {
         }
     },
 
-    setWidth: function (width, update = false) {
-        this.width = Math.max(this.options.minWidth, Math.min(width, this.wrapWidth - this.left));
+    setWidth: function (width, update = false, byHeight = false) {
+        let _width = Math.max(this.options.minWidth, Math.min(width, this.getMaxWidth()));
+        if (this.options.ratio && !byHeight) {
+            let height = _width / this.options.ratio;
+            let maxHeight = this.getMaxHeight();
+            if (height > maxHeight) {
+                height = maxHeight;
+                _width = height * this.options.ratio;
+            }
+            this.setHeight(height, false, true);
+        }
+        this.width = _width;
         if (update) {
             this.updateCropperPosition()
         }
     },
 
-    setHeight: function (height, update = false) {
-        this.height = Math.max(1, Math.min(height, this.wrapHeight - this.top));
+    getMaxWidth: function () {
+        return this.wrapWidth - this.left;
+    },
+
+    setHeight: function (height, update = false, byWidth = false) {
+        let _height = Math.max(this.options.minHeight, Math.min(height, this.getMaxHeight()));
+        if (this.options.ratio && !byWidth) {
+            let width = _height * this.options.ratio;
+            let maxWidth = this.getMaxWidth();
+            if (width > maxWidth) {
+                width = maxWidth;
+                _height = width / this.options.ratio;
+            }
+            this.setWidth(width, false, true);
+        }
+        this.height = _height;
         if (update) {
             this.updateCropperPosition()
         }
+    },
+
+    getMaxHeight: function () {
+        return this.wrapHeight - this.top;
     },
 
     getData: function () {
