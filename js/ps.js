@@ -3,11 +3,15 @@ const Canvas = (function () {
 
     let canvas = document.getElementById('canvas'),
         base64Content = document.getElementById('base64Content'),
+        cropWidth = document.getElementById('cropWidth'),
+        cropHeight = document.getElementById('cropHeight'),
         weChatNine = document.getElementById('weChatNine');
 
     let cropper = new Cropper({
         elem: document.querySelector('.canvas-wrap'),
-        hide: true
+        hide: true,
+        minWidth: 1,
+        minHeight: 1
     });
 
     /**
@@ -204,11 +208,17 @@ const Canvas = (function () {
             })
         },
         toggleSelect: function () {
-            if (cropper.hidden) {
-                cropper.show();
+            if (this.cropper.hidden) {
+                this.cropper.show();
             } else {
-                cropper.hide();
+                this.cropper.hide();
             }
+        },
+        setCropSize: function () {
+            let width = ~~ cropWidth.value,
+                height = ~~ cropHeight.value;
+            this.cropper.setWidth(width);
+            this.cropper.setHeight(height, true);
         }
     };
 
@@ -216,6 +226,7 @@ const Canvas = (function () {
         canvas,
         commands,
         base64Content,
+        cropper,
         pen: canvas.getContext('2d'),
         getImageData: function (startX = 0, startY = 0, endX = this.canvas.width, endY = this.canvas.height) {
             return this.pen.getImageData(startX, startY, endX, endY);

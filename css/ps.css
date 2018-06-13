@@ -16,6 +16,8 @@ fieldset {
 .v-input {
   height: 26px;
   width: 100px; }
+  .v-input[type="number"] {
+    width: 60px; }
 
 .wechat-nine {
   display: flex;
