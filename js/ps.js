@@ -207,18 +207,31 @@ const Canvas = (function () {
                 downloadImgByImgData(data, imgName);
             })
         },
-        toggleSelect: function () {
-            if (this.cropper.hidden) {
-                this.cropper.show();
-            } else {
-                this.cropper.hide();
-            }
+        toggleSelect: function (show = false) {
+            this.toggleSelect(show);
         },
+        /**
+         * 设置选择框大小
+         */
         setCropSize: function () {
             let width = ~~ cropWidth.value,
                 height = ~~ cropHeight.value;
             this.cropper.setWidth(width);
             this.cropper.setHeight(height, true);
+        },
+        /**
+         * 裁剪
+         */
+        crop: function () {
+            if (this.cropper.hidden) {
+                return;
+            }
+            let {left, top, width, height} = this.cropper.getData();
+            let cropImgData = this.getImageData(left, top, width, height);
+            this.canvas.width = width;
+            this.canvas.height = height;
+            this.pen.putImageData(cropImgData, 0, 0);
+            this.toggleSelect(false);
         }
     };
 
@@ -228,8 +241,8 @@ const Canvas = (function () {
         base64Content,
         cropper,
         pen: canvas.getContext('2d'),
-        getImageData: function (startX = 0, startY = 0, endX = this.canvas.width, endY = this.canvas.height) {
-            return this.pen.getImageData(startX, startY, endX, endY);
+        getImageData: function (startX = 0, startY = 0, width = this.canvas.width, height = this.canvas.height) {
+            return this.pen.getImageData(startX, startY, width, height);
         },
         drawImgOnCanvas: function(src) {
             let img = new Image,
@@ -250,6 +263,20 @@ const Canvas = (function () {
             };
             // 读取文件
             reader.readAsDataURL(blob);
+        },
+        toggleSelect: function (show = false) {
+            if (show === true) {
+                this.cropper.show();
+            } else if (show === false) {
+                this.cropper.hide();
+            } else {
+                if (this.cropper.hidden) {
+                    this.cropper.show();
+                } else {
+                    this.cropper.hide();
+                }
+            }
+
         },
         execCommand: function(cmdName) {
             let cmd = this.commands[cmdName];
