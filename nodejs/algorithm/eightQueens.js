@@ -65,14 +65,14 @@ function valid(queens) {
             cache.y[y] = true
         }
 
-        let skew1 = y / x;
+        let skew1 = y - x;
         if (cache.skew1[skew1]) {
             return false
         } else {
             cache.skew1[skew1] = true
         }
 
-        let skew2 = y / (8 - x);
+        let skew2 = y + x;
         if (cache.skew2[skew2]) {
             return false
         } else {
@@ -85,5 +85,9 @@ function valid(queens) {
 let ans = [3, 14, 18, 31, 33, 44, 48, 61]
 let ans2 = [3, 14, 18, 31, 33, 44, 48, 62]
 
+console.log(valid([1]))
+console.log(valid([1, 19]))
+console.log(valid([1, 10]))
+console.log(valid([1, 11]))
 console.log(valid(ans))
 console.log(valid(ans2))
