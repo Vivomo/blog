@@ -87,12 +87,23 @@ const Canvas = (function () {
 
     // noinspection JSUnusedGlobalSymbols
     const commands = {
+        /**
+         * 加载本地图片
+         * @param e
+         */
         drawImgByFile: function (e) {
             this.drawImgOnCanvas(URL.createObjectURL(e.target.files[0]))
         },
+        /**
+         * 加载网络图片或base64的图片
+         */
         drawImgBySrc: function() {
             this.drawImgOnCanvas(document.getElementById('webImg').value)
         },
+        /**
+         * 加载粘贴板的图片, 如QQ截图
+         * @param e
+         */
         drawImgByClipboard: function(e)  {
             // 添加到事件对象中的访问系统剪贴板的接口
             let clipboardData = e.clipboardData,
@@ -121,14 +132,21 @@ const Canvas = (function () {
         toBase64: function() {
             this.base64Content.value = this.canvas.toDataURL('images/png');
         },
+        /**
+         * base 64拷贝
+         */
         copyBase64: function() {
             this.base64Content.select();
             document.execCommand('copy');
         },
-        downloadJPG: function () {
+        /**
+         * 下载图片
+         * @param e
+         */
+        downloadImg: function (e) {
             let options = {
                 canvas: this.canvas,
-                type: 'image/jpeg'
+                type: e.target.dataset.type
             };
             if (!this.cropper.hidden) {
                 let {width, height, left, top} = this.cropper.getData();
@@ -141,21 +159,9 @@ const Canvas = (function () {
             }
             downloadImgByCanvas(options);
         },
-        downloadPNG: function () {
-            let options = {
-                canvas: this.canvas
-            };
-            if (!this.cropper.hidden) {
-                let {width, height, left, top} = this.cropper.getData();
-                Object.assign(options, {
-                    width,
-                    height,
-                    x: left,
-                    y: top,
-                });
-            }
-            downloadImgByCanvas(options);
-        },
+        /**
+         * 去色
+         */
         decolourize: function () {
             let imageData = this.getImageData();
             let data = imageData.data;
@@ -167,6 +173,9 @@ const Canvas = (function () {
             }
             this.pen.putImageData(imageData, 0, 0);
         },
+        /**
+         * 水平翻转
+         */
         hFlip: function(){
             let imageData = this.getImageData();
             let data = imageData.data;
@@ -182,6 +191,9 @@ const Canvas = (function () {
             }
             this.pen.putImageData(imageData, 0, 0);
         },
+        /**
+         * 垂直翻转
+         */
         vFlip: function(){
             let imageData = this.getImageData();
             let data = imageData.data;
@@ -197,6 +209,9 @@ const Canvas = (function () {
             }
             this.pen.putImageData(imageData, 0, 0);
         },
+        /**
+         * 反色
+         */
         inverse: function(){
             let imageData = this.getImageData();
             let data = imageData.data;
@@ -235,6 +250,10 @@ const Canvas = (function () {
 
             weChatNine.innerHTML = imgDataArr.map((data) => `<li><img src="${data}"/></li>`).join('');
         },
+        /**
+         * 下载微信九宫格
+         * @returns {boolean}
+         */
         downloadWechat: function () {
             if (this.wechatImgData.length === 0) {
                 return false;
