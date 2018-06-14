@@ -39,6 +39,7 @@ const Canvas = (function () {
         return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
     }
 
+
     /**
      * 下载图片
      * @param data
@@ -61,6 +62,28 @@ const Canvas = (function () {
             }, 'image/png');
         };
     }
+
+
+    /**
+     *
+     * @param options
+     */
+    function downloadImgByCanvas(options){
+        let {canvas, width = canvas.width, height = canvas.height, x = 0, y = 0, type = 'images/png',
+            name = `img${width}-${height}.${type.substring(type.lastIndexOf('/')+1)}`} = options;
+        let tempCanvas = document.createElement('canvas');
+        tempCanvas.width = width;
+        tempCanvas.height = height;
+        tempCanvas.getContext('2d').putImageData(canvas.getContext('2d').getImageData(x, y, width, height), 0, 0);
+        tempCanvas.toBlob((blob) => {
+            let a = document.createElement('a');
+            a.href = window.URL.createObjectURL(blob);
+            a.download = name;
+            a.click();
+        }, type);
+    }
+
+
 
     // noinspection JSUnusedGlobalSymbols
     const commands = {
@@ -103,20 +126,35 @@ const Canvas = (function () {
             document.execCommand('copy');
         },
         downloadJPG: function () {
-            this.canvas.toBlob((blob) => {
-                let a = document.createElement('a');
-                a.href = window.URL.createObjectURL(blob);
-                a.download = 'download.jpg';
-                a.click();
-            }, 'image/jpeg');
+            let options = {
+                canvas: this.canvas,
+                type: 'image/jpeg'
+            };
+            if (!this.cropper.hidden) {
+                let {width, height, left, top} = this.cropper.getData();
+                Object.assign(options, {
+                    width,
+                    height,
+                    x: left,
+                    y: top,
+                });
+            }
+            downloadImgByCanvas(options);
         },
         downloadPNG: function () {
-            this.canvas.toBlob((blob) => {
-                let a = document.createElement('a');
-                a.href = window.URL.createObjectURL(blob);
-                a.download = 'download.png';
-                a.click();
-            }, 'image/png');
+            let options = {
+                canvas: this.canvas
+            };
+            if (!this.cropper.hidden) {
+                let {width, height, left, top} = this.cropper.getData();
+                Object.assign(options, {
+                    width,
+                    height,
+                    x: left,
+                    y: top,
+                });
+            }
+            downloadImgByCanvas(options);
         },
         decolourize: function () {
             let imageData = this.getImageData();
