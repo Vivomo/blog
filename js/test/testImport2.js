@@ -1,3 +1,3 @@
-import a from './testImport1';
+import a, {b} from './testImport1.js';
 
-console.log(a);
+console.log(a, b);
