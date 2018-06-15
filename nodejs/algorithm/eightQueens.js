@@ -5,17 +5,12 @@ let queens = [0];
 let count = 0;
 let resultCount = 0;
 console.time('queen');
-while (true) {
+while (queens[0] < 8) {
     count ++;
     let last = queens[queens.length - 1]
     if (valid(queens)) {
         if (queens.length === queensNum) {
             console.log('result', queens, count, ++resultCount)
-            if (resultCount === 92) {
-                console.log('All result have be found');
-                console.timeEnd('queen');
-                break;
-            }
         } else {
             if (last !== max) {
                 queens.push(last + 1);
@@ -28,7 +23,8 @@ while (true) {
     }
     queens[queens.length - 1]++;
 }
-
+console.log('第一行已经试完了, 后面的不可能有解了, 解法个数', resultCount);
+console.log('查找次数', count);
 
 
 function valid(queens) {
