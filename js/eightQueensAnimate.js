@@ -40,8 +40,6 @@ function start() {
     run();
 }
 
-start();
-
 function updateQueenPosition() {
     for (let i = 0; i < queens.length; i++) {
         queenElem[i].style.transform = `translate3d(${(queens[i] % 8) * 80}px, ${~~(queens[i] / 8) * 80}px, 0)`;
@@ -93,3 +91,5 @@ function valid(queens) {
     });
 }
 
+
+document.getElementById('start').addEventListener('click', start);
