@@ -1,29 +1,32 @@
 // 八皇后算法
-
 const queensNum = 8;
 const max = 63;
 let queens = [0];
-let end = 0;
-
-let maxCount = 4426165368; // 64C8
 let count = 0;
-
-while (count < maxCount) {
+let resultCount = 0;
+console.time('queen');
+while (true) {
     count ++;
     let last = queens[queens.length - 1]
     if (valid(queens)) {
         if (queens.length === queensNum) {
-            console.log('result', queens, count)
-            break;
+            console.log('result', queens, count, ++resultCount)
+            if (resultCount === 92) {
+                console.log('All result have be found');
+                console.timeEnd('queen');
+                break;
+            }
         } else {
-            queens.push(last + 1);
+            if (last !== max) {
+                queens.push(last + 1);
+                continue;
+            }
         }
-    } else {
-        if (last === max) {
-            queens.pop()
-        }
-        queens[queens.length - 1]++;
     }
+    if (last === max) {
+        queens.pop()
+    }
+    queens[queens.length - 1]++;
 }
 
 
@@ -67,7 +70,4 @@ function valid(queens) {
         return true
     });
 }
-
-let ans = [3, 14, 18, 31, 33, 44, 48, 61]
-let ans2 = [3, 14, 18, 31, 33, 44, 48, 62]
 
