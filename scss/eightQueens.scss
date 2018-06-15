@@ -1,0 +1,43 @@
+$width: 80px;
+
+.bg {
+    position: relative;
+    background: #fff;
+    display: flex;
+    width: 640px;
+    height: 640px;
+    flex-wrap: wrap;
+    margin: 80px auto;
+    border: 1px solid #000;
+    outline: 6px solid #9a9a9a;
+}
+
+.cell {
+    width: $width;
+    height: $width;
+}
+
+
+.cell::before {
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    line-height: 36px;
+}
+
+.queen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: $width;
+    height: $width;
+    font-size: 40px;
+    line-height: $width;
+    text-align: center;
+    text-shadow: 0 0 10px #000;
+    color: #fff;
+}
+
+.row:nth-child(odd) .cell:nth-child(even), .row:nth-child(even) .cell:nth-child(odd){
+    background: #000;
+}
