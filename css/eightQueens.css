@@ -21,6 +21,7 @@
 
 .queen {
   position: absolute;
+  visibility: hidden;
   left: 0;
   top: 0;
   width: 80px;
@@ -30,6 +31,8 @@
   text-align: center;
   text-shadow: 0 0 10px #000;
   color: #fff; }
+  .queen.show {
+    visibility: visible; }
 
 .row:nth-child(odd) .cell:nth-child(even), .row:nth-child(even) .cell:nth-child(odd) {
   background: #000; }
