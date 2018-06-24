@@ -1,9 +1,18 @@
 
 const Canvas = (function () {
 
-    var canvas = document.getElementById('canvas'),
+    let canvas = document.getElementById('canvas'),
         base64Content = document.getElementById('base64Content'),
+        cropWidth = document.getElementById('cropWidth'),
+        cropHeight = document.getElementById('cropHeight'),
         weChatNine = document.getElementById('weChatNine');
+
+    let cropper = new Cropper({
+        elem: document.querySelector('.canvas-wrap'),
+        hide: true,
+        minWidth: 1,
+        minHeight: 1
+    });
 
     /**
      * 交换两个坐标像素信息
@@ -12,10 +21,10 @@ const Canvas = (function () {
      * @param p2
      */
     function swipePoint(arr, p1, p2) {
-        for (var i = 0; i < 4; i++) {
-            var index1 = p1 + i;
-            var index2 = p2 + i;
-            var temp = arr[index1];
+        for (let i = 0; i < 4; i++) {
+            let index1 = p1 + i;
+            let index2 = p2 + i;
+            let temp = arr[index1];
             arr[index1] = arr[index2];
             arr[index2] = temp;
         }
@@ -29,6 +38,7 @@ const Canvas = (function () {
         let date = new Date;
         return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
     }
+
 
     /**
      * 下载图片
@@ -45,7 +55,7 @@ const Canvas = (function () {
             canvas.height = this.height;
             ctx.drawImage(this, 0, 0);
             canvas.toBlob((blob) => {
-                var a = document.createElement('a');
+                let a = document.createElement('a');
                 a.href = window.URL.createObjectURL(blob);
                 a.download = name;
                 a.click();
@@ -53,17 +63,50 @@ const Canvas = (function () {
         };
     }
 
+
+    /**
+     *
+     * @param options
+     */
+    function downloadImgByCanvas(options){
+        let {canvas, width = canvas.width, height = canvas.height, x = 0, y = 0, type = 'images/png',
+            name = `img${width}-${height}.${type.substring(type.lastIndexOf('/')+1)}`} = options;
+        let tempCanvas = document.createElement('canvas');
+        tempCanvas.width = width;
+        tempCanvas.height = height;
+        tempCanvas.getContext('2d').putImageData(canvas.getContext('2d').getImageData(x, y, width, height), 0, 0);
+        tempCanvas.toBlob((blob) => {
+            let a = document.createElement('a');
+            a.href = window.URL.createObjectURL(blob);
+            a.download = name;
+            a.click();
+        }, type);
+    }
+
+
+
     // noinspection JSUnusedGlobalSymbols
     const commands = {
+        /**
+         * 加载本地图片
+         * @param e
+         */
         drawImgByFile: function (e) {
             this.drawImgOnCanvas(URL.createObjectURL(e.target.files[0]))
         },
+        /**
+         * 加载网络图片或base64的图片
+         */
         drawImgBySrc: function() {
-            this.drawImgOnCanvas(e.target.value)
+            this.drawImgOnCanvas(document.getElementById('webImg').value)
         },
+        /**
+         * 加载粘贴板的图片, 如QQ截图
+         * @param e
+         */
         drawImgByClipboard: function(e)  {
             // 添加到事件对象中的访问系统剪贴板的接口
-            var clipboardData = e.clipboardData,
+            let clipboardData = e.clipboardData,
                 items, item, types;
 
             if( clipboardData ){
@@ -74,7 +117,7 @@ const Canvas = (function () {
                 item = items[0];
                 // 保存在剪贴板中的数据类型
                 types = clipboardData.types || [];
-                for(var i = 0; i < types.length; i++ ){
+                for(let i = 0; i < types.length; i++ ){
                     if( types[i] === 'Files' ){
                         item = items[i];
                         break;
@@ -89,71 +132,90 @@ const Canvas = (function () {
         toBase64: function() {
             this.base64Content.value = this.canvas.toDataURL('images/png');
         },
+        /**
+         * base 64拷贝
+         */
         copyBase64: function() {
             this.base64Content.select();
             document.execCommand('copy');
         },
-        downloadJPG: function () {
-            this.canvas.toBlob((blob) => {
-                var a = document.createElement('a');
-                a.href = window.URL.createObjectURL(blob);
-                a.download = 'download.jpg';
-                a.click();
-            }, 'image/jpeg');
+        /**
+         * 下载图片
+         * @param e
+         */
+        downloadImg: function (e) {
+            let options = {
+                canvas: this.canvas,
+                type: e.target.dataset.type
+            };
+            if (!this.cropper.hidden) {
+                let {width, height, left, top} = this.cropper.getData();
+                Object.assign(options, {
+                    width,
+                    height,
+                    x: left,
+                    y: top,
+                });
+            }
+            downloadImgByCanvas(options);
         },
-        downloadPNG: function () {
-            this.canvas.toBlob((blob) => {
-                var a = document.createElement('a');
-                a.href = window.URL.createObjectURL(blob);
-                a.download = 'download.png';
-                a.click();
-            }, 'image/png');
-        },
+        /**
+         * 去色
+         */
         decolourize: function () {
-            var imageData = this.getImageData();
-            var data = imageData.data;
-            for (var i = 0, l = data.length; i < l; i += 4) {
-                var avg = (data[i] + data[i+1] + data[i+2]) / 3;
+            let imageData = this.getImageData();
+            let data = imageData.data;
+            for (let i = 0, l = data.length; i < l; i += 4) {
+                let avg = (data[i] + data[i+1] + data[i+2]) / 3;
                 data[i] = avg;
                 data[i+1] = avg;
                 data[i+2] = avg;
             }
             this.pen.putImageData(imageData, 0, 0);
         },
+        /**
+         * 水平翻转
+         */
         hFlip: function(){
-            var imageData = this.getImageData();
-            var data = imageData.data;
-            var w = this.canvas.width * 4;
-            var h = this.canvas.height;
-            var loop =  ~~(w / 2);
-            for (var i = 0; i < h; i++) {
-                for (var j = 0; j < loop; j += 4) {
-                    var p1 = i * w + j;
-                    var p2 = (i + 1) * w - j - 4;
+            let imageData = this.getImageData();
+            let data = imageData.data;
+            let w = this.canvas.width * 4;
+            let h = this.canvas.height;
+            let loop =  ~~(w / 2);
+            for (let i = 0; i < h; i++) {
+                for (let j = 0; j < loop; j += 4) {
+                    let p1 = i * w + j;
+                    let p2 = (i + 1) * w - j - 4;
                     swipePoint(data, p1, p2);
                 }
             }
             this.pen.putImageData(imageData, 0, 0);
         },
+        /**
+         * 垂直翻转
+         */
         vFlip: function(){
-            var imageData = this.getImageData();
-            var data = imageData.data;
-            var w = this.canvas.width * 4;
-            var h = this.canvas.height;
-            var loop = ~~(h / 2);
-            for (var i = 0; i < loop; i++) {
-                for (var j = 0; j < w; j += 4) {
-                    var p1 = i * w + j;
-                    var p2 = (h - 1 - i) * w + j;
+            let imageData = this.getImageData();
+            let data = imageData.data;
+            let w = this.canvas.width * 4;
+            let h = this.canvas.height;
+            let loop = ~~(h / 2);
+            for (let i = 0; i < loop; i++) {
+                for (let j = 0; j < w; j += 4) {
+                    let p1 = i * w + j;
+                    let p2 = (h - 1 - i) * w + j;
                     swipePoint(data, p1, p2);
                 }
             }
             this.pen.putImageData(imageData, 0, 0);
         },
+        /**
+         * 反色
+         */
         inverse: function(){
-            var imageData = this.getImageData();
-            var data = imageData.data;
-            for (var i = 0, l = data.length; i < l; i += 4) {
+            let imageData = this.getImageData();
+            let data = imageData.data;
+            for (let i = 0, l = data.length; i < l; i += 4) {
                 data[i] = 255 - data[i];
                 data[i + 1] = 255 - data[i + 1];
                 data[i + 2] = 255 - data[i + 2];
@@ -188,6 +250,10 @@ const Canvas = (function () {
 
             weChatNine.innerHTML = imgDataArr.map((data) => `<li><img src="${data}"/></li>`).join('');
         },
+        /**
+         * 下载微信九宫格
+         * @returns {boolean}
+         */
         downloadWechat: function () {
             if (this.wechatImgData.length === 0) {
                 return false;
@@ -198,15 +264,42 @@ const Canvas = (function () {
                 downloadImgByImgData(data, imgName);
             })
         },
+        toggleSelect: function (show = false) {
+            this.toggleSelect(show);
+        },
+        /**
+         * 设置选择框大小
+         */
+        setCropSize: function () {
+            let width = ~~ cropWidth.value,
+                height = ~~ cropHeight.value;
+            this.cropper.setWidth(width);
+            this.cropper.setHeight(height, true);
+        },
+        /**
+         * 裁剪
+         */
+        crop: function () {
+            if (this.cropper.hidden) {
+                return;
+            }
+            let {left, top, width, height} = this.cropper.getData();
+            let cropImgData = this.getImageData(left, top, width, height);
+            this.canvas.width = width;
+            this.canvas.height = height;
+            this.pen.putImageData(cropImgData, 0, 0);
+            this.toggleSelect(false);
+        }
     };
 
     return {
         canvas,
         commands,
         base64Content,
+        cropper,
         pen: canvas.getContext('2d'),
-        getImageData: function (startX = 0, startY = 0, endX = this.canvas.width, endY = this.canvas.height) {
-            return this.pen.getImageData(startX, startY, endX, endY);
+        getImageData: function (startX = 0, startY = 0, width = this.canvas.width, height = this.canvas.height) {
+            return this.pen.getImageData(startX, startY, width, height);
         },
         drawImgOnCanvas: function(src) {
             let img = new Image,
@@ -227,6 +320,20 @@ const Canvas = (function () {
             };
             // 读取文件
             reader.readAsDataURL(blob);
+        },
+        toggleSelect: function (show = false) {
+            if (show === true) {
+                this.cropper.show();
+            } else if (show === false) {
+                this.cropper.hide();
+            } else {
+                if (this.cropper.hidden) {
+                    this.cropper.show();
+                } else {
+                    this.cropper.hide();
+                }
+            }
+
         },
         execCommand: function(cmdName) {
             let cmd = this.commands[cmdName];

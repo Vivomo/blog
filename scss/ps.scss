@@ -1,8 +1,14 @@
+@import "cropper";
 #canvas {
-    max-width: 100%;
-    margin: 50px auto;
+    display: block;
+    //max-width: 100%;
     box-shadow: 0 0 10px currentColor;
     background: #FFF;
+}
+
+.canvas-wrap {
+    display: inline-block;
+    position: relative;
 }
 
 fieldset {
@@ -16,6 +22,10 @@ fieldset {
 .v-input {
     height: 26px;
     width: 100px;
+
+    &[type="number"] {
+        width: 60px;
+    }
 }
 
 .wechat-nine {
@@ -31,4 +41,14 @@ fieldset {
             max-width: 100%;
         }
     }
+}
+
+.opt-menu {
+    float: left;
+    width: 300px;
+}
+
+.content-wrap {
+    padding-top: 20px;
+    margin-left: 320px;
 }

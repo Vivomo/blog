@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>裁剪框</title>
+    <link rel="stylesheet" href="../../css/cropper.css">
+</head>
+<body>
+    <div id="wrap">
+
+    </div>
+
+    <script src="../../js/cropper.js"></script>
+    <script>
+        let cropper = new Cropper({
+            elem: document.getElementById('wrap'),
+            ratio: 3 / 2
+        })
+    </script>
+</body>
+</html>
