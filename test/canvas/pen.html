@@ -6,34 +6,36 @@
     <style>
         canvas {
             display: block;
+            width: 800px;
             margin: 0 auto;
             background: #ccc;
         }
     </style>
 </head>
 <body>
-<canvas width="800" height="600" id="canvas"></canvas>
+    <canvas width="800" height="600" id="canvas"></canvas>
 <script>
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
-    let points = [];
     ctx.fillStyle = '#000';
     ctx.lineWidth = 5;
     ctx.strokeStyle = '#333';
+    let {left: canvasOffsetX, top: canvasOffsetY} = canvas.getBoundingClientRect();
 
-    let draw = ({offsetX, offsetY}) => {
+    let draw = ({clientX, clientY}) => {
         ctx.lineCap = 'round';
-        ctx.lineTo(offsetX, offsetY);
+        ctx.lineTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
         ctx.stroke();
-
-        points.push({
-            offsetX, offsetY
-        });
     };
 
-    canvas.addEventListener('mousedown', ({offsetX, offsetY}) => {
+    let drawWap = (e) => {
+        draw(e.touches[0]);
+    };
+
+    canvas.addEventListener('mousedown', (e) => {
+        let {clientX, clientY} = e;
         ctx.beginPath();
-        ctx.moveTo(offsetX, offsetY);
+        ctx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
         canvas.addEventListener('mousemove', draw)
     });
 
@@ -41,6 +43,16 @@
         canvas.removeEventListener('mousemove', draw)
     });
 
+    canvas.addEventListener('touchstart', (e) => {
+        ctx.beginPath();
+        let {clientX, clientY} = e.touches[0];
+        ctx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
+        canvas.addEventListener('touchmove', drawWap)
+    });
+
+    canvas.addEventListener('touchend', () => {
+        canvas.removeEventListener('touchmove', drawWap)
+    });
 </script>
 </body>
 </html>
