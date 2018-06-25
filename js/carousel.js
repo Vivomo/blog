@@ -108,12 +108,19 @@ class Carousel {
         } else {
             if (isAdd || this.wrap.style[this.transitionStyleName] === '' ||
                 this.wrap.style[this.transitionStyleName] === 'none') {
-                this.wrap.style[this.transitionStyleName] =
-                    `all ${this.config.transitionTime}ms cubic-bezier(0.94,-0.01, 0.11, 0.97)`;
+                this.wrap.style[this.transitionStyleName] = this.getTransition();
             } else {
                 this.wrap.style[this.transitionStyleName] = 'none';
             }
         }
+    }
+
+    /**
+     * 获取transition值, 如果轮播是touchable触发则判定为wap场景, 用默认的贝塞尔曲线
+     * @returns {string}
+     */
+    getTransition() {
+        return `all ${this.config.transitionTime}ms ${this.config.touchable ? '' : 'cubic-bezier(0.94,-0.01, 0.11, 0.97)'}`;
     }
 
     /**
