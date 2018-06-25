@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas 画笔测试</title>
+    <style>
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background: #ccc;
+        }
+    </style>
+</head>
+<body>
+<canvas width="800" height="600" id="canvas"></canvas>
+<script>
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+    let points = [];
+    ctx.fillStyle = '#000';
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = '#333';
+
+    let draw = ({offsetX, offsetY}) => {
+        ctx.lineCap = 'round';
+        ctx.lineTo(offsetX, offsetY);
+        ctx.stroke();
+
+        points.push({
+            offsetX, offsetY
+        });
+    };
+
+    canvas.addEventListener('mousedown', ({offsetX, offsetY}) => {
+        ctx.beginPath();
+        ctx.moveTo(offsetX, offsetY);
+        canvas.addEventListener('mousemove', draw)
+    });
+
+    canvas.addEventListener('mouseup', () => {
+        canvas.removeEventListener('mousemove', draw)
+    });
+
+</script>
+</body>
+</html>
