@@ -3,6 +3,8 @@
 
 > 不支持SVG 
 
+> 不支持iconfont
+
 > canvas 无非被元素覆盖 (zIndex突破天际)
 
 > scroll-view 里面不能放canvas; 里面的input blur 会有文字不显示问题
