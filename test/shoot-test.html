@@ -11,6 +11,7 @@
         .screen {
             position: relative;
             width: 100vw;
+            min-width: 1200px;
             height: 100vh;
             border: 3px solid green;
             overflow: hidden;
@@ -29,18 +30,62 @@
 
         .wall {
             position: absolute;
+            border: solid #00eaff;
+        }
+
+        .wall1 {
+            z-index: 10;
             bottom: 0;
             width: 100%;
             height: 200%;
-            border: solid #00eaff;
             transform: translate3d(0, 0, -1000px);
+            transform-style: preserve-3d;
+        }
+
+        .wall2 {
+            left: -100%;
+            bottom: 0;
+            width: 300%;
+            height: 100%;
+            transform: translate3d(0, 0, -3200px);
+            background: #777;
+        }
+
+        .wall1-1 {
+            width: 15%;
+            height: 100%;
+            transform: rotateY(-90deg);
+            transform-origin: 100% 0;
+            background: #666;
+        }
+
+        .wall1-2 {
+            right: 0;
+            width: 15%;
+            height: 100%;
+            transform: rotateY(90deg);
+            transform-origin: 0 0;
+            background: #666;
+        }
+
+        .wall1-3 {
+            width: 15%;
+            height: 100%;
+            background: #666;
+        }
+
+        .wall1-4 {
+            right: 0;
+            width: 15%;
+            height: 100%;
+            background: #666;
         }
 
         .target-wrap {
             position: absolute;
-            width: 80%;
+            width: 70%;
             height: 40%;
-            left: 10%;
+            left: 15%;
             bottom: 10%;
             background: #555;
         }
@@ -49,9 +94,14 @@
 <body>
     <div class="screen">
         <div class="floor"></div>
-        <div class="wall">
+        <div class="wall wall1">
+            <div class="wall wall1-1"></div>
+            <div class="wall wall1-2"></div>
+            <div class="wall wall1-3"></div>
+            <div class="wall wall1-4"></div>
             <div class="target-wrap"></div>
         </div>
+        <div class="wall wall2"></div>
     </div>
 </body>
 </html>
