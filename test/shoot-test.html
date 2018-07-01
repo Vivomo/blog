@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>射击测试</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        div {
+            box-sizing: border-box;
+        }
+        .screen {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            border: 3px solid green;
+            overflow: hidden;
+            perspective: 1600px;
+        }
+
+        .floor {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            bottom: 0;
+            background: #555;
+            transform: rotateX(90deg);
+            transform-origin: 50% 100%;
+        }
+
+        .wall {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 200%;
+            border: solid #00eaff;
+            transform: translate3d(0, 0, -1000px);
+        }
+
+        .target-wrap {
+            position: absolute;
+            width: 80%;
+            height: 40%;
+            left: 10%;
+            bottom: 10%;
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="screen">
+        <div class="floor"></div>
+        <div class="wall">
+            <div class="target-wrap"></div>
+        </div>
+    </div>
+</body>
+</html>
