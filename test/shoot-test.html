@@ -18,6 +18,11 @@
             perspective: 1600px;
         }
 
+        .scene {
+            transform-style: preserve-3d;
+            height: 100%;
+        }
+
         .floor {
             position: absolute;
             width: 100%;
@@ -43,12 +48,12 @@
         }
 
         .wall2 {
-            left: -100%;
+            left: -150%;
             bottom: 0;
-            width: 300%;
+            width: 400%;
             height: 100%;
             transform: translate3d(0, 0, -3200px);
-            background: #777;
+            background-image: radial-gradient(ellipse at center, #999 0%, #000 90%);
         }
 
         .wall1-1 {
@@ -93,15 +98,17 @@
 </head>
 <body>
     <div class="screen">
-        <div class="floor"></div>
-        <div class="wall wall1">
-            <div class="wall wall1-1"></div>
-            <div class="wall wall1-2"></div>
-            <div class="wall wall1-3"></div>
-            <div class="wall wall1-4"></div>
-            <div class="target-wrap"></div>
+        <div class="scene">
+            <div class="floor"></div>
+            <div class="wall wall1">
+                <div class="wall wall1-1"></div>
+                <div class="wall wall1-2"></div>
+                <div class="wall wall1-3"></div>
+                <div class="wall wall1-4"></div>
+                <div class="target-wrap"></div>
+            </div>
+            <div class="wall wall2"></div>
         </div>
-        <div class="wall wall2"></div>
     </div>
 </body>
 </html>
