@@ -24,6 +24,17 @@
             float: right;
             background: #666;
         }
+        
+        .square {
+            margin: 0 100px;
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+        }
+
+        .fl {
+            float: left;
+        }
     </style>
 </head>
 <body>
@@ -33,5 +44,9 @@
         <li></li>
         <li></li>
     </ul>
+
+    <h2>float margin 绝不合并</h2>
+    <div class="square fl"></div>
+    <div class="square fl"></div>
 </body>
 </html>
