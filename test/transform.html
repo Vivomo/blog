@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>transform 属性顺序测试</title>
+    <style>
+        .square {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            height: 60px;
+            background: #ccc;
+        }
+    </style>
+</head>
+<body>
+<div class="square" style="transform: translateX(300px) rotateX(60deg) rotateZ(20deg)"></div>
+<div class="square" style="transform: rotateX(60deg) rotateZ(20deg) translateX(300px)"></div>
+</body>
+</html>
