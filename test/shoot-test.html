@@ -101,12 +101,14 @@
             position: absolute;
             left: 100px;
             top: 100px;
-            width: 6px;
-            height: 6px;
-            padding: 1px;
+            width: 60px;
+            height: 60px;
+            padding: 10px;
             background: #ff2d16;
             opacity: 0.8;
             border-radius: 50%;
+
+            animation: scale 3s linear;
         }
 
         .target:before {
@@ -114,9 +116,18 @@
             display: block;
             width: 100%;
             height: 100%;
-            border: 1px solid #fff;
+            border: 6px solid #fff;
             border-radius: 50%;
             box-sizing: border-box;
+        }
+
+        @keyframes scale {
+            0% {
+                transform: scale(.1);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
     </style>
 </head>
@@ -129,12 +140,22 @@
                 <div class="wall wall1-2"></div>
                 <div class="wall wall1-3"></div>
                 <div class="wall wall1-4"></div>
-                <div class="target-wrap">
-                    <div class="target"></div>
-                </div>
+                <div class="target-wrap"></div>
             </div>
             <div class="wall wall2"></div>
         </div>
     </div>
+    <script src="../js/shoot-test.js"></script>
+    <script>
+        let test = new ShootTest({
+            screen: document.querySelector('.target-wrap')
+        });
+
+
+        setInterval(() => {
+            test.createTarget();
+        }, 1000)
+
+    </script>
 </body>
 </html>
