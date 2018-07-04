@@ -1,0 +1,31 @@
+.wrap {
+    position: relative;
+    margin: 200px auto;
+    width: 100px;
+    height: 100px;
+    transform-style: preserve-3d;
+    perspective: 1600px;
+    transform: rotateX(45deg);
+
+    .circle {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border: 1px solid #2e6be6;
+        border-radius: 50%;
+        opacity: 0.5;
+        box-shadow: 3px 3px 3px #2e6be6;
+    }
+
+    .circle:first-child {
+        background: #f00;
+    }
+
+    @for $i from 1 through 100 {
+        .circle:nth-child(#{$i}) {
+            transform: translateZ(#{$i}px);
+        }
+    }
+}
