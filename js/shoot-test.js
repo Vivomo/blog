@@ -5,6 +5,7 @@ class ShootTest{
         this.width = this.screen.clientWidth;
         this.height = this.screen.clientHeight;
         this.diameter = config.diameter || 60;
+        this.perLVHitCount = config.perLVHitCount || 20;
         this.initScreen();
         this.initData();
     }
@@ -30,6 +31,9 @@ class ShootTest{
     set hitCount(value) {
         this._hit = value;
         this.hitCountElem.innerHTML = value;
+        if (this.hitCount / this.perLVHitCount >= this.lv) {
+            this.upgrade();
+        }
     }
 
     get hitCount() {
@@ -37,12 +41,12 @@ class ShootTest{
     }
 
     set lv(value) {
-        this._target = value;
+        this._lv = value;
         this.lvElem.innerHTML = value;
     }
 
     get lv() {
-        return this._target || 0;
+        return this._lv || 0;
     }
 
     initScreen() {
@@ -67,6 +71,15 @@ class ShootTest{
         this.lv = 1;
     }
 
+    /**
+     * 升级
+     */
+    upgrade() {
+        this.lv += 1;
+        clearInterval(this.interval);
+        this.autoCreate();
+    }
+
     createTarget() {
         let target = document.createElement('div');
         target.style.left = `${~~ ((this.width - this.diameter)  * Math.random())}px`;
@@ -85,5 +98,11 @@ class ShootTest{
                 }
             }, 1000)
         }, 3500);
+    }
+
+    autoCreate() {
+        this.interval = setInterval(() => {
+            this.createTarget();
+        }, (13 - this.lv * 4) * 100)
     }
 }
