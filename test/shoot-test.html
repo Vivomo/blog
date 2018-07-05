@@ -4,132 +4,7 @@
     <meta charset="UTF-8">
     <title>射击测试</title>
     <link rel="stylesheet" href="../css/common.css">
-    <style>
-        div {
-            box-sizing: border-box;
-        }
-        .screen {
-            position: relative;
-            width: 100vw;
-            min-width: 1200px;
-            height: 100vh;
-            border: 3px solid green;
-            overflow: hidden;
-            perspective: 1600px;
-        }
-
-        .scene {
-            transform-style: preserve-3d;
-            height: 100%;
-        }
-
-        .floor {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            bottom: 0;
-            background: #555;
-            transform: rotateX(90deg);
-            transform-origin: 50% 100%;
-        }
-
-        .wall {
-            position: absolute;
-            border: solid #00eaff;
-        }
-
-        .wall1 {
-            z-index: 10;
-            bottom: 0;
-            width: 100%;
-            height: 200%;
-            transform: translate3d(0, 0, -1000px);
-            transform-style: preserve-3d;
-            border: 0;
-        }
-
-        .wall2 {
-            left: -150%;
-            bottom: 0;
-            width: 400%;
-            height: 100%;
-            transform: translate3d(0, 0, -3200px);
-            background-image: radial-gradient(ellipse at center, #999 0%, #000 90%);
-        }
-
-        .wall1-1 {
-            width: 15%;
-            height: 100%;
-            transform: rotateY(-90deg);
-            transform-origin: 100% 0;
-            background: #666;
-        }
-
-        .wall1-2 {
-            right: 0;
-            width: 15%;
-            height: 100%;
-            transform: rotateY(90deg);
-            transform-origin: 0 0;
-            background: #666;
-        }
-
-        .wall1-3 {
-            width: 15%;
-            height: 100%;
-            background: #666;
-        }
-
-        .wall1-4 {
-            right: 0;
-            width: 15%;
-            height: 100%;
-            background: #666;
-        }
-
-        .target-wrap {
-            position: absolute;
-            width: 70%;
-            height: 40%;
-            left: 15%;
-            bottom: 10%;
-            background: #555;
-            cursor: crosshair;
-        }
-
-        .target {
-            position: absolute;
-            left: 100px;
-            top: 100px;
-            width: 60px;
-            height: 60px;
-            padding: 10px;
-            background: #ff2d16;
-            opacity: 0.8;
-            border-radius: 50%;
-
-            animation: scale 3s linear;
-        }
-
-        .target:before {
-            content: '';
-            display: block;
-            width: 100%;
-            height: 100%;
-            border: 6px solid #fff;
-            border-radius: 50%;
-            box-sizing: border-box;
-        }
-
-        @keyframes scale {
-            0% {
-                transform: scale(.1);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="../css/shoot-test.css">
 </head>
 <body>
     <div class="screen">
@@ -140,7 +15,22 @@
                 <div class="wall wall1-2"></div>
                 <div class="wall wall1-3"></div>
                 <div class="wall wall1-4"></div>
-                <div class="target-wrap"></div>
+                <div class="target-wrap">
+                    <div class="scoreboard">
+                        <div class="score-item">
+                            Target: <span class="target-count">0</span>
+                        </div>
+                        <div class="score-item">
+                            Miss: <span class="miss">0</span>
+                        </div>
+                        <div class="score-item">
+                            Hit: <span class="hit">0</span>
+                        </div>
+                        <div class="score-item">
+                            LV: <span class="lv">1</span>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="wall wall2"></div>
         </div>
