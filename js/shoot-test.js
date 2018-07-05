@@ -4,8 +4,9 @@ class ShootTest{
         this.screen = config.screen;
         this.width = this.screen.clientWidth;
         this.height = this.screen.clientHeight;
+        this.diameter = config.diameter || 60;
+        console.log(this)
         this.initScreen();
-
     }
 
     initScreen() {
@@ -21,8 +22,9 @@ class ShootTest{
 
     createTarget() {
         let target = document.createElement('div');
-        target.style.left = `${~~ (this.width * Math.random())}px`
-        target.style.top = `${~~ (this.height * Math.random())}px`
+        target.style.left = `${~~ ((this.width - this.diameter)  * Math.random())}px`;
+        target.style.top = `${~~ ((this.height - this.diameter)  * Math.random())}px`;
+        target.style.width = target.style.height = `${this.diameter}px`;
         this.screen.appendChild(target);
         target.className = 'target'
     }
