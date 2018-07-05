@@ -90,10 +90,8 @@ div {
   background: #ff2d16;
   opacity: 0.8;
   border-radius: 50%;
-  animation: scale 3s linear;
-  transition: opacity 1s; }
-  .target.hide {
-    opacity: 0; }
+  animation: scale 4s linear;
+  animation-fill-mode: forwards; }
 
 .target:before {
   content: '';
@@ -107,7 +105,11 @@ div {
 @keyframes scale {
   0% {
     transform: scale(0.1); }
+  75% {
+    opacity: 1;
+    transform: scale(1); }
   100% {
+    opacity: 0;
     transform: scale(1); } }
 
 .scoreboard {

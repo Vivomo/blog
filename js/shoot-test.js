@@ -6,6 +6,8 @@ class ShootTest{
         this.height = this.screen.clientHeight;
         this.diameter = config.diameter || 60;
         this.perLVHitCount = config.perLVHitCount || 20;
+        this.gameOverMissCount = config.gameOverMissCount || 30;
+        this.gameOver = false;
         this.initScreen();
         this.initData();
     }
@@ -22,6 +24,14 @@ class ShootTest{
     set missCount(value) {
         this._missCount = value;
         this.missCountElem.innerHTML = value;
+        if (this.missCount >= this.gameOverMissCount) {
+            clearInterval(this.interval);
+            this.gameOver = true;
+            setTimeout(() => {
+                alert('Game Over');
+            })
+
+        }
     }
 
     get missCount() {
@@ -46,7 +56,7 @@ class ShootTest{
     }
 
     get lv() {
-        return this._lv || 0;
+        return this._lv || 1;
     }
 
     initScreen() {
@@ -65,10 +75,10 @@ class ShootTest{
     }
 
     initData() {
+        this.lv = 1;
         this.targetCount = 0;
         this.missCount = 0;
         this.hitCount = 0;
-        this.lv = 1;
     }
 
     /**
@@ -90,19 +100,21 @@ class ShootTest{
         this.targetCount += 1;
 
         setTimeout(() => {
-            target.classList.add('hide');
-            setTimeout(() => {
-                if (this.screen.contains(target)) {
-                    this.missCount += 1;
-                    target.remove()
-                }
-            }, 1000)
-        }, 3500);
+            if (this.gameOver) {
+                return;
+            }
+            if (this.screen.contains(target)) {
+                this.missCount += 1;
+                target.remove()
+            }
+        }, 4000);
     }
 
     autoCreate() {
+        console.log('run')
         this.interval = setInterval(() => {
             this.createTarget();
+            console.log(Date.now());
         }, (13 - this.lv * 4) * 100)
     }
 }
