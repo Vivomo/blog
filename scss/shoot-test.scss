@@ -88,6 +88,7 @@ div {
     bottom: 10%;
     background: #555;
     cursor: crosshair;
+    user-select: none;
 }
 
 .target {
@@ -102,6 +103,11 @@ div {
     border-radius: 50%;
 
     animation: scale 3s linear;
+    transition: opacity 1s;
+
+    &.hide {
+        opacity: 0;
+    }
 }
 
 .target:before {

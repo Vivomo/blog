@@ -56,8 +56,6 @@ class ShootTest{
                 target.remove();
                 this.targetCount -= 1;
                 this.hitCount += 1;
-            } else {
-        
             }
         });
     }
@@ -77,5 +75,15 @@ class ShootTest{
         this.screen.appendChild(target);
         target.className = 'target';
         this.targetCount += 1;
+
+        setTimeout(() => {
+            target.classList.add('hide');
+            setTimeout(() => {
+                if (this.screen.contains(target)) {
+                    this.missCount += 1;
+                    target.remove()
+                }
+            }, 1000)
+        }, 3500);
     }
 }

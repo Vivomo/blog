@@ -77,7 +77,8 @@ div {
   left: 15%;
   bottom: 10%;
   background: #555;
-  cursor: crosshair; }
+  cursor: crosshair;
+  user-select: none; }
 
 .target {
   position: absolute;
@@ -89,7 +90,10 @@ div {
   background: #ff2d16;
   opacity: 0.8;
   border-radius: 50%;
-  animation: scale 3s linear; }
+  animation: scale 3s linear;
+  transition: opacity 1s; }
+  .target.hide {
+    opacity: 0; }
 
 .target:before {
   content: '';
