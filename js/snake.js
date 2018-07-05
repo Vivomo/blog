@@ -3,7 +3,7 @@ avalon.config({
     interpolate: ["[[", "]]"]
 });
 
-var DIRECTION = {
+let DIRECTION = {
     LEFT: 0,
     TOP: 1,
     RIGHT: 2,
@@ -22,8 +22,8 @@ const Square = {
         );
     },
     nextSquare: function (point, direction) {
-        var x, y;
-        if (direction % 2 == 0) {
+        let x, y;
+        if (direction % 2 === 0) {
             y = point.y;
             x = point.x + direction - 1;
         } else {
@@ -52,7 +52,7 @@ const Snake = {
 };
 
 
-var snake = avalon.define({
+let snake = avalon.define({
     $id: 'snake',
     $task: [],
     $food: null,
@@ -66,8 +66,8 @@ var snake = avalon.define({
         if (e.keyCode < 37 || e.keyCode > 40) {
             return
         }
-        var direction = e.keyCode - 37;
-        if (Math.abs(direction - snake.direction) != 2) {
+        let direction = e.keyCode - 37;
+        if (Math.abs(direction - snake.direction) !== 2) {
             snake.direction = direction;
             snake.stop();
             snake.move();
@@ -79,8 +79,8 @@ var snake = avalon.define({
         return Math.abs(this.direction - direction) === 2;
     },
     move: function () {
-        var head = this.body[0];
-        var ceil = Square.nextSquare(head, this.direction);
+        let head = this.body[0];
+        let ceil = Square.nextSquare(head, this.direction);
         if (this.isOutOfIndex(ceil) || this.isOnBody(ceil)) {
             this.tip = 'Game Over!';
             document.removeEventListener('keydown', this.directionKeyBind);
@@ -91,7 +91,7 @@ var snake = avalon.define({
             this.eat(ceil);
             return;
         }
-        for (var i = this.body.length - 1; i > 0; i--) {
+        for (let i = this.body.length - 1; i > 0; i--) {
             this.body[i].x = this.body[i - 1].x;
             this.body[i].y = this.body[i - 1].y;
         }
@@ -122,7 +122,7 @@ var snake = avalon.define({
     },
     isOnBody: function (ceil) {
         return this.body.some(function (item) {
-            return item.x == ceil.x && item.y == ceil.y
+            return item.x === ceil.x && item.y === ceil.y
         })
     },
     isFood: function (ceil) {
@@ -168,7 +168,7 @@ var snake = avalon.define({
         clearInterval(this.interval);
     },
     start: function () {
-        this.interval = setInterval(snake.move, Snake.cfg.speed);
+        this.interval = setInterval(snake.move.bind(snake), Snake.cfg.speed);
     }
 });
 
