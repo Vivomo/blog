@@ -29,7 +29,7 @@ class ShootTest{
             this.gameOver = true;
             setTimeout(() => {
                 alert('Game Over');
-            })
+            }, 10)
 
         }
     }
@@ -115,6 +115,6 @@ class ShootTest{
         this.interval = setInterval(() => {
             this.createTarget();
             console.log(Date.now());
-        }, (13 - this.lv * 4) * 100)
+        }, (13 - this.lv) * 100)
     }
 }
