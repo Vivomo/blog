@@ -39,6 +39,7 @@ wx.getImageInfo({
     }
 });
 ```
+> 按钮border如果去不掉 就加个 `button:after{border: 0}` (脑残的设计)
 
 > 通过选择器获取wxml的属性都是异步只读的 (2018-5-2)
 
