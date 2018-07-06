@@ -7,6 +7,8 @@
 
 > canvas 无非被元素覆盖 (zIndex突破天际)
 
+> textarea ios 会有一个去不掉的padding
+
 > scroll-view 里面不能放canvas; 里面的input blur 会有文字不显示问题
 ``` 
 input blur 后, 可以手动去改下scrollTop 强制让其重绘
