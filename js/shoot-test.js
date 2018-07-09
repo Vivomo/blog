@@ -118,3 +118,19 @@ class ShootTest{
         }, (13 - this.lv) * 100)
     }
 }
+
+let body = document.body;
+let scene = document.querySelector('.scene');
+let centerX = body.clientWidth / 2;
+let centerY = body.clientHeight / 2;
+const ratio = 0.03;
+
+body.addEventListener('mousemove', ({clientX: x, clientY: y}) => {
+    scene.style.transform = `rotateX(${ratio * (centerY - y)}deg) rotateY(${ratio * (x - centerX)}deg)`;
+});
+
+let test = new ShootTest({
+    screen: document.querySelector('.target-wrap')
+});
+
+test.autoCreate();
