@@ -111,10 +111,8 @@ class ShootTest{
     }
 
     autoCreate() {
-        console.log('run')
         this.interval = setInterval(() => {
             this.createTarget();
-            console.log(Date.now());
         }, (13 - this.lv) * 100)
     }
 }
