@@ -22,7 +22,7 @@ div {
     height: 100%;
     bottom: 0;
     background: #555;
-    transform: rotateX(90deg);
+    transform: translate3d(0, 0, -500px) rotateX(90deg);
     transform-origin: 50% 100%;
 }
 
@@ -36,7 +36,7 @@ div {
     bottom: 0;
     width: 100%;
     height: 200%;
-    transform: translate3d(0, 0, -1000px);
+    transform: translate3d(0, 0, -2000px);
     transform-style: preserve-3d;
     border: 0;
 }
@@ -142,4 +142,12 @@ div {
     color: #fff;
     transform: translateY(-100%);
     justify-content: space-around;
+}
+
+.gun {
+    position: absolute;
+    z-index: 100;
+    bottom: 0;
+    left: 60%;
+    width: 300px;
 }

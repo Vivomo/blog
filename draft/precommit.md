@@ -1,5 +1,14 @@
 
-# hooks/precommit
+# 在已配置eslint的项目增加precommit做git提交校验
+
+执行 `npm install -g eslint eslint-config-airbnb eslint-plugin-babel eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-markdown eslint-plugin-react`
+
+``` 
+上面内容不是写死的, 根据实际项目来(package.json里面和eslint相关的), 缺啥补啥,多啥就去掉啥
+```
+
+`[project]/.git/hooks/` 目录下新建文件 `pre-commit`, 并将下面内容写入保存
+
 ```
 #!/bin/sh
 STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep ".jsx\{0,1\}$")
