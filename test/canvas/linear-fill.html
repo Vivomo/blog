@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas 渐变填充区域</title>
+</head>
+<body>
+    <canvas width="600" height="400" id="canvas"></canvas>
+
+    <script>
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext('2d');
+        let grd = ctx.createLinearGradient(0,0,170,0);
+        grd.addColorStop(0,"black");
+        grd.addColorStop(1,"white");
+
+        ctx.moveTo(100, 100);
+        ctx.lineTo(100, 200);
+        ctx.lineTo(150, 250);
+        ctx.lineTo(200, 200);
+        ctx.lineTo(100, 100);
+
+        ctx.fillStyle = grd;
+        ctx.fill();
+
+    </script>
+</body>
+</html>
