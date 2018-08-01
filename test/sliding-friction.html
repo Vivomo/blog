@@ -9,10 +9,18 @@
         }
 
         .cube {
-            width: 100px;
+            display: flex;
+            justify-content: space-around;
+            width: 4000px;
             height: 100px;
             margin: 0 auto;
             border: 1px solid;
+        }
+        
+        .item {
+            min-width: 100px;
+            height: 100px;
+            background: #000;
         }
         hr {
             margin: 0;
@@ -21,8 +29,75 @@
 </head>
 <body>
 <div class="wrap">
-    <div class="cube"></div>
+    <div class="cube">
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+    </div>
     <hr/>
 </div>
+
+<script>
+    let μ = 0.15;
+    let g = 10;
+    let criticalSpeed = 0.2;
+
+    let startX = 0;
+    let moveX = 0;
+    let x = 0;
+    let startTime = 0;
+
+    let cube = document.querySelector('.cube');
+
+    cube.addEventListener('touchstart', function (e) {
+        let touch = e.touches[0];
+        startX = touch.pageX;
+        startTime = Date.now()
+        cube.addEventListener('touchmove', touchmove)
+    });
+
+    cube.addEventListener('touchend', function (e) {
+        cube.removeEventListener('touchmove', touchmove);
+        x += moveX;
+        let v = moveX / (Date.now() - startTime) * 1000;
+        if (Math.abs(v) > criticalSpeed) {
+            slide(v);
+        }
+        // console.log(v);
+    });
+
+    function touchmove(e) {
+        let touch = e.touches[0];
+        let {pageX} = touch;
+        moveX = pageX - startX;
+        cube.style.transform = `translate3d(${moveX + x}px, 0, 0)`;
+    }
+
+    function slide(v) {
+        let a = μ * g * (v > 0 ? -1 : 1);
+        let maxT = Math.abs(v / a);
+        console.log(maxT)
+        let t = 0;
+        let interval = setInterval(() => {
+            t += 16;
+            t = Math.min(t, maxT);
+            let s = 0.5 * a * t ** 2 + v * t;
+            console.log(s)
+            cube.style.transform = `translate3d(${s / 1000 + x}px, 0, 0)`;
+            if (t === maxT) {
+                x += s / 1000
+                clearInterval(interval);
+            }
+        }, 16);
+
+    }
+</script>
 </body>
 </html>
