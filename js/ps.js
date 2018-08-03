@@ -340,6 +340,15 @@ const Canvas = (function () {
             this.canvas.height = height;
             this.pen.putImageData(cropImgData, 0, 0);
             this.toggleSelect(false);
+        },
+
+        /**
+         * 重置
+         */
+        reset: function () {
+            canvas.width = this.img.width;
+            canvas.height = this.img.height;
+            this.pen.drawImage(this.img, 0, 0);
         }
     };
 
@@ -353,7 +362,7 @@ const Canvas = (function () {
             return this.pen.getImageData(startX, startY, width, height);
         },
         drawImgOnCanvas: function(src) {
-            let img = new Image,
+            let img = this.img = new Image,
                 pen = this.pen;
             img.src = src;
             img.onload = function(){
