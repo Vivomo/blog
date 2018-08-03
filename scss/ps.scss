@@ -1,7 +1,11 @@
 @import "cropper";
+
+* {
+    box-sizing: border-box;
+}
+
 #canvas {
     display: block;
-    //max-width: 100%;
     box-shadow: 0 0 10px currentColor;
     background: #FFF;
 }
@@ -17,10 +21,13 @@ fieldset {
     input, button, select {
         margin: 3px;
     }
+
+    .btn, .v-input {
+        height: 26px;
+    }
 }
 
 .v-input {
-    height: 26px;
     width: 100px;
 
     &[type="number"] {
@@ -49,6 +56,11 @@ fieldset {
 }
 
 .content-wrap {
-    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #333;
     margin-left: 320px;
+    height: 100vh;
+    overflow: auto;
 }
