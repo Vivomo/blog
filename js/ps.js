@@ -223,6 +223,57 @@ const Canvas = (function () {
             this.pen.putImageData(imageData, 0, 0);
         },
         /**
+         * 描边
+         */
+        stock: function () {
+            let imageData = this.getImageData();
+            let data = imageData.data;
+            let whiteData = new Array(data.length).fill(255);
+
+            let w = this.canvas.width * 4;
+            let h = this.canvas.height;
+
+            for (let i = 0; i < h; i++) {
+                let isOdd = true;
+                for (let j = 4 + w * i, _w = w + w * i; j < _w; j += 4) {
+                    let tolerance = Math.max(data[j] - data[j - 4], data[j + 1] - data[j - 3], data[j + 2] - data[j - 2]);
+                    if (tolerance > 20) {
+                        if (isOdd) {
+                            whiteData[j] = whiteData[j + 1] = whiteData[j + 2] = 0;
+                        } else {
+                            whiteData[j - 4] = whiteData[j - 3] = whiteData[j - 2] = 0;
+                        }
+                        j += 4;
+                        isOdd = !isOdd;
+                    }
+                }
+            }
+
+            for (let i = 0; i < w; i += 4) {
+                let isOdd = true;
+                for (let j = 1; j < h; j++) {
+                    let tolerance = Math.max(data[w * j + i] - data[w * (j - 1) + i],
+                        data[w * j + i + 1] - data[w * (j - 1) + i + 1],
+                        data[w * j + i + 2] - data[w * (j - 1) + i] + 2);
+                    if (tolerance > 20) {
+                        if (isOdd) {
+                            whiteData[w * j + i] = whiteData[w * j + i + 1] = whiteData[w * j + i + 2] = 0;
+                        } else {
+                            whiteData[w * (j - 1) + i] = whiteData[w * (j - 1) + i + 1] = whiteData[w * (j - 1) + i + 2] = 0;
+                        }
+                        j++;
+                        isOdd = !isOdd;
+                    }
+                }
+            }
+
+            data.forEach((item, index) => {
+                data[index] = whiteData[index];
+            });
+
+            this.pen.putImageData(imageData, 0, 0);
+        },
+        /**
          * 图片生成9份
          */
         cutNine: function () {
