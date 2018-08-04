@@ -94,6 +94,21 @@ const Canvas = (function () {
         }, type);
     }
 
+    /**
+     * 获取容差
+     * @param imageData 图像数据 => ctx.getImageData().data
+     * @param index1 坐标点1 imageData的一维数组的下标
+     * @param index2 坐标点2
+     * @returns {number} 容差
+     */
+    function getTolerance(imageData, index1, index2) {
+        return Math.max(
+            Math.abs(imageData[index1] - imageData[index2]),
+            Math.abs(imageData[index1 + 1] - imageData[index2 + 1]),
+            Math.abs(imageData[index1 + 2] - imageData[index2 + 2])
+        )
+    }
+
 
     // noinspection JSUnusedGlobalSymbols
     const commands = {
@@ -246,7 +261,7 @@ const Canvas = (function () {
             for (let i = 0; i < h; i++) {
                 let isOdd = true;
                 for (let j = 4 + w * i, _w = w + w * i; j < _w; j += 4) {
-                    let tolerance = Math.max(data[j] - data[j - 4], data[j + 1] - data[j - 3], data[j + 2] - data[j - 2]);
+                    let tolerance = getTolerance(data, j, j - 4); // Math.max(data[j] - data[j - 4], data[j + 1] - data[j - 3], data[j + 2] - data[j - 2]);
                     if (tolerance > toleranceValue) {
                         if (isOdd) {
                             whiteData[j] = whiteData[j + 1] = whiteData[j + 2] = 0;
@@ -264,9 +279,7 @@ const Canvas = (function () {
                 for (let j = 1; j < h; j++) {
                     let pIndex1 = w * j + i;
                     let pIndex2 = w * (j - 1) + i;
-                    let tolerance = Math.max(data[pIndex1] - data[pIndex2],
-                        data[pIndex1 + 1] - data[pIndex2 + 1],
-                        data[pIndex1 + 2] - data[pIndex2 + 2]);
+                    let tolerance = getTolerance(data, pIndex1, pIndex2);// Math.max(data[pIndex1] - data[pIndex2], data[pIndex1 + 1] - data[pIndex2 + 1], data[pIndex1 + 2] - data[pIndex2 + 2]);
                     if (tolerance > toleranceValue) {
                         if (isOdd) {
                             whiteData[pIndex1] = whiteData[pIndex1 + 1] = whiteData[pIndex1 + 2] = 0;
@@ -278,6 +291,26 @@ const Canvas = (function () {
                     }
                 }
             }
+
+            // for (let i = 0; i < h; i++) {
+            //     let isOdd = true;
+            //     for (let j = w * i, _w = w * (i + 1); j < _w; j += 4) {
+            //         let topIndex = j - w;
+            //         if (topIndex >= 0 && whiteData[topIndex] !== 0) {
+            //
+            //         }
+            //         let tolerance = Math.max(data[j] - data[j - 4], data[j + 1] - data[j - 3], data[j + 2] - data[j - 2]);
+            //         if (tolerance > toleranceValue) {
+            //             if (isOdd) {
+            //                 whiteData[j] = whiteData[j + 1] = whiteData[j + 2] = 0;
+            //             } else {
+            //                 whiteData[j - 4] = whiteData[j - 3] = whiteData[j - 2] = 0;
+            //             }
+            //             j += 4;
+            //             isOdd = !isOdd;
+            //         }
+            //     }
+            // }
 
             data.forEach((item, index) => {
                 data[index] = whiteData[index];
