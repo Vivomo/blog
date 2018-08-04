@@ -5,7 +5,18 @@ const Canvas = (function () {
         base64Content = document.getElementById('base64Content'),
         cropWidth = document.getElementById('cropWidth'),
         cropHeight = document.getElementById('cropHeight'),
-        weChatNine = document.getElementById('weChatNine');
+        weChatNine = document.getElementById('weChatNine'),
+        tolerance = document.getElementById('tolerance'),
+        toleranceValue = 20;
+
+    tolerance.onchange = function (e) {
+        let value = Number(this.value);
+        let validValue = ~~ Math.min(Math.max(1, value), 255);
+        if (validValue !== value) {
+            this.value = validValue;
+        }
+        toleranceValue = validValue;
+    };
 
     let cropper = new Cropper({
         elem: document.querySelector('.canvas-wrap'),
@@ -82,7 +93,6 @@ const Canvas = (function () {
             a.click();
         }, type);
     }
-
 
 
     // noinspection JSUnusedGlobalSymbols
@@ -237,7 +247,7 @@ const Canvas = (function () {
                 let isOdd = true;
                 for (let j = 4 + w * i, _w = w + w * i; j < _w; j += 4) {
                     let tolerance = Math.max(data[j] - data[j - 4], data[j + 1] - data[j - 3], data[j + 2] - data[j - 2]);
-                    if (tolerance > 20) {
+                    if (tolerance > toleranceValue) {
                         if (isOdd) {
                             whiteData[j] = whiteData[j + 1] = whiteData[j + 2] = 0;
                         } else {
@@ -255,7 +265,7 @@ const Canvas = (function () {
                     let tolerance = Math.max(data[w * j + i] - data[w * (j - 1) + i],
                         data[w * j + i + 1] - data[w * (j - 1) + i + 1],
                         data[w * j + i + 2] - data[w * (j - 1) + i] + 2);
-                    if (tolerance > 20) {
+                    if (tolerance > toleranceValue) {
                         if (isOdd) {
                             whiteData[w * j + i] = whiteData[w * j + i + 1] = whiteData[w * j + i + 2] = 0;
                         } else {
