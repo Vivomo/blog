@@ -262,14 +262,16 @@ const Canvas = (function () {
             for (let i = 0; i < w; i += 4) {
                 let isOdd = true;
                 for (let j = 1; j < h; j++) {
-                    let tolerance = Math.max(data[w * j + i] - data[w * (j - 1) + i],
-                        data[w * j + i + 1] - data[w * (j - 1) + i + 1],
-                        data[w * j + i + 2] - data[w * (j - 1) + i] + 2);
+                    let pIndex1 = w * j + i;
+                    let pIndex2 = w * (j - 1) + i;
+                    let tolerance = Math.max(data[pIndex1] - data[pIndex2],
+                        data[pIndex1 + 1] - data[pIndex2 + 1],
+                        data[pIndex1 + 2] - data[pIndex2 + 2]);
                     if (tolerance > toleranceValue) {
                         if (isOdd) {
-                            whiteData[w * j + i] = whiteData[w * j + i + 1] = whiteData[w * j + i + 2] = 0;
+                            whiteData[pIndex1] = whiteData[pIndex1 + 1] = whiteData[pIndex1 + 2] = 0;
                         } else {
-                            whiteData[w * (j - 1) + i] = whiteData[w * (j - 1) + i + 1] = whiteData[w * (j - 1) + i + 2] = 0;
+                            whiteData[pIndex2] = whiteData[pIndex2 + 1] = whiteData[pIndex2 + 2] = 0;
                         }
                         j++;
                         isOdd = !isOdd;
