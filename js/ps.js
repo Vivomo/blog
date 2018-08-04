@@ -9,7 +9,7 @@ const Canvas = (function () {
         tolerance = document.getElementById('tolerance'),
         toleranceValue = 20;
 
-    tolerance.onchange = function (e) {
+    tolerance.onchange = function () {
         let value = Number(this.value);
         let validValue = ~~ Math.min(Math.max(1, value), 255);
         if (validValue !== value) {
@@ -107,6 +107,26 @@ const Canvas = (function () {
             Math.abs(imageData[index1 + 1] - imageData[index2 + 1]),
             Math.abs(imageData[index1 + 2] - imageData[index2 + 2])
         )
+    }
+
+    /**
+     * 如果容差大于指定值则在 临时数据中记录一下,
+     * ( 这不算函数, 算一个宏吧, 挺违背函数单一职责的 ┑(￣Д ￣)┍)
+     * @param imageData from canvas
+     * @param tempData 临时存储描边点的数组
+     * @param currentIndex 当前坐标
+     * @param compareIndex 比较的坐标
+     * @returns {boolean} 是否大于容差
+     */
+    function stockIfGtToleranceMacro(imageData, tempData, currentIndex, compareIndex) {
+        if (tempData[compareIndex] !== 0) {
+            let tolerance = getTolerance(imageData, currentIndex, compareIndex);
+            if (tolerance > toleranceValue) {
+                tempData[currentIndex] = tempData[currentIndex + 1] = tempData[currentIndex + 2] = 0;
+                return true
+            }
+        }
+        return false;
     }
 
 
@@ -259,58 +279,27 @@ const Canvas = (function () {
             let h = this.canvas.height;
 
             for (let i = 0; i < h; i++) {
-                let isOdd = true;
-                for (let j = 4 + w * i, _w = w + w * i; j < _w; j += 4) {
-                    let tolerance = getTolerance(data, j, j - 4); // Math.max(data[j] - data[j - 4], data[j + 1] - data[j - 3], data[j + 2] - data[j - 2]);
-                    if (tolerance > toleranceValue) {
-                        if (isOdd) {
-                            whiteData[j] = whiteData[j + 1] = whiteData[j + 2] = 0;
-                        } else {
-                            whiteData[j - 4] = whiteData[j - 3] = whiteData[j - 2] = 0;
+                for (let j = w * i, _w = w * (i + 1); j < _w; j += 4) {
+                    if (i > 0) {
+                        let topIndex = j - w;
+                        if (stockIfGtToleranceMacro(data, whiteData, j, topIndex)) {
+                            continue;
                         }
-                        j += 4;
-                        isOdd = !isOdd;
+                    }
+
+                    if (j > 0) {
+                        let leftIndex = j - 4;
+                        if (stockIfGtToleranceMacro(data, whiteData, j, leftIndex)) {
+                            continue;
+                        }
+                    }
+
+                    if (i > 0 && j > 0) {
+                        let leftTopIndex = j - w - 4;
+                        stockIfGtToleranceMacro(data, whiteData, j, leftTopIndex)
                     }
                 }
             }
-
-            for (let i = 0; i < w; i += 4) {
-                let isOdd = true;
-                for (let j = 1; j < h; j++) {
-                    let pIndex1 = w * j + i;
-                    let pIndex2 = w * (j - 1) + i;
-                    let tolerance = getTolerance(data, pIndex1, pIndex2);// Math.max(data[pIndex1] - data[pIndex2], data[pIndex1 + 1] - data[pIndex2 + 1], data[pIndex1 + 2] - data[pIndex2 + 2]);
-                    if (tolerance > toleranceValue) {
-                        if (isOdd) {
-                            whiteData[pIndex1] = whiteData[pIndex1 + 1] = whiteData[pIndex1 + 2] = 0;
-                        } else {
-                            whiteData[pIndex2] = whiteData[pIndex2 + 1] = whiteData[pIndex2 + 2] = 0;
-                        }
-                        j++;
-                        isOdd = !isOdd;
-                    }
-                }
-            }
-
-            // for (let i = 0; i < h; i++) {
-            //     let isOdd = true;
-            //     for (let j = w * i, _w = w * (i + 1); j < _w; j += 4) {
-            //         let topIndex = j - w;
-            //         if (topIndex >= 0 && whiteData[topIndex] !== 0) {
-            //
-            //         }
-            //         let tolerance = Math.max(data[j] - data[j - 4], data[j + 1] - data[j - 3], data[j + 2] - data[j - 2]);
-            //         if (tolerance > toleranceValue) {
-            //             if (isOdd) {
-            //                 whiteData[j] = whiteData[j + 1] = whiteData[j + 2] = 0;
-            //             } else {
-            //                 whiteData[j - 4] = whiteData[j - 3] = whiteData[j - 2] = 0;
-            //             }
-            //             j += 4;
-            //             isOdd = !isOdd;
-            //         }
-            //     }
-            // }
 
             data.forEach((item, index) => {
                 data[index] = whiteData[index];
