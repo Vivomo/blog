@@ -15,6 +15,7 @@ css: ps
 
         <input type="text" placeholder="图片地址或base64" class="v-input" id="webImg" spellcheck="false">
         <button id="loadWebImg" class="btn" data-cmd="drawImgBySrc">加载</button>
+        <button class="btn" data-cmd="reset">还原</button>
     </fieldset>
 
     <fieldset>
@@ -32,12 +33,18 @@ css: ps
 
     <fieldset>
         <legend>滤镜</legend>
-        <button class="btn" data-cmd="decolourize">去色</button>
-        <button class="btn" data-cmd="inverse">反色</button>
-        <button class="btn" data-cmd="hFlip">水平翻转</button>
-        <button class="btn" data-cmd="vFlip">垂直翻转</button>
-        <button class="btn" data-cmd="stock">描边</button>
-        <button class="btn" data-cmd="cutNine">生成微信九宫格</button>
+        <div class="flex">
+            <button class="btn" data-cmd="decolourize">去色</button>
+            <button class="btn" data-cmd="inverse">反色</button>
+            <button class="btn" data-cmd="hFlip">水平翻转</button>
+            <button class="btn" data-cmd="vFlip">垂直翻转</button>
+            <div>
+                <button class="btn" data-cmd="stock">描边</button>
+                <input class="v-input" type="number" min="0" max="255" step="1" id="tolerance" value="20">
+                <label for="tolerance">描边容差</label>
+            </div>
+            <button class="btn" data-cmd="cutNine">生成微信九宫格</button>
+        </div>
     </fieldset>
 
     <fieldset>
