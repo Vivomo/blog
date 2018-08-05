@@ -15,7 +15,6 @@ Python 翻译 GitHub上的md文档
 Python 博客生成器
 Python 微博爬虫
 Python 爬虫 http://www.manhuagui.com/comic/2027/
-Python image -> excel
 python 搭建web 服务器
 
 b^n % m
