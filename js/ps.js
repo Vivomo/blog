@@ -286,7 +286,7 @@ const Canvas = (function () {
         stock: function () {
             let imageData = this.getImageData();
             let data = imageData.data;
-            let whiteData = new Array(data.length).fill(255);
+            let tempData = new Array(data.length).fill(255);
 
             let w = this.canvas.width * 4;
             let h = this.canvas.height;
@@ -295,27 +295,27 @@ const Canvas = (function () {
                 for (let j = w * i, _w = w * (i + 1); j < _w; j += 4) {
                     if (i > 0) {
                         let topIndex = j - w;
-                        if (stockIfGtToleranceMacro(data, whiteData, j, topIndex)) {
+                        if (stockIfGtToleranceMacro(data, tempData, j, topIndex)) {
                             continue;
                         }
                     }
 
                     if (j > 0) {
                         let leftIndex = j - 4;
-                        if (stockIfGtToleranceMacro(data, whiteData, j, leftIndex)) {
+                        if (stockIfGtToleranceMacro(data, tempData, j, leftIndex)) {
                             continue;
                         }
                     }
 
                     if (i > 0 && j > 0) {
                         let leftTopIndex = j - w - 4;
-                        stockIfGtToleranceMacro(data, whiteData, j, leftTopIndex)
+                        stockIfGtToleranceMacro(data, tempData, j, leftTopIndex)
                     }
                 }
             }
 
             data.forEach((item, index) => {
-                data[index] = whiteData[index];
+                data[index] = tempData[index];
             });
 
             this.pen.putImageData(imageData, 0, 0);
