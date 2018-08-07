@@ -53,8 +53,27 @@
         let y = centerX - Math.sin(degree) * r;
         ctx.moveTo(centerX, centerY);
         ctx.lineTo(~~x, ~~y);
-        console.log(x, y)
     }
+
+    let startX, startY;
+    for (let j = 1; j <= 5; j++) {
+        for (let i = 0; i < indicatorCount; i++) {
+            let _r = r * j / 5;
+            let degree = Math.PI / 2 -  rad * i;
+            let x = ~~(centerX + Math.cos(degree) * _r);
+            let y = ~~(centerX - Math.sin(degree) * _r);
+            if (i === 0) {
+                startX = x;
+                startY = y;
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
+            }
+        }
+        ctx.lineTo(startX, startY);
+    }
+
+
     ctx.stroke();
 
 
