@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas 雷达图</title>
+</head>
+<body>
+    <canvas id="canvas" width="600" height="600"></canvas>
+<script>
+    let canvas = document.getElementById('canvas');
+    let {width, height} = canvas;
+    let minSide = Math.min(width, height);
+    let r = minSide * 0.85; // 参照了百度雷达半径和短边的对比
+    let data = {
+        indicator: [
+            {
+                name: '金',
+                max: 1000,
+            },
+            {
+                name: '木',
+                max: 1000,
+            },
+            {
+                name: '水',
+                max: 600,
+            },
+            {
+                name: '火',
+                max: 1000,
+            },
+            {
+                name: '土',
+                max: 1000,
+            },
+        ],
+        data: [100, 200, 300, 400, 500]
+    };
+
+    let indicatorCount = data.indicator.length;
+    let centerX = ~~(width / 2);
+    let centerY = ~~(height / 2);
+
+    let ctx = canvas.getContext('2d');
+
+
+
+</script>
+</body>
+</html>
