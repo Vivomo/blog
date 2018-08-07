@@ -10,7 +10,7 @@
     let canvas = document.getElementById('canvas');
     let {width, height} = canvas;
     let minSide = Math.min(width, height);
-    let r = minSide * 0.85; // 参照了百度雷达半径和短边的对比
+    let r = minSide * 0.85 / 2; // 参照了百度雷达半径和短边的对比
     let data = {
         indicator: [
             {
@@ -43,6 +43,19 @@
 
     let ctx = canvas.getContext('2d');
 
+    let rad = Math.PI * 2 / indicatorCount;
+
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = '#000';
+    for (let i = 0; i < indicatorCount; i++) {
+        let degree = Math.PI / 2 -  rad * i;
+        let x = centerX + Math.cos(degree) * r;
+        let y = centerX - Math.sin(degree) * r;
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(~~x, ~~y);
+        console.log(x, y)
+    }
+    ctx.stroke();
 
 
 </script>
