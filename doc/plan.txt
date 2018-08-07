@@ -26,3 +26,4 @@ b^n % m
 
 学习计划
 https://cn.udacity.com/course/interactive-3d-graphics--cs291 图形3D
+https://cn.udacity.com/course/linux-command-line-basics--ud595 linux 命令行基础
