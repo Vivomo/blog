@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>最小完美正方形</title>
+    <style>
+        html {
+            font-size: 5px;
+        }
+        .wrap {
+            position: relative;
+            width: 112rem;
+            height: 112rem;
+            transform-origin: 0 0;
+            transform: scale(0.5);
+            outline: 2px solid #00eaff;
+        }
+        .wrap div{
+            position: absolute;
+            outline: 1px solid #00eaff;
+        }
+    </style>
+</head>
+<body>
+<!--
+TODO 不太想用 position: absolute
+-->
+<div class="wrap">
+    <div style="width: 50rem; height: 50rem;"></div>
+    <div style="width: 35rem; height: 35rem; left: 50rem;"></div>
+    <div style="width: 27rem; height: 27rem; right: 0;"></div>
+    <div style="width: 15rem; height: 15rem; left: 50rem; top: 35rem;"></div>
+    <div style="width: 17rem; height: 17rem; left: 65rem; top: 35rem;"></div>
+
+    <div style="width: 8rem; height: 8rem; top: 27rem; left: 85rem;"></div>
+    <div style="width: 19rem; height: 19rem; top: 27rem; right: 0;"></div>
+
+    <div style="width: 11rem; height: 11rem; top: 35rem; right: 19rem;"></div>
+    <div style="width: 29rem; height: 29rem; top: 50rem;"></div>
+    <div style="width: 25rem; height: 25rem; left: 29rem; top: 50rem;"></div>
+    <div style="width: 9rem; height: 9rem; top: 50rem; left: 54rem;"></div>
+    <div style="width: 2rem; height: 2rem; top: 50rem; left: 63rem;"></div>
+    <div style="width: 6rem; height: 6rem; right: 24rem; top: 46rem;"></div>
+    <div style="width: 24rem; height: 24rem; right: 0; top: 46rem;"></div>
+    <div style="width: 16rem; height: 16rem; left: 54rem; top: 59rem;"></div>
+    <div style="width: 18rem; height: 18rem; right: 24rem; top: 52rem;"></div>
+    <div style="width: 7rem; height: 7rem; top: 52rem; right: 42rem;"></div>
+    <div style="width: 4rem; height: 4rem; left: 29rem; bottom: 33rem;"></div>
+    <div style="width: 33rem; height: 33rem; bottom: 0;"></div>
+    <div style="width: 37rem; height: 37rem; left: 33rem; bottom: 0;"></div>
+    <div style="width: 42rem; height: 42rem; right: 0; bottom: 0;"></div>
+</div>
+</body>
+</html>
