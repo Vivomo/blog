@@ -34,7 +34,7 @@
                 max: 1000,
             },
         ],
-        data: [100, 200, 300, 400, 500]
+        data: [900, 700, 300, 400, 500]
     };
 
     let indicatorCount = data.indicator.length;
@@ -73,7 +73,28 @@
         ctx.lineTo(startX, startY);
     }
 
+    ctx.stroke();
 
+    ctx.beginPath();
+    ctx.strokeStyle = '#00f';
+    ctx.fillStyle = 'rgba(0, 0, 255, 0.5)';
+
+    for (let i = 0; i < indicatorCount; i++) {
+        let _r = r * data.data[i] / data.indicator[i].max;
+        let degree = Math.PI / 2 -  rad * i;
+        let x = ~~(centerX + Math.cos(degree) * _r);
+        let y = ~~(centerX - Math.sin(degree) * _r);
+        if (i === 0) {
+            startX = x;
+            startY = y;
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+    }
+    ctx.lineTo(startX, startY);
+
+    ctx.fill();
     ctx.stroke();
 
 
