@@ -6,97 +6,37 @@
 </head>
 <body>
     <canvas id="canvas" width="600" height="600"></canvas>
+    <script src="../../js/lib/radar.js"></script>
 <script>
-    let canvas = document.getElementById('canvas');
-    let {width, height} = canvas;
-    let minSide = Math.min(width, height);
-    let r = minSide * 0.85 / 2; // 参照了百度雷达半径和短边的对比
-    let data = {
-        indicator: [
-            {
-                name: '金',
-                max: 1000,
-            },
-            {
-                name: '木',
-                max: 1000,
-            },
-            {
-                name: '水',
-                max: 600,
-            },
-            {
-                name: '火',
-                max: 1000,
-            },
-            {
-                name: '土',
-                max: 1000,
-            },
-        ],
-        data: [900, 700, 300, 400, 500]
-    };
-
-    let indicatorCount = data.indicator.length;
-    let centerX = ~~(width / 2);
-    let centerY = ~~(height / 2);
-
-    let ctx = canvas.getContext('2d');
-
-    let rad = Math.PI * 2 / indicatorCount;
-
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = '#000';
-    for (let i = 0; i < indicatorCount; i++) {
-        let degree = Math.PI / 2 -  rad * i;
-        let x = centerX + Math.cos(degree) * r;
-        let y = centerX - Math.sin(degree) * r;
-        ctx.moveTo(centerX, centerY);
-        ctx.lineTo(~~x, ~~y);
-    }
-
-    let startX, startY;
-    for (let j = 1; j <= 5; j++) {
-        for (let i = 0; i < indicatorCount; i++) {
-            let _r = r * j / 5;
-            let degree = Math.PI / 2 -  rad * i;
-            let x = ~~(centerX + Math.cos(degree) * _r);
-            let y = ~~(centerX - Math.sin(degree) * _r);
-            if (i === 0) {
-                startX = x;
-                startY = y;
-                ctx.moveTo(x, y);
-            } else {
-                ctx.lineTo(x, y);
-            }
+    let radar = new Radar({
+        canvas: '#canvas',
+        data: {
+            indicator: [
+                {
+                    name: '金',
+                    max: 1000,
+                },
+                {
+                    name: '木',
+                    max: 1000,
+                },
+                {
+                    name: '水',
+                    max: 600,
+                },
+                {
+                    name: '火',
+                    max: 1000,
+                },
+                {
+                    name: '土',
+                    max: 1000,
+                },
+            ],
+            data: [900, 700, 300, 400, 500]
         }
-        ctx.lineTo(startX, startY);
-    }
-
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.strokeStyle = '#00f';
-    ctx.fillStyle = 'rgba(0, 0, 255, 0.5)';
-
-    for (let i = 0; i < indicatorCount; i++) {
-        let _r = r * data.data[i] / data.indicator[i].max;
-        let degree = Math.PI / 2 -  rad * i;
-        let x = ~~(centerX + Math.cos(degree) * _r);
-        let y = ~~(centerX - Math.sin(degree) * _r);
-        if (i === 0) {
-            startX = x;
-            startY = y;
-            ctx.moveTo(x, y);
-        } else {
-            ctx.lineTo(x, y);
-        }
-    }
-    ctx.lineTo(startX, startY);
-
-    ctx.fill();
-    ctx.stroke();
-
+    });
+    radar.draw();
 
 </script>
 </body>
