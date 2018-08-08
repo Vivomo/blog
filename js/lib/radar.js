@@ -17,12 +17,19 @@ class Radar{
 
     draw() {
         let {width, height} = this.canvas;
-        let {ctx, r, indicatorCount, indicatorRad} = this;
-        ctx.clearRect(0, 0, width, height);
+        this.ctx.clearRect(0, 0, width, height);
+        this._drawBg();
+        this._drawArea();
+    }
 
+    /**
+     * 绘制背景线条
+     * @private
+     */
+    _drawBg() {
+        let {ctx, r, indicatorCount, indicatorRad} = this;
         let centerX = ~~(width / 2);
         let centerY = ~~(height / 2);
-
         ctx.lineWidth = 1;
         ctx.strokeStyle = '#999';
         for (let i = 0; i < indicatorCount; i++) {
@@ -52,12 +59,10 @@ class Radar{
         }
 
         ctx.stroke();
-
-        this._drawArea();
     }
 
     /**
-     * 绘制面积区域
+     * 绘制数据面积区域
      * @private
      */
     _drawArea() {
