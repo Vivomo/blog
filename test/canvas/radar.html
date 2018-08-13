@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas 雷达图</title>
+</head>
+<body>
+    <canvas id="canvas" width="600" height="600"></canvas>
+    <script src="../../js/lib/radar.js"></script>
+<script>
+    let radar = new Radar({
+        canvas: '#canvas',
+        data: {
+            indicator: [
+                {
+                    name: '金',
+                    max: 1000,
+                },
+                {
+                    name: '木',
+                    max: 1000,
+                },
+                {
+                    name: '水',
+                    max: 600,
+                },
+                {
+                    name: '火',
+                    max: 1000,
+                },
+                {
+                    name: '土',
+                    max: 1000,
+                },
+            ],
+            data: [900, 700, 300, 400, 500]
+        }
+    });
+    radar.draw();
+
+</script>
+</body>
+</html>
