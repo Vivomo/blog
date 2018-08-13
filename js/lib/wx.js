@@ -21,6 +21,9 @@ const wx = {
     },
     chooseAddress: () => {
     },
+    /**
+     * 选择图片
+     */
     chooseImage: () => {
     },
     chooseInvoiceTitle: () => {
