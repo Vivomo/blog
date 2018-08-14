@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        h1 {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <canvas id="canvas" width="300" height="300"></canvas>
@@ -10,6 +15,8 @@
     <h1>111</h1>
     <h2>222</h2>
 </div>
+
+<div id="svg"></div>
 <script>
     let wrap = document.getElementById('wrap');
     let canvas = document.getElementById('canvas');
@@ -25,7 +32,7 @@
 
     console.log(data);
 
-
+    document.getElementById('svg').innerHTML = data;
 
     let img = new Image();
     let svg = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
