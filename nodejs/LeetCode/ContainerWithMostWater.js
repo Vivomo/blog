@@ -96,6 +96,17 @@ let maxArea2 = (arr) => {
     }
     return max;
 };
+console.time('a2');
+for (let i = 0; i < 1000000; i++) {
+    maxArea2([1,8,6,2,5,4,8,3,7]);
+    maxArea2([4,5,18,17,6]);
+}
+console.timeEnd('a2');
 
-console.log(maxArea2([1,8,6,2,5,4,8,3,7]));
-console.log(maxArea2([4,5,18,17,6]));
+console.time('a');
+for (let i = 0; i < 1000000; i++) {
+    maxArea([1,8,6,2,5,4,8,3,7]);
+    maxArea([4,5,18,17,6]);
+}
+console.timeEnd('a');
+
