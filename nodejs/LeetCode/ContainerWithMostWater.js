@@ -78,5 +78,24 @@ function getArea(arr, start, end) {
     return Math.min(arr[start], arr[end]) * (end - start);
 }
 
-console.log(maxArea([1,8,6,2,5,4,8,3,7]));
-console.log(maxArea([4,5,18,17,6]));
+
+
+// better solution
+
+let maxArea2 = (arr) => {
+    let end = arr.length - 1;
+    let start = 0;
+    let max = 0;
+    while (start < end) {
+        max = Math.max(max, Math.min(arr[start], arr[end]) * (end - start));
+        if (arr[start] > arr[end]) {
+            end--;
+        } else {
+            start++;
+        }
+    }
+    return max;
+};
+
+console.log(maxArea2([1,8,6,2,5,4,8,3,7]));
+console.log(maxArea2([4,5,18,17,6]));
