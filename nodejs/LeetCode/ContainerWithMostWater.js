@@ -96,17 +96,37 @@ let maxArea2 = (arr) => {
     }
     return max;
 };
-console.time('a2');
-for (let i = 0; i < 1000000; i++) {
-    maxArea2([1,8,6,2,5,4,8,3,7]);
-    maxArea2([4,5,18,17,6]);
-}
-console.timeEnd('a2');
 
-console.time('a');
-for (let i = 0; i < 1000000; i++) {
-    maxArea([1,8,6,2,5,4,8,3,7]);
-    maxArea([4,5,18,17,6]);
-}
-console.timeEnd('a');
+let maxArea3 = (arr) => {
+    let end = arr.length - 1;
+    let start = 0;
+    let max = 0;
+    while (start < end) {
+        max = Math.max(max, Math.min(arr[start], arr[end]) * (end - start));
+        if (arr[start] > arr[end]) {
+            let endValue = arr[end];
+            while (arr[--end] < endValue && start < end);
+        } else {
+            let startValue = arr[start];
+            while (arr[++start] < startValue && start < end);
+        }
+    }
+    return max;
+};
+// console.time('a2');
+// for (let i = 0; i < 1000000; i++) {
+//     maxArea2([1,8,6,2,5,4,8,3,7]);
+//     maxArea2([4,5,18,17,6]);
+// }
+// console.timeEnd('a2');
+//
+// console.time('a');
+// for (let i = 0; i < 1000000; i++) {
+//     maxArea3([1,8,6,2,5,4,8,3,7]);
+//     maxArea3([4,5,18,17,6]);
+// }
+// console.timeEnd('a');
 
+
+console.log(maxArea3([1,8,6,2,5,4,8,3,7]));
+console.log(maxArea3([4,5,18,17,6]));
