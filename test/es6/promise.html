@@ -29,6 +29,38 @@
     p.then(function () {
         console.log(arguments);
     }).catch(error => console.log(error))
+
+    let p2 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(1)
+        }, 1000)
+    });
+
+    p2.then((result) => {
+
+    });
+
+    setTimeout(() => {
+        console.log(1)
+
+        setTimeout(() => {
+            console.log(2)
+
+            setTimeout(() => {
+                console.log(3)
+            }, 3000)
+        }, 2000)
+    }, 1000);
+
+
+    new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(1)
+        }, 1000)
+    }).then((args) => new Promise((resolve => setTimeout(resolve(), 20000))))
+
+
+
 </script>
 </body>
 </html>
