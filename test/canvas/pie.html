@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pie</title>
+</head>
+<body>
+    <canvas id="pie" width="210" height="210"></canvas>
+<script>
+    class SimplePie{
+        constructor(options) {
+            let defaultOptions = {
+                id: 'pie',
+                lineWidth: 23,
+                r: 60,
+                colors: ['#7FA0FF', '#98BDFF', '#A1D2B6', '#FFDB46', '#FFB63E', '#F77C7A', '#696CC9', '#787EF3'],
+                cb: () => {}
+            };
+
+            this.options = Object.assign({}, defaultOptions, options);
+            this.draw();
+        }
+
+        draw() {
+            let {id, lineWidth, colors, cb, percent, r} = this.options;
+            let canvas = document.getElementById(id);
+            let {width, height} = canvas;
+            let centerX = width / 2;
+            let centerY = height / 2;
+            let ctx = this.ctx = canvas.getContext('2d');
+            ctx.lineWidth = lineWidth;
+            let begin = Math.PI / -2;
+            let i = 0;
+            let interval = setInterval(() => {
+                i++;
+                ctx.clearRect(0, 0 , width, height);
+                let _endRad = begin + Math.PI * 2 * i / 60;
+                percent.reduce((prev, cur, index) => {
+                    ctx.beginPath();
+                    ctx.strokeStyle = colors[index];
+                    let _beginRad = begin + prev / 100 * Math.PI * 2;
+                    if (_endRad > _beginRad) {
+                        ctx.arc(centerX, centerY, r, _beginRad, _endRad);
+                        ctx.stroke();
+                    }
+                    return prev + cur;
+                }, 0);
+                if (i === 60) {
+                    clearInterval(interval);
+                    cb(ctx);
+                }
+                ctx.draw();
+            }, 16);
+        }
+    }
+
+    new SimplePie({
+        percent: [30, 20, 50],
+        r: 68,
+    });
+</script>
+</body>
+</html>
