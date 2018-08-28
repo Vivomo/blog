@@ -17,13 +17,66 @@
             height: 100%;
             background: #000;
             border-radius: 50%;
-            clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 70% 100%, 50% 50%);
+            clip-path: polygon(0 0);
+            /*clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 70% 100%);*/
         }
     </style>
 </head>
 <body>
     <div class="box">
-        <div class="content"></div>
+        <div class="content" id="content"></div>
     </div>
+
+    <input type="number" id="percent" step="0.1" value="0.1">
+    <button id="submit">set</button>
+
+    <script>
+        let percentElem = document.getElementById('percent');
+        let content = document.getElementById('content');
+        document.getElementById('submit').addEventListener('click', () => {
+            let percent = Number(percentElem.value);
+            if (percent >= 0 && percent <= 1) {
+                let polygon = getPolygon(percent);
+                console.log(polygon);
+                content.style.clipPath = `polygon(${polygon})`;
+            }
+        });
+
+        function getPolygon(percent) {
+            if (percent === 0) {
+                return '0% 0%'
+            } else if (percent === 1) {
+                return ''
+            }
+            let points = ['50% 50%', '50% 0%'];
+            let progress = [0.125, 0.375, 0.625, 0.875];
+            let progressPoints = ['100% 0%', '100% 100%', '0% 100%', '0% 0%'];
+            progress.every((item, index) => {
+                if (percent > item) {
+                    points.push(progressPoints[index]);
+                    return true;
+                }
+            });
+            let k = Math.tan(Math.PI / 2 - Math.PI * 2 * percent);
+            console.log(k);
+            if (percent <= 0.125) {
+                let x = 50 / k + 50;
+                points.push(`${x}% 0%`);
+            } else if (percent <= 0.375) {
+                let y = 50 - 50 * k;
+                points.push(`100% ${y}%`);
+            } else if (percent <= 0.625) {
+                let x = 50 + (-50 / k);
+                points.push(`${x}% 100%`);
+            } else if (percent <= 0.875) {
+                let y = 50 - (-50 * k);
+                points.push(`0% ${y}%`);
+            } else if (percent < 1) {
+                let x = 50 / k + 50;
+                points.push(`${x}% 0%`);
+            }
+            return points.join(',')
+        }
+    </script>
 </body>
 </html>
