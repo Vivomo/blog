@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas 字体自适应</title>
+    <style>
+        canvas {
+            display: block;
+            margin: 0 auto;
+            outline: 1px solid;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="200" height="1000" id="canvas"></canvas>
+    <script>
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext('2d');
+        let maxWidth = canvas.width;
+        let fontSize = 48;
+        ctx.textBaseline = 'top';
+        let str = '100';
+        ctx.font = '48px Microsoft Yahei';
+        for (let y = 0; y < 1000 - fontSize; y += fontSize) {
+            let width = ctx.measureText(str).width;
+            // console.log(str, width);
+            if (width <= maxWidth) {
+                ctx.fillText(str, 0, y);
+            } else {
+                let fs = fontSize;
+                do {
+                    fs--;
+                    ctx.font = `${fs}px Microsoft Yahei`;
+                    width = ctx.measureText(str).width;
+                } while (width > maxWidth);
+                ctx.fillText(str, 0, y);
+            }
+            str += '0'
+        }
+    </script>
+</body>
+</html>
