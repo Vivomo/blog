@@ -7,7 +7,7 @@ let htmlHeader = {
 };
 
 http.createServer((req, res) => {
-    let url = req.url;
+    let url = req.url.substr(1);
     let file = root + url;
     let httpCode = null;
     let content = null;
