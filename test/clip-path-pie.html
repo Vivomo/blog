@@ -17,8 +17,8 @@
             height: 100%;
             background: #000;
             border-radius: 50%;
-            clip-path: polygon(0 0);
-            /*clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 70% 100%);*/
+            /*clip-path: polygon(0 0);*/
+            clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 70% 100%);
         }
     </style>
 </head>
@@ -31,6 +31,9 @@
     <button id="submit">set</button>
 
     <script>
+        window.onerror = function (...args) {
+            alert(JSON.stringify(args))
+        }
         let percentElem = document.getElementById('percent');
         let content = document.getElementById('content');
         document.getElementById('submit').addEventListener('click', () => {
