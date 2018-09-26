@@ -23,7 +23,7 @@
         for (var i = 0; i < hashArr.length; i++) {
             var tempArr = hashArr[i].split('='),
                 k = tempArr[0],
-                v = tempArr[1];
+                v = tempArr[1] || true;
             if (hashMap[k]) {
                 if (Array.isArray(hashMap[k])) {
                     hashMap[k].push(v);
