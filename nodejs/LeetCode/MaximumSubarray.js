@@ -12,34 +12,27 @@
 function maxSubArray(arr) {
     let lastIndex = arr.length - 1;
     let sum = 0;
-    let begin = 0;
-    let end = lastIndex;
-    while (arr[begin] < 0 && begin <= lastIndex) {
-        begin++;
+    let maxSum = arr[0];
+    if (maxSum < 0) {
+        for (let i = 1; i <= lastIndex; i++) {
+            if (arr[i] > maxSum) {
+                maxSum = arr[i]
+            }
+            if (maxSum > 0) {
+                break;
+            }
+        }
     }
-    if (begin > lastIndex) {
-        return 0;
-    }
-    while (arr[end] < 0 && end >= begin) {
-        end--;
-    }
-
-    let endIndex = begin;
-    let tempBegin = begin;
-    let maxSum = 0;
-    for(let i = begin; i <= end; i++) {
+    for(let i = 0; i <= lastIndex; i++) {
         sum += arr[i];
         if (sum > maxSum) {
-            endIndex = i;
-            begin = tempBegin;
             maxSum = sum;
         } else {
             if (sum < 0) {
                 do {
                     i++
-                } while (arr[i] <= 0 && i <= end)
-                if (i <= end) {
-                    tempBegin = i;
+                } while (arr[i] <= 0 && i <= lastIndex);
+                if (i <= lastIndex) {
                     i--;
                     sum = 0;
                 }
@@ -49,4 +42,7 @@ function maxSubArray(arr) {
     return maxSum;
 }
 
-maxSubArray([-2,1,-3,4,-1,2,1,-5,4])
+console.log(maxSubArray([-2,1,-3,4,-1,2,1,-5,4]))
+console.log(maxSubArray([-2, -3, 2]))
+console.log(maxSubArray([-2, -3]))
+console.log(maxSubArray([-4, -3]))
