@@ -46,12 +46,8 @@ function maxSubArray(arr) {
 function maxSubArray2(arr) {
     let max = arr[0];
     for (let i = 1, l = arr.length; i < l; i++) {
-        if (arr[i - 1] > 0) {
-            arr[i] += arr[i - 1]
-        }
-        if (arr[i] > max) {
-            max = arr[i]
-        }
+        arr[i - 1] > 0 && (arr[i] += arr[i - 1]);
+        arr[i] > max && (max = arr[i]);
     }
     return max;
 }
