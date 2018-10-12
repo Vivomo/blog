@@ -42,7 +42,23 @@ function maxSubArray(arr) {
     return maxSum;
 }
 
-console.log(maxSubArray([-2,1,-3,4,-1,2,1,-5,4]))
-console.log(maxSubArray([-2, -3, 2]))
-console.log(maxSubArray([-2, -3]))
-console.log(maxSubArray([-4, -3]))
+
+function maxSubArray2(arr) {
+    let max = arr[0];
+    for (let i = 1, l = arr.length; i < l; i++) {
+        if (arr[i - 1] > 0) {
+            arr[i] += arr[i - 1]
+        }
+        if (arr[i] > max) {
+            max = arr[i]
+        }
+    }
+    return max;
+}
+
+
+
+console.log(maxSubArray2([-2,1,-3,4,-1,2,1,-5,4]))
+console.log(maxSubArray2([-2, -3, 2]))
+console.log(maxSubArray2([-2, -3]))
+console.log(maxSubArray2([-4, -3]))
