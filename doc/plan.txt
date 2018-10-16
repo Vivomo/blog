@@ -18,11 +18,7 @@ Python 爬虫 http://www.manhuagui.com/comic/2027/
 python 搭建web 服务器
 
 b^n % m
-编程珠玑 数组求最大片段和
 
 博客修改计划
 首页改造为魔方
 
-
-学习计划
-https://cn.udacity.com/course/interactive-3d-graphics--cs291 图形3D
