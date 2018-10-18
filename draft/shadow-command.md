@@ -6,7 +6,7 @@
 wget https://bootstrap.pypa.io/ez_setup.py -O - | python
 ```
 * pip install shadowsocks
-* vi  /etc/shadowsocks.json
+* vi /etc/shadowsocks.json
 
 `复制下面的JSON, port 和password 自定`
 ```json
