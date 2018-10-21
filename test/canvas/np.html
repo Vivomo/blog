@@ -16,8 +16,20 @@
     <script>
 
         class Group {
+
+            
+            
             constructor(canvas) {
                 this.canvas = canvas;
+                this.scale = 50;
+                this.width = 36.56 * this.scale;
+                this.height = 18.28 * this.scale;
+                this.innerWidth = 23.78 * this.scale;
+                this.innerHeight = 10.97 * this.scale;
+                this.innerXPoint = (this.width - this.innerWidth) / 2;
+                this.innerYPoint = (this.height - this.innerHeight) / 2;
+
+                this.init();
             }
 
             init() {
@@ -25,49 +37,46 @@
             }
 
             initBg() {
-                let canvas = this.canvas;
+                let { canvas, scale, width, height, innerWidth, innerHeight, innerXPoint, innerYPoint } = this;
                 let ctx = canvas.getContext('2d');
 
-                let scale = 50;
-                let groupWidth = 36.56 * scale;
-                let groupHeight = 18.28 * scale;
-                let innerGroupWidth = 23.78 * scale;
-                let innerGroupHeight = 10.97 * scale;
-                let innerXPoint = (groupWidth - innerGroupWidth) / 2;
-                let innerYPoint = (groupHeight - innerGroupHeight) / 2;
-
-                canvas.width = groupWidth;
-                canvas.height = groupHeight;
+                canvas.width = width;
+                canvas.height = height;
 
                 ctx.fillStyle = '#3488bf';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
                 ctx.fillStyle = '#447498';
-                ctx.fillRect(innerXPoint, innerYPoint, innerGroupWidth, innerGroupHeight);
+                ctx.fillRect(innerXPoint, innerYPoint, innerWidth, innerHeight);
 
                 ctx.strokeStyle = '#fff';
                 ctx.strokeWidth = 6;
-                ctx.strokeRect(innerXPoint, innerYPoint, innerGroupWidth, innerGroupHeight);
+                ctx.strokeRect(innerXPoint, innerYPoint, innerWidth, innerHeight);
 
                 ctx.moveTo(innerXPoint, innerYPoint + 1.37 * scale);
-                ctx.lineTo(innerXPoint + innerGroupWidth, innerYPoint + 1.37 * scale);
-                ctx.moveTo(innerXPoint, innerYPoint + innerGroupHeight - 1.37 * scale);
-                ctx.lineTo(innerXPoint + innerGroupWidth, innerYPoint + innerGroupHeight - 1.37 * scale);
-                ctx.moveTo(groupWidth / 2 - 6.4 * scale, groupHeight / 2);
-                ctx.lineTo(groupWidth / 2 + 6.4 * scale, groupHeight / 2);
-                ctx.moveTo(groupWidth / 2 - 6.4 * scale, innerYPoint + 1.37 * scale);
-                ctx.lineTo(groupWidth / 2 - 6.4 * scale, innerYPoint + innerGroupHeight - 1.37 * scale);
-                ctx.moveTo(groupWidth / 2 + 6.4 * scale, innerYPoint + 1.37 * scale);
-                ctx.lineTo(groupWidth / 2 + 6.4 * scale, innerYPoint + innerGroupHeight - 1.37 * scale);
-                ctx.moveTo(groupWidth / 2, innerYPoint);
-                ctx.lineTo(groupWidth / 2, groupHeight / 2 + innerGroupHeight / 2);
+                ctx.lineTo(innerXPoint + innerWidth, innerYPoint + 1.37 * scale);
+                ctx.moveTo(innerXPoint, innerYPoint + innerHeight - 1.37 * scale);
+                ctx.lineTo(innerXPoint + innerWidth, innerYPoint + innerHeight - 1.37 * scale);
+                ctx.moveTo(width / 2 - 6.4 * scale, height / 2);
+                ctx.lineTo(width / 2 + 6.4 * scale, height / 2);
+                ctx.moveTo(width / 2 - 6.4 * scale, innerYPoint + 1.37 * scale);
+                ctx.lineTo(width / 2 - 6.4 * scale, innerYPoint + innerHeight - 1.37 * scale);
+                ctx.moveTo(width / 2 + 6.4 * scale, innerYPoint + 1.37 * scale);
+                ctx.lineTo(width / 2 + 6.4 * scale, innerYPoint + innerHeight - 1.37 * scale);
+                ctx.moveTo(width / 2, innerYPoint);
+                ctx.lineTo(width / 2, height / 2 + innerHeight / 2);
 
                 ctx.stroke();
             }
-        }
 
-        let group = new Group(document.getElementById('canvas'));
+            createRandomTennis(num = 10) {
+                let tennis = '🎾';
+
+            }
+        }
         
+        let group = new Group(document.getElementById('canvas'));
+
 
     </script>
 </body>
