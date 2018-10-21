@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>捡网球 NP问题</title>
+    <style>
+        canvas {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="1200" />
+
+    <script>
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext('2d');
+
+        let scale = 50;
+        let groupWidth = 36.56 * scale;
+        let groupHeight = 18.28 * scale;
+        let innerGroupWidth = 23.78 * scale;
+        let innerGroupHeight = 10.97 * scale;
+        let innerXPoint = (groupWidth - innerGroupWidth) / 2;
+        let innerYPoint = (groupHeight - innerGroupHeight) / 2;
+
+        canvas.width = groupWidth;
+        canvas.height = groupHeight;
+
+        ctx.fillStyle = '#3488bf';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#447498';
+        ctx.fillRect(innerXPoint, innerYPoint, innerGroupWidth, innerGroupHeight);
+
+        ctx.strokeStyle = '#fff';
+        ctx.strokeWidth = 6;
+        ctx.strokeRect(innerXPoint, innerYPoint, innerGroupWidth, innerGroupHeight);
+
+        ctx.moveTo(innerXPoint, innerYPoint + 1.37 * scale);
+        ctx.lineTo(innerXPoint + innerGroupWidth, innerYPoint + 1.37 * scale);
+        ctx.moveTo(innerXPoint, innerYPoint + innerGroupHeight - 1.37 * scale);
+        ctx.lineTo(innerXPoint + innerGroupWidth, innerYPoint + innerGroupHeight - 1.37 * scale);
+        ctx.moveTo(groupWidth / 2 - 6.4 * scale, groupHeight / 2);
+        ctx.lineTo(groupWidth / 2 + 6.4 * scale, groupHeight / 2);
+        ctx.moveTo(groupWidth / 2 - 6.4 * scale, innerYPoint + 1.37 * scale);
+        ctx.lineTo(groupWidth / 2 - 6.4 * scale, innerYPoint + innerGroupHeight - 1.37 * scale);
+        ctx.moveTo(groupWidth / 2 + 6.4 * scale, innerYPoint + 1.37 * scale);
+        ctx.lineTo(groupWidth / 2 + 6.4 * scale, innerYPoint + innerGroupHeight - 1.37 * scale);
+        ctx.moveTo(groupWidth / 2, innerYPoint);
+        ctx.lineTo(groupWidth / 2, groupHeight / 2 + innerGroupHeight / 2);
+
+        ctx.stroke()
+
+    </script>
+</body>
+</html>
