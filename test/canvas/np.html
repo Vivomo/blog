@@ -20,10 +20,10 @@
             
             
             constructor(canvas) {
-                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
                 this.scale = 50;
-                this.width = 36.56 * this.scale;
-                this.height = 18.28 * this.scale;
+                canvas.width = this.width = 36.56 * this.scale;
+                canvas.height = this.height = 18.28 * this.scale;
                 this.innerWidth = 23.78 * this.scale;
                 this.innerHeight = 10.97 * this.scale;
                 this.innerXPoint = (this.width - this.innerWidth) / 2;
@@ -37,11 +37,7 @@
             }
 
             initBg() {
-                let { canvas, scale, width, height, innerWidth, innerHeight, innerXPoint, innerYPoint } = this;
-                let ctx = canvas.getContext('2d');
-
-                canvas.width = width;
-                canvas.height = height;
+                let { ctx, scale, width, height, innerWidth, innerHeight, innerXPoint, innerYPoint } = this;
 
                 ctx.fillStyle = '#3488bf';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -70,13 +66,19 @@
             }
 
             createRandomTennis(num = 10) {
-                let tennis = '🎾';
-
+                let tennis = '◎';
+                let { ctx, width, height } = this;
+                ctx.strokeStyle = '#c9ee00';
+                ctx.font = '20px sans-serif';
+                
+                for (let i = 0; i < num; i++) {
+                    ctx.strokeText(tennis, width * Math.random(), height * Math.random());
+                }
             }
         }
         
         let group = new Group(document.getElementById('canvas'));
-
+        group.createRandomTennis();
 
     </script>
 </body>
