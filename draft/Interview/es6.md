@@ -52,6 +52,13 @@ npm i rollup rollup-plugin-node-resolve rollup-plugin-babel babel-plugin-externa
 ```
 
 ### Class与普通构造函数的区别
+```text
+Class 在语法上更加贴合面向对象的写法
+Class 实现继承更加易读、易理解
+本质还是语法糖，使用 prototype
+
+```
+
 
 ### Promise的使用和原理
 
