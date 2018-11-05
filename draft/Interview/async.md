@@ -19,3 +19,41 @@
 待同步函数执行完毕，轮询执行 异步队列 的函数
 ```
 
+### jQuery-deferred
+```text
+jQ 1.5版本后(2011年1月) 新增deferred
+
+无法改变 JS 异步和单线程的本质
+只能从写法上杜绝 callback 这种形式
+它是一种语法糖形式，但是解耦了代码
+很好的体现：开放封闭原则(对扩展开放，而对修改封闭)
+
+```
+
+```js
+function waitHandle() {
+    // 定义
+    var dtd = $.Deferred()
+    var wait = function (dtd) {
+        var task = function () {
+            console.log('执行完成')
+            // 成功
+            dtd.resolve()
+            // 失败
+            // dtd.reject()
+        }
+        setTimeout(task, 1000)
+        // wait 返回
+        return dtd.promise()
+    }
+    // 最终返回
+    return wait(dtd)
+}
+
+// 使用（B 员工）
+$.when(waitHandle()).then(function () {
+    console.log('ok 1')
+}, function () {
+    console.log('err 1')
+})
+```
