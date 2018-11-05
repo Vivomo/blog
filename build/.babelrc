@@ -1,5 +1,10 @@
 {
-  "presets": ["es2015", "latest"],
-  "plugins": [],
-  "ignore": []
+  "presets": [
+    ["latest", {
+      "es2015": {
+        "modules": false
+      }
+    }]
+  ],
+  "plugins": ["external-helpers", "babel-plugin-transform-regenerator"]
 }

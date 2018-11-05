@@ -45,7 +45,7 @@ npm start
 rollup 
 目前Vue 和 React 使用的打包方式
 npm init
-npm i rollup rollup-plugin-node-resolve rollup-plugin-babel babel-plugin-external-helpers babel-preset-latest  --save-dev
+npm i rollup rollup-plugin-node-resolve rollup-plugin-babel babel-plugin-external-helpers babel-preset-latest -D
 编辑 .babelrc
 编辑  rollup.config.js
 
