@@ -10,7 +10,7 @@ Vue/React 以数据驱动视图, 只关心数据变化, DOM操作被封装
 MVC
 M Model 数据
 V View 视图
-V Controller 控制器,逻辑处理
+C Controller 控制器,逻辑处理
 
 MVVM
 M Model 数据
