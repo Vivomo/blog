@@ -50,7 +50,7 @@ function waitHandle() {
     return wait(dtd)
 }
 
-// 使用（B 员工）
+
 $.when(waitHandle()).then(function () {
     console.log('ok 1')
 }, function () {
