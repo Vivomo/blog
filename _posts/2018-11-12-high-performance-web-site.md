@@ -77,3 +77,5 @@ function altBgcolor(elem) {
 ### 13.配置ETag
 
 ETag是确认缓存组件有效性的一种机制
+
+### 14.使Ajax可缓存
