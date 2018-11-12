@@ -36,3 +36,24 @@ Apache mod_expires模块可以使Expires的设置方式如Cache-Control一样
 
 ### 5.样式表放头部
 ### 6.将脚本放在底部
+
+### 7.避免CSS的表达式
+```css
+/* expression IE支持, 其他浏览器会忽略 */ 
+body {
+    background-color: expression((new Date()).getHours() % 2 ? 'red' : 'black');
+}
+```
+避开该问题可以用 `一次性表达式` 或 `事件处理器`
+
+##### 一次性表达式
+```css
+p {
+    background-color: expression(altBgcolor(this));
+}
+```
+```js
+function altBgcolor(elem) {
+    elem.style.backgroundColor = (new Date).getHours() % 2 ? 'red' : 'black';
+}
+```
