@@ -34,3 +34,5 @@ Apache mod_expires模块可以使Expires的设置方式如Cache-Control一样
 ### 4.压缩组件
 `Accept-Encoding: gzip, deflate`
 
+### 5.样式表放头部
+### 6.将脚本放在底部
