@@ -7,6 +7,7 @@ keywords: 高性能网站 网站性能优化
 
 ### 1.减少HTTP请求
 * 图片地图
+
 ```html
 <!-- example -->
 <img src="http://a.a.jpg" alt="" usemap="#map1">
@@ -60,3 +61,9 @@ function altBgcolor(elem) {
 
 ### 8.使用外部的JS和CSS
 为了可以缓存
+
+### 9.减少DNS查找
+通过keep-alive 和 较少的域名来减少DNS查找
+
+### 10.精简JS
+通过对JS亚索混淆来减少JS的体积
