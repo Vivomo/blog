@@ -31,4 +31,6 @@ Cache-Control: max-age=8640000
 
 Apache mod_expires模块可以使Expires的设置方式如Cache-Control一样
 ```
+### 4.压缩组件
+`Accept-Encoding: gzip, deflate`
 
