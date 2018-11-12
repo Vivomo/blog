@@ -19,4 +19,16 @@ keywords: 高性能网站 网站性能优化
 * 内联图片 `data:[<mediatype>][;base64],<data>`
 * 合并脚本和样式表
 
-### 使用内容发布网络 CDN (Content Delivery Network)
+### 2.使用内容发布网络 CDN (Content Delivery Network)
+
+### 3.添加Expires头
+```text
+web服务器使用Expires可以让web客户端使用当前组件(图片/脚本/样式表...)的一个副本,直到指定时间
+Expires: Mon, 12 Apr 2030 12:00:00 GMT
+但这个消息头需要服务端和客户端时间同步
+Cache-Control头可以克服这个限制 max-age 单位是秒
+Cache-Control: max-age=8640000
+
+Apache mod_expires模块可以使Expires的设置方式如Cache-Control一样
+```
+
