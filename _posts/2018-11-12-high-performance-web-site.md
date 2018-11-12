@@ -18,3 +18,5 @@ keywords: 高性能网站 网站性能优化
 * CSS Sprite
 * 内联图片 `data:[<mediatype>][;base64],<data>`
 * 合并脚本和样式表
+
+### 使用内容发布网络 CDN (Content Delivery Network)
