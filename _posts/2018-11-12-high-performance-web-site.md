@@ -57,3 +57,6 @@ function altBgcolor(elem) {
     elem.style.backgroundColor = (new Date).getHours() % 2 ? 'red' : 'black';
 }
 ```
+
+### 8.使用外部的JS和CSS
+为了可以缓存
