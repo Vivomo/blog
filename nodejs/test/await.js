@@ -14,4 +14,4 @@ let start = async function () {
 };
 
 let r = start();
-// console.log(r);
+console.log(r); // Promise
