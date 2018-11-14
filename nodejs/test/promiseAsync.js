@@ -17,3 +17,13 @@ p.then((res) => {
 console.log(2.5);
 
 
+let p2 = new Promise((resolve, reject) => {
+    reject('reject');
+    console.log('after reject'); // will run
+});
+
+p2.then((res) => {
+    console.log('res1', res)
+}, (res) => {
+    console.log('res2', res)
+});
