@@ -2,6 +2,7 @@ let http = require('http');
 let fs = require('fs');
 
 let root = '';
+const DEFAULT_URL = 'index.html';
 
 const getContentType = (suffix) => {
     let suffixMap = {
@@ -15,7 +16,7 @@ const getContentType = (suffix) => {
 };
 
 http.createServer((req, res) => {
-    let url = req.url.substr(1);
+    let url = req.url.substr(1) || DEFAULT_URL;
     let file = root + url;
     let httpCode = null;
     let content = null;
