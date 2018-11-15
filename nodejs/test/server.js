@@ -2,8 +2,16 @@ let http = require('http');
 let fs = require('fs');
 
 let root = '';
-let htmlHeader = {
-    'content-type': 'text/html;charset="utf-8"'
+
+const getContentType = (suffix) => {
+    let suffixMap = {
+        js: 'text/javascript',
+        css: 'text/css',
+        html: 'text/html'
+    };
+    return {
+        'content-type': suffixMap[suffix]
+    } || {};
 };
 
 http.createServer((req, res) => {
@@ -21,7 +29,8 @@ http.createServer((req, res) => {
             httpCode = 200;
             content = data;
         }
-        res.writeHeader(httpCode, htmlHeader);
+        let suffix = url.substr(url.lastIndexOf('.') + 1);
+        res.writeHeader(httpCode, getContentType(suffix));
         res.write(content);
         res.end();
     });
