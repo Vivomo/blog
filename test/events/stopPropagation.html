@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>冒泡测试</title>
+    <style>
+        #out {
+            width: 200px;
+            border: 40px solid #ccc;
+        }
+        #inner {
+            border: 40px solid #999;
+        }
+    </style>
+</head>
+<body>
+<div id="out">
+    <div id="inner"></div>
+</div>
+<script>
+    document.getElementById('out').addEventListener('click', function (e) {
+        console.log(this.id);
+        e.stopPropagation();
+    }, true);
+
+    document.getElementById('inner').addEventListener('click', function () {
+        console.log(this.id)
+    })
+</script>
+</body>
+</html>
