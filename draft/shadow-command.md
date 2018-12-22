@@ -25,3 +25,27 @@ wget https://bootstrap.pypa.io/ez_setup.py -O - | python
 * firewall-cmd --zone=public --add-port=443/tcp --permanent
 * firewall-cmd --reload
 * ssserver -c /etc/shadowsocks.json -d start
+
+===================================
+
+## easy quick method
+```text
+yum install wget
+
+wget –no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh
+
+chmod +x shadowsocks.sh
+
+./shadowsocks.sh 2>&1 | tee shadowsocks.log
+
+# 加速
+
+wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh
+
+chmod +x bbr.sh
+
+./bbr.sh
+
+# 输入lsmod | grep bbr 看到tcp_bbr代表成功了
+ 
+```
