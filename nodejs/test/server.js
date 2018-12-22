@@ -1,28 +1,33 @@
 let http = require('http');
 let fs = require('fs');
+let path = require('path');
 
-let root = '';
-const DEFAULT_URL = 'index.html';
+let root = '.';
+const DEFAULT_URL = '/index.html';
 
 const getContentType = (suffix) => {
     let suffixMap = {
         js: 'text/javascript',
         css: 'text/css',
-        html: 'text/html'
+        html: 'text/html',
+        ico: 'image/x-icon'
     };
-    return {
-        'content-type': suffixMap[suffix]
-    } || {};
+    return suffixMap[suffix] ?
+        {
+            'content-type': suffixMap[suffix]
+        }
+        :
+        {};
 };
 
 http.createServer((req, res) => {
     let url = req.url.substr(1) || DEFAULT_URL;
-    let file = root + url;
+    let filePath = path.resolve(__dirname, url);
     let httpCode = null;
     let content = null;
-    console.log(url);
+    console.log(url, filePath);
 
-    fs.readFile(file, function (err, data) {
+    fs.readFile(filePath, function (err, data) {
         if (err) {
             httpCode = 404;
             content = '404';

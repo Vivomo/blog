@@ -53,3 +53,19 @@ console.log(0.29 * 10) // 2.9 ...
 console.log(0.29 * 100) // 28.99999999 ...
 console.log(0.29 * 1000) // 290 ...
 ```
+
+* webpack项目改造注意一下配置目录
+```
+新建webpack项目, 他会有默认的配置, 非配置目录中的文件不会被 loader处理
+```
+
+* ajax post请求变成get
+```text
+http请求重定向为https请求导致的
+还有一些其他的情况可能导致重定向method变get https://stackoverflow.com/questions/46611275/axios-post-is-sending-a-get-request
+```
+
+* ajax options 请求
+```text
+当客户端content-type是 application/json 或请求方法不为post或get的时候
+```
