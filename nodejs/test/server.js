@@ -22,6 +22,11 @@ const getContentType = (suffix) => {
 
 http.createServer((req, res) => {
     let url = req.url.substr(1) || DEFAULT_URL;
+    let queryIndex = url.indexOf('?');
+    let query = '';
+    if (queryIndex !== -1) {
+        url = url.substring(0, queryIndex);
+    }
     let filePath = path.resolve(__dirname, url);
     let httpCode = null;
     let content = null;
@@ -41,6 +46,6 @@ http.createServer((req, res) => {
         res.end();
     });
 
-}).listen(8888);
+}).listen(9999);
 
 console.log('服务器开启成功');
