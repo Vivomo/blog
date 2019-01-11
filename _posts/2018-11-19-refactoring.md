@@ -83,4 +83,56 @@ keywords: 代码重构
 * 被拒绝的遗赠
 * 过多的注释
 
+## 构筑测试体系
+```text
+重构首要的前提是拥有一个可靠的测试环境
+```
+
+## 重构列表
+
+每个重构手法包含下面五个部分
+* 名称 -- 重构词汇表
+* 概要
+* 动机 -- 何时需要重构 & 何时不该重构
+* 做法
+* 范例
+* 重构的记录格式
+
+## 重构手法
+
+### 重新组织函数
+* 提炼函数 Extract Method
+```text
+函数的粒度越小, 复用的机会就更大
+关于函数名: 长度不是问题, 关键在于函数名称和函数本体之间的语义距离, 用函数的意图来命名(do what not how to do)
+```
+* 内联函数 Inline Method
+
+```js
+let _numOfLateDeliveries;
+let moreThanFiveLateDeliveries = () => _numOfLateDeliveries > 5;
+let getRating = () => moreThanFiveLateDeliveries() ? 2 : 1;
+
+// ↓
+let getRating2 = _numOfLateDeliveries > 5 ? 2 : 1;
+```
+```text
+有时函数内部代码和函数名称同样清晰易读, 如此便可去除此函数, 直接使用内部代码
+```
+
+* 内联临时变量 Inline Temp
+```text
+只被用一次的临时变量可以去掉(webstorm 自动有这个warning)
+```
+
+* 以查询取代临时变量 Replace Temp width Query
+```text
+没觉得这个重构方法哪里好, 可能书里的例子不佳
+```
+
+* 引入解释性变量 Introduce Explaining Variable
+```text
+将复杂度的表达式(或一部分)放进一个临时变量, 以此变量名来解释表达式用途
+```
+
 ### 未完待续...
