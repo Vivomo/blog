@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery 事件委托测试</title>
+</head>
+<body>
+<p>
+    <button>p button</button>
+</p>
+<div class="wrap">
+    <button>.wrap button</button>
+</div>
+<button class="btn">.btn</button>
+<button>none</button>
+<script src="../js/jq/jquery.js"></script>
+<script>
+    $(document).on('click', 'p button, .btn, .wrap button', (e) => {
+        console.log(e)
+    })
+</script>
+</body>
+</html>
