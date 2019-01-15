@@ -8,10 +8,11 @@
 <canvas id="canvas"></canvas>
 
 <script>
+    var requestAnimationFrame = window.requestAnimationFrame || setTimeout;
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
     var _t = Date.now();
-    let P2 = Math.PI * 2;
+    var P2 = Math.PI * 2;
     var width, height;
 
     resize();
