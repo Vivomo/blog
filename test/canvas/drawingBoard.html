@@ -41,11 +41,16 @@
             <li>↩️</li>
         </ul>
         <div class="drawing-board-box">
-            <canvas class="background" width="600" height="600"/>
-            <canvas class="foreground" width="600" height="600"/>
+            <canvas class="background" width="600" height="600"></canvas>
+            <canvas class="foreground" width="600" height="600"></canvas>
         </div>
     </div>
 </div>
 <script src="../../js/drawingBoard.js"></script>
+<script>
+    new DrawingBoard({
+        wrap: document.getElementById('wrap')
+    })
+</script>
 </body>
 </html>
