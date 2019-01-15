@@ -19,7 +19,7 @@ DrawingBoard.prototype = {
         let {left, top} = this.foreground.getBoundingClientRect();
         this.canvasOffsetX = left;
         this.canvasOffsetY = top;
-        this.command = this.commands.draw;
+        this.command = this.commands.draw.bind(this);
     },
     initEvent: function() {
         this.initForegroundEvent();
@@ -36,16 +36,16 @@ DrawingBoard.prototype = {
         let canvas = this.foreground;
         let ctx = this.ctx;
         let {canvasOffsetX, canvasOffsetY} = this;
-        let command = this.command.bind(this);
+
         canvas.addEventListener('mousedown', (e) => {
             let {clientX, clientY} = e;
             ctx.beginPath();
             ctx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
-            canvas.addEventListener('mousemove', command)
+            canvas.addEventListener('mousemove', this.command)
         });
 
         canvas.addEventListener('mouseup', () => {
-            canvas.removeEventListener('mousemove', command)
+            canvas.removeEventListener('mousemove', this.command)
         });
 
         canvas.addEventListener('touchstart', (e) => {
