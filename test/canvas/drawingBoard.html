@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>画板</title>
+    <style>
+        .drawing-board-wrap {
+            margin: 0 auto;
+            width: 600px;
+            outline: 1px solid #ccc;
+        }
+        .utils-list li{
+            display: inline-block;
+            min-width: 50px;
+            height: 20px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        .drawing-board-box {
+            position: relative;
+            border: 1px solid #ccc;
+        }
+
+        .foreground {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <div class="drawing-board-wrap">
+        <ul class="utils-list">
+            <li>T</li>
+            <li>✎</li>
+            <li>□</li>
+            <li><input type="color"></li>
+            <li>橡皮</li>
+            <li>清空</li>
+            <li>↩️</li>
+        </ul>
+        <div class="drawing-board-box">
+            <canvas class="background" width="600" height="600"/>
+            <canvas class="foreground" width="600" height="600"/>
+        </div>
+    </div>
+</div>
+<script src="../../js/drawingBoard.js"></script>
+</body>
+</html>
