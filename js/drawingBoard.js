@@ -8,10 +8,14 @@ DrawingBoard.prototype = {
     defaultCfg: {},
     init: function() {
         this.initHtml();
+        this.initCanvas();
         this.initEvent();
     },
     initHtml: function() {
-        this.initForeground()
+    },
+    initCanvas: function() {
+        this.initForeground();
+        this.initBackground();
     },
     initForeground: function() {
         this.foreground = this.cfg.wrap.querySelector('.foreground');
@@ -20,6 +24,9 @@ DrawingBoard.prototype = {
         this.canvasOffsetX = left;
         this.canvasOffsetY = top;
         this.command = this.commands.draw.bind(this);
+    },
+    initBackground: function() {
+        this.background = this.cfg.wrap.querySelector('.background');
     },
     initEvent: function() {
         this.initForegroundEvent();
