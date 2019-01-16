@@ -6,12 +6,15 @@ function DrawingBoard(cfg) {
 }
 let body = document.body;
 
+let supportClassList = !!body.classList;
+
 let getDomData = body.dataset ? (dom, dataName) => dom.dataset[dataName] : (dom, dataName) => dom.getAttribute('data-' + dataName);
 
 let getMainEvent = (arg) => arg.clientX === undefined ? arg.touches[0] : arg;
 
-let removeClass = body.classList ? (dom, className) => {
+let removeClass = supportClassList ? (dom, className) => {
     dom.classList.remove(className);
+    return dom;
 } : (dom, className) => {
     let classList = dom.className.split(' ');
     let index = classList.indexOf(className);
@@ -19,7 +22,23 @@ let removeClass = body.classList ? (dom, className) => {
         classList[index] = '';
         dom.className = classList.join(' ');
     }
+    return dom;
 };
+
+let addClass = supportClassList ? (dom, className) => {
+        dom.classList.add(className);
+        return dom;
+    } : (dom, className) => {
+        if (!hasClass(dom, className)) {
+            dom.className += ' ' + className;
+        }
+        return dom;
+    };
+
+let hasClass = supportClassList ?
+    (dom, className) => dom.classList.contains(className) : (dom, className) => dom.className.split(' ').includes(className);
+
+let toggleClass = (dom, className) => hasClass(dom, className) ? removeClass(dom, className) : addClass(dom, className);
 
 const CMD_TYPE = {
     move: 'move',
@@ -39,7 +58,6 @@ const commands = {
         func: function (e) {
             let {clientX, clientY} = getMainEvent(e);
             let {canvasOffsetX, canvasOffsetY, foreCtx} = this;
-            foreCtx.lineCap = 'round';
             foreCtx.lineTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
             foreCtx.stroke();
         }
@@ -108,6 +126,9 @@ DrawingBoard.prototype = {
         let {left, top} = this.foreground.getBoundingClientRect();
         this.canvasOffsetX = left;
         this.canvasOffsetY = top;
+        this.foreCtx.lineCap = 'round';
+        this.foreCtx.lineWidth = 3;
+
         this.bindCommand('draw');
     },
     /**
@@ -205,11 +226,12 @@ DrawingBoard.prototype = {
     },
     /**
      * 记录历史
+     * 超出最大记录长度时, 则把第一个删掉
      */
     recordHistory: function () {
         this.history.push(this.backCtx.getImageData(0, 0, this.width, this.height));
         if (this.history.length > this.cfg.maxHistorySize) {
-            this.history.unshift();
+            this.history.shift();
         }
     },
     /**
