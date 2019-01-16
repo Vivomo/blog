@@ -2,8 +2,20 @@ function DrawingBoard(cfg) {
     this.cfg = Object.assign({}, this.defaultCfg, cfg);
     this.init();
 }
+let body = document.body;
 
-let getCommand = document.body.dataset ? dom => dom.dataset.command : dom => dom.getAttribute('data-command');
+let getCommand = body.dataset ? dom => dom.dataset.command : dom => dom.getAttribute('data-command');
+
+let removeClass = body.classList ? (dom, className) => {
+    dom.classList.remove(className);
+} : (dom, className) => {
+    let classList = dom.className.split(' ');
+    let index = classList.indexOf(className);
+    if (index !== -1) {
+        classList[index] = '';
+        dom.className = classList.join(' ');
+    }
+};
 
 /**
  * 画板指令列表
@@ -78,6 +90,7 @@ DrawingBoard.prototype = {
      * 初始化绑定事件
      */
     initEvent: function() {
+        this.initUtilsEvent();
         this.initForegroundEvent();
     },
     /**
@@ -116,6 +129,22 @@ DrawingBoard.prototype = {
         canvas.addEventListener('touchend', () => {
             canvas.removeEventListener('touchmove', drawWap)
         });
+    },
+    /**
+     * 工具列表事件绑定
+     */
+    initUtilsEvent: function() {
+        let utilsElem = this.cfg.wrap.querySelector('.utils-list .cmd-item');
+        let activeUtil = null;
+        for (let i = 0, l = utilsElem.length; i < l; i++) {
+            utilsElem[i].addEventListener('click', (e) => {
+                if (activeUtil) {
+                    removeClass(activeUtil, 'active');
+                }
+                activeUtil = e.target;
+                activeUtil.className += ' active';
+            });
+        }
     },
     /**
      * 更新历史
