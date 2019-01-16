@@ -4,7 +4,9 @@ function DrawingBoard(cfg) {
 }
 let body = document.body;
 
-let getCommand = body.dataset ? dom => dom.dataset.command : dom => dom.getAttribute('data-command');
+let getDomData = body.dataset ? (dom, dataName) => dom.dataset[dataName] : (dom, dataName) => dom.getAttribute('data-' + dataName);
+
+let getMainEvent = (arg) => arg.clientX === undefined ? arg.touches[0] : arg;
 
 let removeClass = body.classList ? (dom, className) => {
     dom.classList.remove(className);
@@ -17,21 +19,30 @@ let removeClass = body.classList ? (dom, className) => {
     }
 };
 
+const CMD_TYPE = {
+    move: 'move',
+    once: 'once'
+};
+
 /**
  * 画板指令列表
  */
 const commands = {
     /**
      * 画笔指令
-     * @param clientX
-     * @param clientY
+     * @param e
      */
-    draw: function ({clientX, clientY}) {
-        let {canvasOffsetX, canvasOffsetY, ctx} = this;
-        ctx.lineCap = 'round';
-        ctx.lineTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
-        ctx.stroke();
-    }
+    draw: {
+        type: CMD_TYPE.move,
+        func: function (e) {
+            let {clientX, clientY} = getMainEvent(e);
+            let {canvasOffsetX, canvasOffsetY, ctx} = this;
+            ctx.lineCap = 'round';
+            ctx.lineTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
+            ctx.stroke();
+        }
+    },
+
 };
 
 DrawingBoard.prototype = {
@@ -76,7 +87,7 @@ DrawingBoard.prototype = {
         let {left, top} = this.foreground.getBoundingClientRect();
         this.canvasOffsetX = left;
         this.canvasOffsetY = top;
-        this.command = this.commands.draw.bind(this);
+        this.bindCommand('draw');
     },
     /**
      * 初始化背景canvas
@@ -98,7 +109,20 @@ DrawingBoard.prototype = {
      */
     commands,
     // 获取指令
-    getCommand,
+    getCommand: function(utilElem) {
+        let command = getDomData(utilElem, 'cmd');
+    },
+    /**
+     * 绑定指令
+     * @param cmd
+     */
+    bindCommand: function(cmd) {
+        let command = this.commands[cmd];
+        this.command = {
+            type: command.type,
+            func: command.func.bind(this)
+        }
+    },
     /**
      * 前景canvas事件绑定
      */
@@ -108,26 +132,35 @@ DrawingBoard.prototype = {
         let {canvasOffsetX, canvasOffsetY} = this;
 
         canvas.addEventListener('mousedown', (e) => {
-            let {clientX, clientY} = e;
-            ctx.beginPath();
-            ctx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
-            canvas.addEventListener('mousemove', this.command)
+            if (this.command.type === CMD_TYPE.move) {
+                let {clientX, clientY} = e;
+                ctx.beginPath();
+                ctx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
+                canvas.addEventListener('mousemove', this.command.func)
+            }
         });
 
         canvas.addEventListener('mouseup', () => {
-            canvas.removeEventListener('mousemove', this.command);
-            this.updateHistory();
+            if (this.command.type === CMD_TYPE.move) {
+                canvas.removeEventListener('mousemove', this.command);
+                this.updateHistory();
+            }
         });
 
         canvas.addEventListener('touchstart', (e) => {
-            ctx.beginPath();
-            let {clientX, clientY} = e.touches[0];
-            ctx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
-            canvas.addEventListener('touchmove', drawWap)
+            if (this.command.type === CMD_TYPE.move) {
+                ctx.beginPath();
+                let {clientX, clientY} = e.touches[0];
+                ctx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
+                canvas.addEventListener('touchmove', this.command);
+            }
         });
 
         canvas.addEventListener('touchend', () => {
-            canvas.removeEventListener('touchmove', drawWap)
+            if (this.command.type === CMD_TYPE.move) {
+                canvas.removeEventListener('touchmove', this.command)
+                this.updateHistory();
+            }
         });
     },
     /**
