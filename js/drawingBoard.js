@@ -42,7 +42,15 @@ const commands = {
             ctx.stroke();
         }
     },
-
+    back: {
+        type: CMD_TYPE.once,
+        func: function () {
+            let {backCtx, history} = this;
+            if (history.length > 0) {
+                backCtx.putImageData(history.pop(), 0, 0);
+            }
+        }
+    }
 };
 
 DrawingBoard.prototype = {
@@ -108,17 +116,13 @@ DrawingBoard.prototype = {
      * 画板指令列表
      */
     commands,
-    // 获取指令
-    getCommand: function(utilElem) {
-        let command = getDomData(utilElem, 'cmd');
-    },
     /**
      * 绑定指令
      * @param cmd
      */
     bindCommand: function(cmd) {
         let command = this.commands[cmd];
-        if (command === CMD_TYPE.once) {
+        if (command.type === CMD_TYPE.once) {
             command.func.call(this);
         } else {
             this.command = {
@@ -146,7 +150,7 @@ DrawingBoard.prototype = {
 
         canvas.addEventListener('mouseup', () => {
             if (this.command.type === CMD_TYPE.move) {
-                canvas.removeEventListener('mousemove', this.command);
+                canvas.removeEventListener('mousemove', this.command.func);
                 this.updateHistory();
             }
         });
@@ -156,13 +160,13 @@ DrawingBoard.prototype = {
                 ctx.beginPath();
                 let {clientX, clientY} = e.touches[0];
                 ctx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
-                canvas.addEventListener('touchmove', this.command);
+                canvas.addEventListener('touchmove', this.command.func);
             }
         });
 
         canvas.addEventListener('touchend', () => {
             if (this.command.type === CMD_TYPE.move) {
-                canvas.removeEventListener('touchmove', this.command)
+                canvas.removeEventListener('touchmove', this.command.func);
                 this.updateHistory();
             }
         });
@@ -171,7 +175,7 @@ DrawingBoard.prototype = {
      * 工具列表事件绑定
      */
     initUtilsEvent: function() {
-        let utilsElem = this.cfg.wrap.querySelector('.utils-list .cmd-item');
+        let utilsElem = this.cfg.wrap.querySelectorAll('.utils-list .cmd-item');
         let activeUtil = null;
         for (let i = 0, l = utilsElem.length; i < l; i++) {
             utilsElem[i].addEventListener('click', (e) => {
@@ -180,6 +184,7 @@ DrawingBoard.prototype = {
                 }
                 activeUtil = e.target;
                 activeUtil.className += ' active';
+                this.bindCommand(getDomData(activeUtil, 'cmd'));
             });
         }
     },
@@ -187,9 +192,9 @@ DrawingBoard.prototype = {
      * 更新历史
      */
     updateHistory: function () {
+        this.history.push(this.backCtx.getImageData(0, 0, this.width, this.height));
         this.backCtx.drawImage(this.foreground, 0, 0);
         this.ctx.clearRect(0, 0, this.width, this.height);
-        this.history.push(this.backCtx.getImageData(0, 0, this.width, this.height));
         if (this.history.length > this.cfg.maxHistorySize) {
             this.history.unshift();
         }
