@@ -36,10 +36,10 @@ const commands = {
         type: CMD_TYPE.move,
         func: function (e) {
             let {clientX, clientY} = getMainEvent(e);
-            let {canvasOffsetX, canvasOffsetY, ctx} = this;
-            ctx.lineCap = 'round';
-            ctx.lineTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
-            ctx.stroke();
+            let {canvasOffsetX, canvasOffsetY, foreCtx} = this;
+            foreCtx.lineCap = 'round';
+            foreCtx.lineTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
+            foreCtx.stroke();
         }
     },
     back: {
@@ -91,7 +91,7 @@ DrawingBoard.prototype = {
         this.foreground = this.cfg.wrap.querySelector('.foreground');
         this.width = this.foreground.width;
         this.height = this.foreground.height;
-        this.ctx = this.foreground.getContext('2d');
+        this.foreCtx = this.foreground.getContext('2d');
         let {left, top} = this.foreground.getBoundingClientRect();
         this.canvasOffsetX = left;
         this.canvasOffsetY = top;
@@ -136,14 +136,14 @@ DrawingBoard.prototype = {
      */
     initForegroundEvent: function () {
         let canvas = this.foreground;
-        let ctx = this.ctx;
+        let foreCtx = this.foreCtx;
         let {canvasOffsetX, canvasOffsetY} = this;
 
         canvas.addEventListener('mousedown', (e) => {
             if (this.command.type === CMD_TYPE.move) {
                 let {clientX, clientY} = e;
-                ctx.beginPath();
-                ctx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
+                foreCtx.beginPath();
+                foreCtx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
                 canvas.addEventListener('mousemove', this.command.func)
             }
         });
@@ -151,15 +151,16 @@ DrawingBoard.prototype = {
         canvas.addEventListener('mouseup', () => {
             if (this.command.type === CMD_TYPE.move) {
                 canvas.removeEventListener('mousemove', this.command.func);
-                this.updateHistory();
+                this.recordHistory();
+                this.addForeToBack();
             }
         });
 
         canvas.addEventListener('touchstart', (e) => {
             if (this.command.type === CMD_TYPE.move) {
-                ctx.beginPath();
+                foreCtx.beginPath();
                 let {clientX, clientY} = e.touches[0];
-                ctx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
+                foreCtx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
                 canvas.addEventListener('touchmove', this.command.func);
             }
         });
@@ -167,7 +168,8 @@ DrawingBoard.prototype = {
         canvas.addEventListener('touchend', () => {
             if (this.command.type === CMD_TYPE.move) {
                 canvas.removeEventListener('touchmove', this.command.func);
-                this.updateHistory();
+                this.recordHistory();
+                this.addForeToBack();
             }
         });
     },
@@ -189,14 +191,19 @@ DrawingBoard.prototype = {
         }
     },
     /**
-     * 更新历史
+     * 记录历史
      */
-    updateHistory: function () {
+    recordHistory: function () {
         this.history.push(this.backCtx.getImageData(0, 0, this.width, this.height));
-        this.backCtx.drawImage(this.foreground, 0, 0);
-        this.ctx.clearRect(0, 0, this.width, this.height);
         if (this.history.length > this.cfg.maxHistorySize) {
             this.history.unshift();
         }
+    },
+    /**
+     * 前景叠加到背景
+     */
+    addForeToBack: function () {
+        this.backCtx.drawImage(this.foreground, 0, 0);
+        this.foreCtx.clearRect(0, 0, this.width, this.height);
     }
 };
