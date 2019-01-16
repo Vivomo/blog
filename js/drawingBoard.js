@@ -2,6 +2,7 @@ function DrawingBoard(cfg) {
     this.cfg = Object.assign({}, this.defaultCfg, cfg);
     // 操作历史
     this.history = [];
+    this.command = {};
     this.init();
 }
 let body = document.body;
@@ -83,6 +84,12 @@ const commands = {
             this.recordHistory();
             this.backCtx.clearRect(0, 0, this.width, this.height);
         }
+    },
+    setCtx: {
+        type: CMD_TYPE.once,
+        func: function (key, value) {
+            this.foreCtx[key] = value;
+        }
     }
 };
 
@@ -127,9 +134,7 @@ DrawingBoard.prototype = {
         this.canvasOffsetX = left;
         this.canvasOffsetY = top;
         this.foreCtx.lineCap = 'round';
-        this.foreCtx.lineWidth = 3;
-
-        this.bindCommand('draw');
+        this.foreCtx.lineWidth = 2;
     },
     /**
      * 初始化背景canvas
@@ -152,12 +157,18 @@ DrawingBoard.prototype = {
     commands,
     /**
      * 绑定指令
-     * @param cmd
+     * @param elem
      */
-    bindCommand: function(cmd) {
+    bindCommand: function(elem) {
+        let cmd = getDomData(elem, 'cmd');
+        let key = getDomData(elem, 'key');
+        let value = getDomData(elem, 'value');
         let command = this.commands[cmd];
+        if (!command) {
+            return;
+        }
         if (command.type === CMD_TYPE.once) {
-            command.func.call(this);
+            command.func.call(this, key, value);
         } else {
             this.command = {
                 type: command.type,
@@ -211,16 +222,36 @@ DrawingBoard.prototype = {
      * 工具列表事件绑定
      */
     initUtilsEvent: function() {
-        let utilsElem = this.cfg.wrap.querySelectorAll('.utils-list .cmd-item');
-        let activeUtil = null;
+        let utilsWrap = this.cfg.wrap.querySelector('.utils-list');
+        let utilsElem = utilsWrap.querySelectorAll('[data-cmd]');
+        let me = this;
         for (let i = 0, l = utilsElem.length; i < l; i++) {
-            utilsElem[i].addEventListener('click', (e) => {
-                if (activeUtil) {
-                    removeClass(activeUtil, 'active');
+            utilsElem[i].addEventListener('click', function(e){
+                if (hasClass(this, 'sub-cmd')) {
+                    removeClass(this.parentElement.parentElement, 'show');
+                    e.stopPropagation();
+                } else {
+                    let activeElem = utilsWrap.querySelector('.cmd-item.active');
+                    if (!hasClass(this, 'once')) {
+                        if (hasClass(this, 'menu')) {
+                            if (this === activeElem) {
+                                toggleClass(this, 'show');
+                            } else {
+                                activeElem && removeClass(activeElem, 'active');
+                                addClass(this, 'show');
+                            }
+                        } else {
+                            activeElem && removeClass(activeElem, 'active');
+                            activeElem && removeClass(activeElem, 'show');
+                        }
+                        addClass(this, 'active');
+                    }
+                    if (hasClass(this, 'menu')) {
+                        addClass(this, 'show');
+                    }
                 }
-                activeUtil = e.target;
-                activeUtil.className += ' active';
-                this.bindCommand(getDomData(activeUtil, 'cmd'));
+
+                me.bindCommand(this);
             });
         }
     },

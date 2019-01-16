@@ -4,18 +4,43 @@
     <meta charset="UTF-8">
     <title>画板</title>
     <style>
+        ul, ol, li {
+            padding: 0;
+            margin: 0;
+        }
         .drawing-board-wrap {
             margin: 0 auto;
             width: 600px;
             outline: 1px solid #ccc;
         }
+        .utils-list {
+            position: relative;
+            z-index: 1;
+        }
         .utils-list li{
             display: inline-block;
+            position: relative;
             min-width: 50px;
             height: 20px;
             border: 1px solid #ccc;
             cursor: pointer;
         }
+        .utils-list li.active{
+            border-color: red;
+        }
+        .utils-list .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 20px;
+            background: #fff;
+        }
+
+        .utils-list li.active.show .submenu{
+            display: block;
+        }
+
         .drawing-board-box {
             position: relative;
             border: 1px solid #ccc;
@@ -33,9 +58,24 @@
     <div class="drawing-board-wrap">
         <ul class="utils-list">
             <li class="cmd-item" data-cmd="text">T</li>
-            <li class="cmd-item" data-cmd="draw">✎</li>
+            <li class="cmd-item menu" data-cmd="draw">
+                <div class="menu-name">✎</div>
+                <ul class="submenu">
+                    <li class="sub-cmd" data-cmd="setCtx" data-key="lineWidth" data-value="2">2</li>
+                    <li class="sub-cmd" data-cmd="setCtx" data-key="lineWidth" data-value="4">4</li>
+                    <li class="sub-cmd" data-cmd="setCtx" data-key="lineWidth" data-value="6">6</li>
+                </ul>
+            </li>
             <li class="cmd-item" data-cmd="shape">□</li>
-            <li class="cmd-item" data-cmd="color">颜色</li>
+            <li class="cmd-item menu" data-cmd="color">
+                <div class="menu-name">颜色</div>
+                <ul class="submenu">
+                    <li class="sub-cmd" data-cmd="setCtx" data-key="strokeStyle" data-value="#000">黑</li>
+                    <li class="sub-cmd" data-cmd="setCtx" data-key="strokeStyle" data-value="#f00">红</li>
+                    <li class="sub-cmd" data-cmd="setCtx" data-key="strokeStyle" data-value="#00f">蓝</li>
+                    <li class="sub-cmd" data-cmd="setCtx" data-key="strokeStyle" data-value="#fff">白</li>
+                </ul>
+            </li>
             <li class="cmd-item" data-cmd="eraser">橡皮</li>
             <li class="cmd-item" data-cmd="clear">清空</li>
             <li class="cmd-item" data-cmd="back">↩️</li>
