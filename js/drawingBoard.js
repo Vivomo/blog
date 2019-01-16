@@ -1,5 +1,7 @@
 function DrawingBoard(cfg) {
     this.cfg = Object.assign({}, this.defaultCfg, cfg);
+    // 操作历史
+    this.history = [];
     this.init();
 }
 let body = document.body;
@@ -42,6 +44,9 @@ const commands = {
             foreCtx.stroke();
         }
     },
+    /**
+     * 上一步
+     */
     back: {
         type: CMD_TYPE.once,
         func: function () {
@@ -49,6 +54,16 @@ const commands = {
             if (history.length > 0) {
                 backCtx.putImageData(history.pop(), 0, 0);
             }
+        }
+    },
+    /**
+     * 清空画板
+     */
+    clear: {
+        type: CMD_TYPE.once,
+        func: function () {
+            this.recordHistory();
+            this.backCtx.clearRect(0, 0, this.width, this.height);
         }
     }
 };
@@ -59,8 +74,6 @@ DrawingBoard.prototype = {
         // 历史记录最大保存次数
         maxHistorySize: 20
     },
-    // 操作历史
-    history: [],
     /**
      * 初始化
      * html初始化
