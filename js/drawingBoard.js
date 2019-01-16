@@ -118,9 +118,13 @@ DrawingBoard.prototype = {
      */
     bindCommand: function(cmd) {
         let command = this.commands[cmd];
-        this.command = {
-            type: command.type,
-            func: command.func.bind(this)
+        if (command === CMD_TYPE.once) {
+            command.func.call(this);
+        } else {
+            this.command = {
+                type: command.type,
+                func: command.func.bind(this)
+            }
         }
     },
     /**
