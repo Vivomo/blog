@@ -148,7 +148,7 @@ const commands = {
                     foreCtx.strokeRect(startX, startY, diffX - startX, diffY - startY);
                     break;
                 case 'circle':
-                    foreCtx.ellipse(startX, startY, Math.abs(diffX - startX), Math.abs(diffY - startY), 0, 0, Math.PI * 2);
+                    foreCtx.ellipse((startX + diffX) / 2, (startY + diffY) / 2, Math.abs(diffX - startX) / 2, Math.abs(diffY - startY) / 2, 0, 0, Math.PI * 2);
                     break;
             }
             foreCtx.stroke();
