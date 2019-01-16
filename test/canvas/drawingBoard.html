@@ -76,9 +76,16 @@
                     <li class="sub-cmd" data-cmd="setCtx" data-key="strokeStyle" data-value="#fff">白</li>
                 </ul>
             </li>
-            <li class="cmd-item" data-cmd="eraser">橡皮</li>
-            <li class="cmd-item" data-cmd="clear">清空</li>
-            <li class="cmd-item" data-cmd="back">↩️</li>
+            <li class="cmd-item menu" data-cmd="eraser">
+                <div class="menu-name">橡皮</div>
+                <ul class="submenu">
+                    <li class="sub-cmd" data-cmd="setDrawingBoard" data-key="eraserRadius" data-value="10">10</li>
+                    <li class="sub-cmd" data-cmd="setDrawingBoard" data-key="eraserRadius" data-value="20">20</li>
+                    <li class="sub-cmd" data-cmd="setDrawingBoard" data-key="eraserRadius" data-value="30">30</li>
+                </ul>
+            </li>
+            <li class="cmd-item once" data-cmd="clear">清空</li>
+            <li class="cmd-item once" data-cmd="back">↩️</li>
         </ul>
         <div class="drawing-board-box">
             <canvas class="background" width="600" height="600"></canvas>

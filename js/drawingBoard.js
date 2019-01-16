@@ -85,10 +85,30 @@ const commands = {
             this.backCtx.clearRect(0, 0, this.width, this.height);
         }
     },
+    /**
+     * 设置上下文
+     */
     setCtx: {
         type: CMD_TYPE.once,
         func: function (key, value) {
             this.foreCtx[key] = value;
+        }
+    },
+    /**
+     * 橡皮擦
+     */
+    eraser: {
+        type: CMD_TYPE.move,
+        func: function (e) {
+            let {clientX, clientY} = getMainEvent(e);
+            let {canvasOffsetX, canvasOffsetY, backCtx, eraserRadius} = this;
+            backCtx.clearRect(clientX - canvasOffsetX, clientY - canvasOffsetY, eraserRadius, eraserRadius);
+        }
+    },
+    setDrawingBoard: {
+        type: CMD_TYPE.once,
+        func: function (key, value) {
+            this[key] = [value]
         }
     }
 };
@@ -99,6 +119,7 @@ DrawingBoard.prototype = {
         // 历史记录最大保存次数
         maxHistorySize: 20
     },
+    eraserRadius: 10,
     /**
      * 初始化
      * html初始化
