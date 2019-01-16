@@ -3,6 +3,25 @@ function DrawingBoard(cfg) {
     this.init();
 }
 
+let getCommand = document.body.dataset ? dom => dom.dataset.command : dom => dom.getAttribute('data-command');
+
+/**
+ * 画板指令列表
+ */
+const commands = {
+    /**
+     * 画笔指令
+     * @param clientX
+     * @param clientY
+     */
+    draw: function ({clientX, clientY}) {
+        let {canvasOffsetX, canvasOffsetY, ctx} = this;
+        ctx.lineCap = 'round';
+        ctx.lineTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
+        ctx.stroke();
+    }
+};
+
 DrawingBoard.prototype = {
     constructor: DrawingBoard,
     defaultCfg: {
@@ -64,19 +83,9 @@ DrawingBoard.prototype = {
     /**
      * 画板指令列表
      */
-    commands: {
-        /**
-         * 画笔指令
-         * @param clientX
-         * @param clientY
-         */
-        draw: function ({clientX, clientY}) {
-            let {canvasOffsetX, canvasOffsetY, ctx} = this;
-            ctx.lineCap = 'round';
-            ctx.lineTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
-            ctx.stroke();
-        }
-    },
+    commands,
+    // 获取指令
+    getCommand,
     /**
      * 前景canvas事件绑定
      */
