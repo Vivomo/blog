@@ -46,6 +46,19 @@ const CMD_TYPE = {
     once: 'once'
 };
 
+let canvasRenderingContext2DPrototype = CanvasRenderingContext2D.prototype;
+if (!canvasRenderingContext2DPrototype.ellipse) {
+    canvasRenderingContext2DPrototype.ellipse = function(x, y, radiusX, radiusY, rotation, startAngle, endAngle, antiClockwise) {
+        this.save();
+        this.translate(x, y);
+        this.rotate(rotation);
+        this.scale(radiusX, radiusY);
+        this.arc(0, 0, 1, startAngle, endAngle, antiClockwise);
+        this.restore();
+    };
+}
+
+
 /**
  * 画板指令列表
  */
@@ -56,7 +69,7 @@ const commands = {
      */
     draw: {
         type: CMD_TYPE.move,
-        func: function (e) {
+        exe: function (e) {
             let {clientX, clientY} = getMainEvent(e);
             let {canvasOffsetX, canvasOffsetY, foreCtx} = this;
             foreCtx.lineTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
@@ -68,7 +81,7 @@ const commands = {
      */
     back: {
         type: CMD_TYPE.once,
-        func: function () {
+        exe: function () {
             let {backCtx, history} = this;
             if (history.length > 0) {
                 backCtx.putImageData(history.pop(), 0, 0);
@@ -80,7 +93,7 @@ const commands = {
      */
     clear: {
         type: CMD_TYPE.once,
-        func: function () {
+        exe: function () {
             this.recordHistory();
             this.backCtx.clearRect(0, 0, this.width, this.height);
         }
@@ -90,7 +103,7 @@ const commands = {
      */
     setCtx: {
         type: CMD_TYPE.once,
-        func: function (key, value) {
+        exe: function (key, value) {
             this.foreCtx[key] = value;
         }
     },
@@ -99,16 +112,46 @@ const commands = {
      */
     eraser: {
         type: CMD_TYPE.move,
-        func: function (e) {
+        exe: function (e) {
             let {clientX, clientY} = getMainEvent(e);
             let {canvasOffsetX, canvasOffsetY, backCtx, eraserRadius} = this;
             backCtx.clearRect(clientX - canvasOffsetX, clientY - canvasOffsetY, eraserRadius, eraserRadius);
         }
     },
+    /**
+     * 设置画板
+     */
     setDrawingBoard: {
         type: CMD_TYPE.once,
-        func: function (key, value) {
-            this[key] = [value]
+        exe: function (key, value) {
+            this[key] = value
+        }
+    },
+    /**
+     * 画形状
+     */
+    shape: {
+        type: CMD_TYPE.move,
+        exe: function (e) {
+            let {clientX, clientY} = getMainEvent(e);
+            let {canvasOffsetX, canvasOffsetY, foreCtx, width, height, startX, startY} = this;
+            let diffX = clientX - canvasOffsetX;
+            let diffY = clientY - canvasOffsetY;
+            foreCtx.beginPath();
+            foreCtx.clearRect(0, 0, width, height);
+            switch (this.shape) {
+                case 'line':
+                    foreCtx.moveTo(startX, startY);
+                    foreCtx.lineTo(diffX, diffY);
+                    break;
+                case 'rect':
+                    foreCtx.strokeRect(startX, startY, diffX - startX, diffY - startY);
+                    break;
+                case 'circle':
+                    foreCtx.ellipse(startX, startY, Math.abs(diffX - startX), Math.abs(diffY - startY), 0, 0, Math.PI * 2);
+                    break;
+            }
+            foreCtx.stroke();
         }
     }
 };
@@ -120,6 +163,7 @@ DrawingBoard.prototype = {
         maxHistorySize: 20
     },
     eraserRadius: 10,
+    shape: 'line',
     /**
      * 初始化
      * html初始化
@@ -163,7 +207,6 @@ DrawingBoard.prototype = {
     initBackground: function() {
         this.background = this.cfg.wrap.querySelector('.background');
         this.backCtx = this.background.getContext('2d');
-        this.backCtx.globalCompositeOperation = 'lighter';
     },
     /**
      * 初始化绑定事件
@@ -189,11 +232,11 @@ DrawingBoard.prototype = {
             return;
         }
         if (command.type === CMD_TYPE.once) {
-            command.func.call(this, key, value);
+            command.exe.call(this, key, value);
         } else {
             this.command = {
                 type: command.type,
-                func: command.func.bind(this)
+                exe: command.exe.bind(this)
             }
         }
     },
@@ -208,15 +251,17 @@ DrawingBoard.prototype = {
         canvas.addEventListener('mousedown', (e) => {
             if (this.command.type === CMD_TYPE.move) {
                 let {clientX, clientY} = e;
+                this.startX = clientX - canvasOffsetX;
+                this.startY = clientY- canvasOffsetY;
                 foreCtx.beginPath();
-                foreCtx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
-                canvas.addEventListener('mousemove', this.command.func)
+                foreCtx.moveTo(this.startX, this.startY);
+                canvas.addEventListener('mousemove', this.command.exe)
             }
         });
 
         canvas.addEventListener('mouseup', () => {
             if (this.command.type === CMD_TYPE.move) {
-                canvas.removeEventListener('mousemove', this.command.func);
+                canvas.removeEventListener('mousemove', this.command.exe);
                 this.recordHistory();
                 this.addForeToBack();
             }
@@ -227,13 +272,13 @@ DrawingBoard.prototype = {
                 foreCtx.beginPath();
                 let {clientX, clientY} = e.touches[0];
                 foreCtx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
-                canvas.addEventListener('touchmove', this.command.func);
+                canvas.addEventListener('touchmove', this.command.exe);
             }
         });
 
         canvas.addEventListener('touchend', () => {
             if (this.command.type === CMD_TYPE.move) {
-                canvas.removeEventListener('touchmove', this.command.func);
+                canvas.removeEventListener('touchmove', this.command.exe);
                 this.recordHistory();
                 this.addForeToBack();
             }
