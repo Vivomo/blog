@@ -51,6 +51,13 @@
             top: 0;
             left: 0;
         }
+        .drawing-board-textarea {
+            position: absolute;
+            top: 0;
+            height: 28px;
+            width: 100px;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
@@ -97,11 +104,12 @@
         <div class="drawing-board-box">
             <canvas class="background" width="600" height="600"></canvas>
             <canvas class="foreground" width="600" height="600"></canvas>
+            <div contenteditable="true" class="drawing-board-textarea"></div>
         </div>
     </div>
 </div>
-<script src="../../js/drawingBoard.js"></script>
-<script>
+<script src="../../js/drawingBoard.js" type="module"></script>
+<script type="module">
     new DrawingBoard({
         wrap: document.getElementById('wrap')
     })
