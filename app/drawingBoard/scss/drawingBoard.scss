@@ -10,14 +10,14 @@ ul, ol, li {
 .utils-list {
     position: relative;
     z-index: 1;
-}
-.utils-list li{
-    display: inline-block;
-    position: relative;
-    min-width: 50px;
-    height: 20px;
-    border: 1px solid #ccc;
-    cursor: pointer;
+    li{
+        display: inline-block;
+        position: relative;
+        min-width: 50px;
+        height: 20px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+    }
 }
 .utils-list li.active{
     border-color: red;
