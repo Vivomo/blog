@@ -1,0 +1,81 @@
+$squareWidth: 9px;
+.cropper-wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 999;
+    overflow: hidden;
+
+    &.hide {
+        display: none;
+    }
+}
+.cropper {
+    position: absolute;
+    border: 1px solid #00eaff;
+    opacity: 0.5;
+    cursor: move;
+    box-sizing: border-box;
+    outline: 10000px solid rgba(#000, 0.5);
+}
+
+.cropper .square {
+    position: absolute;
+    width: $squareWidth;
+    height: $squareWidth;
+    background: #00eaff;
+}
+
+.cropper .s-lt {
+    left: -$squareWidth / 2;
+    top: -$squareWidth / 2;
+    cursor: se-resize;
+}
+
+.cropper .s-rt {
+    right: -$squareWidth / 2;
+    top: -$squareWidth / 2;
+    cursor: sw-resize;
+}
+
+.cropper .s-t {
+    top: -$squareWidth / 2;
+    left: 50%;
+    margin-left: -$squareWidth / 2;
+    cursor: s-resize;
+}
+
+.cropper .s-l {
+    left: -$squareWidth / 2;
+    top: 50%;
+    margin-top: -$squareWidth / 2;
+    cursor: e-resize;
+}
+
+.cropper .s-r {
+    right: -$squareWidth / 2;
+    top: 50%;
+    margin-top: -$squareWidth / 2;
+    cursor: e-resize;
+}
+
+.cropper .s-lb {
+    left: -$squareWidth / 2;
+    bottom: -$squareWidth / 2;
+    cursor: sw-resize;
+}
+
+.cropper .s-rb {
+    right: -$squareWidth / 2;
+    bottom: -$squareWidth / 2;
+    cursor: se-resize;
+}
+
+.cropper .s-b {
+    bottom: -$squareWidth / 2;
+    left: 50%;
+    margin-left: -$squareWidth / 2;
+    cursor: s-resize;
+}

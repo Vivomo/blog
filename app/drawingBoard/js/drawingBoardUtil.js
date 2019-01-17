@@ -45,3 +45,10 @@ if (!canvasRenderingContext2DPrototype.ellipse) {
         this.restore();
     };
 }
+
+
+export const CMD_TYPE = {
+    move: 'move',
+    once: 'once',
+    click: 'click'
+};

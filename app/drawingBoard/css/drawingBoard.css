@@ -1,11 +1,92 @@
-ul, ol, li {
-  padding: 0;
-  margin: 0; }
+.cropper-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 999;
+  overflow: hidden; }
+  .cropper-wrap.hide {
+    display: none; }
+
+.cropper {
+  position: absolute;
+  border: 1px solid #00eaff;
+  opacity: 0.5;
+  cursor: move;
+  box-sizing: border-box;
+  outline: 10000px solid rgba(0, 0, 0, 0.5); }
+
+.cropper .square {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background: #00eaff; }
+
+.cropper .s-lt {
+  left: -4.5px;
+  top: -4.5px;
+  cursor: se-resize; }
+
+.cropper .s-rt {
+  right: -4.5px;
+  top: -4.5px;
+  cursor: sw-resize; }
+
+.cropper .s-t {
+  top: -4.5px;
+  left: 50%;
+  margin-left: -4.5px;
+  cursor: s-resize; }
+
+.cropper .s-l {
+  left: -4.5px;
+  top: 50%;
+  margin-top: -4.5px;
+  cursor: e-resize; }
+
+.cropper .s-r {
+  right: -4.5px;
+  top: 50%;
+  margin-top: -4.5px;
+  cursor: e-resize; }
+
+.cropper .s-lb {
+  left: -4.5px;
+  bottom: -4.5px;
+  cursor: sw-resize; }
+
+.cropper .s-rb {
+  right: -4.5px;
+  bottom: -4.5px;
+  cursor: se-resize; }
+
+.cropper .s-b {
+  bottom: -4.5px;
+  left: 50%;
+  margin-left: -4.5px;
+  cursor: s-resize; }
 
 .drawing-board-wrap {
   margin: 0 auto;
   width: 600px;
   outline: 1px solid #ccc; }
+  .drawing-board-wrap ul, .drawing-board-wrap ol, .drawing-board-wrap li {
+    padding: 0;
+    margin: 0; }
+  .drawing-board-wrap .drawing-board-box {
+    position: relative;
+    border: 1px solid #ccc; }
+  .drawing-board-wrap .foreground {
+    position: absolute;
+    top: 0;
+    left: 0; }
+  .drawing-board-wrap .drawing-board-textarea {
+    position: absolute;
+    top: 0;
+    height: 28px;
+    width: 100px;
+    border: 1px solid #ccc; }
 
 .utils-list {
   position: relative;
@@ -17,33 +98,14 @@ ul, ol, li {
     height: 20px;
     border: 1px solid #ccc;
     cursor: pointer; }
-
-.utils-list li.active {
-  border-color: red; }
-
-.utils-list .submenu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 20px;
-  background: #fff; }
-
-.utils-list li.active.show .submenu {
-  display: block; }
-
-.drawing-board-box {
-  position: relative;
-  border: 1px solid #ccc; }
-
-.foreground {
-  position: absolute;
-  top: 0;
-  left: 0; }
-
-.drawing-board-textarea {
-  position: absolute;
-  top: 0;
-  height: 28px;
-  width: 100px;
-  border: 1px solid #ccc; }
+    .utils-list li.active {
+      border-color: red; }
+      .utils-list li.active.show .submenu {
+        display: block; }
+  .utils-list .submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 20px;
+    background: #fff; }
