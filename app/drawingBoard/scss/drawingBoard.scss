@@ -1,0 +1,54 @@
+ul, ol, li {
+    padding: 0;
+    margin: 0;
+}
+.drawing-board-wrap {
+    margin: 0 auto;
+    width: 600px;
+    outline: 1px solid #ccc;
+}
+.utils-list {
+    position: relative;
+    z-index: 1;
+}
+.utils-list li{
+    display: inline-block;
+    position: relative;
+    min-width: 50px;
+    height: 20px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+.utils-list li.active{
+    border-color: red;
+}
+.utils-list .submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 20px;
+    background: #fff;
+}
+
+.utils-list li.active.show .submenu{
+    display: block;
+}
+
+.drawing-board-box {
+    position: relative;
+    border: 1px solid #ccc;
+}
+
+.foreground {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.drawing-board-textarea {
+    position: absolute;
+    top: 0;
+    height: 28px;
+    width: 100px;
+    border: 1px solid #ccc;
+}

@@ -11,3 +11,4 @@ build/package-lock.json
 nodejs/node_modules/
 test/node_modules/
 exportToHTML/
+app/node_modules/
