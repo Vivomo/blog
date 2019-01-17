@@ -11,9 +11,8 @@ gulp.task('scss', function () {
 });
 
 
-
 gulp.task('testWatch', function () {
-    gulp.watch(scssSrc, gulp.parallel('scss'));
+    gulp.watch(scssSrc, ['scss']);
 });
 
-gulp.task('default', gulp.parallel('scss', 'testWatch'));
+gulp.task('default', ['scss', 'testWatch']);
