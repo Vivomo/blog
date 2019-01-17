@@ -11,7 +11,8 @@ Cropper.prototype = {
         minWidth: 5,
         minHeight: 5,
         // 固定比例 width / height
-        ratio: null
+        ratio: null,
+        onHide: () => {}
     },
     cropperTemplate: `
         <div class="cropper">
@@ -23,7 +24,7 @@ Cropper.prototype = {
             <div class="square s-lb" data-left="1" data-height="1"></div>
             <div class="square s-rb" data-width="1" data-height="1"></div>
             <div class="square s-b" data-height="1"></div>
-            <div contenteditable="true" style="display: block; width: 100%; height: 100%"></div>
+            <div class="content" contenteditable="true" style="height: 100%"></div>
         </div>
     `,
     init: function () {
@@ -33,6 +34,12 @@ Cropper.prototype = {
     initListener: function () {
         this.listenCropper();
         this.listenCropperItem();
+        this.listenWrap()
+    },
+    listenWrap: function () {
+        this.wrap.addEventListener('click', () => {
+            this.hide();
+        });
     },
     listenCropper: function () {
         let startX = 0;
@@ -65,7 +72,9 @@ Cropper.prototype = {
             document.body.addEventListener('mouseup', mouseUp);
         });
 
-
+        this.cropper.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
     },
     listenCropperItem: function () {
         let startX = 0;
@@ -152,6 +161,7 @@ Cropper.prototype = {
         this.updateCropperPosition();
     },
     hide: function () {
+        this.options.onHide(this, this.wrap.querySelector('.content').innerText);
         this.wrap.classList.add('hide');
         this.hidden = true;
     },

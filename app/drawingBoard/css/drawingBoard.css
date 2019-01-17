@@ -16,6 +16,8 @@
   cursor: move;
   box-sizing: border-box;
   outline: 10000px solid rgba(0, 0, 0, 0.5); }
+  .cropper .content {
+    font: 14px "Microsoft YaHei", sans-serif; }
 
 .cropper .square {
   position: absolute;
@@ -81,12 +83,6 @@
     position: absolute;
     top: 0;
     left: 0; }
-  .drawing-board-wrap .drawing-board-textarea {
-    position: absolute;
-    top: 0;
-    height: 28px;
-    width: 100px;
-    border: 1px solid #ccc; }
 
 .utils-list {
   position: relative;

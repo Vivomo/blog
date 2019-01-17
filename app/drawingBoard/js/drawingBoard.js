@@ -7,8 +7,6 @@ import {
     CMD_TYPE
 } from './drawingBoardUtil.js'
 
-import Cropper from './cropper.js';
-
 import commands from './commands.js';
 
 window.DrawingBoard = function(cfg) {
@@ -16,7 +14,6 @@ window.DrawingBoard = function(cfg) {
     // 操作历史
     this.history = [];
     this.command = {};
-    this.hasInitCropper = false;
     this.init();
 };
 
@@ -70,6 +67,8 @@ DrawingBoard.prototype = {
     initBackground: function() {
         this.background = this.cfg.wrap.querySelector('.background');
         this.backCtx = this.background.getContext('2d');
+        this.backCtx.font = '14px "Microsoft YaHei", sans-serif';
+        this.backCtx.textBaseline = 'top'
     },
     /**
      * 初始化绑定事件
@@ -204,5 +203,9 @@ DrawingBoard.prototype = {
     addForeToBack: function () {
         this.backCtx.drawImage(this.foreground, 0, 0);
         this.foreCtx.clearRect(0, 0, this.width, this.height);
+    },
+    drawText: function (text, x, y) {
+        this.recordHistory();
+        this.backCtx.fillText(text, x, y);
     }
 };

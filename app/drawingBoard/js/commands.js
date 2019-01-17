@@ -100,14 +100,23 @@ const commands = {
         type: CMD_TYPE.click,
         exe: function (e) {
             let {offsetX, offsetY} = getMainEvent(e);
-            if (this.hasInitCropper) {
-
+            let {cropper} = this;
+            if (cropper) {
+                cropper.setLeft(offsetX, false);
+                cropper.setTop(offsetY, false, true);
+                cropper.show();
             } else {
                 let cropper = this.cropper = new Cropper({
-                    elem: this.cfg.wrap.querySelector('.drawing-board-box')
+                    elem: this.cfg.wrap.querySelector('.drawing-board-box'),
+                    onHide: (cropper, text) => {
+                        if (text) {
+                            let data = cropper.getData();
+                            this.drawText(text, data.left, data.top);
+                        }
+                    }
                 });
-                cropper.move(offsetX, offsetY);
-                this.hasInitCropper = true;
+                cropper.setLeft(offsetX, false);
+                cropper.setTop(offsetY, false, true);
             }
         }
     }

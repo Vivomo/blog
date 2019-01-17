@@ -19,6 +19,10 @@ $squareWidth: 9px;
     cursor: move;
     box-sizing: border-box;
     outline: 10000px solid rgba(#000, 0.5);
+
+    .content {
+        font: 14px "Microsoft YaHei", sans-serif;
+    }
 }
 
 .cropper .square {
