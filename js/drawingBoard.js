@@ -70,9 +70,9 @@ const commands = {
     draw: {
         type: CMD_TYPE.move,
         exe: function (e) {
-            let {clientX, clientY} = getMainEvent(e);
-            let {canvasOffsetX, canvasOffsetY, foreCtx} = this;
-            foreCtx.lineTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
+            let {offsetX, offsetY} = getMainEvent(e);
+            let {foreCtx} = this;
+            foreCtx.lineTo(offsetX, offsetY);
             foreCtx.stroke();
         }
     },
@@ -113,9 +113,9 @@ const commands = {
     eraser: {
         type: CMD_TYPE.move,
         exe: function (e) {
-            let {clientX, clientY} = getMainEvent(e);
-            let {canvasOffsetX, canvasOffsetY, backCtx, eraserRadius} = this;
-            backCtx.clearRect(clientX - canvasOffsetX, clientY - canvasOffsetY, eraserRadius, eraserRadius);
+            let {offsetX, offsetY} = getMainEvent(e);
+            let {backCtx, eraserRadius} = this;
+            backCtx.clearRect(offsetX, offsetY, eraserRadius, eraserRadius);
         }
     },
     /**
@@ -133,22 +133,22 @@ const commands = {
     shape: {
         type: CMD_TYPE.move,
         exe: function (e) {
-            let {clientX, clientY} = getMainEvent(e);
-            let {canvasOffsetX, canvasOffsetY, foreCtx, width, height, startX, startY} = this;
-            let diffX = clientX - canvasOffsetX;
-            let diffY = clientY - canvasOffsetY;
+            let {offsetX, offsetY} = getMainEvent(e);
+            let {foreCtx, width, height, startX, startY} = this;
+            let dx = offsetX - startX;
+            let dy = offsetY - startY;
             foreCtx.beginPath();
             foreCtx.clearRect(0, 0, width, height);
             switch (this.shape) {
                 case 'line':
                     foreCtx.moveTo(startX, startY);
-                    foreCtx.lineTo(diffX, diffY);
+                    foreCtx.lineTo(offsetX, offsetY);
                     break;
                 case 'rect':
-                    foreCtx.strokeRect(startX, startY, diffX - startX, diffY - startY);
+                    foreCtx.strokeRect(startX, startY, dx, dy);
                     break;
                 case 'circle':
-                    foreCtx.ellipse((startX + diffX) / 2, (startY + diffY) / 2, Math.abs(diffX - startX) / 2, Math.abs(diffY - startY) / 2, 0, 0, Math.PI * 2);
+                    foreCtx.ellipse((startX + offsetX) / 2, (startY + offsetY) / 2, Math.abs(dx) / 2, Math.abs(dy) / 2, 0, 0, Math.PI * 2);
                     break;
             }
             foreCtx.stroke();
@@ -195,9 +195,6 @@ DrawingBoard.prototype = {
         this.width = this.foreground.width;
         this.height = this.foreground.height;
         this.foreCtx = this.foreground.getContext('2d');
-        let {left, top} = this.foreground.getBoundingClientRect();
-        this.canvasOffsetX = left;
-        this.canvasOffsetY = top;
         this.foreCtx.lineCap = 'round';
         this.foreCtx.lineWidth = 2;
     },
@@ -246,13 +243,11 @@ DrawingBoard.prototype = {
     initForegroundEvent: function () {
         let canvas = this.foreground;
         let foreCtx = this.foreCtx;
-        let {canvasOffsetX, canvasOffsetY} = this;
 
         canvas.addEventListener('mousedown', (e) => {
             if (this.command.type === CMD_TYPE.move) {
-                let {clientX, clientY} = e;
-                this.startX = clientX - canvasOffsetX;
-                this.startY = clientY- canvasOffsetY;
+                this.startX = e.offsetX;
+                this.startY = e.offsetY;
                 foreCtx.beginPath();
                 foreCtx.moveTo(this.startX, this.startY);
                 canvas.addEventListener('mousemove', this.command.exe)
@@ -270,8 +265,8 @@ DrawingBoard.prototype = {
         canvas.addEventListener('touchstart', (e) => {
             if (this.command.type === CMD_TYPE.move) {
                 foreCtx.beginPath();
-                let {clientX, clientY} = e.touches[0];
-                foreCtx.moveTo(clientX - canvasOffsetX, clientY - canvasOffsetY);
+                let {offsetX, offsetY} = e.touches[0];
+                foreCtx.moveTo(offsetX, offsetY);
                 canvas.addEventListener('touchmove', this.command.exe);
             }
         });
