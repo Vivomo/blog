@@ -4,8 +4,6 @@ const supportClassList = !!body.classList;
 
 export const getDomData = body.dataset ? (dom, dataName) => dom.dataset[dataName] : (dom, dataName) => dom.getAttribute('data-' + dataName);
 
-export const  getMainEvent = (arg) => arg.clientX === undefined ? arg.touches[0] : arg;
-
 export const getEventOffset = (e, elem) => {
     if (e.touches) {
         let {clientX, clientY} = e.touches[0];
