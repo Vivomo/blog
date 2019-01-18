@@ -112,6 +112,7 @@ DrawingBoard.prototype = {
         let foreCtx = this.foreCtx;
 
         let touchdown = (e) => {
+            this.hideSubmenu();
             if (this.command.type === CMD_TYPE.move) {
                 let {offsetX, offsetY} = getEventOffset(e, this.foreground);
                 this.startX = offsetX;
@@ -162,7 +163,10 @@ DrawingBoard.prototype = {
         for (let i = 0, l = utilsElem.length; i < l; i++) {
             utilsElem[i].addEventListener('click', function(e){
                 if (hasClass(this, 'sub-cmd')) {
-                    removeClass(this.parentElement.parentElement, 'show');
+                    let parent = this.parentElement.parentElement;
+                    me.hideSubmenu();
+                    removeClass(parent.querySelector('.active'), 'active');
+                    addClass(this, 'active');
                     e.stopPropagation();
                 } else {
                     let activeElem = utilsWrap.querySelector('.cmd-item.active');
@@ -176,7 +180,7 @@ DrawingBoard.prototype = {
                             }
                         } else {
                             activeElem && removeClass(activeElem, 'active');
-                            activeElem && removeClass(activeElem, 'show');
+                            activeElem && me.hideSubmenu();
                         }
                         addClass(this, 'active');
                     }
@@ -188,6 +192,13 @@ DrawingBoard.prototype = {
                 me.bindCommand(this);
             });
         }
+    },
+
+    /**
+     * 隐藏二级菜单
+     */
+    hideSubmenu: function() {
+        removeClass(this.cfg.wrap.querySelector('.menu.show'), 'show');
     },
     /**
      * 记录历史
