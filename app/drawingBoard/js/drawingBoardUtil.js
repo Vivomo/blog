@@ -46,6 +46,46 @@ if (!canvasRenderingContext2DPrototype.ellipse) {
     };
 }
 
+CanvasRenderingContext2D.prototype.wrapText = function (text, x, y, maxWidth, lineHeight) {
+    if (typeof text != 'string' || typeof x != 'number' || typeof y != 'number') {
+        return;
+    }
+
+    let ctx = this;
+    let canvas = ctx.canvas;
+
+    if (typeof maxWidth == 'undefined') {
+        maxWidth = canvas.width || 300;
+    }
+    if (typeof lineHeight == 'undefined') {
+        let matchResult = ctx.font.match(/\d+/);
+        lineHeight = matchResult ? matchResult[0] * 1.5 : 21;
+    }
+
+    let textArr = text.split('');
+    let line = '';
+
+    for (let i = 0; i < textArr.length; i++) {
+        if (textArr[i] === '\n') {
+            ctx.fillText(line, x, y);
+            line = '';
+            y += lineHeight;
+            continue;
+        }
+        let testLine = line + textArr[i];
+        let metrics = ctx.measureText(testLine);
+        let testWidth = metrics.width;
+        if (testWidth > maxWidth && i > 0) {
+            ctx.fillText(line, x, y);
+            line = textArr[i];
+            y += lineHeight;
+        } else {
+            line = testLine;
+        }
+    }
+    ctx.fillText(line, x, y);
+};
+
 
 export const CMD_TYPE = {
     move: 'move',

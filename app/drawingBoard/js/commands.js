@@ -111,7 +111,8 @@ const commands = {
                     onHide: (cropper, text) => {
                         if (text) {
                             let data = cropper.getData();
-                            this.drawText(text, data.left, data.top);
+                            cropper.clearContent();
+                            this.drawText(text, data.left, data.top, data.width);
                         }
                     }
                 });

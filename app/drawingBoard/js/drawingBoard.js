@@ -204,8 +204,8 @@ DrawingBoard.prototype = {
         this.backCtx.drawImage(this.foreground, 0, 0);
         this.foreCtx.clearRect(0, 0, this.width, this.height);
     },
-    drawText: function (text, x, y) {
+    drawText: function (text, x, y, width) {
         this.recordHistory();
-        this.backCtx.fillText(text, x, y);
+        this.backCtx.wrapText(text, x, y, width);
     }
 };

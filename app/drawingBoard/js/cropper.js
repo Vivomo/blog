@@ -140,6 +140,7 @@ Cropper.prototype = {
         wrap.className = 'cropper-wrap';
         wrap.innerHTML = this.cropperTemplate;
         this.cropper = wrap.querySelector('.cropper');
+        this.content = this.cropper.querySelector('.content');
         if (this.options.hide) {
             this.hide();
         }
@@ -161,7 +162,7 @@ Cropper.prototype = {
         this.updateCropperPosition();
     },
     hide: function () {
-        this.options.onHide(this, this.wrap.querySelector('.content').innerText);
+        this.options.onHide(this, this.content.innerText);
         this.wrap.classList.add('hide');
         this.hidden = true;
     },
@@ -261,6 +262,9 @@ Cropper.prototype = {
             width: this.width,
             height: this.height
         }
+    },
+    clearContent: function () {
+        this.content.innerHTML = '';
     }
 };
 
