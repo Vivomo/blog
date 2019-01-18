@@ -23,14 +23,16 @@ export const getEventOffset = (e, elem) => {
 };
 
 export const  removeClass = supportClassList ? (dom, className) => {
-    dom.classList.remove(className);
+    dom && dom.classList.remove(className);
     return dom;
 } : (dom, className) => {
-    let classList = dom.className.split(' ');
-    let index = classList.indexOf(className);
-    if (index !== -1) {
-        classList[index] = '';
-        dom.className = classList.join(' ');
+    if (dom) {
+        let classList = dom.className.split(' ');
+        let index = classList.indexOf(className);
+        if (index !== -1) {
+            classList[index] = '';
+            dom.className = classList.join(' ');
+        }
     }
     return dom;
 };
