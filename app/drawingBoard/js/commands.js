@@ -1,5 +1,12 @@
-import {getMainEvent, CMD_TYPE} from './drawingBoardUtil.js';
+import {getMainEvent} from './drawingBoardUtil.js';
 import Cropper from './cropper.js';
+
+
+export const CMD_TYPE = {
+    move: 'move',
+    once: 'once',
+    click: 'click'
+};
 
 /**
  * 画板指令列表

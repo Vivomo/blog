@@ -4,10 +4,10 @@ import {
     addClass,
     hasClass,
     toggleClass,
-    CMD_TYPE
 } from './drawingBoardUtil.js'
 
-import commands from './commands.js';
+import commands, {CMD_TYPE} from './commands.js';
+import './canvasContextPloyfill.js';
 
 window.DrawingBoard = function(cfg) {
     this.cfg = Object.assign({}, this.defaultCfg, cfg);
