@@ -1,4 +1,4 @@
-import {getMainEvent} from './drawingBoardUtil.js';
+import {getEventOffset} from './drawingBoardUtil.js';
 import Cropper from './cropper.js';
 
 
@@ -19,7 +19,7 @@ const commands = {
     draw: {
         type: CMD_TYPE.move,
         exe: function (e) {
-            let {offsetX, offsetY} = getMainEvent(e);
+            let {offsetX, offsetY} = getEventOffset(e, this.foreground);
             let {foreCtx} = this;
             foreCtx.lineTo(offsetX, offsetY);
             foreCtx.stroke();
@@ -66,7 +66,7 @@ const commands = {
     eraser: {
         type: CMD_TYPE.move,
         exe: function (e) {
-            let {offsetX, offsetY} = getMainEvent(e);
+            let {offsetX, offsetY} = getEventOffset(e, this.foreground);
             let {backCtx, eraserRadius} = this;
             backCtx.clearRect(offsetX, offsetY, eraserRadius, eraserRadius);
         }
@@ -86,7 +86,7 @@ const commands = {
     shape: {
         type: CMD_TYPE.move,
         exe: function (e) {
-            let {offsetX, offsetY} = getMainEvent(e);
+            let {offsetX, offsetY} = getEventOffset(e, this.foreground);
             let {foreCtx, width, height, startX, startY} = this;
             let dx = offsetX - startX;
             let dy = offsetY - startY;
@@ -110,7 +110,7 @@ const commands = {
     text: {
         type: CMD_TYPE.click,
         exe: function (e) {
-            let {offsetX, offsetY} = getMainEvent(e);
+            let {offsetX, offsetY} = getEventOffset(e, this.foreground);
             let {cropper} = this;
             if (cropper) {
                 cropper.setLeft(offsetX, false);

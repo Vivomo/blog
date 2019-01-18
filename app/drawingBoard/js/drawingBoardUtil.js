@@ -6,6 +6,22 @@ export const getDomData = body.dataset ? (dom, dataName) => dom.dataset[dataName
 
 export const  getMainEvent = (arg) => arg.clientX === undefined ? arg.touches[0] : arg;
 
+export const getEventOffset = (e, elem) => {
+    if (e.touches) {
+        let {clientX, clientY} = e.touches[0];
+        let {left, top} = elem.getBoundingClientRect();
+        return {
+            offsetX: clientX - left,
+            offsetY: clientY - top
+        }
+    } else {
+        return {
+            offsetX: e.offsetX,
+            offsetY: e.offsetY
+        }
+    }
+};
+
 export const  removeClass = supportClassList ? (dom, className) => {
     dom.classList.remove(className);
     return dom;

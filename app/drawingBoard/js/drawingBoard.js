@@ -4,6 +4,7 @@ import {
     addClass,
     hasClass,
     toggleClass,
+    getEventOffset
 } from './drawingBoardUtil.js'
 
 import commands, {CMD_TYPE} from './commands.js';
@@ -110,40 +111,40 @@ DrawingBoard.prototype = {
         let canvas = this.foreground;
         let foreCtx = this.foreCtx;
 
-        canvas.addEventListener('mousedown', (e) => {
+        let touchdown = (e) => {
             if (this.command.type === CMD_TYPE.move) {
-                this.startX = e.offsetX;
-                this.startY = e.offsetY;
+                let {offsetX, offsetY} = getEventOffset(e, this.foreground);
+                this.startX = offsetX;
+                this.startY = offsetY;
                 foreCtx.beginPath();
                 foreCtx.moveTo(this.startX, this.startY);
-                canvas.addEventListener('mousemove', this.command.exe)
+                if (e.touches) {
+                    canvas.addEventListener('touchmove', this.command.exe);
+                } else {
+                    canvas.addEventListener('mousemove', this.command.exe);
+                }
             }
-        });
+        };
 
-        canvas.addEventListener('mouseup', () => {
+        let touchup = (e) => {
             if (this.command.type === CMD_TYPE.move) {
-                canvas.removeEventListener('mousemove', this.command.exe);
+                if (e.changedTouches) {
+                    canvas.removeEventListener('touchmove', this.command.exe);
+                } else {
+                    canvas.removeEventListener('mousemove', this.command.exe);
+                }
                 this.recordHistory();
                 this.addForeToBack();
             }
-        });
+        };
 
-        canvas.addEventListener('touchstart', (e) => {
-            if (this.command.type === CMD_TYPE.move) {
-                foreCtx.beginPath();
-                let {offsetX, offsetY} = e.touches[0];
-                foreCtx.moveTo(offsetX, offsetY);
-                canvas.addEventListener('touchmove', this.command.exe);
-            }
-        });
+        canvas.addEventListener('mousedown', touchdown);
 
-        canvas.addEventListener('touchend', () => {
-            if (this.command.type === CMD_TYPE.move) {
-                canvas.removeEventListener('touchmove', this.command.exe);
-                this.recordHistory();
-                this.addForeToBack();
-            }
-        });
+        canvas.addEventListener('mouseup', touchup);
+
+        canvas.addEventListener('touchstart', touchdown);
+
+        canvas.addEventListener('touchend', touchup);
 
         canvas.addEventListener('click', (e) => {
             if (this.command.type === CMD_TYPE.click) {
