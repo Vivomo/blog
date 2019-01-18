@@ -17,7 +17,10 @@
   box-sizing: border-box;
   outline: 10000px solid rgba(0, 0, 0, 0.5); }
   .cropper .content {
-    font: 14px "Microsoft YaHei", sans-serif; }
+    height: 100%;
+    font: 14px/1.5 "Microsoft YaHei", sans-serif;
+    max-height: 100%;
+    overflow: hidden; }
 
 .cropper .square {
   position: absolute;

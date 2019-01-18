@@ -24,7 +24,7 @@ Cropper.prototype = {
             <div class="square s-lb" data-left="1" data-height="1"></div>
             <div class="square s-rb" data-width="1" data-height="1"></div>
             <div class="square s-b" data-height="1"></div>
-            <div class="content" contenteditable="true" style="height: 100%"></div>
+            <div class="content" contenteditable="true"></div>
         </div>
     `,
     init: function () {

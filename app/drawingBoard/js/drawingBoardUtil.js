@@ -57,13 +57,16 @@ CanvasRenderingContext2D.prototype.wrapText = function (text, x, y, maxWidth, li
     if (typeof maxWidth == 'undefined') {
         maxWidth = canvas.width || 300;
     }
+    let fontSizeMatchResult = ctx.font.match(/\d+/);
+    let fontSize = fontSizeMatchResult ? fontSizeMatchResult[0] : 14;
     if (typeof lineHeight == 'undefined') {
-        let matchResult = ctx.font.match(/\d+/);
-        lineHeight = matchResult ? matchResult[0] * 1.5 : 21;
+        lineHeight = fontSize * 1.5;
     }
 
     let textArr = text.split('');
     let line = '';
+
+    y += ~~((lineHeight - fontSize) / 2);
 
     for (let i = 0; i < textArr.length; i++) {
         if (textArr[i] === '\n') {

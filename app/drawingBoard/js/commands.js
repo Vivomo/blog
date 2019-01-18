@@ -47,6 +47,10 @@ const commands = {
         type: CMD_TYPE.once,
         exe: function (key, value) {
             this.foreCtx[key] = value;
+            if (key === 'strokeStyle') {
+                this.boxElem.style.color = value;
+                this.backCtx.fillStyle = value;
+            }
         }
     },
     /**

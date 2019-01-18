@@ -21,7 +21,10 @@ $squareWidth: 9px;
     outline: 10000px solid rgba(#000, 0.5);
 
     .content {
-        font: 14px "Microsoft YaHei", sans-serif;
+        height: 100%;
+        font: 14px/1.5 "Microsoft YaHei", sans-serif;
+        max-height: 100%;
+        overflow: hidden;
     }
 }
 

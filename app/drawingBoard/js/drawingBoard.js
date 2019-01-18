@@ -42,6 +42,7 @@ DrawingBoard.prototype = {
      * 初始化html
      */
     initHtml: function() {
+        this.boxElem = this.cfg.wrap.querySelector('.drawing-board-box');
     },
     /**
      * 初始化canvas, 前景和背景
