@@ -2,9 +2,11 @@
 layout: blog
 title: markdown语法
 ---
-# 原地址
-https://github.com/younghz/Markdown/blob/master/README.md
+## github支持的markdown
+[https://github.com/guodongxiaren/README]
 
+## 下面内容的原地址
+[https://github.com/younghz/Markdown/blob/master/README.md]
 ## 主要内容 
 > #### Markdown*是什么*？
 > #### *谁*发明了这么个东西？
