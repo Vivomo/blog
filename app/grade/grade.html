@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评分系统</title>
+    <style>
+        #addCategory * {
+            display: block;
+        }
+        #wrap {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .content-item {
+            width: 25%;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+        }
+        .content-item form {
+            float: right;
+        }
+
+
+        ol {
+            padding-left: 1.5em;
+        }
+
+        li {
+            word-wrap: break-word;
+            color: #999
+        }
+    </style>
+</head>
+<body>
+<form id="addCategory">
+    <input required type="text" placeholder="category" id="category">
+    <textarea required id="contentList" cols="30" rows="5" placeholder="content"></textarea>
+    <button>添加</button>
+</form>
+
+<div id="wrap"></div>
+
+<script>
+    let form = document.getElementById('addCategory');
+    let category = document.getElementById('category');
+    let contentList = document.getElementById('contentList');
+    let wrap = document.getElementById('wrap');
+
+    form.onsubmit = function () {
+        addCategory(category.value, contentList.value);
+        return false;
+    };
+
+    let addCategory = (category, contentList) => {
+        let item = document.createElement('div');
+        item.className = 'content-item';
+        item.innerHTML = `
+            <h3>${category}</h3>
+            <ol>
+                ${
+                    contentList.trim().split('\n').map(content =>
+                        `<li>
+                            <span>${content}</span>
+                            <form>
+                                <label><input type="radio" name="score" value="3">A</label>
+                                <label><input type="radio" name="score" value="2">B</label>
+                                <label><input type="radio" name="score" value="1">C</label>
+                                <label><input type="radio" name="score" value="0">空</label>
+                            </form>
+                         </li>`).join('')
+                }
+            </ol>
+        `;
+        wrap.appendChild(item);
+    }
+</script>
+</body>
+</html>
