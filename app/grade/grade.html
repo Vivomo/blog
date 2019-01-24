@@ -14,7 +14,8 @@
 
         .content-item {
             position: relative;
-            width: 25%;
+            width: 24%;
+            margin-right: 1%;
             box-sizing: border-box;
             border: 1px solid #ddd;
         }
@@ -33,8 +34,8 @@
         }
 
         li.item {
-            margin: 3px;
-            padding: 3px;
+            margin: 5px;
+            padding: 5px;
             outline: 1px solid currentColor;
         }
 
@@ -48,6 +49,10 @@
 
         li[data-value="1"] {
             color: red;
+        }
+
+        h3 {
+            padding-left: 0.5em;
         }
 
         .close {
@@ -74,7 +79,7 @@
 <div id="wrap"></div>
 
 <script type="module">
-    import {q} from './q.js';
+    import {q} from './q';
     let form = document.getElementById('addCategory');
     let category = document.getElementById('category');
     let contentList = document.getElementById('contentList');
