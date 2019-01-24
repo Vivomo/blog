@@ -39,6 +39,12 @@
             outline: 1px solid currentColor;
         }
 
+        li.item::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
         li[data-value="3"] {
             color: #05f305;
         }
