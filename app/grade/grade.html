@@ -30,6 +30,24 @@
             word-wrap: break-word;
             color: #999
         }
+
+        li.item {
+            margin: 3px;
+            padding: 3px;
+            outline: 1px solid currentColor;
+        }
+
+        li[data-value="3"] {
+            color: #05f305;
+        }
+
+        li[data-value="2"] {
+            color: #0389da;
+        }
+
+        li[data-value="1"] {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -60,7 +78,7 @@
             <ol>
                 ${
                     contentList.trim().split('\n').map(content =>
-                        `<li>
+                        `<li class="item">
                             <span>${content}</span>
                             <form>
                                 <label><input type="radio" name="score" value="3">A</label>
@@ -73,7 +91,18 @@
             </ol>
         `;
         wrap.appendChild(item);
-    }
+    };
+
+    wrap.addEventListener('change', ({target}) => {
+        let li = target.parentElement.parentElement.parentElement;
+        let value = target.value;
+        li.dataset.value = target.value;
+        if (value === '0') {
+            li.classList.remove('active');
+        } else {
+            li.classList.add('active');
+        }
+    })
 </script>
 </body>
 </html>
