@@ -13,6 +13,7 @@
         }
 
         .content-item {
+            position: relative;
             width: 25%;
             box-sizing: border-box;
             border: 1px solid #ddd;
@@ -48,6 +49,19 @@
         li[data-value="1"] {
             color: red;
         }
+
+        .close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            font-weight: bold;
+            font-size: 20px;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -74,6 +88,7 @@
         let item = document.createElement('div');
         item.className = 'content-item';
         item.innerHTML = `
+            <span class="close">×</span>
             <h3>${category}</h3>
             <ol>
                 ${
@@ -101,6 +116,12 @@
             li.classList.remove('active');
         } else {
             li.classList.add('active');
+        }
+    });
+
+    wrap.addEventListener('click', ({target}) => {
+        if (target.className === 'close') {
+            target.parentElement.remove();
         }
     })
 </script>
