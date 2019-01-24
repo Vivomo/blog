@@ -30,6 +30,10 @@ http.createServer((req, res) => {
     let filePath = path.resolve(__dirname, url);
     let httpCode = null;
     let content = null;
+
+    if (!url.includes('.')) {
+        filePath += '.js'
+    }
     console.log(url, filePath);
 
     fs.readFile(filePath, function (err, data) {
@@ -40,8 +44,8 @@ http.createServer((req, res) => {
             httpCode = 200;
             content = data;
         }
-        let suffix = url.substr(url.lastIndexOf('.') + 1);
-        res.writeHeader(httpCode, getContentType(suffix));
+        let suffixMatch = url.match(/\.(\w+)/);
+        res.writeHeader(httpCode, getContentType(suffixMatch ? suffixMatch[1] : 'js'));
         res.write(content);
         res.end();
     });
