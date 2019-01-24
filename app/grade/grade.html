@@ -34,9 +34,22 @@
         }
 
         li.item {
+            position: relative;
             margin: 5px;
             padding: 5px;
             outline: 1px solid currentColor;
+        }
+
+        li.item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: currentColor;
+            opacity: 0.1;
+            z-index: -1;
         }
 
         li.item::after {
@@ -46,7 +59,7 @@
         }
 
         li[data-value="3"] {
-            color: #05f305;
+            color: #26d026;
         }
 
         li[data-value="2"] {
@@ -59,6 +72,7 @@
 
         h3 {
             padding-left: 0.5em;
+            color: #333;
         }
 
         label {
