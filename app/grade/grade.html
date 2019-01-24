@@ -73,7 +73,8 @@
 
 <div id="wrap"></div>
 
-<script>
+<script type="module">
+    import {q} from './q.js';
     let form = document.getElementById('addCategory');
     let category = document.getElementById('category');
     let contentList = document.getElementById('contentList');
@@ -123,7 +124,16 @@
         if (target.className === 'close') {
             target.parentElement.remove();
         }
-    })
+    });
+
+    let init = () => {
+        q.split('=====').forEach((item) => {
+            let [category, contentList] = item.split('---');
+            addCategory(category, contentList);
+        })
+    };
+
+    init();
 </script>
 </body>
 </html>
