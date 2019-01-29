@@ -23,8 +23,11 @@
 
     sound.once('load', function(){
         console.log(sound.duration());
-
     });
+
+    setInterval(() => {
+        console.log(sound.playing());
+    }, 3000);
 
     // Array.from(document.querySelectorAll('.sprite-btn')).forEach((elem) => {
     //     elem.addEventListener('click', function(){
