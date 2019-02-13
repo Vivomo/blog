@@ -70,12 +70,13 @@
     let progress = 0;
 
     function start() {
-        if (progress <= 50) {
-            rightArc.style.cssText = 'transform: rotate(' + (-135 + 3.6 * progress) + 'deg)';
+        let _progress = progress % 100;
+        if (_progress <= 50) {
+            rightArc.style.cssText = 'transform: rotate(' + (-135 + 3.6 * _progress) + 'deg)';
             leftArc.style.cssText = 'transform: rotate(-135deg)';
         } else {
             rightArc.style.cssText = 'transform: rotate(45deg)';
-            leftArc.style.cssText = 'transform: rotate(' + (-135 + 3.6 * (progress - 50)) + 'deg)';
+            leftArc.style.cssText = 'transform: rotate(' + (-135 + 3.6 * (_progress - 50)) + 'deg)';
         }
     }
 
@@ -83,7 +84,7 @@
     setInterval(function () {
         progress++;
         start();
-    }, 1000)
+    }, 16)
 </script>
 </body>
 </html>
