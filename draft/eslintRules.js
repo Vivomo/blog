@@ -848,7 +848,7 @@ const rules = [
     {
         name: 'prefer-const',
         desc: '要求使用 const 声明那些声明后不再被修改的变量',
-        recommend: 2,
+        recommend: 0,
         fixable: true
     },
     {
