@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>画线</title>
+</head>
+<body>
+<canvas id="c" width="600" height="600"></canvas>
+<script>
+    let ctx = document.getElementById('c').getContext('2d');
+
+    ctx.lineWidth = 10;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.moveTo(100, 100);
+    ctx.lineTo(200, 100);
+    ctx.lineTo(200, 200);
+    ctx.lineTo(100, 200);
+
+    ctx.stroke();
+</script>
+</body>
+</html>
