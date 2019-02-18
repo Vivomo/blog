@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ESlint 配置生成</title>
+</head>
+<body>
+<div>
+    <a href="https://eslint.org/docs/rules/" target="_blank">eslint english</a>
+</div>
+<div>
+    <a href="https://eslint.bootcss.com/docs/rules/" target="_blank">eslint 中文</a>
+</div>
+
+<form action="#" id="form">
+    <label><input type="checkbox" name="es6" checked>es6</label>
+    <label><input type="checkbox" name="react" checked>react</label>
+    <label><input type="checkbox" name="bestPractices" checked>最佳实践</label>
+    <label><input type="checkbox" name="nodeCommon">node common</label>
+    <label><input type="checkbox" name="possibleErrors" checked>可能的语法或逻辑错误有关</label>
+    <label><input type="checkbox" name="strict">strict</label>
+    <label><input type="checkbox" name="stylisticIssues" checked>一些主观的编程风格</label>
+    <label><input type="checkbox" name="variables" checked>变量相关</label>
+</form>
+<button id="create">生成规则</button>
+
+<pre id="config"></pre>
+
+<script type="module">
+    import rules from './src/index.js';
+
+    console.log(rules);
+
+    let configElem = document.getElementById('config');
+    document.getElementById('create').addEventListener('click', () => {
+        let rule = createRule();
+        configElem.innerText = JSON.stringify(rule, null, 4);
+    });
+
+    function getRuleTemplate() {
+        return {
+            'parserOptions': {
+                'ecmaFeatures': {},
+                'sourceType': 'module'
+            },
+            'parser': 'babel-eslint',
+            'plugins': [
+                'import'
+            ],
+            'rules': {},
+            'env': {
+                'browser': true
+            },
+            'extends': ['eslint:recommended']
+        }
+    }
+
+    function getFormData() {
+        let form = document.getElementById('form');
+        let data = {};
+        [...form.querySelectorAll('input:checked')].forEach((elem) => {
+            data[elem.name] = true;
+        });
+        return data;
+    }
+
+    function createRule() {
+        let template = getRuleTemplate();
+        let data = getFormData();
+        if (data.es6) {
+            Object.assign(template.parserOptions.ecmaFeatures, {
+                'experimentalObjectRestSpread': true,
+                'arrowFunctions': true,
+                'classes': true,
+                'modules': true,
+                'defaultParams': true
+            });
+            template.env.es6 = true;
+            rules.es6.forEach((rule) => {
+                if (rule.recommend !== 0) {
+                    template.rules[rule.name] = rule.value || rule.recommend;
+                }
+            });
+        }
+        if (data.react) {
+            Object.assign(template.parserOptions.ecmaFeatures, {
+                'jsx': true
+            });
+            template.plugins.push('react', 'jsx-a11y');
+            template.extends.push('react-app')
+        }
+
+        ['es6', 'bestPractices', 'nodeCommon', 'possibleErrors', 'strict', 'stylisticIssues', 'variables'].forEach((key) => {
+            if (data[key]) {
+                addRule(key, template)
+            }
+        });
+
+        return template;
+    }
+
+    function addRule(key, template) {
+        rules[key].forEach((rule) => {
+            if (rule.recommend !== 0) {
+                template.rules[rule.name] = rule.value || rule.recommend;
+            } else if (rule.belong === 'recommended') {
+                template.rules[rule.name] = 0;
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
