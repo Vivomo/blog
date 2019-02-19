@@ -69,3 +69,25 @@ http请求重定向为https请求导致的
 ```text
 当客户端content-type是 application/json 或请求方法不为post或get的时候
 ```
+
+* react hooks Only Call Hooks at the Top Level
+```text
+react hook 有对应的规则 (更新react版本 需要同步react-dom版本)
+https://reactjs.org/docs/hooks-rules.html
+```
+
+* eslint配置后 报错导致影响开发体验 和 编译问题
+```text
+webpack.config.(prod/dev).js eslint loader 如下配置
+ use: [
+  {
+    options: {
+      formatter: require.resolve('react-dev-utils/eslintFormatter'),
+      eslintPath: require.resolve('eslint'),
+        emitWarning: true
+    },
+    loader: require.resolve('eslint-loader'),
+  },
+],
+
+```
