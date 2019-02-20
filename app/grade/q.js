@@ -26,7 +26,9 @@ Array常用的遍历方法(map/every/some/forEach/reduce)
 addEventListener第三个参数
 call apply(,[args]) bind
 cmd(node)和amd(require.js)
-
+localstorage 和 cookie
+let 和 var 的区别
+=>函数和function的区别
 =====
 
 综合
