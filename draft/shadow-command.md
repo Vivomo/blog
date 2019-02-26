@@ -48,4 +48,6 @@ chmod +x bbr.sh
 
 # 输入lsmod | grep bbr 看到tcp_bbr代表成功了
  
+ 
+ (多用户设置 记得改防火墙)
 ```
