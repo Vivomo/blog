@@ -15,7 +15,8 @@ css常用单位
 如何实现一个正方形
 垂直居中 (position/flex/transform/table-cell)
 清除浮动方法
-
+css 常用选择器 ~ empty child not
+对优雅降级和渐进增强的理解
 =====
 
 JS
@@ -28,12 +29,13 @@ call apply(,[args]) bind
 cmd(node)和amd(require.js)
 localstorage 和 cookie
 let 和 var 的区别
-=>函数和function的区别
+=> 函数和function的区别
 =====
 
 综合
 ---
 通过一个图片url获取其大小
 vue双向绑定的原理
+vue的路由实现原理 popstate pushstate onhashchange
 zepto的点击穿透
 `;
