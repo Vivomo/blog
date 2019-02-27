@@ -38,4 +38,5 @@ let 和 var 的区别
 vue双向绑定的原理
 vue的路由实现原理 popstate pushstate onhashchange
 zepto的点击穿透
+location.query => object
 `;
