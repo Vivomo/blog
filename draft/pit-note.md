@@ -91,3 +91,13 @@ webpack.config.(prod/dev).js eslint loader 如下配置
 ],
 
 ```
+
+* js 转16进制 和java有区别, 当数值是负数的时候, 如下解决
+```js
+(-16777216 >>> 0).toString(16)
+```
+js 16进制字符串转数字
+```js
+Number('0xff000000') >> 0; // 或者
+Number('0xff000000') | 0
+```
