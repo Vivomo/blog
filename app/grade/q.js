@@ -39,4 +39,5 @@ vue双向绑定的原理
 vue的路由实现原理 popstate pushstate onhashchange
 zepto的点击穿透
 location.query => object
+判断一个dom元素在可视区
 `;
