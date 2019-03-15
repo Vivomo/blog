@@ -1,10 +1,15 @@
 export const q = `
-html
+React/Vue
 ---
-label的作用
-图片Alt和title的区别
-html语义化的理解
-
+vue双向绑定的原理
+setState异步
+自己写过什么组件
+高阶组件
+diff算法
+触发render
+有没有关注最近React版本的变化
+单页面应用的路由实现原理 popstate pushstate onhashchange
+状态管理
 =====
 
 CSS
@@ -39,10 +44,15 @@ let 和 var 的区别
 http请求和https请求区别(证书,端口,安全性)
 浏览器在使用HTTPS方式与Web服务器通信步骤(请求返回公钥)
 通过一个图片url获取其大小
-vue双向绑定的原理
-单页面应用的路由实现原理 popstate pushstate onhashchange
 zepto的点击穿透
 location.query => object
 判断一个dom元素在可视区
-有没有关注最近React版本的变化
+
+=====
+html
+---
+label的作用
+图片Alt和title的区别
+html语义化的理解
+
 `;
