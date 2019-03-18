@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css3 绘制自由角度弧度</title>
+    <style>
+        .arc-wrapper {
+            position: relative;
+            width: 199px;
+            height: 200px;
+        }
+
+        .arc-wrapper .wrapper {
+            width: 100px;
+            height: 200px;
+            position: absolute;
+            top: 0;
+            overflow: hidden;
+        }
+
+        .arc-wrapper .right {
+            right: 0;
+        }
+
+        .arc-wrapper .left {
+            left: 0;
+        }
+
+        .arc-wrapper .circle {
+            width: 160px;
+            height: 160px;
+            border: 20px solid #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            transform: rotate(-135deg);
+        }
+
+        .arc-wrapper .right-arc {
+            border-top: 20px solid green;
+            border-right: 20px solid green;
+            right: 0;
+        }
+
+        .arc-wrapper .left-arc {
+            border-bottom: 20px solid green;
+            border-left: 20px solid green;
+            left: 0;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="arc-wrapper">
+    <div class="wrapper right">
+        <div class="circle right-arc"></div>
+    </div>
+    <div class="wrapper left">
+        <div class="circle left-arc"></div>
+    </div>
+</div>
+<script>
+
+    let wrap = document.querySelector('.arc-wrapper');
+    let rightArc = wrap.querySelector('.right-arc');
+    let leftArc = wrap.querySelector('.left-arc');
+
+    let progress = 0;
+
+    function start() {
+        let _progress = progress % 100;
+        if (_progress <= 50) {
+            rightArc.style.cssText = 'transform: rotate(' + (-135 + 3.6 * _progress) + 'deg)';
+            leftArc.style.cssText = 'transform: rotate(-135deg)';
+        } else {
+            rightArc.style.cssText = 'transform: rotate(45deg)';
+            leftArc.style.cssText = 'transform: rotate(' + (-135 + 3.6 * (_progress - 50)) + 'deg)';
+        }
+    }
+
+    start();
+    setInterval(function () {
+        progress++;
+        start();
+    }, 16)
+</script>
+</body>
+</html>

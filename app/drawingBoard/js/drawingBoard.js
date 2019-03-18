@@ -61,6 +61,7 @@ DrawingBoard.prototype = {
         this.height = this.foreground.height;
         this.foreCtx = this.foreground.getContext('2d');
         this.foreCtx.lineCap = 'round';
+        this.foreCtx.lineJoin = 'round';
         this.foreCtx.lineWidth = 2;
     },
     /**

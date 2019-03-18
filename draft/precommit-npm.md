@@ -31,4 +31,18 @@ npm i husky lint-staged -D
     }
 }
 ```
+ignore 格式
+```json
+{
+  "lint-staged": {
+    "linters": {
+      "src/**/*.js": [
+        "eslint --fix",
+        "git add"
+      ]
+    },
+    "ignore": ["src/components/Editor"]
+  }
+}
+```
 

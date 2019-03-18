@@ -69,3 +69,37 @@ http请求重定向为https请求导致的
 ```text
 当客户端content-type是 application/json 或请求方法不为post或get的时候
 ```
+
+* react hooks Only Call Hooks at the Top Level
+```text
+react hook 有对应的规则 (更新react版本 需要同步react-dom版本)
+https://reactjs.org/docs/hooks-rules.html
+```
+
+* eslint配置后 报错导致影响开发体验 和 编译问题
+```text
+webpack.config.(prod/dev).js eslint loader 如下配置
+ use: [
+  {
+    options: {
+      formatter: require.resolve('react-dev-utils/eslintFormatter'),
+      eslintPath: require.resolve('eslint'),
+        emitWarning: true
+    },
+    loader: require.resolve('eslint-loader'),
+  },
+],
+
+```
+
+* js 转16进制 和java有区别, 当数值是负数的时候, 如下解决
+```js
+(-16777216 >>> 0).toString(16)
+```
+js 16进制字符串转数字
+```js
+Number('0xff000000') >> 0; // 或者
+Number('0xff000000') | 0
+```
+
+* 重置canvas宽度后, ctx的属性会还原, 所以需要提前保存设置过的值, 然后再次赋值
