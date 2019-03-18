@@ -29,14 +29,16 @@ JS
 typeof(function/number/boolean/object/string/undefined/symbol)
 闭包的优点
 Array常用的遍历方法(map/every/some/forEach/reduce)
+some every 空数组执行结果 (F/T)
+给数组length赋值
+数组去重
 addEventListener第三个参数
 call apply(,[args]) bind
 cmd(node)和amd(require.js)
 localstorage 和 cookie
 let 和 var 的区别
 => 函数和function的区别
-给数组length赋值
-数组去重
+new 的过程
 =====
 
 综合
@@ -47,7 +49,8 @@ http请求和https请求区别(证书,端口,安全性)
 zepto的点击穿透
 location.query => object
 判断一个dom元素在可视区
-
+瀑布流
+懒加载
 =====
 html
 ---
