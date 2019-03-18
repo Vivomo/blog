@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dom-parser": "^0.1.5"
+    "dom-parser": "^0.1.5",
+    "request": "^2.88.0"
   }
 }
