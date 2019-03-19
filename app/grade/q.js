@@ -3,7 +3,7 @@ React/Vue
 ---
 vue双向绑定的原理
 setState异步
-自己写过什么组件
+自己写过什么组件/中间件
 高阶组件
 diff算法
 触发render
@@ -22,6 +22,7 @@ css常用单位
 如何实现一个正方形
 css 常用选择器 ~ empty child not
 对优雅降级和渐进增强的理解
+transform的优缺点
 =====
 
 JS
@@ -49,7 +50,7 @@ http请求和https请求区别(证书,端口,安全性)
 zepto的点击穿透
 location.query => object
 判断一个dom元素在可视区
-瀑布流
+瀑布流/lazyload
 懒加载
 =====
 html
