@@ -167,6 +167,11 @@
             animation-name: rotate;
             animation-iteration-count: infinite;
             animation-timing-function: linear;
+            transition: all 0.6s;
+        }
+
+        .ocean.light:before, .ocean.light:after {
+            background-color: #fff;
         }
 
         .ocean:before {
@@ -218,7 +223,7 @@
             margin: 0 auto;
             width: 100px;
             height: 100px;
-            color: #fff;
+            color: #ececec;
             background: currentColor;
         }
 
@@ -245,7 +250,7 @@
             height: 150px;
             bottom: 100%;
             left: 50%;
-            color: #fff;
+            color: #ececec;
             background: currentColor;
         }
 
@@ -268,6 +273,10 @@
             max-width: 90%;
             word-break: break-all;
             text-align: left;
+        }
+
+        .boat .dialog:empty {
+            visibility: hidden;
         }
 
 
@@ -299,17 +308,53 @@
             border-color: transparent transparent transparent currentColor;
         }
 
+        #sun {
+            position: absolute;
+            left: -300px;
+            top: 400px;
+            z-index: 2;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #F29907;
+            transition: all 1.2s;
+        }
+
+        #sun.show {
+            left: 300px;
+            top: 200px;
+        }
+
+        #sky {
+            position: absolute;
+            z-index: 1;
+            top: -70vh;
+            left: 0;
+            right: 0;
+            height: 70vh;
+            transition: all 1.2s;
+            background: linear-gradient(#1d1df5, #1d1df5 70%, #fff);
+        }
+
+        #sky.show {
+            top: 0;
+        }
+
         @keyframes rotate2 {
             0% {
+                transform: translate3d(0, 0, 0) rotateZ(0deg);
+            }
+
+            25% {
                 transform: translate3d(0, 0, 0) rotateZ(-5deg);
             }
 
-            50% {
+            75% {
                 transform: translate3d(0, 0, 0) rotateZ(5deg);
             }
 
             100% {
-                transform: translate3d(0, 0, 0) rotateZ(-5deg);
+                transform: translate3d(0, 0, 0) rotateZ(0deg);
             }
         }
 
@@ -337,7 +382,7 @@
 </section>
 
 <section id="s2">
-    <h2>凡尔纳说过: <br>把两艘传放在海上,<br> 即使没有浪, 他们也会相遇</h2>
+    <h2>凡尔纳说过: <br>把两艘船放在海上,<br> 即使没有浪, 他们也会相遇</h2>
 </section>
 
 <section id="s3">
@@ -362,12 +407,15 @@
     </div>
 
     <div class="boat" id="weimu">
+        <div class="dialog"></div>
         <div class="sail"></div>
         <div class="bottom">
             <div class="boat-name">帷幕</div>
         </div>
     </div>
-    <div class="ocean"></div>
+    <div id="sun"></div>
+    <div id="sky"></div>
+    <div class="ocean" id="ocean"></div>
 </section>
 <script>
     let s1Wrap = document.getElementById('s1');
@@ -380,24 +428,50 @@
         })
     };
 
-    // delay(1000)
-    //     .then(() => delay(2000, console.log(2)))
-    //     .then(() => delay(2000, console.log(3)))
-
 
     Promise.prototype.delay = function(t) {
         return this.then(function(v) {
             return delay(t, v);
         });
-    }
+    };
 
-    delay(1000).then(() => {
-        console.log(1)
-    }).delay(1000).then(() => {
-        console.log(2)
-    }).delay(1000).then(() => {
-        console.log(3)
-    })
+
+    let herDialog = document.querySelector('#FFFFFF .dialog');
+
+    let myDialog = document.querySelector('#weimu .dialog');
+    let sheSay = (msg = '') => {
+        herDialog.innerHTML = msg;
+    };
+
+    let ISay = (msg = '') => {
+        myDialog.innerHTML = msg;
+    };
+
+    let monthE = document.getElementById('month');
+    let dateE = document.getElementById('date');
+    let hourE = document.getElementById('hour');
+    let minuteE = document.getElementById('minute');
+
+    let setTime = (month, date, hour, minute) => {
+        setAniNum(monthE, month);
+        setAniNum(dateE, date);
+        setAniNum(hourE, hour);
+        setAniNum(minuteE, minute);
+    };
+
+    let setAniNum = (elem, num) => {
+        let prevNum = ~~elem.innerHTML;
+        let interval = setInterval(() => {
+            if (prevNum > num) {
+                prevNum--;
+            } else if (prevNum < num) {
+                prevNum++;
+            } else {
+                clearInterval(interval);
+            }
+            elem.innerHTML = prevNum;
+        }, 100);
+    };
 
     let Secret = {
         s1() {
@@ -445,10 +519,111 @@
             let time = document.getElementById('time');
             let systemInfo = document.getElementById('systemInfo');
             time.classList.add('show');
-            systemInfo.innerText = '系统提示:我们已经是好友了,一起来聊天吧!';
-            delay(100).then(() => {
-
-            })
+            delay(1000).then(() => {
+                systemInfo.innerText = '系统提示:我们已经是好友了,一起来聊天吧!';
+            }).delay(2000).then(() => {
+                sheSay('这是3.07的文档')
+            }).delay(1500).then(() => {
+                ISay('OK, ********....')
+            }).delay(1500).then(() => {
+                sheSay('*****......')
+            }).delay(1500).then(() => {
+                ISay('.....***********')
+            }).delay(3000).then(() => {
+                setTime(3, 22, 16, 43);
+                sheSay();
+                ISay();
+            }).delay(5000).then(() => {
+                ISay('你来施强多久了')
+            }).delay(1000).then(() => {
+                sheSay('快两年了')
+            }).delay(1000).then(() => {
+                sheSay('怎么啦')
+            }).delay(2000).then(() => {
+                ISay('没...怎么')
+            }).delay(2000).then(() => {
+                sheSay('我要走啦')
+            }).delay(2000).then(() => {
+                ISay('啊?....')
+            }).delay(2000).then(() => {
+                sheSay();
+                ISay();
+            }).delay(3000).then(() => {
+                setTime(3, 23, 13, 51);
+            }).delay(5000).then(() => {
+                ISay('研发大会你没来?')
+            }).delay(1500).then(() => {
+                sheSay('点我名了吗?')
+            }).delay(1500).then(() => {
+                ISay('没有...')
+            }).delay(1500).then(() => {
+                sheSay()
+                ISay()
+            }).delay(1500).then(() => {
+                ISay('(其实点了...我心里点了一遍又一遍你的名字,你始终没有出现...)')
+            }).delay(3000).then(() => {
+                setTime(3, 22, 21, 49);
+                sheSay();
+                ISay();
+            }).delay(5000).then(() => {
+                ISay('你是哪里人?')
+            }).delay(1500).then(() => {
+                sheSay('河北')
+            }).delay(1500).then(() => {
+                ISay('河北哪?')
+            }).delay(1500).then(() => {
+                sheSay('邢台')
+            }).delay(1500).then(() => {
+                ISay('我沧州[拥抱]')
+            }).delay(1500).then(() => {
+                sheSay('相见恨晚')
+            }).delay(1500).then(() => {
+                ISay('早点认识你就好了....')
+            }).delay(3000).then(() => {
+                setTime(3, 24, 21, 6);
+                sheSay();
+                ISay();
+            }).delay(5000).then(() => {
+                sheSay('我2019以前都是留长发的')
+            }).delay(1500).then(() => {
+                ISay('一定很美')
+            }).delay(2000).then(() => {
+                sheSay('剪了最近又纠结要不要留长发')
+            }).delay(1500).then(() => {
+                ISay()
+            }).delay(3000).then(() => {
+                ISay('(好想陪你长发及腰)')
+                sheSay()
+            }).delay(3000).then(() => {
+                ISay('你拍照好厉害!');
+            }).delay(2000).then(() => {
+                sheSay('随手拍的')
+            }).delay(2000).then(() => {
+                ISay('你很喜欢旅游吧')
+            }).delay(1000).then(() => {
+                sheSay('嗯')
+            }).delay(2000).then(() => {
+                sheSay('不一定要去很远的地方')
+                ISay()
+            }).delay(2000).then(() => {
+                sheSay('有阳光就可以');
+                document.getElementById('ocean').classList.add('light');
+                document.getElementById('sun').classList.add('show');
+            }).delay(5000).then(() => {
+                sheSay('我很喜欢蓝天');
+                document.getElementById('sky').classList.add('show');
+            }).delay(5000).then(() => {
+                ISay('我很喜欢你...');
+            }).delay(5000).then(() => {
+                ISay('喜欢很久了...');
+                sheSay();
+            }).delay(3000).then(() => {
+                ISay('喜欢你充满灵性的双眼');
+            }).delay(3000).then(() => {
+                ISay('缜密的思维');
+            }).delay(3000).then(() => {
+                ISay('善于发现美的心...');
+            });
 
         },
         start() {
