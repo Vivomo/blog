@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>一个秘密</title>
+    <meta content="target-densitydpi=device-dpi, width=750,shrink-to-fit=no, maximum-scale=1, user-scalable=no"
+          name="viewport">
+    <style>
+        body {
+            font: 24px "Microsoft YaHei";
+            color: #5797fb;
+            text-align: center;
+            background: #000;
+        }
+
+        section {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .fff {
+            color: #fff;
+        }
+
+        .blue {
+            color: #007FFF;
+        }
+
+        h2, h3 {
+            letter-spacing: 4px;
+            text-align: center;
+        }
+
+        .faker-input {
+            position: relative;
+            width: 60%;
+            height: 80px;
+            margin: 0 auto;
+            font-size: 48px;
+            text-align: center;
+            border: 2px solid currentColor;
+            border-radius: 8px;
+        }
+
+        .faker-input:empty::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            top: 10%;
+            bottom: 10%;
+            left: 6px;
+            background: currentColor;
+            animation: flash 0.5s infinite;
+        }
+
+        .faker-input:empty ~ h4 {
+            opacity: 0;
+        }
+
+        .huaji {
+            position: absolute;
+            left: 100%;
+            top: 100%;
+            width: 100px;
+            height: 100px;
+            background: url("data:image/png;base64,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") 0 0 / 100%;
+            transition: all 1s cubic-bezier(0.12, 1.54, 1, 1);
+        }
+
+        .huaji.show {
+            left: 0;
+            top: 0;
+        }
+
+        #s1 {
+            display: none;
+        }
+
+        @keyframes flash {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .ocean {
+            position: relative;
+            align-items: center;
+            min-height: 100vh;
+            background-color: rgb(118, 218, 255);
+            overflow: hidden;
+        }
+
+        .ocean:before, .ocean:after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            min-width: 300vw;
+            min-height: 300vw;
+            background-color: #000;
+            animation-name: rotate;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        .ocean:before {
+            bottom: 15vh;
+            border-radius: 45%;
+            animation-duration: 10s;
+        }
+
+        .ocean:after {
+            bottom: 12vh;
+            opacity: .5;
+            border-radius: 47%;
+            animation-duration: 10s;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: translate(-50%, 0) rotateZ(0deg);
+            }
+            50% {
+                transform: translate(-50%, -2%) rotateZ(180deg);
+            }
+            100% {
+                transform: translate(-50%, 0%) rotateZ(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<section id="s1">
+    <h2>想告诉妳一个秘密</h2>
+    <h3>请输入你的名字</h3>
+    <div class="faker-input" id="fakerInput"></div>
+    <h4>O(∩_∩)O哈哈~ 其实不用输入, 这个是只告诉你一个人的</h4>
+    <h4>你现在有没有在笑?</h4>
+    <div class="huaji"></div>
+</section>
+
+<section id="s2">
+    <h2>凡尔纳说过: <br>把两艘传放在海上,<br> 即使没有浪, 他们也会相遇</h2>
+
+</section>
+
+<section id="s3">
+    <div class="ocean"></div>
+</section>
+<script>
+    // 1
+    let fakerInput = document.getElementById('fakerInput');
+    let setName = () => {
+        setTimeout(() => {
+            fakerInput.innerHTML = '郝晓晗';
+        }, 1000);
+        fakerInput.removeEventListener('click', setName);
+    };
+    fakerInput.addEventListener('click', setName);
+
+    // 2
+</script>
+</body>
+</html>
