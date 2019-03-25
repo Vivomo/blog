@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>一个秘密</title>
-    <meta content="target-densitydpi=device-dpi, width=750,shrink-to-fit=no, maximum-scale=1, user-scalable=no"
-          name="viewport">
+    <title>^_^</title>
+    <meta content="width=750,shrink-to-fit=no, maximum-scale=1, user-scalable=no" name="viewport">
     <!--common-->
     <style>
         body {
@@ -210,7 +209,7 @@
             z-index: 1;
             width: 300px;
             bottom: 60px;
-            transition: transform 2s ease-in-out;
+            transition: all 2s ease-in-out;
         }
 
         .boat-name {
@@ -306,6 +305,10 @@
             left: 100%;
             right: initial;
             border-color: transparent transparent transparent currentColor;
+        }
+
+        #weimu.express {
+            right: 200px;
         }
 
         #sun {
@@ -622,16 +625,17 @@
             }).delay(3000).then(() => {
                 ISay('缜密的思维');
             }).delay(3000).then(() => {
-                ISay('善于发现美的心...');
+                ISay('善于发现美的心');
+            }).delay(3000).then(() => {
+                ISay('你的一切...');
+            }).delay(5000).then(() => {
+                ISay('❀可以做我女朋友吗❀');
+                document.getElementById('weimu').classList.add('express');
             });
-
-        },
-        start() {
-            this.s1();
         }
     };
     setTimeout(() => {
-        Secret.s2();
+        Secret.s1();
     });
 
 
