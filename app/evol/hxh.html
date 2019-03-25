@@ -123,6 +123,7 @@
     <style>
         #s2 {
             display: none;
+            transition: all 1s;
         }
 
         #s2 h2 {
@@ -138,12 +139,22 @@
     </style>
     <style>
 
+        #s3 {
+            display: none;
+        }
+
         .ocean {
             position: relative;
             align-items: center;
             min-height: 100vh;
             background-color: rgb(118, 218, 255);
             overflow: hidden;
+            opacity: 0;
+            transition: all 1s linear 1s;
+        }
+
+        #s3.active .ocean {
+            opacity: 1;
         }
 
         .ocean:before, .ocean:after {
@@ -183,6 +194,7 @@
             z-index: 1;
             width: 300px;
             bottom: 60px;
+            transition: transform 2s ease-in-out;
         }
 
         .boat-name {
@@ -238,16 +250,44 @@
 
         #FFFFFF {
             left: 30px;
+            transform: translate3d(-200%, 0, 0);
         }
 
         #weimu {
             right: 30px;
+            transform: translate3d(200%, 0, 0);
+        }
+
+        #s3.show-boat #FFFFFF, #s3.show-boat #weimu{
+            transform: translate3d(0, 0, 0);
+        }
+
+        #s3.show-boat #FFFFFF {
+            animation: rotate2 6s infinite 2.1s;
+        }
+
+        #s3.show-boat #weimu {
+            animation: rotate2 6s infinite 2.3s;
         }
 
         #weimu .sail:before {
             left: 100%;
             right: initial;
             border-color: transparent transparent transparent currentColor;
+        }
+
+        @keyframes rotate2 {
+            0% {
+                transform: translate3d(0, 0, 0) rotateZ(-5deg);
+            }
+
+            50% {
+                transform: translate3d(0, 0, 0) rotateZ(5deg);
+            }
+
+            100% {
+                transform: translate3d(0, 0, 0) rotateZ(-5deg);
+            }
         }
 
         @keyframes rotate {
@@ -333,21 +373,37 @@
                 s2Wrap.classList.add('show');
                 setTimeout(() => {
                     s2Wrap.classList.add('active');
+                    setTimeout(() => {
+                        s2Wrap.classList.add('hide');
+                        setTimeout(this.s3.bind(this), 2000)
+                    }, 5000);
                 })
             }, 2000)
+        },
+
+        s3() {
+            s2Wrap.remove();
+            s3Wrap.classList.add('show');
+            setTimeout(() => {
+                s3Wrap.classList.add('active');
+                setTimeout(() => {
+                    s3Wrap.classList.add('show-boat');
+                    setTimeout(this.loadHistory.bind(this), 4000);
+                }, 2000);
+            });
+        },
+
+        loadHistory() {
+
         },
         start() {
             this.s1();
         }
     };
     setTimeout(() => {
-        Secret.start();
+        Secret.s2();
     });
-
-
-    // 2
-
-    // 3
+    
 
 </script>
 </body>
