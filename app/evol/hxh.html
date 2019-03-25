@@ -126,6 +126,64 @@
             transform: translate3d(0, 120px, 0);
         }
 
+        .boat {
+            position: absolute;
+            z-index: 1;
+            width: 300px;
+            bottom: 60px;
+        }
+
+        .boat-name {
+            line-height: 4;
+            color: #000;
+        }
+
+        .boat .bottom {
+            position: relative;
+            margin: 0 auto;
+            width: 100px;
+            height: 100px;
+            color: #fff;
+            background: currentColor;
+        }
+
+        .boat .bottom:before, .boat .bottom:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            border: 50px solid;
+        }
+
+        .boat .bottom:before {
+            right: 100%;
+            border-color: currentColor currentColor transparent transparent;
+        }
+
+        .boat .bottom:after {
+            left: 100%;
+            border-color: currentColor transparent transparent currentColor;
+        }
+
+        .boat .sail {
+            position: absolute;
+            width: 10px;
+            height: 150px;
+            bottom: 100%;
+            left: 50%;
+            color: #fff;
+            background: currentColor;
+        }
+
+        .boat .sail:before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 100%;
+            border-width: 60px 90px;
+            border-style: solid;
+            border-color: transparent currentColor transparent transparent;
+        }
+
         @keyframes rotate {
             0% {
                 transform: translate(-50%, 0) rotateZ(0deg);
@@ -162,6 +220,12 @@
 
         <span class="hour" id="hour">16</span> :
         <span class="minute" id="minute">56</span>
+    </div>
+    <div class="boat">
+        <div class="sail"></div>
+        <div class="bottom">
+            <div class="boat-name">FFFFFF</div>
+        </div>
     </div>
     <div class="ocean"></div>
 </section>
