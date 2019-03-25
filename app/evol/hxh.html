@@ -5,6 +5,7 @@
     <title>一个秘密</title>
     <meta content="target-densitydpi=device-dpi, width=750,shrink-to-fit=no, maximum-scale=1, user-scalable=no"
           name="viewport">
+    <!--common-->
     <style>
         body {
             font: 24px "Microsoft YaHei";
@@ -12,25 +13,50 @@
             text-align: center;
             background: #000;
         }
-
         section {
             position: relative;
             height: 100vh;
             overflow: hidden;
         }
 
-        .fff {
-            color: #fff;
-        }
-
-        .blue {
-            color: #007FFF;
-        }
-
         h2, h3 {
             letter-spacing: 4px;
-            text-align: center;
         }
+
+        h4 {
+            font-size: 30px;
+        }
+    </style>
+    
+    <style>
+        #s1 {
+            transition: all 1s;
+        }
+
+        #s1.hide {
+            opacity: 0;
+        }
+
+        #s1.active .s1-1, #s1.active .s1-2, #s1.active .s1-3{
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .s1-1, .s1-2, .s1-3 {
+            opacity: 0;
+            transform: translate3d(0, -100%, 0);
+            transition: all 0.6s;
+        }
+
+        .s1-2 {
+            transition-delay: 1s;
+        }
+
+        .s1-3 {
+            transition-delay: 2s;
+        }
+
+
 
         .faker-input {
             position: relative;
@@ -56,6 +82,12 @@
 
         .faker-input:empty ~ h4 {
             opacity: 0;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .faker-input ~ h4 {
+            transition: all 0.6s 1s;
+            transform: translate3d(0, 80px, 0);
         }
 
         .huaji {
@@ -65,7 +97,7 @@
             width: 100px;
             height: 100px;
             background: url("data:image/png;base64,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") 0 0 / 100%;
-            transition: all 1s cubic-bezier(0.12, 1.54, 1, 1);
+            transition: all 2s cubic-bezier(0.12, 1.54, 1, 1);
         }
 
         .huaji.show {
@@ -73,9 +105,6 @@
             top: 0;
         }
 
-        #s1 {
-            display: none;
-        }
 
         @keyframes flash {
             from {
@@ -213,12 +242,12 @@
 </head>
 <body>
 <section id="s1">
-    <h2>想告诉妳一个秘密</h2>
-    <h3>请输入你的名字</h3>
-    <div class="faker-input" id="fakerInput"></div>
-    <h4>O(∩_∩)O哈哈~ 其实不用输入, 这个是只告诉你一个人的</h4>
-    <h4>你现在有没有在笑?</h4>
-    <div class="huaji"></div>
+    <h2 class="s1-1">想和你说一段心里话</h2>
+    <h3 class="s1-2">请输入妳的名字</h3>
+    <div class="faker-input s1-3" id="fakerInput"></div>
+    <h4>O(∩_∩)O哈哈~ 其实不用输入, <br>这个是只告诉妳一个人的</h4>
+    <h4>妳有没有微微一笑?</h4>
+    <div class="huaji" id="huaji"></div>
 </section>
 
 <section id="s2">
@@ -235,6 +264,8 @@
         <span class="hour" id="hour">16</span> :
         <span class="minute" id="minute">56</span>
     </div>
+
+
     <div class="boat" id="FFFFFF">
         <div class="sail"></div>
         <div class="bottom">
@@ -249,19 +280,50 @@
         </div>
     </div>
     <div class="ocean"></div>
+    <div class="chat-box">
+
+    </div>
 </section>
 <script>
-    // 1
-    let fakerInput = document.getElementById('fakerInput');
-    let setName = () => {
-        setTimeout(() => {
-            fakerInput.innerHTML = '郝晓晗';
-        }, 1000);
-        fakerInput.removeEventListener('click', setName);
+    let s1Wrap = document.getElementById('s1');
+    let s2Wrap = document.getElementById('s2');
+    let s3Wrap = document.getElementById('s3');
+
+    let Secret = {
+        s1() {
+            let huaji = document.getElementById('huaji');
+            s1Wrap.classList.add('active');
+            let fakerInput = document.getElementById('fakerInput');
+            let setName = () => {
+                setTimeout(() => {
+                    huaji.classList.add('show');
+                    setTimeout(this.s2.bind(this), 4000);
+                }, 6000);
+                fakerInput.innerHTML = '郝晓晗';
+                fakerInput.removeEventListener('click', setName);
+            };
+            fakerInput.addEventListener('click', setName);
+        },
+        s2() {
+            s1Wrap.classList.add('hide');
+            setTimeout(() => {
+                s1Wrap.remove();
+                s2Wrap.classList.add('show');
+            }, 2000)
+        },
+        start() {
+            this.s1();
+        }
     };
-    fakerInput.addEventListener('click', setName);
+    setTimeout(() => {
+        Secret.start();
+    });
+
 
     // 2
+
+    // 3
+
 </script>
 </body>
 </html>
