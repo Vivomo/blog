@@ -19,6 +19,14 @@
             overflow: hidden;
         }
 
+        section.show {
+            display: block;
+        }
+
+        section.hide {
+            opacity: 0;
+        }
+
         h2, h3 {
             letter-spacing: 4px;
         }
@@ -27,14 +35,11 @@
             font-size: 30px;
         }
     </style>
-    
+
+    <!--s1-->
     <style>
         #s1 {
             transition: all 1s;
-        }
-
-        #s1.hide {
-            opacity: 0;
         }
 
         #s1.active .s1-1, #s1.active .s1-2, #s1.active .s1-3{
@@ -55,8 +60,6 @@
         .s1-3 {
             transition-delay: 2s;
         }
-
-
 
         .faker-input {
             position: relative;
@@ -114,6 +117,17 @@
                 opacity: 1;
             }
         }
+    </style>
+
+    <!--s2-->
+    <style>
+        #s2 {
+            display: none;
+        }
+
+     
+    </style>
+    <style>
 
         .ocean {
             position: relative;
