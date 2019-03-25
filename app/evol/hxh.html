@@ -185,8 +185,19 @@
         .time {
             position: relative;
             z-index: 2;
-            font-size: 36px;
+            font-size: 48px;
             transform: translate3d(0, 120px, 0);
+            opacity: 0;
+        }
+
+        .time.show {
+            opacity: 1;
+        }
+
+        .system-info {
+            position: relative;
+            z-index: 2;
+            transform: translate3d(0, 150px, 0);
         }
 
         .boat {
@@ -247,6 +258,18 @@
             border-style: solid;
             border-color: transparent currentColor transparent transparent;
         }
+
+        .boat .dialog {
+            position: absolute;
+            bottom: 264px;
+            padding: 10px;
+            border: 2px solid;
+            border-radius: 6px;
+            max-width: 90%;
+            word-break: break-all;
+            text-align: left;
+        }
+
 
         #FFFFFF {
             left: 30px;
@@ -318,7 +341,7 @@
 </section>
 
 <section id="s3">
-    <div class="time">
+    <div class="time" id="time">
         <span class="year" id="year">2019</span> /
         <span class="month" id="month">01</span> /
         <span class="date" id="date">22</span>
@@ -327,8 +350,11 @@
         <span class="minute" id="minute">56</span>
     </div>
 
+    <div class="system-info" id="systemInfo"></div>
+
 
     <div class="boat" id="FFFFFF">
+        <div class="dialog"></div>
         <div class="sail"></div>
         <div class="bottom">
             <div class="boat-name">FFFFFF</div>
@@ -342,14 +368,36 @@
         </div>
     </div>
     <div class="ocean"></div>
-    <div class="chat-box">
-
-    </div>
 </section>
 <script>
     let s1Wrap = document.getElementById('s1');
     let s2Wrap = document.getElementById('s2');
     let s3Wrap = document.getElementById('s3');
+
+    const delay = (t, v) => {
+        return new Promise((resolve) => {
+            setTimeout(resolve.bind(null, v), t)
+        })
+    };
+
+    // delay(1000)
+    //     .then(() => delay(2000, console.log(2)))
+    //     .then(() => delay(2000, console.log(3)))
+
+
+    Promise.prototype.delay = function(t) {
+        return this.then(function(v) {
+            return delay(t, v);
+        });
+    }
+
+    delay(1000).then(() => {
+        console.log(1)
+    }).delay(1000).then(() => {
+        console.log(2)
+    }).delay(1000).then(() => {
+        console.log(3)
+    })
 
     let Secret = {
         s1() {
@@ -394,6 +442,13 @@
         },
 
         loadHistory() {
+            let time = document.getElementById('time');
+            let systemInfo = document.getElementById('systemInfo');
+            time.classList.add('show');
+            systemInfo.innerText = '系统提示:我们已经是好友了,一起来聊天吧!';
+            delay(100).then(() => {
+
+            })
 
         },
         start() {
@@ -403,7 +458,7 @@
     setTimeout(() => {
         Secret.s2();
     });
-    
+
 
 </script>
 </body>
