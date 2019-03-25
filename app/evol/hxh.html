@@ -184,6 +184,20 @@
             border-color: transparent currentColor transparent transparent;
         }
 
+        #FFFFFF {
+            left: 30px;
+        }
+
+        #weimu {
+            right: 30px;
+        }
+
+        #weimu .sail:before {
+            left: 100%;
+            right: initial;
+            border-color: transparent transparent transparent currentColor;
+        }
+
         @keyframes rotate {
             0% {
                 transform: translate(-50%, 0) rotateZ(0deg);
@@ -221,10 +235,17 @@
         <span class="hour" id="hour">16</span> :
         <span class="minute" id="minute">56</span>
     </div>
-    <div class="boat">
+    <div class="boat" id="FFFFFF">
         <div class="sail"></div>
         <div class="bottom">
             <div class="boat-name">FFFFFF</div>
+        </div>
+    </div>
+
+    <div class="boat" id="weimu">
+        <div class="sail"></div>
+        <div class="bottom">
+            <div class="boat-name">帷幕</div>
         </div>
     </div>
     <div class="ocean"></div>
