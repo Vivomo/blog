@@ -119,6 +119,13 @@
             animation-duration: 10s;
         }
 
+        .time {
+            position: relative;
+            z-index: 2;
+            font-size: 36px;
+            transform: translate3d(0, 120px, 0);
+        }
+
         @keyframes rotate {
             0% {
                 transform: translate(-50%, 0) rotateZ(0deg);
@@ -148,6 +155,14 @@
 </section>
 
 <section id="s3">
+    <div class="time">
+        <span class="year" id="year">2019</span> /
+        <span class="month" id="month">01</span> /
+        <span class="date" id="date">22</span>
+
+        <span class="hour" id="hour">16</span> :
+        <span class="minute" id="minute">56</span>
+    </div>
     <div class="ocean"></div>
 </section>
 <script>
