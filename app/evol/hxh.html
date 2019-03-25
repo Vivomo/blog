@@ -20,7 +20,7 @@
         }
 
         section.show {
-            display: block;
+            display: block!important;
         }
 
         section.hide {
@@ -54,11 +54,11 @@
         }
 
         .s1-2 {
-            transition-delay: 1s;
+            transition-delay: 2s;
         }
 
         .s1-3 {
-            transition-delay: 2s;
+            transition-delay: 3s;
         }
 
         .faker-input {
@@ -125,7 +125,16 @@
             display: none;
         }
 
-     
+        #s2 h2 {
+            opacity: 0;
+            transform: translate3d(0, 200%, 0);
+            transition: all 1s;
+        }
+
+        #s2.active h2 {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
     </style>
     <style>
 
@@ -266,7 +275,6 @@
 
 <section id="s2">
     <h2>凡尔纳说过: <br>把两艘传放在海上,<br> 即使没有浪, 他们也会相遇</h2>
-
 </section>
 
 <section id="s3">
@@ -323,6 +331,9 @@
             setTimeout(() => {
                 s1Wrap.remove();
                 s2Wrap.classList.add('show');
+                setTimeout(() => {
+                    s2Wrap.classList.add('active');
+                })
             }, 2000)
         },
         start() {
