@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>↑↓阻止滚动</title>
+    <style>
+        div {
+            height: 80vh;
+            background: #00eaff;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+
+
+<script>
+    document.body.addEventListener('keydown', function(e) {
+        if (e.keyCode < 50) {
+            e.preventDefault();
+        }
+    })
+</script>
+</body>
+</html>
