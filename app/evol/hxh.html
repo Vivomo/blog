@@ -629,8 +629,11 @@
             }).delay(3000).then(() => {
                 ISay('妳的一切...');
             }).delay(5000).then(() => {
-                ISay('❀可以做我女朋友吗❀(Q)');
+                ISay('❀可以做我女朋友吗❀');
                 document.getElementById('weimu').classList.add('express');
+            }).delay(5000).then(() => {
+                let msg = prompt('妳的回答:');
+                sheSay(msg);
             });
         }
     };
