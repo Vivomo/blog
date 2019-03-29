@@ -82,23 +82,6 @@
             animation-duration: 10s;
         }
 
-        .time {
-            position: relative;
-            z-index: 2;
-            font-size: 48px;
-            transform: translate3d(0, 120px, 0);
-            opacity: 0;
-        }
-
-        .time.show {
-            opacity: 1;
-        }
-
-        .system-info {
-            position: relative;
-            z-index: 2;
-            transform: translate3d(0, 150px, 0);
-        }
 
         .boat {
             position: absolute;
@@ -175,22 +158,14 @@
         }
 
 
-        #FFFFFF {
-            left: 30px;
-            transform: translate3d(-200%, 0, 0);
-        }
 
         #weimu {
             right: 30px;
             transform: translate3d(200%, 0, 0);
         }
 
-        #s3.show-boat #FFFFFF, #s3.show-boat #weimu{
+        #s3.show-boat #weimu{
             transform: translate3d(0, 0, 0);
-        }
-
-        #s3.show-boat #FFFFFF {
-            animation: rotate2 6s infinite 2.1s;
         }
 
         #s3.show-boat #weimu {
