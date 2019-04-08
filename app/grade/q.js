@@ -53,6 +53,7 @@ location.query => object
 判断一个dom元素在可视区
 瀑布流/lazyload
 懒加载
+并发请求处理
 =====
 html
 ---
