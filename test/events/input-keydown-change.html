@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>input keydown change 执行顺序</title>
+</head>
+<body>
+    <input type="text" id="inp" placeholder="">
+    <script>
+        let inp = document.getElementById('inp');
+        inp.addEventListener('keydown', (e) => {
+            console.log('keydown', e.keyCode, e.target.value);
+            setTimeout(() => {
+                console.log('keydown', e.keyCode, e.target.value);
+            }, 0);
+        });
+
+        inp.addEventListener('change', (e) => {
+            console.log('change', e.target.value);
+        });
+    </script>
+</body>
+</html>
