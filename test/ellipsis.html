@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .wrap {
+            height: 40px;
+            line-height: 20px;
+            overflow: hidden;
+        }
+
+        .wrap .text {
+            float: right;
+            margin-left: -5px;
+            width: 100%;
+            word-break: break-all;
+        }
+
+        .wrap::before {
+            float: left;
+            width: 5px;
+            content: '';
+            height: 40px;
+        }
+
+        .wrap::after {
+            float: right;
+            content: "...";
+            height: 20px;
+            line-height: 20px;
+            /* 为三个省略号的宽度 */
+            width: 3em;
+            /* 使盒子不占位置 */
+            margin-left: -3em;
+            /* 移动省略号位置 */
+            position: relative;
+            left: 100%;
+            top: -20px;
+            padding-right: 5px;
+            background-color: #FFF;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="text">
+        That's the basic idea. You can imagine the light blue region as the title, and the yellow region as the ellipsis. Then you may think that the pink box takes up space, but will the title be delayed as a whole? Here you can come out by the negative value of margin. Set the negative value of the pale blue box to be the same width as the pink box, and the title can also be displayed normally.
+    </div>
+</div>
+</body>
+</html>
