@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>transform test</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 100px;
+            outline: 2px solid #ff7700;
+            transition: all 0.6s;
+        }
+
+        .move .box {
+            transform: translate(200px, 0);
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <input type="text" placeholder="" id="inp">
+
+</div>
+
+<div class="box">
+    <input type="text" placeholder="" id="inp2">
+</div>
+
+<button id="move">move</button>
+<script>
+    let move = document.getElementById('move');
+    let inp = document.getElementById('inp');
+    let inp2 = document.getElementById('inp2');
+    move.addEventListener('click', () => {
+        document.body.classList.add('move');
+        inp.focus();
+
+        setTimeout(() => {
+            inp2.focus();
+
+        }, 100)
+    })
+</script>
+</body>
+</html>
