@@ -7,13 +7,34 @@
         body {
             font-size: 24px;
         }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            height: 100%;
+        }
     </style>
 </head>
 <body>
-123
+<!-- IE td内的absolute 属性 取父级高度是此td的内容高度, 所以不能作为flex的某种解决方案 -->
 <table>
     <tr>
-        <td>123</td>
+        <td style="background: #ccc; height: 30px">123324324
+        23325
+            <br>
+            <br>
+            <br>
+        123
+        </td>
+    </tr>
+    <tr>
+        <td style="background: #ddd; position: relative; height: 100%">123
+        <div style="position: absolute; left: 10px; top: 10px; bottom: 10px; right: 10px; background: rgba(99, 99, 99, 0.5)"></div>
+        </td>
     </tr>
 </table>
 </body>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标移动样式</title>
+    <style>
+        body {
+            margin: 0;
+            position: relative;
+            height: 100vh;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .snow {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1000;
+            will-change: transfrom;
+        }
+
+        .snow0 {
+            color: #f00;
+            animation: go0 1.2s forwards;
+        }
+
+        .snow1 {
+            color: #ff00c6;
+            animation: go1 1.2s forwards;
+        }
+
+        .snow2 {
+            color: #00a2d4;
+            animation: go2 1.2s forwards;
+        }
+
+        .snow3 {
+            color: #ff7700;
+            animation: go3 1.2s forwards;
+        }
+
+        @keyframes go0 {
+            from {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+            to {
+                transform: translate3d(50px, 120px, 0) scale(0);
+            }
+        }
+
+        @keyframes go1 {
+            from {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+            to {
+                transform: translate3d(-50px, 110px, 0) scale(0);
+            }
+        }
+
+        @keyframes go2 {
+            from {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+            to {
+                transform: translate3d(25px, 120px, 0) scale(0);
+            }
+        }
+
+        @keyframes go3 {
+            from {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+            to {
+                transform: translate3d(-25px, 130px, 0) scale(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+<script>
+    document.body.addEventListener('mousemove', (e) => {
+        let {pageX, pageY} = e;
+        let d = document.createElement('div');
+        d.className = 'snow snow' + ~~(Math.random() * 4);
+        d.innerHTML = '❉';
+        d.style.left = pageX + 'px';
+        d.style.top = pageY + 'px';
+        document.body.appendChild(d);
+
+        setTimeout(() => {
+            d.remove();
+        }, 1200);
+    });
+</script>
+</body>
+</html>
