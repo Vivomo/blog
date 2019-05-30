@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo1</title>
+</head>
+<body>
+
+<script src="../../js/lib/matter.js"></script>
+<script>
+    let Engine = Matter.Engine,
+        Render = Matter.Render,
+        World = Matter.World,
+        Bodies = Matter.Bodies;
+
+    let engine = Engine.create(),
+        world = engine.world;
+
+    let render = Render.create({
+        engine: engine,
+        element: document.body
+    });
+
+    Engine.run(engine);
+    Render.run(render);
+
+    let boxA = Bodies.rectangle(500, 170, 40, 260);
+    let ground = Bodies.rectangle(400, 600, 600, 100, {isStatic: true});
+    World.add(world, ground);
+    World.add(world, boxA);
+</script>
+</body>
+</html>
