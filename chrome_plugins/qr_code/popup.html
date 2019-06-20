@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .qrcode-wrap {
+            min-width: 200px;
+            min-height: 200px;
+        }
+    </style>
 </head>
 <body>
-<div id="qr-code" style="min-width: 200px; min-height: 200px"></div>
+<div id="qr-code" class="qrcode-wrap"></div>
 <button id="download">download</button>
 <script src="qrcode.js"></script>
 <script src="popup.js"></script>
