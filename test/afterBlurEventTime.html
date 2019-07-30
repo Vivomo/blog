@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>测试失效后, 其他事件的相应顺序</title>
+    <title>测试失焦后, 其他事件的相应顺序</title>
 </head>
 <body>
     <input type="text" id="input" placeholder="">
@@ -16,30 +16,22 @@
 
         input.addEventListener('blur', (e) => {
             console.log('blur', e.timeStamp);
-            // console.time('md');
-            // console.time('mouseup');
-            // console.time('click');
-            // console.time('focus');
         });
 
         input2.addEventListener('focus', (e) => {
             console.log('focus', e.timeStamp);
-            // console.timeEnd('focus');
         });
 
         btn.addEventListener('click', (e) => {
             console.log('click', e.timeStamp);
-            // console.timeEnd('click')
         });
 
         btn.addEventListener('mousedown', (e) => {
             console.log('mousedown', e.timeStamp);
-            // console.timeEnd('md')
         });
 
         btn.addEventListener('mouseup', (e) => {
             console.log('mouseup', e.timeStamp);
-            // console.timeEnd('mouseup')
         });
 
     </script>
