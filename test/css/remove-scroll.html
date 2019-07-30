@@ -35,6 +35,21 @@
             width: 100vw;
             overflow: hidden;
         }
+
+        .fix-block {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            background: #ccc;
+            opacity: 0.5;
+            top: 100px;
+            left: 50%;
+        }
+
+        .fix-block.vw {
+            top: 200px;
+            left: 50vw;
+        }
     </style>
 </head>
 <body>
@@ -50,6 +65,8 @@
 </p>
 
 <div id="block"></div>
+<div class="fix-block"></div>
+<div class="fix-block vw"></div>
 <script>
     let block = document.getElementById('block');
     document.querySelector('button').addEventListener('click', () => {
