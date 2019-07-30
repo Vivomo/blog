@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>去除视觉抖动</title>
+    <style>
+        p {
+            width: 600px;
+            margin: 0 auto;
+            font-size: 20px;
+        }
+        #block {
+            height: 50vh;
+        }
+
+        #block.add-height {
+            height: 150vh;
+        }
+
+        html {
+            overflow-y: scroll;
+        }
+
+        :root {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /*:root body {*/
+            /*position: absolute;*/
+        /*}*/
+
+        body {
+            position: absolute;
+            width: 100vw;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<p>
+    十年生死两茫茫，不思量，自难忘。
+    千里孤坟，无处话凄凉。
+    纵使相逢应不识，尘满面，鬓如霜。
+    夜来幽梦忽还乡，小轩窗，正梳妆。
+    相顾无言，惟有泪千行。
+    料得年年肠断处，明月夜，短松冈。
+    <br>
+    <button>toggle 滚动条</button>
+</p>
+
+<div id="block"></div>
+<script>
+    let block = document.getElementById('block');
+    document.querySelector('button').addEventListener('click', () => {
+        block.classList.toggle('add-height');
+    })
+</script>
+</body>
+</html>
