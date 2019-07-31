@@ -8,6 +8,7 @@
             width: 600px;
             margin: 0 auto;
             font-size: 20px;
+            background: #f1f1f1;
         }
         #block {
             height: 50vh;
@@ -34,6 +35,7 @@
             position: absolute;
             width: 100vw;
             overflow: hidden;
+            margin: 0;
         }
 
         .fix-block {
@@ -47,8 +49,13 @@
         }
 
         .fix-block.vw {
-            top: 200px;
+            top: 220px;
             left: 50vw;
+        }
+        .fix-block.right {
+            top: 340px;
+            left: 1vw;
+            /*right: 1vw;*/
         }
     </style>
 </head>
@@ -67,6 +74,7 @@
 <div id="block"></div>
 <div class="fix-block"></div>
 <div class="fix-block vw"></div>
+<div class="fix-block right"></div>
 <script>
     let block = document.getElementById('block');
     document.querySelector('button').addEventListener('click', () => {
