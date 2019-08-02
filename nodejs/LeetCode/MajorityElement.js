@@ -39,6 +39,22 @@ let majorityElement = function(nums) {
         }
     }
 };
+let majorityElement2 = function(nums) {
+    let max = 0, count = 0;
+    for(let i = 0; i < nums.length; i++){
+        if(count === 0){
+            max = a[i];
+            count = 1;
+        } else {
+            if(nums[i] === max)
+                count++;
+            else
+                count--;
+        }
+    }
+    return max;
+};
+
 console.log(majorityElement([2, 2, 1, 2]));
 console.log(majorityElement([2, 2, 1, 2, 1, 1, 1]));
 console.log(majorityElement([1]));
