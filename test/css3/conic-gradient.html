@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>conic-gradient 径向渐变的应用-饼图 </title>
+    <style>
+        .block {
+            width: 200px;
+            height: 200px;
+            margin: 100px auto;
+            border-radius: 50%;
+        }
+        .b1 {
+            background: conic-gradient(red, green, blue, red);
+        }
+
+        .b2 {
+            background: conic-gradient(red 0 33%, green 33% 66%, blue 66% 100%);
+        }
+    </style>
+</head>
+<body>
+<p>min version chrome 69</p>
+<div class="block b1"></div>
+<div class="block b2"></div>
+</body>
+</html>
