@@ -31,10 +31,7 @@
  * @return {boolean}
  */
 let searchMatrix = function(matrix, target) {
-    let mLen = matrix.length;
-    let startRowIndex = 0;
-    let endRowIndex = mLen - 1;
-    let targetRowIndex;
+
     let includesByHalfSearch = (arr, _target) => {
         let start = 0;
         let end = arr.length - 1;
@@ -51,6 +48,11 @@ let searchMatrix = function(matrix, target) {
         }
         return false;
     };
+
+    let mLen = matrix.length;
+    let startRowIndex = 0;
+    let endRowIndex = mLen - 1;
+    let targetRowIndex;
     while (endRowIndex >= startRowIndex) {
         targetRowIndex = ~~((endRowIndex + startRowIndex) / 2);
         let targetRow = matrix[targetRowIndex];
