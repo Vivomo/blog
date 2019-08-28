@@ -31,24 +31,6 @@
  * @return {boolean}
  */
 let searchMatrix = function(matrix, target) {
-
-    let includesByHalfSearch = (arr, _target) => {
-        let start = 0;
-        let end = arr.length - 1;
-        while (start <= end) {
-            let half = ~~((start + end) / 2);
-            let value = arr[half];
-            if (value < _target) {
-                start = half + 1;
-            } else if (value > _target) {
-                end = half - 1;
-            } else {
-                return true;
-            }
-        }
-        return false;
-    };
-
     let mLen = matrix.length;
     let startRowIndex = 0;
     let endRowIndex = mLen - 1;
@@ -58,13 +40,30 @@ let searchMatrix = function(matrix, target) {
         let targetRow = matrix[targetRowIndex];
         let lessThan = targetRow[0] <= target;
         if (lessThan && (targetRowIndex === mLen - 1 || matrix[targetRowIndex + 1][0] > target)) {
-            return includesByHalfSearch(targetRow, target);
+            return includesByBinarySearch(targetRow, target);
         } else {
             if (lessThan) {
                 startRowIndex = targetRowIndex + 1;
             } else {
                 endRowIndex = targetRowIndex - 1;
             }
+        }
+    }
+    return false;
+};
+
+let includesByBinarySearch = (arr, _target) => {
+    let start = 0;
+    let end = arr.length - 1;
+    while (start <= end) {
+        let half = ~~((start + end) / 2);
+        let value = arr[half];
+        if (value < _target) {
+            start = half + 1;
+        } else if (value > _target) {
+            end = half - 1;
+        } else {
+            return true;
         }
     }
     return false;
