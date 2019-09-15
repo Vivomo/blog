@@ -1,0 +1,39 @@
+{
+  "name": "magic-keyboard",
+  "description": "",
+  "version": "0.0.0",
+  "author": {
+    "name": "Feross Aboukhadijeh",
+    "email": "feross@feross.org",
+    "url": "http://feross.org/"
+  },
+  "bugs": {
+    "url": "https://github.com/feross/magic-keyboard/issues"
+  },
+  "dependencies": {
+    "matter-js": "^0.10.0",
+    "preload-img": "^1.0.0",
+    "vkey": "^1.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^14.0.0",
+    "ecstatic": "^2.1.0",
+    "simple-get": "^2.3.0",
+    "standard": "*",
+    "watchify": "^3.6.1"
+  },
+  "homepage": "https://github.com/feross/magic-keyboard",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/feross/magic-keyboard.git"
+  },
+  "scripts": {
+    "build": "node bin/get-hexagons.js && browserify client > static/bundle.js",
+    "serve": "ecstatic -p 4000 static",
+    "start": "npm run build && npm run serve",
+    "test": "standard",
+    "watch-js": "watchify client -o static/bundle.js -dv",
+    "watch": "npm run watch-js & npm run serve"
+  }
+}

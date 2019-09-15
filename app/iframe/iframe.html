@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="http://baidu.com" target="a">
+    <iframe src="./iframe2.html" frameborder="0" name="a" id="iframe2"></iframe>
+    <iframe src="./iframe2.html" frameborder="0" name="a"></iframe>
+    <button type="submit">submit</button>
+</form>
+
+<script>
+    let iframe2 = document.getElementById('iframe2');
+    let iDom = iframe2.contentWindow.document;
+    if (iDom.readyState === 'complete') {
+        console.log(iDom.body.innerText);
+    }
+    console.log(iDom.readyState);
+    iframe2.onreadystatechange = function () {
+        console.log(iDom.readyState);
+    }
+    setTimeout(() => {
+        iframe2.onload = function () {
+            console.log(iDom.body.innerText);
+            console.log( iframe2.contentWindow.document.body.innerText);
+            console.log(iDom.readyState);
+        }
+    }, 1000)
+
+</script>
+</body>
+</html>

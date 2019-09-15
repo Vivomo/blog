@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--下面的meta 无法阻止ctrl + 滚轮-->
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <style>
+        .block {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            background: #00FFE6;
+        }
+    </style>
+</head>
+<body>
+    <div class="block"></div>
+    <!--下面的script 无法阻止ctrl + 滚轮-->
+    <script>
+        // 按住ctrl时 滚轮事件不会被触发
+        document.body.addEventListener('mousewheel', function (e) {
+            e.preventDefault();
+        })
+    </script>
+</body>
+</html>

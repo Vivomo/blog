@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>去除视觉抖动</title>
+    <style>
+        p {
+            width: 600px;
+            margin: 0 auto;
+            font-size: 20px;
+            background: #f1f1f1;
+        }
+        #block {
+            height: 50vh;
+        }
+
+        #block.add-height {
+            height: 150vh;
+        }
+
+        html {
+            overflow-y: scroll;
+        }
+
+        :root {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /*:root body {*/
+            /*position: absolute;*/
+        /*}*/
+
+        body {
+            position: absolute;
+            width: 100vw;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .fix-block {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            background: #ccc;
+            opacity: 0.5;
+            top: 100px;
+            left: 50%;
+        }
+
+        .fix-block.vw {
+            top: 220px;
+            left: 50vw;
+        }
+        .fix-block.right {
+            top: 340px;
+            left: 1vw;
+            /*right: 1vw;*/
+        }
+    </style>
+</head>
+<body>
+<p>
+    十年生死两茫茫，不思量，自难忘。
+    千里孤坟，无处话凄凉。
+    纵使相逢应不识，尘满面，鬓如霜。
+    夜来幽梦忽还乡，小轩窗，正梳妆。
+    相顾无言，惟有泪千行。
+    料得年年肠断处，明月夜，短松冈。
+    <br>
+    <button>toggle 滚动条</button>
+</p>
+
+<div id="block"></div>
+<div class="fix-block"></div>
+<div class="fix-block vw"></div>
+<div class="fix-block right"></div>
+<script>
+    let block = document.getElementById('block');
+    document.querySelector('button').addEventListener('click', () => {
+        block.classList.toggle('add-height');
+    })
+</script>
+</body>
+</html>

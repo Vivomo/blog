@@ -53,3 +53,10 @@ nrm del <registry>
 ```
 nrm test
 ```
+
+> 查找package.json没用到的依赖 (这个包是通过查找 require 和 import的语法来判断的, 存在误判的情况)
+```text
+npm i -g npm-check
+npm check
+
+```

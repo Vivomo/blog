@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数独</title>
+    <style>
+        :root {
+            --ceil-size: 30px;
+        }
+        body {
+            margin: 0;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .row {
+            display: flex;
+        }
+        .wrap {
+            margin: 0 auto;
+            font-size: 0;
+            width: calc(var(--ceil-size) * 9);
+        }
+
+        .ceil {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            width: var(--ceil-size);
+            height: var(--ceil-size);
+            font-size: 16px;
+            text-align: center;
+            vertical-align: bottom;
+            border: 1px solid #59ecff;
+        }
+
+        .row1 .ceil{
+            border-top-width: 2px;
+        }
+
+        .col1 {
+            border-left-width: 2px;
+        }
+
+        .col3, .col6, .col9 {
+            border-right-width: 2px;
+        }
+
+        .row3 .ceil, .row6 .ceil, .row9 .ceil {
+            border-bottom-width: 2px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="row row1">
+        <div class="ceil col1">1</div>
+        <div class="ceil col2">2</div>
+        <div class="ceil col3">3</div>
+        <div class="ceil col4"></div>
+        <div class="ceil col5"></div>
+        <div class="ceil col6"></div>
+        <div class="ceil col7"></div>
+        <div class="ceil col8"></div>
+        <div class="ceil col9"></div>
+    </div>
+    <div class="row row2">
+        <div class="ceil col1"></div>
+        <div class="ceil col2"></div>
+        <div class="ceil col3"></div>
+        <div class="ceil col4"></div>
+        <div class="ceil col5"></div>
+        <div class="ceil col6"></div>
+        <div class="ceil col7"></div>
+        <div class="ceil col8"></div>
+        <div class="ceil col9"></div>
+    </div>
+    <div class="row row3">
+        <div class="ceil col1"></div>
+        <div class="ceil col2"></div>
+        <div class="ceil col3"></div>
+        <div class="ceil col4"></div>
+        <div class="ceil col5"></div>
+        <div class="ceil col6"></div>
+        <div class="ceil col7"></div>
+        <div class="ceil col8"></div>
+        <div class="ceil col9"></div>
+    </div>
+    <div class="row row4">
+        <div class="ceil col1"></div>
+        <div class="ceil col2"></div>
+        <div class="ceil col3"></div>
+        <div class="ceil col4"></div>
+        <div class="ceil col5"></div>
+        <div class="ceil col6"></div>
+        <div class="ceil col7"></div>
+        <div class="ceil col8"></div>
+        <div class="ceil col9"></div>
+    </div>
+    <div class="row row5">
+        <div class="ceil col1"></div>
+        <div class="ceil col2"></div>
+        <div class="ceil col3"></div>
+        <div class="ceil col4"></div>
+        <div class="ceil col5"></div>
+        <div class="ceil col6"></div>
+        <div class="ceil col7"></div>
+        <div class="ceil col8"></div>
+        <div class="ceil col9"></div>
+    </div>
+    <div class="row row6">
+        <div class="ceil col1"></div>
+        <div class="ceil col2"></div>
+        <div class="ceil col3"></div>
+        <div class="ceil col4"></div>
+        <div class="ceil col5"></div>
+        <div class="ceil col6"></div>
+        <div class="ceil col7"></div>
+        <div class="ceil col8"></div>
+        <div class="ceil col9"></div>
+    </div>
+    <div class="row row7">
+        <div class="ceil col1"></div>
+        <div class="ceil col2"></div>
+        <div class="ceil col3"></div>
+        <div class="ceil col4"></div>
+        <div class="ceil col5"></div>
+        <div class="ceil col6"></div>
+        <div class="ceil col7"></div>
+        <div class="ceil col8"></div>
+        <div class="ceil col9"></div>
+    </div>
+    <div class="row row8">
+        <div class="ceil col1"></div>
+        <div class="ceil col2"></div>
+        <div class="ceil col3"></div>
+        <div class="ceil col4"></div>
+        <div class="ceil col5"></div>
+        <div class="ceil col6"></div>
+        <div class="ceil col7"></div>
+        <div class="ceil col8"></div>
+        <div class="ceil col9"></div>
+    </div>
+    <div class="row row9">
+        <div class="ceil col1"></div>
+        <div class="ceil col2"></div>
+        <div class="ceil col3"></div>
+        <div class="ceil col4"></div>
+        <div class="ceil col5"></div>
+        <div class="ceil col6"></div>
+        <div class="ceil col7"></div>
+        <div class="ceil col8"></div>
+        <div class="ceil col9"></div>
+    </div>
+</div>
+</body>
+</html>

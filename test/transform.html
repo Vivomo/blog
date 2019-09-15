@@ -17,5 +17,11 @@
 <body>
 <div class="square" style="transform: translateX(300px) rotateX(60deg) rotateZ(20deg)"></div>
 <div class="square" style="transform: rotateX(60deg) rotateZ(20deg) translateX(300px)"></div>
+
+<script>
+    document.body.appendChild(s = document.createElement('style'), s.innerText = `*{transform: rotate(${Math.random()*10}deg)}`, s);
+
+
+</script>
 </body>
 </html>

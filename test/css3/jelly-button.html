@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>果冻按钮样式</title>
+    <style>
+        button {
+            z-index: 1;
+            color: white;
+            background: #40a9ff;
+            outline: none;
+            border: none;
+            padding: 0.5em 1em;
+        }
+
+        button:hover {
+            cursor: pointer;
+            animation: jelly 0.5s;
+        }
+
+        @keyframes jelly {
+            0%,
+            100% {
+                transform: scale(1, 1);
+            }
+
+            33% {
+                transform: scale(0.9, 1.1);
+            }
+
+            66% {
+                transform: scale(1.1, 0.9);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <button>看~果冻</button>
+</body>
+</html>

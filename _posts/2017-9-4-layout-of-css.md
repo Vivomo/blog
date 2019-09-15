@@ -142,9 +142,15 @@ keywords: CSS布局,垂直居中,水平居中,自适应布局,栅格布局
     <div class="content"></div>
 </div>
 
+
+
 ```
-关于垂直水平居中可以通过上面列举的方式根据情况组合出来, 这里就不啰嗦了, 否则就是一个笛卡尔积式的blog
+关于垂直水平居中可以通过上面列举的方式根据情况组合出来, 这里就不啰嗦了, 否则就是一个笛卡尔积式的blog, 只说一个简单的flex方式
 ```
+### by flex2
+<div class="v-window flex" style="width: 200px;">
+    <div class="content" style="margin: auto"></div>
+</div>
 
 ## 各种各样的自适应
 

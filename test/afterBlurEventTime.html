@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试失焦后, 其他事件的相应顺序</title>
+</head>
+<body>
+    <input type="text" id="input" placeholder="">
+    <input type="text" id="input2" placeholder="">
+    <button id="btn">按钮</button>
+
+    <script>
+        let input = document.getElementById('input');
+        let input2 = document.getElementById('input2');
+        let btn = document.getElementById('btn');
+
+        input.addEventListener('blur', (e) => {
+            console.log('blur', e.timeStamp);
+        });
+
+        input2.addEventListener('focus', (e) => {
+            console.log('focus', e.timeStamp);
+        });
+
+        btn.addEventListener('click', (e) => {
+            console.log('click', e.timeStamp);
+        });
+
+        btn.addEventListener('mousedown', (e) => {
+            console.log('mousedown', e.timeStamp);
+        });
+
+        btn.addEventListener('mouseup', (e) => {
+            console.log('mouseup', e.timeStamp);
+        });
+
+    </script>
+</body>
+</html>

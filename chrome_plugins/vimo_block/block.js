@@ -58,6 +58,12 @@
                     elem.style.zoom = 0.01;
                 }
             })
+        },
+        "192.168.20.146:3000": function () {
+            console.log('fix yapi');
+            var style = document.createElement('style');
+            style.innerText = '.anticon:not(:empty):before { display:none!important }';
+            document.head.append(style);
         }
     };
     var host = location.host;

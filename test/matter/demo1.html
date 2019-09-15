@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo1</title>
+</head>
+<body>
+
+<script src="../../js/lib/matter.js"></script>
+<script>
+    let Engine = Matter.Engine,
+        Render = Matter.Render,
+        World = Matter.World,
+        Bodies = Matter.Bodies,
+        MouseConstraint = Matter.MouseConstraint,
+        Composites = Matter.Composites;
+
+    let engine = Engine.create(),
+        world = engine.world;
+
+    let render = Render.create({
+        engine: engine,
+        element: document.body
+    });
+
+
+
+    let boxA = Bodies.rectangle(400, 170, 260, 40);
+    let ground = Bodies.rectangle(400, 600, 600, 100, {isStatic: true});
+    let newtonsCradle = Composites.newtonsCradle(300, 320, 5, 25, 150, {
+        collisionFilter: {
+            category: 1
+        }
+    });
+
+    World.add(world, [ground, boxA, newtonsCradle]);
+
+    let mouseConstraint = MouseConstraint.create(engine);
+
+
+    World.add(world, mouseConstraint);
+
+    Engine.run(engine);
+    Render.run(render);
+    // World.add(world, boxA);
+</script>
+</body>
+</html>

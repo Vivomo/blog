@@ -11,6 +11,10 @@ diff算法
 单页面应用的路由实现原理 popstate pushstate onhashchange
 状态管理
 React 解决嵌套问题
+React 模块懒加载
+React 处理组件渲染出错 ErrorBoundary
+React 长列表优化
+React 生命周期过程
 =====
 
 CSS
