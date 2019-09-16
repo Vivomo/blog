@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>只可以输入数字的键盘</title>
+</head>
+<body>
+    <input type="text" placeholder="只能输入数字" id="numeric">
+
+    <script>
+        let input = document.getElementById('numeric');
+        const reg = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/;
+
+        input.addEventListener('keyup', function () {
+            let value = this.value;
+            if (!isNaN(value) && reg.test(value) || value === '' || value === '-') {
+                this.tempValue = value;
+            } else {
+                this.value = this.tempValue || '';
+            }
+            console.log('change');
+        });
+        input.addEventListener('blur', function () {
+            let value = this.value;
+            if (value.charAt(value.length - 1) === '.' || value === '-') {
+                // this.onChange(value.slice(0, -1));
+            }
+        })
+        // TODO
+    </script>
+</body>
+</html>
