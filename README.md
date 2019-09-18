@@ -40,14 +40,18 @@
 
 ### 学习笔记
 * [SCSS学习笔记](http://www.weimu.me/2018/01/30/scss.html)
+* [一堆零散的经验](https://github.com/Vivomo/blog/tree/gh-pages/draft)
 
 ### 算法
 * [八皇后递归回溯动画](http://www.weimu.me/2018/06/15/eight-queens.html)
 * [暴力破解推理题](http://www.weimu.me/2018/04/01/answerEnum.js.html)
 * [3D排序](http://www.weimu.me/2017/04/12/sort-3d.html)
+* [TreeUtils](https://github.com/Vivomo/blog/blob/gh-pages/js/utils/TreeUtils.js)
+* [LeetCode](https://github.com/Vivomo/blog/tree/gh-pages/nodejs/LeetCode)
 
 ### 工具
 * [二维码转换](http://www.weimu.me/2017/12/05/to-qr-code.html)
 * [图片处理](http://www.weimu.me/2017/08/17/image-opt.html)
 * [一键搜索](http://www.weimu.me/2016/03/31/search.html)
 * [查找QQ群共存的人](http://www.weimu.me/2016/03/12/find-qq.html)
+* [画板](http://www.weimu.me/app/drawingBoard/drawingBoard.html)
