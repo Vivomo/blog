@@ -26,3 +26,28 @@
 * [随机长方形动画](http://www.weimu.me/2016/04/18/random-cuboid.html)
 * [纯CSS实现太阳系](http://www.weimu.me/2016/05/25/solar-system.html)
 * [太极](http://www.weimu.me/2017/05/07/TaiChi.html)
+* [太阳系](http://www.weimu.me/2016/05/25/solar-system.html)
+
+### 前端体验优化
+* [页面滚动条出现时不抖动实践与相关问题](http://www.weimu.me/2019/07/31/css-remove-scroll-shake.html)
+
+### 游戏
+* [射击测试](http://www.weimu.me/2018/07/08/shoot-test.html)
+* [魔方](http://www.weimu.me/2017/12/12/cube.html)
+* [贪吃蛇](http://www.weimu.me/2017/03/13/snake.html)
+* [五子棋](http://www.weimu.me/2016/04/04/Gobang.html)
+* [汉诺塔](http://www.weimu.me/2015/12/10/hanoi.html)
+
+### 学习笔记
+* [SCSS学习笔记](http://www.weimu.me/2018/01/30/scss.html)
+
+### 算法
+* [八皇后递归回溯动画](http://www.weimu.me/2018/06/15/eight-queens.html)
+* [暴力破解推理题](http://www.weimu.me/2018/04/01/answerEnum.js.html)
+* [3D排序](http://www.weimu.me/2017/04/12/sort-3d.html)
+
+### 工具
+* [二维码转换](http://www.weimu.me/2017/12/05/to-qr-code.html)
+* [图片处理](http://www.weimu.me/2017/08/17/image-opt.html)
+* [一键搜索](http://www.weimu.me/2016/03/31/search.html)
+* [查找QQ群共存的人](http://www.weimu.me/2016/03/12/find-qq.html)
