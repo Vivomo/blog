@@ -19,6 +19,7 @@
 
 ### JS
 * TreeUtils 一个处理数组树的工具方法[地址](https://github.com/Vivomo/blog/blob/gh-pages/js/utils/TreeUtils.js)
+* [url -> searchMap]((https://github.com/Vivomo/blog/tree/gh-pages/draft/url-to-search-map.md))
 
 ### CSS
 * [CSS工具箱](http://www.weimu.me/2015/08/14/css-util.html)
