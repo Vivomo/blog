@@ -1,35 +1,34 @@
 let noop = () => {};
 
-function NumericInput(config = {}) {
-    let {input, type, onChange = noop} = config;
-    if (!type) {
-        type = input.dataset.numberType || NumericInput.type.defaults;
+class NumericInput {
+    static type = {
+        integer: 'integer',
+        positiveNumber: 'positiveNumber',
+        naturalNumber: 'naturalNumber',
+        defaults: 'defaults'
+    };
+
+    constructor(config = {}) {
+        let {input, type, onChange = noop} = config;
+        if (!type) {
+            type = input.dataset.numberType || NumericInput.type.defaults;
+        }
+        if (!NumericInput.type[type]) {
+            throw new Error('invalid type')
+        }
+        input._reg = this._regMap[type];
+        input.addEventListener('input', this._onInputMap[type]);
+        input._onChange = onChange;
     }
-    if (!NumericInput.type[type]) {
-        throw new Error('invalid type')
-    }
-    input._reg = this.regMap[type];
-    input.addEventListener('input', this.onInputMap[type]);
-    input._onChange = onChange;
-}
 
-NumericInput.type = {
-    integer: 'integer',
-    positiveNumber: 'positiveNumber',
-    naturalNumber: 'naturalNumber',
-    defaults: 'defaults'
-};
-
-
-NumericInput.prototype = {
-    constructor: NumericInput,
-    regMap: {
+    _regMap = {
         integer: /^-?(0|[1-9]\d*)?$/,
         positiveNumber: /^(0|[1-9]\d*)(\.\d*)?$/,
         naturalNumber: /^(0|[1-9]\d*)?$/,
         defaults: /^-?(0|[1-9]\d*)(\.\d*)?$/
-    },
-    onInputMap: {
+    }
+
+    _onInputMap = {
         integer: function () {
             let value = this.value;
             if (!isNaN(value) && this._reg.test(value) || value === '' || value === '-') {
@@ -67,5 +66,5 @@ NumericInput.prototype = {
             }
         }
     }
-};
+}
 
