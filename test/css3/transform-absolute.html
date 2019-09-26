@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transform 对层叠上下文的影响</title>
+    <style>
+        .transform-list {
+            margin-bottom: 200px;
+            counter-reset: abc;
+        }
+
+        .transform-list li{
+            list-style: none;
+        }
+        .transform-list .wrap {
+            transform: translate(0);
+            width: 300px;
+            height: 200px;
+            margin: 20px auto;
+            border: 1px solid #00a2d4;
+            counter-increment: abc;
+            content: counter(abc);
+            position: relative;
+        }
+
+        /*.transform-list .wrap:hover {*/
+        /*    z-index: 2;*/
+        /*}*/
+
+        .box {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            font-size: 60px;
+            background: rgba(0, 0, 0, 0.2);
+            bottom: -100px;
+        }
+
+        .box:hover {
+            border: 2px solid #00aa00;
+        }
+
+        /*临时解决方案*/
+        .transform-list.resolve .wrap:nth-child(odd){
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+<p>
+    在鼠标悬停在box2的父级与box1的交集处不会触发hover效果的解释: <br>
+    <a href="https://www.w3.org/TR/2019/CR-css-transforms-1-20190214/#transform-rendering" target="_blank">参考链接</a>
+    transform非none的情况下必然会创建层叠上下文,如果z-index是auto则表现为z-index:0
+    同时 transform非none的元素会建立一个新的局部坐标, 其子元素的absolute/fixed元素都会参照此坐标布局
+
+    <br>
+    临时解决办法: li:odd zIndex 增加且
+</p>
+<ul class="transform-list">
+    <li class="wrap">
+        <div class="box">box1</div>
+    </li>
+    <li class="wrap">
+        <div class="box">box2</div>
+    </li>
+</ul>
+
+<h2>临时解决</h2>
+<ul class="transform-list resolve">
+    <li class="wrap">
+        <div class="box">box1</div>
+    </li>
+    <li class="wrap">
+        <div class="box">box2</div>
+    </li>
+</ul>
+</body>
+</html>
