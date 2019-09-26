@@ -56,3 +56,6 @@
 * [一键搜索](http://www.weimu.me/2016/03/31/search.html)
 * [查找QQ群共存的人](http://www.weimu.me/2016/03/12/find-qq.html)
 * [画板](http://www.weimu.me/app/drawingBoard/drawingBoard.html)
+
+### 组件
+* [数字输入框](http://www.weimu.me/test/numeric-input.html)

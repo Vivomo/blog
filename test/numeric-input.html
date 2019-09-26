@@ -5,65 +5,20 @@
     <title>只可以输入数字的键盘</title>
 </head>
 <body>
-    <input type="text" placeholder="只能输入数字" id="numeric" data-number-type="PositiveNumber">
+    <input type="text" placeholder="只能输入数字" id="numeric">
+    <br>
+    <input type="text" placeholder="只能输入整数" data-number-type="integer">
+    <br>
+    <input type="text" placeholder="只能输入正数" data-number-type="positiveNumber">
+    <br>
+    <input type="text" placeholder="只能输入自然数" data-number-type="naturalNumber">
 
+    <script src="../js/NumericInput.js"></script>
     <script>
-        let input = document.getElementById('numeric');
 
-        let type = input.dataset.numberType;
-
-        console.log(type);
-        let reg = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/;
-        let listener;
-        if (type === 'Integer') {
-            let reg = /^-?(0|[1-9][0-9]*)([0-9]*)?$/;
-            listener = (e) => {
-                let target = e.target;
-                let value = target.value;
-                if (!isNaN(value) && reg.test(value) || value === '' || value === '-') {
-                    target.tempValue = value;
-                } else {
-                    target.value = target.tempValue || '';
-                }
-            };
-        } else if (type === 'PositiveNumber') {
-            let reg = /^(0|[1-9][0-9]*)(\.[0-9]*)?$/;
-            listener = (e) => {
-                let target = e.target;
-                let value = target.value;
-                if (!isNaN(value) && reg.test(value) || value === '') {
-                    target.tempValue = value;
-                } else {
-                    target.value = target.tempValue || '';
-                }
-            };
-        } else if (type === 'NaturalNumber') {
-            let reg = /^[1-9][0-9]*$/;
-            listener = (e) => {
-                let target = e.target;
-                let value = target.value;
-                if (!isNaN(value) && reg.test(value) || value === '') {
-                    target.tempValue = value;
-                } else {
-                    target.value = target.tempValue || '';
-                }
-            };
-        } else {
-            let reg = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/;
-            listener = (e) => {
-                let target = e.target;
-                let value = target.value;
-                if (!isNaN(value) && reg.test(value) || value === '' || value === '-') {
-                    target.tempValue = value;
-                } else {
-                    target.value = target.tempValue || '';
-                }
-            };
-        }
-
-
-        input.addEventListener('input', listener)
-
+        Array.from(document.querySelectorAll('input')).forEach((input) => {
+            new NumericInput({input});
+        });
     </script>
 </body>
 </html>
