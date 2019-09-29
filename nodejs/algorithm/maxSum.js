@@ -26,7 +26,24 @@ let n2_1 = (arr) => {
         }
     }
     return max;
-}
+};
+
+let n2_2 = (arr) => {
+    let l = arr.length;
+    let cumArr = [arr[0]];
+    for (let i = 1; i < l; i++) {
+        cumArr[i] = cumArr[i - 1] + arr[i]
+    }
+    let max = 0;
+    for (let i = 0; i < l; i++) {
+        for (let j = i; j < l; j++) {
+            let sum = cumArr[j] - (cumArr[i - 1] || 0);
+            max = Math.max(max, sum)
+        }
+    }
+    return max;
+};
 
 console.log(n3(nums));
 console.log(n2_1(nums));
+console.log(n2_2(nums));
