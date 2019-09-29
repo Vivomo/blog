@@ -44,6 +44,17 @@ let n2_2 = (arr) => {
     return max;
 };
 
+let n = (arr) => {
+    let max = 0;
+    let maxEnd = 0;
+    for (let i = 0; i < arr.length; i++) {
+        maxEnd = Math.max(maxEnd + arr[i], 0);
+        max = Math.max(max, maxEnd);
+    }
+    return max;
+}
+
 console.log(n3(nums));
 console.log(n2_1(nums));
 console.log(n2_2(nums));
+console.log(n(nums));
