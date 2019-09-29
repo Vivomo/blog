@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>matrix 测试</title>
+    <link rel="stylesheet" href="../../css/cube.css">
+</head>
+<body>
+
+<div class="outer-wrap">
+    <div class="cube-content">
+        <div class="outer-box" style="transform: rotateX(0deg) rotateY(60deg) rotateZ(0deg)">
+            <div class="cubes" style="transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 100, -100, 100, 1)">
+                <div class="front face" style="background: yellow;"></div>
+                <div class="left face"></div>
+                <div class="up face" style="background: green;"></div>
+                <div class="right face" style="background: red;"></div>
+                <div class="back face"></div>
+                <div class="bottom face"></div>
+            </div>
+
+            <div class="cubes" style="">
+                <div class="front face" ></div>
+                <div class="left face"></div>
+                <div class="up face" ></div>
+                <div class="right face"></div>
+                <div class="back face"></div>
+                <div class="bottom face"></div>
+            </div>
+
+            <div class="cubes" style="transform: translate3d(-100px, 100px, 100px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);">
+                <div class="front face" style="background: yellow;"></div>
+                <div class="left face" style="background: orange;"></div>
+                <div class="up face"></div>
+                <div class="right face"></div>
+                <div class="back face"></div>
+                <div class="bottom face" style="background: blue;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../js/utils/matrix3d.js"></script>
+<script>
+    // matrix3d(1, 0, 0, 0,
+    //          0, 1, 0, 0,
+    //          0, 0, 1, 0,
+    //          transX, transY, transZ, 1)
+</script>
+</body>
+</html>
