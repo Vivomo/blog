@@ -33,6 +33,8 @@ body{
     transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
     transition: transform 0.3s;
     transform-style: preserve-3d;
+    user-select: none;
+
     &.no-animate {
         transition: none;
     }
@@ -43,7 +45,7 @@ body{
     transform-style: preserve-3d;
     width: 100px;
     height: 100px;
-    user-select: none;
+
 }
 
 
