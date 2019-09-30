@@ -251,6 +251,7 @@ const CubeListener = (function () {
         let {pageX, pageY} = e.touches[0];
         mouseX = pageX;
         mouseY = pageY;
+        e.preventDefault();
     }
 
     function onBodyTouchEnd() {
@@ -366,15 +367,17 @@ let vm = avalon.define({
                 cube[y] = _x * Math.sin(rad) + _y * Math.cos(rad);
 
                 if (count === 30) {
-                    clearInterval(tempInterval);
-                    cube[x] = _x;
-                    cube[y] = _y;
-                    cube[rotateDirection] = 0;
-                    CubeUtil.swapColor(vm.cubes, direction, num, isClockwise);
+                    webkitRequestAnimationFrame(() => {
+                        clearInterval(tempInterval);
+                        cube[x] = _x;
+                        cube[y] = _y;
+                        cube[rotateDirection] = 0;
+                        CubeUtil.swapColor(vm.cubes, direction, num, isClockwise);
 
-                    if (index === 8) { // last
-                        this.$rotating = false;
-                    }
+                        if (index === 8) { // last
+                            this.$rotating = false;
+                        }
+                    });
                 }
             }, 10);
         });
