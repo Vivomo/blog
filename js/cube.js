@@ -339,7 +339,9 @@ let vm = avalon.define({
         } else {
             this.$rotating = true;
         }
-        let rangeDegree = isClockwise ? 3 : -3;
+        let rotateStep = 20;
+        let rangeDegree = (isClockwise ? 90 : -90) / rotateStep;
+
         let cubes = vm.cubes.filter((cube) => {
             return (cube[direction] + CUBE_WIDTH * 2) / CUBE_WIDTH === num;
         });
@@ -351,36 +353,44 @@ let vm = avalon.define({
             y = 'z';
         }
 
-        cubes.forEach((cube, index) => {
-            let count = 0;
-            let _x = cube[x];
-            let _y = cube[y];
-            let tempInterval = setInterval(() => {
+        let count = 0;
+        cubes.forEach((cube) => {
+            cube._x = cube[x];
+            cube._y = cube[y];
+        });
+
+        let _rotate = () => {
+            if (count < rotateStep) {
                 count++;
                 let rad = CubeUtil.degreeToRad(count * rangeDegree);
                 if (direction !== 'z') {
                     rad = -rad;
                 }
 
-                cube[rotateDirection] += rangeDegree;
-                cube[x] = _x * Math.cos(rad) - _y * Math.sin(rad);
-                cube[y] = _x * Math.sin(rad) + _y * Math.cos(rad);
+                cubes.forEach((cube) => {
+                    let _x = cube._x;
+                    let _y = cube._y;
 
-                if (count === 30) {
-                    webkitRequestAnimationFrame(() => {
-                        clearInterval(tempInterval);
-                        cube[x] = _x;
-                        cube[y] = _y;
+                    cube[rotateDirection] += rangeDegree;
+                    cube[x] = _x * Math.cos(rad) - _y * Math.sin(rad);
+                    cube[y] = _x * Math.sin(rad) + _y * Math.cos(rad);
+                });
+                requestAnimationFrame(_rotate);
+            } else {
+                requestAnimationFrame(() => {
+                    cubes.forEach((cube, index) => {
+                        cube[x] = cube._x;
+                        cube[y] = cube._y;
                         cube[rotateDirection] = 0;
-                        CubeUtil.swapColor(vm.cubes, direction, num, isClockwise);
-
-                        if (index === 8) { // last
-                            this.$rotating = false;
-                        }
                     });
-                }
-            }, 10);
-        });
+                    CubeUtil.swapColor(vm.cubes, direction, num, isClockwise);
+                    this.$rotating = false;
+                });
+            }
+        };
+
+        requestAnimationFrame(_rotate);
+
     },
 
     rotateMethod: (method, time = 1000) => {
