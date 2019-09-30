@@ -29,6 +29,7 @@ const CubeUtil = (() => {
                 '3': 'right'
             },
             '1': [
+                // for swap color
                 [0, 3, 6],
                 [6, 15, 24],
                 [24, 21, 18],
@@ -106,6 +107,7 @@ const CubeUtil = (() => {
         bottom,
         left,
         right,
+        indexMap,
         xDirection: [front, up, back, bottom],
         yDirection: [front, left, back, right],
         zDirection: [up, right, bottom, left],
@@ -182,7 +184,7 @@ const CubeUtil = (() => {
                 colorMap.push(colorMap.shift());
             }
 
-            if (num != 2) {
+            if (num !== 2) {
                 let sideDirection = indexGroup.side[num];
                 let sideColorMap = indexArr.map((arr) => {
                     return arr.map(cubeIndex => cubes[cubeIndex].bg[sideDirection]);
@@ -306,6 +308,11 @@ const CubeListener = (function () {
                     vm.rotateMethod(Method[this.dataset.method])
                 });
             });
+
+            document.body.addEventListener('mouseup', () => {
+                document.body.removeEventListener('mousemove', vm.eventMove);
+            });
+
         }
     }
 })();
@@ -321,6 +328,10 @@ let vm = avalon.define({
     },
     $rotating: false,
     rotatingVisualAngle: false,
+    $startX: 0,
+    $startY: 0,
+    $activeCube: null,
+    $activeDirection: null,
     /**
      * 一个点绕一个圆心(0, 0)旋转后的坐标
      * 未完待续
@@ -421,8 +432,115 @@ let vm = avalon.define({
                 this.rotatingVisualAngle = false;
             }, 30);
         }, 300);
-    }
+    },
 
+    eventMove: function(e) {
+        let diffX = e.pageX - vm.$startX;
+        let diffY = e.pageY - vm.$startY;
+        let distance = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
+        if (distance > 80) {
+            vm.checkRotateDirection(diffX, diffY);
+            document.body.removeEventListener('mousemove', vm.eventMove);
+        }
+        e.stopPropagation();
+    },
+
+    checkRotateDirection: function(xDistance, yDistance) {
+        let index = vm.$activeCube.index;
+        let isX = Math.abs(xDistance) > Math.abs(yDistance);
+        let isClockwise;
+        let direction = 'y';
+        let num = 3;
+        switch (vm.$activeDirection) {
+            case 'front':
+                if (isX) {
+                    isClockwise = xDistance > 0;
+                    if ([0, 1, 2, 0, 10, 11, 18, 19, 20].includes(index)) {
+                        num = 1;
+                    } else if ([3, 4, 5, 12, 13, 14, 21, 22, 23].includes(index)) {
+                        num = 2;
+                    }
+                } else {
+                    direction = 'x';
+                    isClockwise = yDistance < 0;
+                    if ([0, 9, 18, 21, 24].includes(index)) {
+                        num = 1;
+                    } else if ([1, 10, 19, 22, 25].includes(index)) {
+                        num = 2;
+                    }
+                }
+                break;
+            case 'right':
+                if (isX) {
+                    isClockwise = xDistance > 0;
+                    if ([0, 1, 2, 0, 10, 11, 18, 19, 20].includes(index)) {
+                        num = 1;
+                    } else if ([3, 4, 5, 12, 13, 14, 21, 22, 23].includes(index)) {
+                        num = 2;
+                    }
+                } else {
+                    direction = 'z';
+                    isClockwise = yDistance > 0;
+                    if ([2, 5, 8].includes(index)) {
+                        num = 1;
+                    } else if ([11, 14, 17].includes(index)) {
+                        num = 2;
+                    }
+                }
+                break;
+            case 'up':
+                if (xDistance > 0) {
+                    if (yDistance > 0) {
+                        isClockwise = true;
+                        direction = 'z';
+                        if ([0, 1, 2].includes(index)) {
+                            num = 1;
+                        } else if ([9, 10, 11].includes(index)) {
+                            num = 2;
+                        }
+                    } else {
+                        //
+                        direction = 'x';
+                        isClockwise = true;
+                        if ([0, 9, 18].includes(index)) {
+                            num = 1;
+                        } else if ([1, 10, 19].includes(index)) {
+                            num = 2;
+                        }
+                    }
+                } else {
+                    if (yDistance > 0) {
+                        isClockwise = false;
+                        direction = 'x';
+                        if ([0, 9, 18].includes(index)) {
+                            num = 1;
+                        } else if ([1, 10, 19].includes(index)) {
+                            num = 2;
+                        }
+                    } else {
+                        direction = 'z';
+                        isClockwise = false;
+                        if ([0, 1, 2].includes(index)) {
+                            num = 1;
+                        } else if ([9, 10, 11].includes(index)) {
+                            num = 2;
+                        }
+                    }
+                }
+                break;
+        }
+        vm.rotate(direction, num, isClockwise);
+    },
+
+    mousedown: function (cube, direction, e) {
+        vm.$startX = e.pageX;
+        vm.$startY = e.pageY;
+        vm.$activeCube = cube;
+        vm.$activeDirection = direction;
+
+        document.body.addEventListener('mousemove', vm.eventMove);
+
+    }
 });
 avalon.scan();
 
