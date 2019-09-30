@@ -264,6 +264,7 @@ const CubeListener = (function () {
                 return;
             }
             vm.rotateVisualAngle('y', mouseX > startX)
+
         } else {
             if (changedY < MIN_DISTANCE) {
                 return;
@@ -271,6 +272,10 @@ const CubeListener = (function () {
             let isX = startX < bodyWidth / 2;
             vm.rotateVisualAngle( isX ? 'x' : 'z', isX ? mouseY < startY : mouseY > startY);
         }
+        startX = 0;
+        startY = 0;
+        mouseX = 0;
+        mouseY = 0;
         body.removeEventListener('mousemove', onBodyMouseMove);
         body.removeEventListener('touchmove', onBodyTouchMove);
     }
