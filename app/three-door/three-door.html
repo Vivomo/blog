@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>三门问题</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+        body {
+            color: #d4d3d0;
+            text-align: center;
+            height: 100vh;
+            background: #000;
+        }
+
+        .create-box {
+            width: 5em;
+            margin: 0.5em auto;
+            line-height: 2em;
+            text-align: center;
+            border: 1px solid currentColor;
+        }
+
+        .main-box {
+
+        }
+
+        .door-box {
+            margin: 3em auto;
+            width: 25%;
+            display: flex;
+            /*animation: show 0.5s;*/
+        }
+
+        .door {
+            font-size: 2em;
+            flex: 1;
+            border: 1px solid currentColor;
+        }
+
+        .door.choose {
+            outline: 3px solid #00a2d4;
+        }
+
+        .car {
+            color: red;
+        }
+
+        .result-box {
+            width: 66%;
+            margin: 0 auto;
+            display: flex;
+        }
+
+        .result {
+            flex: 1;
+            margin: 1em;
+            border: 1px solid currentColor;
+        }
+
+        @keyframes show {
+            from {
+                opacity: 0;
+                transform: translate(0, -200%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-box">
+    <ul class="door-box">
+        <li class="door car">车</li>
+        <li class="door choose">羊</li>
+        <li class="door">羊</li>
+    </ul>
+</div>
+
+<div class="result-box">
+    <div class="result">
+        <h2>换</h2>
+        <div class="score">0/0=0</div>
+    </div>
+
+    <div class="result">
+        <h2>不换</h2>
+        <div class="score">0/0=0</div>
+    </div>
+</div>
+
+<script src="three-door.js"></script>
+</body>
+</html>
