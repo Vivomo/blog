@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul, li {
+    list-style: none;
+}
+body {
+    color: #d4d3d0;
+    text-align: center;
+    height: 100vh;
+    background: #000;
+}
+
+.create-box {
+    width: 5em;
+    margin: 0.5em auto;
+    line-height: 2em;
+    text-align: center;
+    border: 1px solid currentColor;
+}
+
+.main-box {
+    padding: 1em 0;
+    height: 2em;
+    font-size: 2em;
+}
+
+.door-box {
+    margin: 0 auto;
+    width: 25%;
+    display: flex;
+    animation: show 0.2s;
+}
+
+.door {
+    flex: 1;
+    border: 1px solid currentColor;
+
+    &.selected {
+        outline: 3px solid #00a2d4;
+    }
+
+    &:before {
+        content: '羊';
+    }
+
+    &.open {
+        background: #5B6770;
+    }
+}
+
+.car {
+    color: red;
+
+    &:before {
+        content: '车';
+    }
+}
+
+
+.result-box {
+    width: 66%;
+    margin: 0 auto;
+    display: flex;
+}
+
+.result {
+    flex: 1;
+    margin: 1em;
+    border: 1px solid currentColor;
+}
+
+p {
+    padding: 2em;
+    text-align: left;
+}
+
+@keyframes show {
+    from {
+        opacity: 0;
+        transform: translate(0, -200%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+
+}
