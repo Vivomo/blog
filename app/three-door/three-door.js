@@ -20,11 +20,7 @@ let creator = {
     total: 0,
     changeScore: 0,
     noChangeScore: 0,
-    template: `<ul class="door-box">
-        <li class="door"></li>
-        <li class="door"></li>
-        <li class="door"></li>
-    </ul>`,
+    template: `<ul class="door-box"><li class="door"></li><li class="door"></li><li class="door"></li></ul>`,
     createRandomIndex() {
         return ~~(Math.random() * 3);
     },
@@ -59,16 +55,17 @@ let creator = {
         this.box.firstChild.remove()
     },
     start() {
-        delay(1000).then(() => {
-            this.create();
-        }).delay(1000).then(() => {
-            this.openNoCarDoor();
-        }).delay(1000).then(() => {
-            this.count();
-        });
         setInterval(() => {
-
-        }, 400);
+            delay(100).then(() => {
+                this.create();
+            }).delay(100).then(() => {
+                this.openNoCarDoor();
+            }).delay(100).then(() => {
+                this.count();
+            }).delay(100).then(() => {
+                this.clear();
+            });
+        }, 500);
     }
 };
 
