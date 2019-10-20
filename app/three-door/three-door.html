@@ -28,18 +28,19 @@
         }
 
         .main-box {
-
+            padding: 1em 0;
+            height: 2em;
+            font-size: 2em;
         }
 
         .door-box {
-            margin: 3em auto;
+            margin: 0 auto;
             width: 25%;
             display: flex;
             /*animation: show 0.5s;*/
         }
 
         .door {
-            font-size: 2em;
             flex: 1;
             border: 1px solid currentColor;
         }
@@ -48,8 +49,16 @@
             outline: 3px solid #00a2d4;
         }
 
+        .door:before {
+            content: '羊';
+        }
+
         .car {
             color: red;
+        }
+
+        .car:before {
+            content: '车';
         }
 
         .result-box {
@@ -80,11 +89,11 @@
 </head>
 <body>
 
-<div class="main-box">
+<div class="main-box" id="main-box">
     <ul class="door-box">
-        <li class="door car">车</li>
-        <li class="door choose">羊</li>
-        <li class="door">羊</li>
+        <li class="door car"></li>
+        <li class="door choose"></li>
+        <li class="door"></li>
     </ul>
 </div>
 
