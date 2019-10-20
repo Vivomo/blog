@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>只可以输入数字的键盘</title>
+</head>
+<body>
+    <input type="text" placeholder="只能输入数字" id="numeric">
+    <br>
+    <input type="text" placeholder="只能输入整数" data-number-type="integer">
+    <br>
+    <input type="text" placeholder="只能输入正数" data-number-type="positiveNumber">
+    <br>
+    <input type="text" placeholder="只能输入自然数" data-number-type="naturalNumber">
+
+    <script src="../js/NumericInput.js"></script>
+    <script>
+
+        Array.from(document.querySelectorAll('input')).forEach((input) => {
+            new NumericInput({input});
+        });
+    </script>
+</body>
+</html>

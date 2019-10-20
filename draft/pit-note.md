@@ -105,3 +105,7 @@ Number('0xff000000') | 0
 * 重置canvas宽度后, ctx的属性会还原, 所以需要提前保存设置过的值, 然后再次赋值
 
 * 同域iframe获取不到内容 可能是document.domain 设置了成了其他域名
+
+* 误删远程分支
+1.使用git log -g 找回之前提交的commit
+2.使用git branch recover_branch[新分支] commit_id命令用这个commit创建一个分支
