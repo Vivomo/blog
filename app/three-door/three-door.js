@@ -48,8 +48,10 @@ let creator = {
         if (this.selectedIndex === this.carIndex) {
             this.noChangeScore++;
         }
-        this.changeInfo.innerText = `${this.changeScore}/${this.total}=${this.changeScore && (this.changeScore / this.total)}`;
-        this.noChangeInfo.innerText = `${this.noChangeScore}/${this.total}=${this.noChangeScore && (this.noChangeScore / this.total)}`;
+        this.changeInfo.innerText = `${this.changeScore}/${this.total}=
+            ${((this.changeScore && (this.changeScore / this.total) * 100)).toFixed(4)}%`;
+        this.noChangeInfo.innerText = `${this.noChangeScore}/${this.total}=
+            ${((this.noChangeScore && (this.noChangeScore / this.total) * 100)).toFixed(4)}%`;
     },
     clear() {
         this.box.firstChild.remove()
