@@ -66,3 +66,7 @@ p {
   to {
     opacity: 1;
     transform: translate(0, 0); } }
+
+@media (max-width: 1000px) {
+  .door-box {
+    width: 50%; } }
