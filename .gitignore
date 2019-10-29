@@ -3,6 +3,7 @@ html/
 _site/
 test/d3-test/node_modules/
 build/node_modules/
+node_modules/
 test/big-screen/
 ignore/
 webpack-test/node_modules/
@@ -12,3 +13,4 @@ nodejs/node_modules/
 test/node_modules/
 exportToHTML/
 app/node_modules/
+package-lock.json
