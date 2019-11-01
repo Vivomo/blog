@@ -9,3 +9,7 @@ exports.parseScript = (dom) => {
     }
     return null;
 };
+
+exports.parseBodyData = (dom) => {
+    return dom.body.dataset;
+};
