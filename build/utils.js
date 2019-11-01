@@ -13,3 +13,8 @@ exports.parseScript = (dom) => {
 exports.parseBodyData = (dom) => {
     return dom.body.dataset;
 };
+
+exports.parseViewport = (dom) => {
+    let viewport = dom.querySelector('[name="viewport"]');
+    return viewport && viewport.getAttribute('content');
+};
