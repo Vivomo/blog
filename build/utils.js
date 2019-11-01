@@ -10,6 +10,11 @@ exports.parseScript = (dom) => {
     return null;
 };
 
+exports.parseCSS = (dom) => {
+    let css = dom.querySelector('link');
+    return css && css.getAttribute('href');
+};
+
 exports.parseBodyData = (dom) => {
     return dom.body.dataset;
 };
@@ -17,4 +22,17 @@ exports.parseBodyData = (dom) => {
 exports.parseViewport = (dom) => {
     let viewport = dom.querySelector('[name="viewport"]');
     return viewport && viewport.getAttribute('content');
+};
+
+exports.createBlog = (blog) => {
+    return `
+---
+layout: ${blog.layout}
+viewport: ${blog.viewport}
+title: ${blog.title}
+css: ${blog.css}
+js: ${blog.js}
+---
+${blog.content}     
+   `
 };
