@@ -8,7 +8,7 @@ const {parseScript, parseBodyData, parseViewport, parseCSS, createBlog} = requir
 const { JSDOM } = jsdom;
 
 const inputPath = '../src/html';
-const outputPath = './test';
+const outputPath = '../_posts';
 
 let htmlPaths = getFilesByPath(path.join(__dirname, inputPath));
 
@@ -28,8 +28,6 @@ htmlPaths.forEach((htmlPath) => {
         title: document.title,
         content: document.body.innerHTML,
     };
-
-    console.log(createBlog(blog));
 
     fs.writeFile(path.join(__dirname, outputPath, bodyData.date + '-' + path.basename(htmlPath)), createBlog(blog), (err) => {
         if (err) {
