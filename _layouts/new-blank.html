@@ -8,7 +8,7 @@
     <title>{{ page.title }}</title>
     <link rel="stylesheet" href="{{site.cname}}css/common.css"/>
     {% if page.css != null %}
-    <link rel="stylesheet" href="{{site.cname}}src/css/{{page.css}}.css"/>
+    <link rel="stylesheet" href="{{site.cname}}src/css/{{page.css}}"/>
     {% endif %}
     <link rel="shortcut icon" href="{{site.cname}}img/favicon.ico">
 </head>
@@ -17,7 +17,7 @@
 {{ content }}
 
 {% if page.js != null %}
-<script src="{{site.cname}}src/js/{{page.js}}.js"></script>
+<script src="{{site.cname}}src/js/{{page.js}}"></script>
 {% endif %}
 </body>
 </html>
