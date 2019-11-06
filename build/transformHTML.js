@@ -7,7 +7,7 @@ const {parseScript, parseBodyData, parseViewport, parseCSS, createBlog} = requir
 
 const { JSDOM } = jsdom;
 
-const inputPath = './test';
+const inputPath = '../src/html';
 const outputPath = './test';
 
 let htmlPaths = getFilesByPath(path.join(__dirname, inputPath));
@@ -17,19 +17,26 @@ htmlPaths.forEach((htmlPath) => {
     let {document} = (new JSDOM(html)).window;
 
     let bodyData = parseBodyData(document);
+    if (!bodyData.date) {
+        throw htmlPath + ' no date';
+    }
     let blog = {
         js: parseScript(document),
         css: parseCSS(document),
-        layout: bodyData.layout || 'blank',
+        layout: bodyData.layout,
         viewport: parseViewport(document),
         title: document.title,
         content: document.body.innerHTML,
     };
 
     // console.log(parseBodyData(document));
-    console.log(blog);
     console.log(createBlog(blog));
-    // console.log(document.body.innerHTML);
+
+    fs.writeFile(path.join(__dirname, outputPath, bodyData.date + '-' + path.basename(htmlPath)), createBlog(blog), (err) => {
+        if (err) {
+            console.log(err)
+        }
+    })
 });
 
 

@@ -43,4 +43,14 @@ gulp.task('testWatch', function () {
     gulp.watch(shareCss, ['scss', 'share']);
 });
 
-gulp.task('default', ['scss', 'testWatch', 'share']);
+gulp.task('scss2', function () {
+    gulp.src('../src/scss/**/*.scss')
+        .pipe(scss({
+            linefeed: 'crlf'
+            // outputStyle: 'expanded',
+            // indentWidth: 4
+        }))
+        .pipe(gulp.dest('../src/css'));
+});
+
+gulp.task('default', ['scss', 'scss2', 'testWatch', 'share']);

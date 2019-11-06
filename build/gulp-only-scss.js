@@ -18,4 +18,4 @@ gulp.task('testWatch', function () {
     gulp.watch(scssSrc, ['scss']);
 });
 
-gulp.task('default', ['scss', 'testWatch']);
+gulp.task('default', ['scss', 'scss2', 'testWatch']);
