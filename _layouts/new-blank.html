@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    {% if page.viewport != null %}
+    <meta name="viewport" content="{{page.viewport}}" />
+    {% endif %}
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="{{site.cname}}css/common.css"/>
+    {% if page.css != null %}
+    <link rel="stylesheet" href="{{site.cname}}src/css/{{page.css}}.css"/>
+    {% endif %}
+    <link rel="shortcut icon" href="{{site.cname}}img/favicon.ico">
+</head>
+<body>
+
+{{ content }}
+
+{% if page.js != null %}
+<script src="{{site.cname}}src/js/{{page.js}}.js"></script>
+{% endif %}
+</body>
+</html>
