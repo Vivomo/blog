@@ -29,7 +29,6 @@ htmlPaths.forEach((htmlPath) => {
         content: document.body.innerHTML,
     };
 
-    // console.log(parseBodyData(document));
     console.log(createBlog(blog));
 
     fs.writeFile(path.join(__dirname, outputPath, bodyData.date + '-' + path.basename(htmlPath)), createBlog(blog), (err) => {

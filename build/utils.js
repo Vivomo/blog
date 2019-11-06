@@ -34,5 +34,5 @@ css: ${blog.css}
 js: ${blog.js}
 ---
 ${blog.content}     
-   `
+   `.trim();
 };
