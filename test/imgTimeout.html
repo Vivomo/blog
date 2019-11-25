@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>利用图片假死触发异步测试</title>
+</head>
+<body>
+
+<script>
+    /**
+     * JavaScript框架 12.1 记述了一种利用图片死链接时立即执行error事件来模拟异步
+     * 未找到特别旧版本的IE
+     * 模拟效果不理想，都是前者效果好
+     */
+    setTimeout(function () {
+        console.time('a');
+        setTimeout(function () {
+            console.timeEnd('a');
+        }, 0);
+
+        var imgTimeout = function (cb) {
+            var img = new Image();
+            img.onload = img.onerror = function () {
+                cb()
+            };
+            img.src = 'data:,foo'
+        };
+        console.time('b');
+        imgTimeout(function () {
+            console.timeEnd('b');
+        })
+    }, 1000);
+
+</script>
+</body>
+</html>
