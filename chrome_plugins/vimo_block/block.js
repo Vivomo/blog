@@ -3,8 +3,13 @@
     var block = {
         "coding.imooc.com" :function (){
             var style = document.createElement('style');
-            style.innerText =  ' .next-mask.in, #video-container-mocoplayer-hls-video > [class]{ z-index:1000;background:#000} ';
+            style.className = 'v-diy';
+            style.innerHTML = `
+                .vjs-tech~div[style*=opacity]{
+                    opacity:0!important;
+                }`;
             document.head.appendChild(style);
+            console.log('added');
         },
         "lpl.qq.com": function () {
             var style = document.createElement('style');
