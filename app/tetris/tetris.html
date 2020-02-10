@@ -27,6 +27,22 @@
             height: 600px;
             background: #666;
         }
+
+        .core-ceil, .core-ceil > div {
+            position: absolute;
+            left: 0;
+            top: 0;
+            box-sizing: border-box;
+            width: 30px;
+            height: 30px;
+            border: 2px solid #999;
+        }
+
+        .core-ceil > div {
+            left: -2px;
+            top: -2px;
+        }
+
     </style>
 </head>
 <body>
@@ -37,5 +53,6 @@
             <div class="next"></div>
         </div>
     </div>
+    <script src="./tetris.js"></script>
 </body>
 </html>

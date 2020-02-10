@@ -3,7 +3,18 @@ class BaseCeil {
         this.core = document.createElement('div');
         this.core.classList.add('core-ceil');
         this.rotateState = 0;
+        this.ininH = 5;
     }
+
+    setChild(index, h, v) {
+        this.children[index].style.transform = `translate( ${h * 100}%, ${v * 100}%)`;
+    }
+
+    rotate(direction = 1) {
+        this.rotateState = (this.rotateState + direction) % this.loopCount;
+        this.render();
+    }
+
 }
 
 class I extends BaseCeil {
@@ -15,11 +26,16 @@ class I extends BaseCeil {
             <div class="i3"></div>
         `;
         this.children = [...this.core.children];
-        this.loopCount = 2;        
+        this.loopCount = 2;
+        this.initV = -3;
+        this.h = this.ininH;
+        this.v = this.initV;
     }
 
-    rotate(direction = 1) {
-        this.rotateState = (this.rotateState + direction) % this.loopCount;
+    
+    render() {
+        this.core.style.transform = `translate( ${this.h * 30}px, ${this.v * 30}px)`;
+
         switch(this.rotateState) {
             case 0:
                 this.setChild(0, 0, -1);
@@ -33,8 +49,14 @@ class I extends BaseCeil {
         }
     }
 
-    setChild(index, h, v) {
-        this.children[index].style.transform = `translate( ${h * 100}%, ${v * 100}%)`;
+    tryDrop(cb) {
+        this.v++;
+        this.render();
+    }    
+
+
+    init() {
+        this.render();
     }
 
 }
@@ -43,13 +65,29 @@ class Tetris {
     constructor() {
         this.curCeil = null;
         this.nextCeil = null;
+        this.ground = document.querySelector('.ground');
     }
 
     createCeil() {
 
     }
 
-    start() {
+    appendNewCeil() {
+        this.curCeil = new I();
+        this.curCeil.init();
+        this.ground.appendChild(this.curCeil.core);
+    }
 
+    next() {
+        this.curCeil.v++;
+        this.curCeil.render();
+    }
+
+    start() {
+        this.appendNewCeil();
+        setInterval(this.next.bind(this), 1000);
     }
 }
+
+let game = new Tetris();
+game.start();
