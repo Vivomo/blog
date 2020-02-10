@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>俄罗斯方块</title>
+    <style>
+        .container {
+            position: relative;
+            width: 480px;
+            margin: 0 auto;
+            outline: 2px solid #000;
+            height: 600px;
+        }
+        .ground {
+            position: absolute;
+            width: 300px;
+            height: 600px;
+            background: #333;
+            /* border: 2px solid blue; */
+        }
+
+        .score-wrap {
+            position: absolute;
+            right: 0;
+            width: 180px;
+            height: 600px;
+            background: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="ground"></div>
+        <div class="score-wrap">
+            <div class="score">0</div>
+            <div class="next"></div>
+        </div>
+    </div>
+</body>
+</html>
