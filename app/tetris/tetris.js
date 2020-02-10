@@ -3,11 +3,11 @@ class BaseCeil {
         this.core = document.createElement('div');
         this.core.classList.add('core-ceil');
         this.rotateState = 0;
-        this.ininH = 5;
+        this.initX = 5;
     }
 
-    setChild(index, h, v) {
-        this.children[index].style.transform = `translate( ${h * 100}%, ${v * 100}%)`;
+    setChild(index, x, y) {
+        this.children[index].style.transform = `translate( ${x * 100}%, ${y * 100}%)`;
     }
 
     rotate(direction = 1) {
@@ -27,14 +27,14 @@ class I extends BaseCeil {
         `;
         this.children = [...this.core.children];
         this.loopCount = 2;
-        this.initV = -3;
-        this.h = this.ininH;
-        this.v = this.initV;
+        this.initY = -3;
+        this.x = this.initX;
+        this.y = this.initY;
     }
 
     
     render() {
-        this.core.style.transform = `translate( ${this.h * 30}px, ${this.v * 30}px)`;
+        this.core.style.transform = `translate( ${this.x * 30}px, ${this.y * 30}px)`;
 
         switch(this.rotateState) {
             case 0:
@@ -49,10 +49,32 @@ class I extends BaseCeil {
         }
     }
 
+    getPoints() {
+        let points = [[this.x, this.y]];
+        switch(this.rotateState) {
+            case 0:
+                points.push([this.x, this.y - 1]);
+                points.push([this.x, this.y + 1]);
+                points.push([this.x, this.y + 2]);
+                break;
+            default:
+                points.push([this.x - 1, this.y]);
+                points.push([this.x + 1, this.y]);
+                points.push([this.x + 2, this.y]);
+        };
+        return points;
+    }
+
     tryDrop(cb) {
-        this.v++;
-        this.render();
-    }    
+        this.y++;
+        let points = this.getPoints();
+        let result = cb(points);
+        if (result) {
+            this.render();
+        } else {
+            this.y--;
+        }
+    }
 
 
     init() {
@@ -78,9 +100,25 @@ class Tetris {
         this.ground.appendChild(this.curCeil.core);
     }
 
+    impactCheck(points) {
+        
+        return points.every(([x, y]) => {
+            
+            return x > -1 && x < 10 && y < 20;
+        });
+    }
+
     next() {
-        this.curCeil.v++;
-        this.curCeil.render();
+        this.curCeil.tryDrop((points) => {
+            let result = this.impactCheck(points);
+            if (!result) {
+                console.log('down');
+                
+            }
+            return result;
+        });
+        // this.curCeil.v++;
+        // this.curCeil.render();
     }
 
     start() {
