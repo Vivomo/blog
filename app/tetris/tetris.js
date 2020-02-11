@@ -66,12 +66,15 @@ class I extends BaseCeil {
     }
 
     tryDrop(cb) {
-        this.y++;
         let points = this.getPoints();
-        let result = cb(points);
+        this.y++;
+        let nextPoints = this.getPoints();
+        let result = cb(nextPoints, points);
         if (result) {
             this.render();
         } else {
+            console.log(this.y, result);
+            
             this.y--;
         }
     }
@@ -88,42 +91,65 @@ class Tetris {
         this.curCeil = null;
         this.nextCeil = null;
         this.ground = document.querySelector('.ground');
+        this.points = new Array(20).fill(null).map(_ => new Array(10).fill(0));
     }
 
     createCeil() {
-
+        return new I;
     }
 
     appendNewCeil() {
-        this.curCeil = new I();
+        this.curCeil = this.nextCeil;
         this.curCeil.init();
         this.ground.appendChild(this.curCeil.core);
+        this.nextCeil = this.createCeil();
     }
 
     impactCheck(points) {
-        
         return points.every(([x, y]) => {
-            
-            return x > -1 && x < 10 && y < 20;
+            return y < 0 || 
+            (x > -1 && x < 10 && y < 20 && !this.points[y][x]);
         });
+    }
+
+    addPoints(points) {
+        points.forEach(([x, y]) => {
+            if (!this.points[y]) {
+                throw 'game over';
+            } else {
+                this.points[y][x] = 1;
+            }
+        })
     }
 
     next() {
-        this.curCeil.tryDrop((points) => {
-            let result = this.impactCheck(points);
+        this.curCeil.tryDrop((nextPoints, points) => {
+            let result = this.impactCheck(nextPoints);
             if (!result) {
-                console.log('down');
-                
+                this.addPoints(points);
+                this.appendNewCeil();
             }
             return result;
         });
-        // this.curCeil.v++;
-        // this.curCeil.render();
+    }
+
+    initListener() {
+        let body = document.body;
+        body.addEventListener('keydown', (e) => {
+            console.log(e.keyCode);
+            switch(e.keyCode) {
+                case 32:
+                    this.curCeil.rotate();
+                    break;
+            }
+        });
     }
 
     start() {
+        this.nextCeil = this.createCeil();
         this.appendNewCeil();
-        setInterval(this.next.bind(this), 1000);
+        this.initListener();
+        setInterval(this.next.bind(this), 500);
     }
 }
 
