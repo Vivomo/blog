@@ -85,6 +85,7 @@ class BaseCeil {
     init() {
         this.rotateState = ~~(Math.random() * this.subCoordinates.length);
         this.render();
+        return this;
     }
 }
 
@@ -169,25 +170,29 @@ class O extends BaseCeil {
 
 class Tetris {
     constructor() {
-        this.curCeil = null;
-        this.nextCeil = null;
-        this.score = 0;
         this.ground = document.querySelector('.ground');
         this.scoreElem = document.querySelector('.score');
-        this.points = new Array(20).fill(null).map(_ => new Array(10).fill(0));
+        this.nextElem = document.querySelector('.next');
     }
 
     createCeil() {
         let random = [I, O, S, Z, T, L, J][~~(Math.random() * 7)];
-        return new random;
+        return (new random).init();
     }
 
     appendNewCeil() {
         this.curCeil && this.curCeil.core.remove();
         this.curCeil = this.nextCeil;
-        this.curCeil.init();
         this.ground.appendChild(this.curCeil.core);
         this.nextCeil = this.createCeil();
+        this.nextElem.innerHTML = '';
+        this.nextElem.appendChild(this.cloneCeil(this.nextCeil));
+    }
+
+    cloneCeil(ceil) {
+        let c = ceil.core.cloneNode();
+        c.innerHTML = ceil.core.innerHTML;
+        return c;
     }
 
     appendPoints(x, y) {
@@ -231,15 +236,19 @@ class Tetris {
     }
 
     addPoints(points) {
-        points.forEach(([x, y]) => {
+        let live = points.every(([x, y]) => {
             if (!this.points[y]) {
                 alert('游戏结束, 得分'+ this.score);
+                clearInterval(this.key);
+                return false;
             } else {
                 this.appendPoints(x, y);
-                // chrome bug, appendPoints有时会变成异步操作
-                setTimeout(this.calcScore.bind(this));
+                return true;
             }
-        })
+        });
+        if (live) {
+            this.calcScore(); 
+        }
     }
 
     next() {
@@ -253,32 +262,89 @@ class Tetris {
         });
     }
 
+    exeLeftCommand() {
+        this.curCeil.tryMoveLeft((nextPoints) => this.impactCheck(nextPoints));
+    }
+
+    exeRightCommand() {
+        this.curCeil.tryMoveRight((nextPoints) => this.impactCheck(nextPoints));
+    }
+
+    exeRotateCommand() {
+        this.curCeil.tryRotate((nextPoints) => this.impactCheck(nextPoints));
+    }
+
+
     initListener() {
         let body = document.body;
         body.addEventListener('keydown', (e) => {
             switch(e.keyCode) {
                 case 32:
                 case 38:    
-                    this.curCeil.tryRotate((nextPoints) => this.impactCheck(nextPoints));
+                    this.exeRotateCommand();
                     break;
                 case 37:
-                    this.curCeil.tryMoveLeft((nextPoints) => this.impactCheck(nextPoints));
+                    this.exeLeftCommand();
                     break;
                 case 39:
-                    this.curCeil.tryMoveRight((nextPoints) => this.impactCheck(nextPoints));
+                    this.exeRightCommand();
                     break;
                 case 40:
                     this.next();
                     break;
             }
         });
+        let ctrlLeft = document.querySelector('.left');
+        let leftKey;
+        ctrlLeft.addEventListener('touchstart', () => {
+            this.exeLeftCommand();
+            leftKey = setInterval(() => {
+                this.exeLeftCommand();
+            }, 120);
+        });
+
+        ctrlLeft.addEventListener('touchend', () => {
+            clearInterval(leftKey);
+        });
+
+        let ctrlRight = document.querySelector('.right');
+        let rightKey;
+        ctrlRight.addEventListener('touchstart', () => {
+            this.exeRightCommand();
+            rightKey = setInterval(() => {
+                this.exeRightCommand();
+            }, 120);
+        });
+
+        ctrlRight.addEventListener('touchend', () => {
+            clearInterval(rightKey);
+        });
+
+        let ctrlDown = document.querySelector('.down');
+        let downKey;
+        ctrlDown.addEventListener('touchstart', () => {
+            downKey = setInterval(() => {
+                this.next();
+            }, 30);
+        });
+
+        ctrlDown.addEventListener('touchend', () => {
+            clearInterval(downKey);
+        });
+
+        document.querySelector('.transform').addEventListener('click', () => {
+            this.exeRotateCommand();
+        });
+
     }
 
     start() {
         this.nextCeil = this.createCeil();
         this.appendNewCeil();
         this.initListener();
-        setInterval(this.next.bind(this), 500);
+        this.score = 0;
+        this.points = new Array(20).fill(null).map(_ => new Array(10).fill(0));
+        this.key = setInterval(this.next.bind(this), 500);
     }
 }
 
