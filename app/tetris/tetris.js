@@ -12,7 +12,7 @@ class BaseCeil {
         this.rotateMinX = 1;
         this.rotateMaxX = 8;
         this.rotateMaxY = 18;
-        this.x = 5;
+        this.x = 4;
         this.y = -2;
         this.width = 30;
     }
@@ -136,6 +136,40 @@ class Z extends BaseCeil {
     }
 }
 
+class J extends BaseCeil {
+    constructor() {
+        super();
+        this.subCoordinates = [
+            [[0, -1], [0, 1], [-1, 1]],
+            [[-1, -1], [-1, 0], [1, 0]],
+            [[0, -1], [1, -1], [0, 1]],
+            [[-1, 0], [1, 0], [1, 1]]
+        ]
+    }
+}
+
+class L extends BaseCeil {
+    constructor() {
+        super();
+        this.subCoordinates = [
+            [[0, -1], [0, 1], [1, 1]],
+            [[1, 0], [-1, 0], [-1, 1]],
+            [[0, -1], [0, 1], [-1, -1]],
+            [[-1, 0], [1, 0], [1, -1]]
+        ]
+    }
+}
+
+class O extends BaseCeil {
+    constructor() {
+        super();
+        this.rotateMinX = 0;
+        this.subCoordinates = [
+            [[1, 0], [1, 1], [0, 1]]
+        ]
+    }
+}
+
 class Tetris {
     constructor() {
         this.curCeil = null;
@@ -145,7 +179,7 @@ class Tetris {
     }
 
     createCeil() {
-        return new Z;
+        return new O;
     }
 
     appendNewCeil() {
