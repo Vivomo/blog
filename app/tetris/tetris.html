@@ -2,14 +2,30 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        if (window.innerWidth < 1200) {
+            document.write(`<meta name="viewport" content=" target-densitydpi=device-dpi, width=600,shrink-to-fit=no, maximum-scale=2, user-scalable=no">`)
+        } else {
+            document.write(`<meta name="viewport" content="width=device-width, initial-scale=1.0">`);
+        }
+    </script>
     <title>俄罗斯方块</title>
     <style>
+        body {
+            position: relative;
+            margin: 0;
+            padding-top: 60px;
+            background: #000;
+            width: 100vw;
+            height: 100vh;
+            box-sizing: border-box;
+            user-select: none;
+        }
         .container {
             position: relative;
             width: 480px;
             margin: 0 auto;
-            outline: 2px solid #000;
+            outline: 2px solid #121212;
             height: 600px;
         }
         .ground {
@@ -18,7 +34,6 @@
             height: 600px;
             background: #333;
             overflow: hidden;
-            /* border: 2px solid blue; */
         }
 
         .score-wrap {
@@ -46,6 +61,52 @@
             text-align: center;
             color: yellow;
         }
+
+        .next {
+            position: relative;
+            top: 60px;
+            left: 60px;
+        }
+
+        .next .core-ceil {
+            transform: none!important;
+        }
+
+        .controller {
+            position: absolute;
+            width: 100vw;
+            bottom: 120px;
+        }
+
+        .controller > a {
+            position: absolute;
+            border: 45px solid transparent;
+        }
+
+        .controller .left {
+            left: 10%;
+            bottom: 120px;
+            border-right-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .controller .right {
+            right: 10%;
+            bottom: 120px;
+            border-left-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .controller .down {
+            border-top-color: rgba(255, 255, 255, 0.5);
+            left: calc(50% - 45px);
+            bottom: -30px;
+        }
+
+        .controller .transform {
+            left: calc(50% - 45px);
+            border-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            bottom: 150px;
+        }
     </style>
 </head>
 <body>
@@ -55,6 +116,12 @@
             <div class="score">0</div>
             <div class="next"></div>
         </div>
+    </div>
+    <div class="controller">
+        <a href="javascript:" class="left"></a>
+        <a href="javascript:" class="right"></a>
+        <a href="javascript:" class="down"></a>
+        <a href="javascript:" class="transform"></a>
     </div>
     <script src="./tetris.js"></script>
 </body>
