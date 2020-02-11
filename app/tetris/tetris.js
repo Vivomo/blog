@@ -10,11 +10,55 @@ class BaseCeil {
         this.children[index].style.transform = `translate( ${x * 100}%, ${y * 100}%)`;
     }
 
+    tryDrop(cb) {
+        this.tryTransform(() => {
+            this.y++;
+        }, cb);
+    }
+
+    tryMoveLeft(cb) {
+        this.tryTransform(() => {
+            this.x--;
+        }, cb);
+    }
+
+    tryMoveRight(cb) {
+        this.tryTransform(() => {
+            this.x++;
+        }, cb);
+    }
+
+    tryTransform(transform, cb) {
+        this.backup();
+        let points = this.getPoints();
+        transform();
+        let nextPoints = this.getPoints();
+        let result = cb(nextPoints, points);
+        if (result) {
+            this.render();
+        } else {
+            this.rollback();
+        }
+    }
+
     rotate(direction = 1) {
         this.rotateState = (this.rotateState + direction) % this.loopCount;
         this.render();
     }
 
+    backup() {
+        this.prevState = {
+            x: this.x,
+            y: this.y,
+            rotateState: this.rotateState
+        }
+    }
+
+    rollback() {
+        for (let k in this.prevState) {
+            this[k] = this.prevState[k];
+        }
+    }
 }
 
 class I extends BaseCeil {
@@ -65,20 +109,7 @@ class I extends BaseCeil {
         return points;
     }
 
-    tryDrop(cb) {
-        let points = this.getPoints();
-        this.y++;
-        let nextPoints = this.getPoints();
-        let result = cb(nextPoints, points);
-        if (result) {
-            this.render();
-        } else {
-            console.log(this.y, result);
-            
-            this.y--;
-        }
-    }
-
+    
 
     init() {
         this.render();
@@ -140,6 +171,12 @@ class Tetris {
             switch(e.keyCode) {
                 case 32:
                     this.curCeil.rotate();
+                    break;
+                case 37:
+                    this.curCeil.tryMoveLeft((nextPoints) => this.impactCheck(nextPoints));
+                    break;
+                case 39:
+                    this.curCeil.tryMoveRight((nextPoints) => this.impactCheck(nextPoints));
                     break;
             }
         });
