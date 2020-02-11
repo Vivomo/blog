@@ -87,6 +87,7 @@ class BaseCeil {
     }
 
     init() {
+        this.rotateState = ~~(Math.random() * this.subCoordinates.length);
         this.render();
     }
 }
@@ -179,7 +180,8 @@ class Tetris {
     }
 
     createCeil() {
-        return new O;
+        let random = [I, O, S, Z, T, L, J][~~(Math.random() * 7)];
+        return new random;
     }
 
     appendNewCeil() {
@@ -230,6 +232,8 @@ class Tetris {
                     break;
                 case 39:
                     this.curCeil.tryMoveRight((nextPoints) => this.impactCheck(nextPoints));
+                case 40:
+                    this.next();
                     break;
             }
         });
