@@ -6,6 +6,7 @@ class BaseCeil {
             <div class="i2"></div>
             <div class="i3"></div>
         `;
+        this.children = [...this.core.children];
         this.core.classList.add('core-ceil');
         this.rotateState = 0;
         this.x = 5;
@@ -55,11 +56,6 @@ class BaseCeil {
         }
     }
 
-    rotate(direction = 1) {
-        this.rotateState = (this.rotateState + direction) % this.loopCount;
-        this.render();
-    }
-
     backup() {
         this.prevState = {
             x: this.x,
@@ -81,6 +77,10 @@ class BaseCeil {
         });
     }
 
+    getPoints() {
+        return [[this.x, this.y]].concat(this.subCoordinates[this.rotateState]
+            .map(([x, y]) => [this.x + x, this.y + y]));
+    }
 
     init() {
         this.render();
@@ -90,7 +90,6 @@ class BaseCeil {
 class I extends BaseCeil {
     constructor() {
         super();
-        this.children = [...this.core.children];
         this.loopCount = 2;
         this.initY = -3;
         this.y = -3;
@@ -102,13 +101,12 @@ class I extends BaseCeil {
             1: [[-1, 0], [1, 0], [2, 0]],
         }
     }
+}
 
-
-    getPoints() {
-        return [[this.x, this.y]].concat(this.subCoordinates[this.rotateState]
-            .map(([x, y]) => [this.x + x, this.y + y]));
+class T extends BaseCeil {
+    constructor() {
+        super();
     }
-
 }
 
 class Tetris {
