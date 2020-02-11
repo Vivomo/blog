@@ -173,6 +173,7 @@ class Tetris {
         this.nextCeil = null;
         this.score = 0;
         this.ground = document.querySelector('.ground');
+        this.scoreElem = document.querySelector('.score');
         this.points = new Array(20).fill(null).map(_ => new Array(10).fill(0));
     }
 
@@ -226,6 +227,7 @@ class Tetris {
             }
         });
         this.score += score * score * 10;
+        this.scoreElem.innerHTML = this.score;
     }
 
     addPoints(points) {
@@ -234,9 +236,8 @@ class Tetris {
                 alert('游戏结束, 得分'+ this.score);
             } else {
                 this.appendPoints(x, y);
-                setTimeout(() => {
-                    this.calcScore();
-                })
+                // chrome bug, appendPoints有时会变成异步操作
+                setTimeout(this.calcScore.bind(this));
             }
         })
     }
