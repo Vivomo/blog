@@ -1,11 +1,7 @@
 class BaseCeil {
     constructor() {
         this.core = document.createElement('div');
-        this.core.innerHTML = `
-            <div class="i1"></div>
-            <div class="i2"></div>
-            <div class="i3"></div>
-        `;
+        this.core.innerHTML = '<div></div><div></div><div></div>';
         this.children = [...this.core.children];
         this.core.classList.add('core-ceil');
         this.rotateState = 0;
@@ -175,6 +171,7 @@ class Tetris {
     constructor() {
         this.curCeil = null;
         this.nextCeil = null;
+        this.score = 0;
         this.ground = document.querySelector('.ground');
         this.points = new Array(20).fill(null).map(_ => new Array(10).fill(0));
     }
@@ -185,11 +182,20 @@ class Tetris {
     }
 
     appendNewCeil() {
+        this.curCeil && this.curCeil.core.remove();
         this.curCeil = this.nextCeil;
         this.curCeil.init();
         this.ground.appendChild(this.curCeil.core);
         this.nextCeil = this.createCeil();
     }
+
+    appendPoints(x, y) {
+        let p = document.createElement('div');
+        p.className = 'fixed-ceil';
+        p.style.transform = `translate( ${x * this.curCeil.width}px, ${y * this.curCeil.width}px)`;
+        this.ground.appendChild(p);
+        this.points[y][x] = p;
+    };
 
     impactCheck(points) {
         return points.every(([x, y]) => {
@@ -198,12 +204,39 @@ class Tetris {
         });
     }
 
+    calcScore() {
+        let score = 0;
+        this.points.forEach((rowPoints, rowIndex) => {
+            let full = rowPoints.every(point => point);
+            if (full) {
+                score++;
+                rowPoints.forEach((point) => {
+                    point.remove();
+                });
+                for (let i = rowIndex; i > 0; i--) {
+                    this.points[i] = this.points[i - 1];
+                    let y = i * this.curCeil.width;
+                    this.points[i].forEach((point, pIndex) => {
+                        if (point) {
+                            point.style.transform = `translate(${pIndex * this.curCeil.width}px, ${y}px)`;
+                        }
+                    });
+                }
+                this.points[0] = new Array(10).fill(0);
+            }
+        });
+        this.score += score * score * 10;
+    }
+
     addPoints(points) {
         points.forEach(([x, y]) => {
             if (!this.points[y]) {
-                throw 'game over';
+                alert('游戏结束, 得分'+ this.score);
             } else {
-                this.points[y][x] = 1;
+                this.appendPoints(x, y);
+                setTimeout(() => {
+                    this.calcScore();
+                })
             }
         })
     }
@@ -222,9 +255,9 @@ class Tetris {
     initListener() {
         let body = document.body;
         body.addEventListener('keydown', (e) => {
-            console.log(e.keyCode);
             switch(e.keyCode) {
                 case 32:
+                case 38:    
                     this.curCeil.tryRotate((nextPoints) => this.impactCheck(nextPoints));
                     break;
                 case 37:
@@ -232,6 +265,7 @@ class Tetris {
                     break;
                 case 39:
                     this.curCeil.tryMoveRight((nextPoints) => this.impactCheck(nextPoints));
+                    break;
                 case 40:
                     this.next();
                     break;
