@@ -9,7 +9,11 @@ class BaseCeil {
         this.children = [...this.core.children];
         this.core.classList.add('core-ceil');
         this.rotateState = 0;
+        this.rotateMinX = 1;
+        this.rotateMaxX = 8;
+        this.rotateMaxY = 18;
         this.x = 5;
+        this.y = -2;
         this.width = 30;
     }
 
@@ -39,7 +43,7 @@ class BaseCeil {
         this.tryTransform(() => {
             this.x = Math.min(this.rotateMaxX, Math.max(this.rotateMinX, this.x));
             this.y = Math.min(this.rotateMaxY, this.y);
-            this.rotateState = (this.rotateState + 1) % this.loopCount;
+            this.rotateState = (this.rotateState + 1) % this.subCoordinates.length;
         }, cb);
     }
 
@@ -90,22 +94,25 @@ class BaseCeil {
 class I extends BaseCeil {
     constructor() {
         super();
-        this.loopCount = 2;
-        this.initY = -3;
         this.y = -3;
-        this.rotateMinX = 1;
         this.rotateMaxX = 7;
         this.rotateMaxY = 17;
-        this.subCoordinates = {
-            0: [[0, -1], [0, 1], [0, 2]],
-            1: [[-1, 0], [1, 0], [2, 0]],
-        }
+        this.subCoordinates = [
+            [[0, -1], [0, 1], [0, 2]],
+            [[-1, 0], [1, 0], [2, 0]]
+        ]
     }
 }
 
 class T extends BaseCeil {
     constructor() {
         super();
+        this.subCoordinates = [
+            [[0, -1], [-1, 0], [1, 0]],
+            [[0, -1], [0, 1], [1, 0]],
+            [[-1, 0], [0, 1], [1, 0]],
+            [[-1, 0], [0, 1], [0, -1]]
+        ]
     }
 }
 
@@ -118,7 +125,7 @@ class Tetris {
     }
 
     createCeil() {
-        return new I;
+        return new T;
     }
 
     appendNewCeil() {
