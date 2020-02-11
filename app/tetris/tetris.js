@@ -116,6 +116,26 @@ class T extends BaseCeil {
     }
 }
 
+class S extends BaseCeil {
+    constructor() {
+        super();
+        this.subCoordinates = [
+            [[0, -1], [1, 0], [1, 1]],
+            [[1, 0], [0, 1], [-1, 1]]
+        ]
+    }
+}
+
+class Z extends BaseCeil {
+    constructor() {
+        super();
+        this.subCoordinates = [
+            [[1, -1], [1, 0], [0, 1]],
+            [[1, 1], [0, 1], [-1, 0]]
+        ]
+    }
+}
+
 class Tetris {
     constructor() {
         this.curCeil = null;
@@ -125,7 +145,7 @@ class Tetris {
     }
 
     createCeil() {
-        return new T;
+        return new Z;
     }
 
     appendNewCeil() {
