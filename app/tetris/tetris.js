@@ -28,6 +28,14 @@ class BaseCeil {
         }, cb);
     }
 
+    tryRotate(cb) {
+        this.tryTransform(() => {
+            this.x = Math.min(this.rotateMaxX, Math.max(this.rotateMinX, this.x));
+            this.y = Math.min(this.rotateMaxY, this.y);
+            this.rotateState = (this.rotateState + 1) % this.loopCount;
+        }, cb);
+    }
+
     tryTransform(transform, cb) {
         this.backup();
         let points = this.getPoints();
@@ -74,6 +82,9 @@ class I extends BaseCeil {
         this.initY = -3;
         this.x = this.initX;
         this.y = this.initY;
+        this.rotateMinX = 1;
+        this.rotateMaxX = 7;
+        this.rotateMaxY = 17;
     }
 
     
@@ -108,7 +119,6 @@ class I extends BaseCeil {
         };
         return points;
     }
-
     
 
     init() {
@@ -170,7 +180,7 @@ class Tetris {
             console.log(e.keyCode);
             switch(e.keyCode) {
                 case 32:
-                    this.curCeil.rotate();
+                    this.curCeil.tryRotate((nextPoints) => this.impactCheck(nextPoints));
                     break;
                 case 37:
                     this.curCeil.tryMoveLeft((nextPoints) => this.impactCheck(nextPoints));
