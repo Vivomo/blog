@@ -239,7 +239,24 @@ class Tetris {
             }
         });
         this.score += score * score * 10;
-        this.scoreElem.innerHTML = this.score;
+        if (score) {
+            this.scoreElem.innerHTML = this.score;
+            this.checkEgg(score);
+        }
+    }
+
+    checkEgg(score) {
+        if (this.egg) {
+            if (this.egg[0] === score) {
+                this.egg.shift();
+                if (this.egg.length === 0) {
+                    this.showEgg();
+                    this.egg = null;
+                }
+            } else {
+                this.egg = null;
+            }
+        }
     }
 
     addPoints(points) {
@@ -337,7 +354,15 @@ class Tetris {
 
     }
 
+    showEgg() {
+        document.body.classList.add('ed');
+        document.querySelector('.tip').innerHTML = `
+        曾经有个人<br>  她喜欢柠檬<br>不喜欢柠檬酸
+        `;
+    }
+
     start() {
+        this.egg = [1, 1, 2, 2];
         this.score = 0;
         this.points = new Array(GROUND_HEIGHT).fill(null).map(_ => new Array(GROUND_WIDTH).fill(0));
         this.nextCeil = this.createCeil();
