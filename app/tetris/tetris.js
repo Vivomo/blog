@@ -1,3 +1,7 @@
+const GROUND_HEIGHT = 24;
+const GROUND_WIDTH = 10;
+const CEIL_WIDTH = 30;
+
 class BaseCeil {
     constructor() {
         this.core = document.createElement('div');
@@ -6,11 +10,11 @@ class BaseCeil {
         this.core.classList.add('core-ceil');
         this.rotateState = 0;
         this.rotateMinX = 1;
-        this.rotateMaxX = 8;
-        this.rotateMaxY = 18;
+        this.rotateMaxX = GROUND_WIDTH - 2;
+        this.rotateMaxY = GROUND_HEIGHT - 2;
         this.x = 4;
-        this.y = -2;
-        this.width = 30;
+        this.y = 2;
+        this.width = CEIL_WIDTH;
     }
 
     setChild(index, x, y) {
@@ -71,7 +75,7 @@ class BaseCeil {
     }
 
     render() {
-        this.core.style.transform = `translate( ${this.x * this.width}px, ${this.y * this.width}px)`;
+        this.core.style.transform = `translate( ${this.x * CEIL_WIDTH}px, ${(this.y - 4) * CEIL_WIDTH}px)`;
         this.subCoordinates[this.rotateState].forEach(([x, y], index) => {
             this.setChild(index, x, y);
         });
@@ -92,9 +96,9 @@ class BaseCeil {
 class I extends BaseCeil {
     constructor() {
         super();
-        this.y = -3;
-        this.rotateMaxX = 7;
-        this.rotateMaxY = 17;
+        this.y = 1;
+        this.rotateMaxX = GROUND_WIDTH - 3;
+        this.rotateMaxY = GROUND_HEIGHT - 3;
         this.subCoordinates = [
             [[0, -1], [0, 1], [0, 2]],
             [[-1, 0], [1, 0], [2, 0]]
@@ -187,6 +191,10 @@ class Tetris {
         this.nextCeil = this.createCeil();
         this.nextElem.innerHTML = '';
         this.nextElem.appendChild(this.cloneCeil(this.nextCeil));
+        if (!this.impactCheck(this.curCeil.getPoints())) {
+            alert('游戏结束, 得分'+ this.score);
+            clearInterval(this.key);
+        }
     }
 
     cloneCeil(ceil) {
@@ -198,15 +206,14 @@ class Tetris {
     appendPoints(x, y) {
         let p = document.createElement('div');
         p.className = 'fixed-ceil';
-        p.style.transform = `translate( ${x * this.curCeil.width}px, ${y * this.curCeil.width}px)`;
+        p.style.transform = `translate( ${x * this.curCeil.width}px, ${(y - 4) * this.curCeil.width}px)`;
         this.ground.appendChild(p);
         this.points[y][x] = p;
     };
 
     impactCheck(points) {
         return points.every(([x, y]) => {
-            return y < 0 || 
-            (x > -1 && x < 10 && y < 20 && !this.points[y][x]);
+            return x > -1 && x < GROUND_WIDTH && y < GROUND_HEIGHT && !this.points[y][x];
         });
     }
 
@@ -221,7 +228,7 @@ class Tetris {
                 });
                 for (let i = rowIndex; i > 0; i--) {
                     this.points[i] = this.points[i - 1];
-                    let y = i * this.curCeil.width;
+                    let y = (i - 4) * this.curCeil.width;
                     this.points[i].forEach((point, pIndex) => {
                         if (point) {
                             point.style.transform = `translate(${pIndex * this.curCeil.width}px, ${y}px)`;
@@ -236,19 +243,10 @@ class Tetris {
     }
 
     addPoints(points) {
-        let live = points.every(([x, y]) => {
-            if (!this.points[y]) {
-                alert('游戏结束, 得分'+ this.score);
-                clearInterval(this.key);
-                return false;
-            } else {
-                this.appendPoints(x, y);
-                return true;
-            }
+        points.forEach(([x, y]) => {
+            this.appendPoints(x, y);
         });
-        if (live) {
-            this.calcScore(); 
-        }
+        this.calcScore();
     }
 
     next() {
@@ -297,10 +295,10 @@ class Tetris {
         let ctrlLeft = document.querySelector('.left');
         let leftKey;
         ctrlLeft.addEventListener('touchstart', () => {
-            this.exeLeftCommand();
             leftKey = setInterval(() => {
                 this.exeLeftCommand();
             }, 120);
+            this.exeLeftCommand();
         });
 
         ctrlLeft.addEventListener('touchend', () => {
@@ -310,19 +308,20 @@ class Tetris {
         let ctrlRight = document.querySelector('.right');
         let rightKey;
         ctrlRight.addEventListener('touchstart', () => {
-            this.exeRightCommand();
             rightKey = setInterval(() => {
                 this.exeRightCommand();
             }, 120);
         });
 
         ctrlRight.addEventListener('touchend', () => {
+            this.exeRightCommand();
             clearInterval(rightKey);
         });
 
         let ctrlDown = document.querySelector('.down');
         let downKey;
         ctrlDown.addEventListener('touchstart', () => {
+            this.next();
             downKey = setInterval(() => {
                 this.next();
             }, 30);
@@ -339,11 +338,11 @@ class Tetris {
     }
 
     start() {
+        this.score = 0;
+        this.points = new Array(GROUND_HEIGHT).fill(null).map(_ => new Array(GROUND_WIDTH).fill(0));
         this.nextCeil = this.createCeil();
         this.appendNewCeil();
         this.initListener();
-        this.score = 0;
-        this.points = new Array(20).fill(null).map(_ => new Array(10).fill(0));
         this.key = setInterval(this.next.bind(this), 500);
     }
 }
