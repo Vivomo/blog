@@ -11,6 +11,10 @@
     </script>
     <title>俄罗斯方块</title>
     <style>
+        * {
+            user-select: none;
+            -webkit-user-select: none;
+        }
         body {
             position: relative;
             margin: 0;
@@ -75,37 +79,60 @@
         .controller {
             position: absolute;
             width: 100vw;
-            bottom: 6%;
+            bottom: 2%;
         }
 
-        .controller > a {
+        .controller > div {
             position: absolute;
+            width: 120px;
+            height: 120px;
+        }
+
+        .controller > div::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            width: 0;
+            height: 0;
             border: 45px solid transparent;
         }
 
         .controller .left {
             left: 10%;
             bottom: 120px;
-            border-right-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .controller .left::before {
+            left: -7px;
+            border-right-color: #808080;
         }
 
         .controller .right {
             right: 10%;
             bottom: 120px;
-            border-left-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .controller .right::before {
+            left: 38px;
+            border-left-color: #808080;
         }
 
         .controller .down {
-            border-top-color: rgba(255, 255, 255, 0.5);
-            left: calc(50% - 45px);
-            bottom: -30px;
+            left: calc(50% - 60px);
+            bottom: 0;
+        }
+
+        .controller .down::before {
+            border-top-color: #808080;
+            top: 38px;
+            left: 15px;
         }
 
         .controller .transform {
-            left: calc(50% - 45px);
-            border-color: rgba(255, 255, 255, 0.5);
+            left: calc(50% - 60px);
             border-radius: 50%;
             bottom: 150px;
+            background: #808080;
         }
 
         @media screen and (min-width: 1200px) {
@@ -124,10 +151,10 @@
         </div>
     </div>
     <div class="controller">
-        <a href="javascript:" class="left"></a>
-        <a href="javascript:" class="right"></a>
-        <a href="javascript:" class="down"></a>
-        <a href="javascript:" class="transform"></a>
+        <div class="left"></div>
+        <div class="right"></div>
+        <div class="down"></div>
+        <div class="transform"></div>
     </div>
     <script src="./tetris.js"></script>
 </body>
