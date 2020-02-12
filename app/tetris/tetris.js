@@ -192,8 +192,8 @@ class Tetris {
         this.nextElem.innerHTML = '';
         this.nextElem.appendChild(this.cloneCeil(this.nextCeil));
         if (!this.impactCheck(this.curCeil.getPoints())) {
-            alert('游戏结束, 得分'+ this.score);
-            clearInterval(this.key);
+            this.gameOver = true;
+            alert('游戏结束, 得分:'+ this.score);
         }
     }
 
@@ -343,7 +343,12 @@ class Tetris {
         this.nextCeil = this.createCeil();
         this.appendNewCeil();
         this.initListener();
-        this.key = setInterval(this.next.bind(this), 500);
+        this.key = setInterval(() => {
+            this.next();
+            if (this.gameOver) {
+                clearInterval(this.key);
+            }
+        }, 500);
     }
 }
 
