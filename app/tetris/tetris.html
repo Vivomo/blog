@@ -18,7 +18,7 @@
         body {
             position: relative;
             margin: 0;
-            padding-top: 60px;
+            padding-top: 20px;
             background: #000;
             width: 100vw;
             height: 100vh;
@@ -83,7 +83,7 @@
         .controller {
             position: absolute;
             width: 100vw;
-            bottom: 2%;
+            bottom: 0;
         }
 
         .controller > div {
@@ -108,7 +108,7 @@
 
         .controller .left::before {
             left: -7px;
-            border-right-color: #808080;
+            border-right-color: rgba(255, 255, 255, 0.4);
         }
 
         .controller .right {
@@ -118,7 +118,7 @@
 
         .controller .right::before {
             left: 38px;
-            border-left-color: #808080;
+            border-left-color: rgba(255, 255, 255, 0.4);
         }
 
         .controller .down {
@@ -127,7 +127,7 @@
         }
 
         .controller .down::before {
-            border-top-color: #808080;
+            border-top-color: rgba(255, 255, 255, 0.4);
             top: 38px;
             left: 15px;
         }
@@ -136,7 +136,13 @@
             left: calc(50% - 60px);
             border-radius: 50%;
             bottom: 150px;
-            background: #808080;
+        }
+
+        .controller .transform::before {
+            top: 15px;
+            left: 15px;
+            border-color: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
         }
 
         @media screen and (min-width: 1200px) {
@@ -144,6 +150,8 @@
                 display: none;
             }
         }
+
+    
         .tip {
             position: absolute;
             right: 0;
