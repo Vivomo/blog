@@ -26,7 +26,10 @@ function start() {
                     }
                 }
             }
-            if (last === max) {
+            
+            if (last === max || 
+                (queens.length > 1 && 
+                    (~~(last / 8) - ~~(queens[queens.length - 2] / 8) > 1))) {
                 queens.pop()
             }
             queens[queens.length - 1]++;
