@@ -70,14 +70,25 @@
             color: yellow;
         }
 
+        .score-wrap button {
+            display: block;
+            margin: 30px auto;
+            width: 80px;
+            height: 36px;
+            color: #fff;
+            background: #000;
+            border-radius: 4px;
+            border: none;
+            outline: none;
+        }
+
         .next {
             position: relative;
-            top: 60px;
-            left: 60px;
+            height: 180px;
         }
 
         .next .core-ceil {
-            transform: none!important;
+            transform: translate(60px, 60px)!important;
         }
 
         .controller {
@@ -168,6 +179,8 @@
         <div class="score-wrap">
             <div class="score">0</div>
             <div class="next"></div>
+            <button class="stop">暂停</button>
+            <button class="replay">重玩</button>
             <div class="tip"></div>
         </div>
     </div>

@@ -267,6 +267,8 @@ class Tetris {
     }
 
     next() {
+        if (this.stop || this.gameOver)  return;
+
         this.curCeil.tryDrop((nextPoints, points) => {
             let result = this.impactCheck(nextPoints);
             if (!result) {
@@ -278,14 +280,20 @@ class Tetris {
     }
 
     exeLeftCommand() {
+        if (this.stop || this.gameOver)  return;
+
         this.curCeil.tryMoveLeft((nextPoints) => this.impactCheck(nextPoints));
     }
 
     exeRightCommand() {
+        if (this.stop || this.gameOver)  return;
+
         this.curCeil.tryMoveRight((nextPoints) => this.impactCheck(nextPoints));
     }
 
     exeRotateCommand() {
+        if (this.stop || this.gameOver)  return;
+
         this.curCeil.tryRotate((nextPoints) => this.impactCheck(nextPoints));
     }
 
@@ -352,6 +360,11 @@ class Tetris {
             this.exeRotateCommand();
         });
 
+        let stopBtn = document.querySelector('.stop');
+        stopBtn.addEventListener('click', () => {
+            this.stop = !this.stop;
+            stopBtn.innerHTML = this.stop ? '开始' : '暂停';
+        });
     }
 
     showEgg() {
@@ -364,6 +377,7 @@ class Tetris {
     start() {
         this.egg = [1, 1, 2, 2];
         this.score = 0;
+        this.stop = false;
         this.points = new Array(GROUND_HEIGHT).fill(null).map(_ => new Array(GROUND_WIDTH).fill(0));
         this.nextCeil = this.createCeil();
         this.appendNewCeil();
