@@ -365,7 +365,21 @@ class Tetris {
             this.stop = !this.stop;
             stopBtn.innerHTML = this.stop ? '开始' : '暂停';
         });
+
+        document.querySelector('.replay').addEventListener('click', () => {
+            if(this.gameOver) {
+                this.replay();
+            } else {
+                this.stop = true;
+                if (confirm('游戏还未结束,你确定重玩吗')) {
+                    this.replay();
+                } else {
+                    this.stop = false;
+                }
+            }
+        });
     }
+
 
     showEgg() {
         document.body.classList.add('ed');
@@ -374,14 +388,24 @@ class Tetris {
         `;
     }
 
-    start() {
+    replay() {
+        this.gameOver = false;
+        clearInterval(this.key);
+        this.ground.innerHTML = '';
+        this.start(false);
+    }
+
+    start(init = true) {
         this.egg = [1, 1, 2, 2];
         this.score = 0;
         this.stop = false;
         this.points = new Array(GROUND_HEIGHT).fill(null).map(_ => new Array(GROUND_WIDTH).fill(0));
         this.nextCeil = this.createCeil();
         this.appendNewCeil();
-        this.initListener();
+        if (init) {
+            this.initListener();
+        }
+        
         this.key = setInterval(() => {
             this.next();
             if (this.gameOver) {
