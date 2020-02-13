@@ -17,7 +17,7 @@ function start() {
             if (valid(queens)) {
                 if (queens.length === queensNum) {
                     console.log('result', queens, count, ++resultCount);
-                    alert(`解法${resultCount}${queens.join('-')},点击确定继续查找`)
+                    alert(`解法${resultCount}:--->${queens.join('-')},点击确定继续查找`)
                 } else {
                     if (last !== max) {
                         queens.push(last + 1);
