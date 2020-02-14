@@ -103,15 +103,15 @@ let snake = avalon.define({
         this.createFood();
     },
     isOutOfIndex: function (ceil) {
-        return ceil.x < 0 || ceil.x >= Snake.cfg.width || ceil.y < 0 || ceil.y >= Snake.cfg.width
+        return ceil.x < 0 || ceil.x >= Square.cfg.width || ceil.y < 0 || ceil.y >= Square.cfg.width
     },
     isOnBody: function (ceil) {
         return this.body.some(function (item) {
             return item.x === ceil.x && item.y === ceil.y
         })
     },
-    isFood: function (ceil) {
-        return this.square[ceil.y][ceil.x].isFood;
+    isFood: function ({x, y}) {
+        return this.square[y][x].isFood;
     },
     createFood: function () {
         while (true) {
@@ -124,8 +124,6 @@ let snake = avalon.define({
         }
     },
     pathfinding: function() {
-        console.log(this.$food);
-        
         let start = this.body[0];
         let points = [];
         points.push([{
@@ -142,15 +140,18 @@ let snake = avalon.define({
             let find = last.some((point) => {
                 for (let i = 0; i < 4; i++) {
                     let newPoint = Square.nextSquare(point, i);
+                    
                     if (this.validPoint(newPoint) && !tempSquare[newPoint.y][newPoint.x]) {
                         newPoint.prev = point;
                         newPoint.direction = i;
                         tempSquare[newPoint.y][newPoint.x] = 1;
                         next.push(newPoint);
+
+                        if (this.isFood(newPoint)) {
+                            return true;
+                        }
                     }
-                    if (this.isFood(newPoint)) {
-                        return true;
-                    }
+                    
                 }
             });
             points.push(next);
@@ -171,10 +172,21 @@ let snake = avalon.define({
                 end = end.prev;
             }
             path.pop();
-            console.log(path.reverse());
+            this.runPath(path);
+            console.log(path);
         }
-        console.log(points[points.length - 1]);
         
+    },
+    runPath: function(path) {
+        requestAnimationFrame(() => {
+            this.direction = path.pop();
+            this.move();
+            if (path.length > 0) {
+                this.runPath(path);
+            } else {
+                this.pathfinding();
+            }
+        })
     },
     validPoint: function(point) {
         return !this.isOutOfIndex(point) && !this.isOnBody(point);
@@ -187,7 +199,6 @@ let snake = avalon.define({
         this.square = Square.createSquare();
         this.createFood();
         this.pathfinding();
-        
     },
     
 });
