@@ -12,27 +12,28 @@ while (queens[0] < 8) {
         if (queens.length === queensNum) {
             console.log('result', queens, count, ++resultCount)
         } else {
-            if (last !== max) {
-                queens.push(last + 1);
+            if (~~(last / 8) < 7) {
+                queens.push((~~(last / 8) + 1) * 8);
                 continue;
             }
         }
     }
-    if (last === max || 
+    if (last === max ||
         (queens.length > 1 && 
-            (~~(last / 8) - ~~(queens[queens.length - 2] / 8) > 1))) {
+            (~~(last / 8) - ~~(queens[queens.length - 2] / 8) > 1))
+            ) {
         queens.pop()
     }
     queens[queens.length - 1]++;
 }
 console.log('第一行已经试完了, 后面的不可能有解了, 解法个数', resultCount);
 console.log('查找次数', count);
+console.timeEnd('queen');
 
 
 function valid(queens) {
     let cache = {
         x: {},
-        y: {},
         skew1: {},
         skew2: {},
     };
@@ -46,11 +47,7 @@ function valid(queens) {
         }
 
         let y = ~~ (queen / 8);
-        if (cache.y[y]) {
-            return false
-        } else {
-            cache.y[y] = true
-        }
+        
 
         let skew1 = y - x;
         if (cache.skew1[skew1]) {
