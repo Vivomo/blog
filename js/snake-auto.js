@@ -30,11 +30,7 @@ const Square = {
             y = point.y + direction - 2;
         }
         return { x, y };
-    },
-    createRandomPoint: () => ({
-        x: ~~(Square.cfg.width * Math.random()),
-        y: ~~(Square.cfg.width * Math.random())
-    })
+    }
 };
 
 const Snake = {
@@ -114,8 +110,18 @@ let snake = avalon.define({
         return this.square[y][x].isFood;
     },
     createFood: function () {
-        while (true) {
-            let point = Square.createRandomPoint();
+        let w = Square.cfg.width;
+        let total = w * w;
+        let surplus = total - this.body.length;
+        if (surplus === 0) {
+            alert('O(∩_∩)O哈哈~');
+            return;
+        }
+        let randomIndex = ~~(Math.random() * surplus);
+        for (let i = randomIndex; i < total + randomIndex; i++) {
+            let y = (~~(i / w)) % w;
+            let x = i % w;
+            let point = {x, y};
             if (!this.isOnBody(point)) {
                 this.$food = point;
                 this.square[point.y][point.x].isFood = true;
