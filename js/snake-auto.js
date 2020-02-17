@@ -146,6 +146,7 @@ let snake = avalon.define({
         hinder.forEach((point) => {
             blankSquare[point.y][point.x] = 1;
         });
+        console.log('BFS', from, target, hinder.map(_ => ({x: _.x, y: _.y})));
 
         while (true) {
             let next = [];
@@ -186,15 +187,13 @@ let snake = avalon.define({
         return this.bfs(this.body[0], this.$food, this.body);
     },
     runPath: function (path) {
-        console.log(path);
-
         requestAnimationFrame(() => {
             this.direction = path.pop();
             this.move();
             if (path.length > 0) {
                 this.runPath(path);
             } else {
-                this.autoPathfingding();
+                // this.autoPathfingding();
             }
         })
     },
@@ -220,9 +219,10 @@ let snake = avalon.define({
         let newBodyPoints = path.reverse().map((direction) => {
             return (curPoint = Square.nextSquare(curPoint, direction));
         });
-        newBodyPoints.pop();
-        let hinder = newBodyPoints.concat(this.body.slice(0, this.body.length - path.length - 1));
-        return !!this.bfs(this.$food, this.body[path.length - 1], hinder);
+        let hinder = newBodyPoints.concat(this.body.slice(0, this.body.length - path.length));
+        console.log('阻碍点', hinder);
+        
+        return !!this.bfs(this.$food, this.body[this.body.length - path.length], hinder);
     },
     autoPathfingding: function () {
         let path = this.pathfinding();
@@ -232,7 +232,7 @@ let snake = avalon.define({
             if (this.mockValid(path)) {
                 this.runPath(path);
             } else {
-                path = this.pathfinding([], this.body[this.body.length - 1]);
+                path = this.bfs(this.body[0], this.body[this.body.length - 1], this.body.slice(0, this.body.length - 2));
                 this.runPath(path.slice(0, 1));
             }
         } else {
@@ -246,14 +246,16 @@ let snake = avalon.define({
             }
         }
     },
-
+    triggerClick: function() {
+        snake.autoPathfingding();
+    },
     init: function (auto = false) {
         this.auto = auto;
 
         this.body = Snake.createSnakeBody();
         this.square = Square.createSquare();
         this.createFood();
-        this.autoPathfingding();
+        // this.autoPathfingding();
     },
 
 });
