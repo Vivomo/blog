@@ -221,15 +221,14 @@ let snake = avalon.define({
             return (curPoint = Square.nextSquare(curPoint, direction));
         });
         newBodyPoints.pop();
-        return !!this.pathfinding(newBodyPoints);
+        let hinder = newBodyPoints.concat(this.body.slice(0, this.body.length - path.length - 1));
+        return !!this.bfs(this.$food, this.body[path.length - 1], hinder);
     },
     autoPathfingding: function () {
         let path = this.pathfinding();
         console.log(path);
         
         if (path) {
-            this.runPath(path);
-            return;
             if (this.mockValid(path)) {
                 this.runPath(path);
             } else {
