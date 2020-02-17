@@ -101,8 +101,8 @@ let snake = avalon.define({
     isOutOfIndex: function (ceil) {
         return ceil.x < 0 || ceil.x >= Square.cfg.width || ceil.y < 0 || ceil.y >= Square.cfg.width
     },
-    isOnBody: function (ceil) {
-        return this.body.some(function (item) {
+    isOnBody: function (ceil, end = this.body.length) {
+        return this.body.slice(0, end).some(function (item) {
             return item.x === ceil.x && item.y === ceil.y
         })
     },
@@ -146,7 +146,7 @@ let snake = avalon.define({
         hinder.forEach((point) => {
             blankSquare[point.y][point.x] = 1;
         });
-        console.log('BFS', from, target, hinder.map(_ => ({x: _.x, y: _.y})));
+        console.log('BFS', from.$model || from, target.$model || target, hinder.map(_ => ({x: _.x, y: _.y})));
 
         while (true) {
             let next = [];
@@ -172,6 +172,8 @@ let snake = avalon.define({
             stack.push(next);
             if (find) {
                 let end = stack.pop().pop();
+                console.log(end);
+                
                 let path = [];
                 while (end) {
                     path.push(end.direction);
@@ -209,7 +211,7 @@ let snake = avalon.define({
         return null;
     },
     validPoint: function (point) {
-        return !this.isOutOfIndex(point) && !this.isOnBody(point);
+        return !this.isOutOfIndex(point) && !this.isOnBody(point, this.body.length - 1);
     },
     mockValid: function (path) {
         if (path.length > this.body.length) {
@@ -227,23 +229,13 @@ let snake = avalon.define({
     autoPathfingding: function () {
         let path = this.pathfinding();
         
-        if (path) {
-            if (this.mockValid([...path])) {
-                this.runPath(path);
-            } else {
-                path = this.bfs(this.body[0], this.body[this.body.length - 1], this.body.slice(0, this.body.length - 2));
-                this.runPath(path.slice(0, 1));
-            }
-        } else {
-            console.log('随便走一步');
-
-            path = this.randomRunAStep();
-            if (path) {
-                this.runPath(path);
-            } else {
-                console.log('绝路');
-            }
+        if (path && this.mockValid([...path])) {
+            this.runPath(path);
+            return;
         }
+        path = this.bfs(this.body[0], this.body[this.body.length - 1], this.body.slice(0, this.body.length - 2));
+        this.runPath(path.slice(0, 1));
+
     },
     triggerClick: function() {
         snake.autoPathfingding();
