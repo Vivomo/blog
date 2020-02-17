@@ -159,14 +159,7 @@ let snake = avalon.define({
                 break;
             }
             if (next.length === 0) {
-                console.log('找不到最佳的路了');
                 noWay = true;
-                let path = this.randomRunAStep();
-                if (path) {
-                    this.runPath(path);
-                } else {
-                    console.log('真没路了');
-                }
                 break;
             }
         }
@@ -178,10 +171,10 @@ let snake = avalon.define({
                 end = end.prev;
             }
             path.pop();
-            this.runPath(path);
             console.log(path);
+            return path;
         }
-
+        return null;
     },
     runPath: function (path) {
         requestAnimationFrame(() => {
@@ -190,7 +183,7 @@ let snake = avalon.define({
             if (path.length > 0) {
                 this.runPath(path);
             } else {
-                this.pathfinding();
+                this.autoPathfingding();
             }
         })
     },
@@ -208,6 +201,19 @@ let snake = avalon.define({
     validPoint: function (point) {
         return !this.isOutOfIndex(point) && !this.isOnBody(point);
     },
+    autoPathfingding: function () {
+        let path = this.pathfinding();
+        if (path) {
+            this.runPath(path);
+        } else {
+            path = this.randomRunAStep();
+            if (path) {
+                this.runPath(path);
+            } else {
+                console.log('绝路');
+            }
+        }
+    },
 
     init: function (auto = false) {
         this.auto = auto;
@@ -215,7 +221,7 @@ let snake = avalon.define({
         this.body = Snake.createSnakeBody();
         this.square = Square.createSquare();
         this.createFood();
-        this.pathfinding();
+        this.autoPathfingding();
     },
 
 });
