@@ -226,10 +226,9 @@ let snake = avalon.define({
     },
     autoPathfingding: function () {
         let path = this.pathfinding();
-        console.log(path);
         
         if (path) {
-            if (this.mockValid(path)) {
+            if (this.mockValid([...path])) {
                 this.runPath(path);
             } else {
                 path = this.bfs(this.body[0], this.body[this.body.length - 1], this.body.slice(0, this.body.length - 2));
