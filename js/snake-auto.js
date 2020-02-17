@@ -129,7 +129,13 @@ let snake = avalon.define({
             }
         }
     },
-    pathfinding: function () {
+    isSamePoint: function(p1, p2) {
+        return p1.x === p2.x && p1.y === p2.y;
+    },
+    bfs: function(from, to, hinder) {
+
+    },
+    pathfinding: function (ignorePoints = [], target = this.$food) {
         let start = this.body[0];
         let points = [];
         points.push([{
@@ -139,6 +145,10 @@ let snake = avalon.define({
         let tempSquare = new Array(Square.cfg.width).fill(0).map(() => {
             return new Array(Square.cfg.width).fill(0);
         });
+        
+        ignorePoints.forEach((point) => {
+            tempSquare[point.y][point.x] = 1;
+        });
         let noWay = false;
         while (true) {
             let next = [];
@@ -146,14 +156,12 @@ let snake = avalon.define({
             let find = last.some((point) => {
                 for (let i = 0; i < 4; i++) {
                     let newPoint = Square.nextSquare(point, i);
-
-                    if (this.validPoint(newPoint) && !tempSquare[newPoint.y][newPoint.x]) {
+                    if ((this.validPoint(newPoint)) && !tempSquare[newPoint.y][newPoint.x]) {
                         newPoint.prev = point;
                         newPoint.direction = i;
                         tempSquare[newPoint.y][newPoint.x] = 1;
                         next.push(newPoint);
-
-                        if (this.isFood(newPoint)) {
+                        if (this.isSamePoint(target, newPoint)) {
                             return true;
                         }
                     }
@@ -183,6 +191,8 @@ let snake = avalon.define({
         return null;
     },
     runPath: function (path) {
+        console.log(path);
+        
         requestAnimationFrame(() => {
             this.direction = path.pop();
             this.move();
@@ -207,11 +217,29 @@ let snake = avalon.define({
     validPoint: function (point) {
         return !this.isOutOfIndex(point) && !this.isOnBody(point);
     },
+    mockValid: function (path) {
+        if (path.length > this.body.length) {
+            return true;
+        }
+        let curPoint = this.body[0];
+        let newBodyPoints = path.reverse().map((direction) => {
+            return (curPoint = Square.nextSquare(curPoint, direction));
+        });
+        newBodyPoints.pop();
+        return !!this.pathfinding(newBodyPoints);
+    },
     autoPathfingding: function () {
         let path = this.pathfinding();
         if (path) {
-            this.runPath(path);
+            if (this.mockValid(path)) {
+                this.runPath(path);
+            } else {
+                path = this.pathfinding([], this.body[this.body.length - 1]);
+                this.runPath(path.slice(0, 1));
+            }
         } else {
+            console.log('随便走一步');
+            
             path = this.randomRunAStep();
             if (path) {
                 this.runPath(path);
