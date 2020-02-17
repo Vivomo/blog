@@ -121,7 +121,7 @@ let snake = avalon.define({
         for (let i = randomIndex; i < total + randomIndex; i++) {
             let y = (~~(i / w)) % w;
             let x = i % w;
-            let point = {x, y};
+            let point = { x, y };
             if (!this.isOnBody(point)) {
                 this.$food = point;
                 this.square[point.y][point.x].isFood = true;
@@ -129,70 +129,65 @@ let snake = avalon.define({
             }
         }
     },
-    isSamePoint: function(p1, p2) {
+    isSamePoint: function (p1, p2) {
         return p1.x === p2.x && p1.y === p2.y;
     },
-    bfs: function(from, to, hinder) {
-
-    },
-    pathfinding: function (ignorePoints = [], target = this.$food) {
-        let start = this.body[0];
-        let points = [];
-        points.push([{
-            x: start.x,
-            y: start.y
-        }]);
-        let tempSquare = new Array(Square.cfg.width).fill(0).map(() => {
+    bfs: function (from, target, hinder) {
+        let stack = [
+            [{
+                x: from.x,
+                y: from.y
+            }]
+        ];
+        let blankSquare = new Array(Square.cfg.width).fill(0).map(() => {
             return new Array(Square.cfg.width).fill(0);
         });
-        
-        ignorePoints.forEach((point) => {
-            tempSquare[point.y][point.x] = 1;
+
+        hinder.forEach((point) => {
+            blankSquare[point.y][point.x] = 1;
         });
-        let noWay = false;
+
         while (true) {
             let next = [];
-            let last = points[points.length - 1];
+            let last = stack[stack.length - 1];
             let find = last.some((point) => {
                 for (let i = 0; i < 4; i++) {
                     let newPoint = Square.nextSquare(point, i);
-                    if ((this.validPoint(newPoint)) && !tempSquare[newPoint.y][newPoint.x]) {
-                        newPoint.prev = point;
-                        newPoint.direction = i;
-                        tempSquare[newPoint.y][newPoint.x] = 1;
-                        next.push(newPoint);
-                        if (this.isSamePoint(target, newPoint)) {
-                            return true;
-                        }
+                    if (this.isOutOfIndex(newPoint) || blankSquare[newPoint.y][newPoint.x]) {
+                        continue;
                     }
-
+                    newPoint.prev = point;
+                    newPoint.direction = i;
+                    blankSquare[newPoint.y][newPoint.x] = 1;
+                    next.push(newPoint);
+                    if (this.isSamePoint(target, newPoint)) {
+                        return true;
+                    }
                 }
             });
-            points.push(next);
-            if (find) {
-                break;
-            }
             if (next.length === 0) {
-                noWay = true;
-                break;
+                return null;
+            }
+            stack.push(next);
+            if (find) {
+                let end = stack.pop().pop();
+                let path = [];
+                while (end) {
+                    path.push(end.direction);
+                    end = end.prev;
+                }
+                path.pop();
+                console.log(path);
+                return path;
             }
         }
-        if (!noWay) {
-            let end = points.pop().pop();
-            let path = [];
-            while (end) {
-                path.push(end.direction);
-                end = end.prev;
-            }
-            path.pop();
-            console.log(path);
-            return path;
-        }
-        return null;
+    },
+    pathfinding: function () {
+        return this.bfs(this.body[0], this.$food, this.body);
     },
     runPath: function (path) {
         console.log(path);
-        
+
         requestAnimationFrame(() => {
             this.direction = path.pop();
             this.move();
@@ -230,7 +225,11 @@ let snake = avalon.define({
     },
     autoPathfingding: function () {
         let path = this.pathfinding();
+        console.log(path);
+        
         if (path) {
+            this.runPath(path);
+            return;
             if (this.mockValid(path)) {
                 this.runPath(path);
             } else {
@@ -239,7 +238,7 @@ let snake = avalon.define({
             }
         } else {
             console.log('随便走一步');
-            
+
             path = this.randomRunAStep();
             if (path) {
                 this.runPath(path);
@@ -260,8 +259,8 @@ let snake = avalon.define({
 
 });
 
+avalon.scan();
 
 snake.init();
 
-avalon.scan();
 
