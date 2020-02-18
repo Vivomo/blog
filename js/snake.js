@@ -1,4 +1,3 @@
-//(function () {
 avalon.config({
     interpolate: ["[[", "]]"]
 });
@@ -81,7 +80,7 @@ let snake = avalon.define({
     move: function () {
         let head = this.body[0];
         let ceil = Square.nextSquare(head, this.direction);
-        if (this.isOutOfIndex(ceil) || this.isOnBody(ceil)) {
+        if (!this.validPoint(ceil)) {
             this.tip = 'Game Over!';
             document.removeEventListener('keydown', this.directionKeyBind);
             this.stop();
@@ -120,8 +119,11 @@ let snake = avalon.define({
     isOutOfIndex: function (ceil) {
         return ceil.x < 0 || ceil.x >= Snake.cfg.width || ceil.y < 0 || ceil.y >= Snake.cfg.width
     },
-    isOnBody: function (ceil) {
-        return this.body.some(function (item) {
+    validPoint: function (point) {
+        return !this.isOutOfIndex(point) && !this.isOnBody(point, this.body.length - 1);
+    },
+    isOnBody: function (ceil, end = this.body.length) {
+        return this.body.slice(0, end).some(function (item) {
             return item.x === ceil.x && item.y === ceil.y
         })
     },
@@ -138,31 +140,13 @@ let snake = avalon.define({
             }
         }
     },
-    runShortestPath: function () {
-        let head = this.body[0];
-        if (this.direction === DIRECTION.LEFT || this.direction === DIRECTION.RIGHT) {
-            if (this.$food.y > head.y) {
-                this.$task.splice(0, 0, )
-            } else {
-
-            }
-        } else {
-
-        }
-    },
-    init: function (auto = false) {
-        this.auto = auto;
+    init: function () {
 
         this.body = Snake.createSnakeBody();
         this.square = Square.createSquare();
         this.createFood();
         this.start();
-
-        if (this.auto) {
-
-        } else {
-            document.addEventListener('keydown', this.directionKeyBind);
-        }
+        document.addEventListener('keydown', this.directionKeyBind);
     },
     stop: function () {
         clearInterval(this.interval);
@@ -177,4 +161,3 @@ snake.init();
 
 avalon.scan();
 
-//})();
