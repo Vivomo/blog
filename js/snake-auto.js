@@ -195,7 +195,7 @@ let snake = avalon.define({
             if (path.length > 0) {
                 this.runPath(path);
             } else {
-                // this.autoPathfingding();
+                this.autoPathfingding();
             }
         })
     },
@@ -233,8 +233,10 @@ let snake = avalon.define({
             this.runPath(path);
             return;
         }
-        path = this.bfs(this.body[0], this.body[this.body.length - 1], this.body.slice(0, this.body.length - 2));
-        this.runPath(path.slice(0, 1));
+        path = this.bfs(this.body[0], this.body[this.body.length - 1], this.body.slice(0, this.body.length - 1));
+        if (path) {
+            this.runPath([path.pop()]);
+        }
 
     },
     triggerClick: function() {
