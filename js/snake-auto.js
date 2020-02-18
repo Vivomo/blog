@@ -147,7 +147,6 @@ let snake = avalon.define({
         hinder.forEach((point) => {
             blankSquare[point.y][point.x] = 1;
         });
-        // console.log('BFS', from.$model || from, target.$model || target, hinder.map(_ => ({x: _.x, y: _.y})));
 
         while (true) {
             let next = [];
@@ -173,15 +172,12 @@ let snake = avalon.define({
             stack.push(next);
             if (find) {
                 let end = stack.pop().pop();
-                console.log(end);
-                
                 let path = [];
                 while (end) {
                     path.push(end.direction);
                     end = end.prev;
                 }
                 path.pop();
-                console.log(path);
                 return path;
             }
         }
@@ -248,8 +244,6 @@ let snake = avalon.define({
             return (curPoint = Square.nextSquare(curPoint, direction));
         });
         let hinder = newBodyPoints.concat(this.body.slice(0, this.body.length - path.length));
-        console.log('阻碍点', hinder);
-        
         return !!this.bfs(this.$food, this.body[this.body.length - path.length], hinder);
     },
     autoPathfingding: function () {
@@ -261,7 +255,6 @@ let snake = avalon.define({
         }
         // path = this.bfs(this.body[0], this.body[this.body.length - 1], this.body.slice(0, this.body.length - 1));
         let tetourPath = this.tetour();
-        console.log('tetourPath', tetourPath);
         
         if (tetourPath !== -1) {
             this.runPath([tetourPath]);
