@@ -146,7 +146,7 @@ let snake = avalon.define({
         hinder.forEach((point) => {
             blankSquare[point.y][point.x] = 1;
         });
-        console.log('BFS', from.$model || from, target.$model || target, hinder.map(_ => ({x: _.x, y: _.y})));
+        // console.log('BFS', from.$model || from, target.$model || target, hinder.map(_ => ({x: _.x, y: _.y})));
 
         while (true) {
             let next = [];
@@ -184,6 +184,26 @@ let snake = avalon.define({
                 return path;
             }
         }
+    },
+    tetour: function () {
+        let head = this.body[0];
+        let tail = this.body[this.body.length - 1];
+        let distance = -1;
+        let direction = -1;
+        for (let i = 0; i < 4; i++) {
+            let newPoint = Square.nextSquare(head, i);
+            if (this.validPoint(newPoint) && this.bfs(newPoint, tail, this.body.slice(0, this.body.length - 1))) {
+                let _d = this.getDistance(newPoint, tail);
+                if (_d > distance) {
+                    distance = _d;
+                    direction = i;
+                }
+            }
+        }
+        return direction;
+    },
+    getDistance: function(p1, p2) {
+        return Math.pow(Math.abs(p1.x - p2.x), 2) + Math.pow(Math.abs(p1.y - p2.y), 2);
     },
     pathfinding: function () {
         return this.bfs(this.body[0], this.$food, this.body);
@@ -233,9 +253,12 @@ let snake = avalon.define({
             this.runPath(path);
             return;
         }
-        path = this.bfs(this.body[0], this.body[this.body.length - 1], this.body.slice(0, this.body.length - 1));
-        if (path) {
-            this.runPath([path.pop()]);
+        // path = this.bfs(this.body[0], this.body[this.body.length - 1], this.body.slice(0, this.body.length - 1));
+        let tetourPath = this.tetour();
+        console.log('tetourPath', tetourPath);
+        
+        if (tetourPath !== -1) {
+            this.runPath([tetourPath]);
         }
 
     },
