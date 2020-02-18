@@ -11,7 +11,8 @@ let DIRECTION = {
 
 const Square = {
     cfg: {
-        width: 11
+        width: 11,
+        total: 11 * 11
     },
     createSquare: function () {
         return avalon.range(0, this.cfg.width).map(() =>
@@ -239,7 +240,7 @@ let snake = avalon.define({
         return !this.isOutOfIndex(point) && !this.isOnBody(point, this.body.length - 1);
     },
     mockValid: function (path) {
-        if (path.length > this.body.length) {
+        if (path.length > this.body.length || this.body.length === Square.cfg.total - 1) {
             return true;
         }
         let curPoint = this.body[0];
