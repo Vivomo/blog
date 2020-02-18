@@ -31,11 +31,8 @@
   box-sizing: border-box; }
   #snake li:before {
     background: #ccc; }
-  #snake li:first-child {
-    animation: flash 0.5s infinite; }
+  #snake li:first-child::before {
+      background-color: yellowgreen; }
+  #snake li:last-child::before {
+      background-color: tomato; }
 
-@keyframes flash {
-  0% {
-    opacity: 0.2; }
-  100% {
-    opacity: 1; } }

@@ -53,17 +53,12 @@ $ceilWidth: 60px;
             background: #ccc;
         }
 
-        &:first-child {
-            animation: flash 0.5s infinite;
+        &:first-child::before {
+            background-color: yellowgreen;
         }
-    }
-}
 
-@keyframes flash {
-    0% {
-        opacity: 0.2;
-    }
-    100% {
-        opacity: 1;
+        &:last-child::before {
+            background-color: tomato;
+        }
     }
 }

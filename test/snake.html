@@ -2,38 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>贪吃蛇</title>
+    <title>贪吃蛇(自动寻路)</title>
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/snake.css">
-    <style>
-        #snake li:last-child::before {
-            background-color: tomato;
-        }
-
-
-        #snake li:first-child::before {
-            background-color: yellowgreen;
-        }
-
-        #snake li {
-            z-index: 1;
-            color: #000;
-            font-size: 20px;
-            line-height: 60px;
-            text-align: center;
-        }
-
-        #snake li::before {
-            z-index: -1;
-        }
-    </style>
 </head>
 <body ms-controller="snake">
- <!--   <form id="speed">
-        <input type="number" placeholder="移动频率(毫秒)" min="20" max="2000" class="v-input"/>
-    </form>-->
-    <!-- <h1 class="t-c" >[[body.size()-4]]</h1> -->
-    <!-- <h2 class="t-c game-tip" ms-text="tip"></h2> -->
     <div id="background">
         <table>
             <tr ms-repeat-row="square">
