@@ -1,0 +1,19 @@
+---
+layout: blank
+css: snake
+js: snake-auto
+title: 贪吃蛇自动寻路
+---
+<div ms-controller="snake">
+    <div id="background">
+        <table>
+            <tr ms-repeat-row="square">
+                <td ms-repeat-ceil="row" ms-class-food="ceil.isFood"></td>
+            </tr>
+        </table>
+        <ol id="snake">
+            <li ms-repeat="body" ms-css-left="[[el.x*ceilWidth]]px" ms-css-top="[[el.y*ceilWidth]]px"></li>
+        </ol>
+    </div>
+</div>
+<script src="{{site.cname}}js/avalon.js"></script>

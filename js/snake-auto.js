@@ -62,7 +62,6 @@ let snake = avalon.define({
         let head = this.body[0];
         let ceil = Square.nextSquare(head, this.direction);
         if (!this.validPoint(ceil)) {
-            this.tip = 'Game Over!';
             return;
         }
         if (this.isFood(ceil)) {
