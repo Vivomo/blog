@@ -5,6 +5,19 @@
     <title>贪吃蛇(自动寻路)</title>
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/snake.css">
+    <style>
+        #snake li {
+            color: teal;
+            font-size: 20px;
+            line-height: 60px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        #snake li::before {
+            z-index: -1;
+        }
+    </style>
 </head>
 <body ms-controller="snake">
     <div id="background">
@@ -13,8 +26,8 @@
                 <td ms-repeat-ceil="row" ms-class-food="ceil.isFood"></td>
             </tr>
         </table>
-        <ol id="snake" ms-click="triggerClick">
-            <li ms-repeat="body" ms-css-left="[[el.x*ceilWidth]]px" ms-css-top="[[el.y*ceilWidth]]px"></li>
+        <ol id="snake">
+            <li ms-repeat="body" ms-css-left="[[el.x*ceilWidth]]px" ms-css-top="[[el.y*ceilWidth]]px">[[$index]]</li>
         </ol>
     </div>
     <script src="../js/avalon.js"></script>

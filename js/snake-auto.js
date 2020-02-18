@@ -182,8 +182,10 @@ let snake = avalon.define({
         let tail = this.body[this.body.length - 1];
         let distance = -1;
         let direction = -1;
+        let nextPoints = [];
         for (let i = 0; i < 4; i++) {
             let newPoint = Square.nextSquare(head, i);
+            nextPoints.push(newPoint)
             if (this.validPoint(newPoint) &&
                 (
                     this.isSamePoint(newPoint, tail) ||
@@ -196,6 +198,17 @@ let snake = avalon.define({
                     direction = i;
                 }
             }
+        }
+        // will follow tail
+        if (distance === 0) {
+            let prevTail = this.body[this.body.length - 2];
+            nextPoints.some((point, index) => {
+                if (this.validPoint(point) && !this.isSamePoint(point, tail) && 
+                this.getDistance(point, prevTail) === 1 && !this.isSamePoint(point, this.$food)) {
+                    direction = index;
+                    return true;
+                }
+            });
         }
         return direction;
     },
@@ -254,9 +267,6 @@ let snake = avalon.define({
             this.runPath([tetourPath]);
         }
 
-    },
-    triggerClick: function() {
-        snake.autoPathfingding();
     },
     init: function (auto = false) {
         this.auto = auto;
