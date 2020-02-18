@@ -192,7 +192,12 @@ let snake = avalon.define({
         let direction = -1;
         for (let i = 0; i < 4; i++) {
             let newPoint = Square.nextSquare(head, i);
-            if (this.validPoint(newPoint) && this.bfs(newPoint, tail, this.body.slice(0, this.body.length - 1))) {
+            if (this.validPoint(newPoint) &&
+                (
+                    this.isSamePoint(newPoint, tail) ||
+                    this.bfs(newPoint, tail, this.body.slice(0, this.body.length - 1))
+                )
+             ) {
                 let _d = this.getDistance(newPoint, tail);
                 if (_d > distance) {
                     distance = _d;

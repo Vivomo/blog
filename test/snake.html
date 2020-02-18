@@ -14,6 +14,18 @@
         #snake li:first-child::before {
             background-color: yellowgreen;
         }
+
+        #snake li {
+            z-index: 1;
+            color: #000;
+            font-size: 20px;
+            line-height: 60px;
+            text-align: center;
+        }
+
+        #snake li::before {
+            z-index: -1;
+        }
     </style>
 </head>
 <body ms-controller="snake">
@@ -29,7 +41,7 @@
             </tr>
         </table>
         <ol id="snake" ms-click="triggerClick">
-            <li ms-repeat="body" ms-css-left="[[el.x*ceilWidth]]px" ms-css-top="[[el.y*ceilWidth]]px"></li>
+            <li ms-repeat="body" ms-css-left="[[el.x*ceilWidth]]px" ms-css-top="[[el.y*ceilWidth]]px">[[$index]]</li>
         </ol>
     </div>
     <script src="../js/avalon.js"></script>
