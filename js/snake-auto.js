@@ -58,10 +58,6 @@ let snake = avalon.define({
     square: [],
     direction: DIRECTION.TOP, // 0123 依次代表左上右下
     ceilWidth: 60,
-    // 反方向
-    isNegativeDirection: function (direction) {
-        return Math.abs(this.direction - direction) === 2;
-    },
     move: function () {
         let head = this.body[0];
         let ceil = Square.nextSquare(head, this.direction);
@@ -115,7 +111,7 @@ let snake = avalon.define({
         let total = w * w;
         let surplus = total - this.body.length;
         if (surplus === 0) {
-            alert('O(∩_∩)O哈哈~');
+            this.$food = null;
             return;
         }
         let randomIndex = ~~(Math.random() * surplus);
@@ -216,7 +212,7 @@ let snake = avalon.define({
             this.move();
             if (path.length > 0) {
                 this.runPath(path);
-            } else {
+            } else if (this.$food) {
                 this.autoPathfingding();
             }
         })
@@ -253,7 +249,6 @@ let snake = avalon.define({
             this.runPath(path);
             return;
         }
-        // path = this.bfs(this.body[0], this.body[this.body.length - 1], this.body.slice(0, this.body.length - 1));
         let tetourPath = this.tetour();
         
         if (tetourPath !== -1) {
@@ -270,7 +265,7 @@ let snake = avalon.define({
         this.body = Snake.createSnakeBody();
         this.square = Square.createSquare();
         this.createFood();
-        // this.autoPathfingding();
+        this.autoPathfingding();
     },
 
 });
