@@ -35,9 +35,6 @@ const Square = {
 };
 
 const Snake = {
-    cfg: {
-        speed: 1500,
-    },
     createSnakeBody: function () {
         const center = ~~(Square.cfg.width / 2);
         return avalon.range(0, 4).map((i) => ({
@@ -52,7 +49,9 @@ let snake = avalon.define({
     $id: 'snake',
     $task: [],
     $food: null,
-
+    $moving: false,
+    $moveStep: 0,
+    $foodCost: [],
     tip: '',
     body: [],
     square: [],
@@ -62,10 +61,13 @@ let snake = avalon.define({
         let head = this.body[0];
         let ceil = Square.nextSquare(head, this.direction);
         if (!this.validPoint(ceil)) {
-            return;
+            throw 'failed'
         }
+        this.$moveStep++;
         if (this.isFood(ceil)) {
             this.eat(ceil);
+            let prevStep = this.$foodCost.length === 0 ? 0 : this.$foodCost[this.$foodCost.length - 1].step; 
+            this.$foodCost.push({...ceil, step: this.$moveStep - prevStep });
             return;
         }
         for (let i = this.body.length - 1; i > 0; i--) {
@@ -225,7 +227,8 @@ let snake = avalon.define({
             if (path.length > 0) {
                 this.runPath(path);
             } else if (this.$food) {
-                this.autoPathfingding();
+                this.$moving = false;
+                // this.autoPathfingding();
             }
         })
     },
@@ -255,6 +258,10 @@ let snake = avalon.define({
         return !!this.bfs(this.$food, this.body[this.body.length - path.length], hinder);
     },
     autoPathfingding: function () {
+        if (this.$moving) {
+            return;
+        }
+        this.$moving = true;
         let path = this.pathfinding();
         
         if (path && this.mockValid([...path])) {
@@ -274,7 +281,7 @@ let snake = avalon.define({
         this.body = Snake.createSnakeBody();
         this.square = Square.createSquare();
         this.createFood();
-        this.autoPathfingding();
+        // this.autoPathfingding();
     },
 
 });
@@ -282,5 +289,9 @@ let snake = avalon.define({
 avalon.scan();
 
 snake.init();
+
+document.addEventListener('keydown', () => {
+    snake.autoPathfingding()
+})
 
 
