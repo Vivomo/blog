@@ -66,8 +66,12 @@ let snake = avalon.define({
         this.$moveStep++;
         if (this.isFood(ceil)) {
             this.eat(ceil);
-            let prevStep = this.$foodCost.length === 0 ? 0 : this.$foodCost[this.$foodCost.length - 1].step; 
-            this.$foodCost.push({...ceil, step: this.$moveStep - prevStep });
+            let prevStep = this.$foodCost.length === 0 ? 0 : this.$foodCost[this.$foodCost.length - 1].moveStep; 
+            this.$foodCost.push({
+                ...ceil, 
+                step: this.$moveStep - prevStep,
+                moveStep: this.$moveStep
+             });
             return;
         }
         for (let i = this.body.length - 1; i > 0; i--) {
@@ -228,7 +232,7 @@ let snake = avalon.define({
                 this.runPath(path);
             } else if (this.$food) {
                 this.$moving = false;
-                // this.autoPathfingding();
+                this.autoPathfingding();
             }
         })
     },
