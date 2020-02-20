@@ -343,7 +343,7 @@ let snake = avalon.define({
         this.body = Snake.createSnakeBody();
         this.square = Square.createSquare();
         this.createFood();
-        // this.autoPathfingding();
+        this.autoPathfingding();
         // setTimeout(() => {
         //     this.$time = Date.now();
         // }, 1000);
