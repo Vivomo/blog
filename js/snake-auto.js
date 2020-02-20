@@ -209,13 +209,11 @@ let snake = avalon.define({
                         this.isOnBody(newPoint, this.body.length - 1)) {
                         continue;
                     }
-                    newPoint.prev = point;
                     newPoint.direction = i;
-                    // pathPoints.push(newPoint);
                     newPoint.pathPoints = [...pathPoints, newPoint];
                     next.push(newPoint);
-                    if (this.isSamePoint(tail, newPoint) && pathPoints.length > max.length) {
-                        max = pathPoints;
+                    if (this.isSamePoint(tail, newPoint) && newPoint.pathPoints.length > max.length) {
+                        max = newPoint.pathPoints;
                     }
                 }
             });
@@ -322,7 +320,9 @@ let snake = avalon.define({
         }
         this.$moving = true;
         if (Square.cfg.total / this.body.length <= 1.25) {
+            console.time('full');
             this.runPath(this.getFullPath());
+            console.timeEnd('full');
             return;
             // this.autoPathfingding();
         }
