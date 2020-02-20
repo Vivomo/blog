@@ -11,8 +11,8 @@ let DIRECTION = {
 
 const Square = {
     cfg: {
-        width: 11,
-        total: 11 * 11
+        width: 10,
+        total: 10 * 10
     },
     createSquare: function () {
         return avalon.range(0, this.cfg.width).map(() =>
@@ -47,16 +47,16 @@ const Snake = {
 
 let snake = avalon.define({
     $id: 'snake',
-    $task: [],
     $food: null,
     $moving: false,
     $moveStep: 0,
     $foodCost: [],
-    tip: '',
+    $time: 0,
     body: [],
     square: [],
     direction: DIRECTION.TOP, // 0123 依次代表左上右下
     ceilWidth: 60,
+
     move: function () {
         let head = this.body[0];
         let ceil = Square.nextSquare(head, this.direction);
@@ -103,10 +103,11 @@ let snake = avalon.define({
     isOutOfIndex: function (ceil) {
         return ceil.x < 0 || ceil.x >= Square.cfg.width || ceil.y < 0 || ceil.y >= Square.cfg.width
     },
-    isOnBody: function (ceil, end = this.body.length) {
-        return this.body.slice(0, end).some(function (item) {
-            return item.x === ceil.x && item.y === ceil.y
-        })
+    isOnBody: function (point, end = this.body.length) {
+        return this.isOnPathPoints(point, this.body.slice(0, end));
+    },
+    isOnPathPoints: function(point, points) {
+        return points.some(item => item.x === point.x && item.y === point.y);
     },
     isFood: function ({ x, y }) {
         return this.square[y][x].isFood;
@@ -183,6 +184,57 @@ let snake = avalon.define({
             }
         }
     },
+    getFullPath: function() {
+        let stack = [
+            [{
+                x: this.body[0].x,
+                y: this.body[0].y,
+                pathPoints: []
+            }]
+        ];
+        let tail = this.body[this.body.length - 1];
+        let max = [];
+        let findFood = false;
+        while (true) {
+            let next = [];
+            let last = stack[stack.length - 1];
+            last.forEach((point) => {
+                for (let i = 0; i < 4; i++) {
+                    let newPoint = Square.nextSquare(point, i);
+                    if (this.isSamePoint(this.$food, newPoint)) {
+                        findFood = true;
+                    }
+                    let pathPoints = point.pathPoints;
+                    if (this.isOutOfIndex(newPoint) || this.isOnPathPoints(newPoint, pathPoints) || 
+                        this.isOnBody(newPoint, this.body.length - 1)) {
+                        continue;
+                    }
+                    newPoint.prev = point;
+                    newPoint.direction = i;
+                    // pathPoints.push(newPoint);
+                    newPoint.pathPoints = [...pathPoints, newPoint];
+                    next.push(newPoint);
+                    if (this.isSamePoint(tail, newPoint) && pathPoints.length > max.length) {
+                        max = pathPoints;
+                    }
+                }
+            });
+            if (next.length === 0) {
+                break;
+            }
+            stack.push(next);
+        }
+        if (findFood && !this.isOnPathPoints(this.$food, max)) {
+            let path = this.pathfinding();
+            if (path && this.mockValid([...path])) {
+                console.log('find better way');
+                
+                return path;
+            }
+        }
+        // max.shift();
+        return max.map(_ => _.direction).reverse();
+    },
     tetour: function () {
         let head = this.body[0];
         let tail = this.body[this.body.length - 1];
@@ -232,20 +284,23 @@ let snake = avalon.define({
                 this.runPath(path);
             } else if (this.$food) {
                 this.$moving = false;
+                // if (Square.cfg.total / this.body.length > 1.25) {
+                //     this.autoPathfingding();
+                // }
                 this.autoPathfingding();
+            } else {
+                // let time = Date.now() - this.$time;
+                // localStorage.success += 1;                
+                // localStorage.data += `[${this.$foodCost.map(_ => _.step)}]---${time}\n`;
+                // if (localStorage.success.length === 50) {
+                //     alert('done');
+                //     return;
+                // }
+                // setTimeout(() => {
+                //     location.reload();
+                // }, 1000);
             }
         })
-    },
-    randomRunAStep: function () {
-        for (let i = 0; i < 4; i++) {
-            let newPoint = Square.nextSquare(this.body[0], i);
-            if (this.validPoint(newPoint)) {
-                this.direction = i;
-                this.move();
-                return [i];
-            }
-        }
-        return null;
     },
     validPoint: function (point) {
         return !this.isOutOfIndex(point) && !this.isOnBody(point, this.body.length - 1);
@@ -266,6 +321,11 @@ let snake = avalon.define({
             return;
         }
         this.$moving = true;
+        if (Square.cfg.total / this.body.length <= 1.25) {
+            this.runPath(this.getFullPath());
+            return;
+            // this.autoPathfingding();
+        }
         let path = this.pathfinding();
         
         if (path && this.mockValid([...path])) {
@@ -279,23 +339,40 @@ let snake = avalon.define({
         }
 
     },
-    init: function (auto = false) {
-        this.auto = auto;
-
+    init: function () {
         this.body = Snake.createSnakeBody();
         this.square = Square.createSquare();
         this.createFood();
         // this.autoPathfingding();
+        // setTimeout(() => {
+        //     this.$time = Date.now();
+        // }, 1000);
     },
 
 });
 
 avalon.scan();
-
 snake.init();
 
-document.addEventListener('keydown', () => {
-    snake.autoPathfingding()
+// setTimeout(() => {
+//     localStorage.fail += `${99 - snake.body.length}--`;
+//     location.reload();
+// }, 90 * 1000);
+
+
+
+document.addEventListener('keydown', (e) => {
+    if (e.keyCode === 32) {
+        snake.autoPathfingding();
+    }
+    if (e.keyCode < 37 || e.keyCode > 40) {
+        return
+    }
+    let direction = e.keyCode - 37;
+    if (Math.abs(direction - snake.direction) !== 2) {
+        snake.direction = direction;
+        snake.move();
+    }
 })
 
 
