@@ -195,7 +195,6 @@ let snake = avalon.define({
         let tail = this.body[this.body.length - 1];
         let max = [];
         let findFood = false;
-        let pointCount = 0;
         let blankSquare = new Array(Square.cfg.width).fill(0).map(() => {
             return new Array(Square.cfg.width).fill(0);
         });
@@ -208,7 +207,6 @@ let snake = avalon.define({
             let last = stack[stack.length - 1];
             last.forEach((point) => {
                 for (let i = 0; i < 4; i++) {
-                    pointCount++;
                     let newPoint = Square.nextSquare(point, i);
                     if (this.isSamePoint(this.$food, newPoint)) {
                         findFood = true;
@@ -235,12 +233,9 @@ let snake = avalon.define({
         if (findFood && !this.isOnPathPoints(this.$food, max)) {
             let path = this.pathfinding();
             if (path && this.mockValid([...path])) {
-                console.log('find better way');
-                
                 return path;
             }
         }
-        console.log(pointCount);
         
         return max.map(_ => _.direction).reverse();
     },
@@ -293,9 +288,6 @@ let snake = avalon.define({
                 this.runPath(path);
             } else if (this.$food) {
                 this.$moving = false;
-                // if (Square.cfg.total / this.body.length > 1.25) {
-                //     this.autoPathfingding();
-                // }
                 this.autoPathfingding();
             } else {
                 // let time = Date.now() - this.$time;
@@ -331,11 +323,8 @@ let snake = avalon.define({
         }
         this.$moving = true;
         if (Square.cfg.total / this.body.length <= 1.25) {
-            console.time('full');
             this.runPath(this.getFullPath());
-            console.timeEnd('full');
             return;
-            // this.autoPathfingding();
         }
         let path = this.pathfinding();
         
@@ -354,10 +343,10 @@ let snake = avalon.define({
         this.body = Snake.createSnakeBody();
         this.square = Square.createSquare();
         this.createFood();
-        this.autoPathfingding();
-        // setTimeout(() => {
-        //     this.$time = Date.now();
-        // }, 1000);
+        setTimeout(() => {
+            // this.$time = Date.now();
+            this.autoPathfingding();
+        }, 1000);
     },
 
 });
@@ -365,10 +354,11 @@ let snake = avalon.define({
 avalon.scan();
 snake.init();
 
-// setTimeout(() => {
-//     localStorage.fail += `${99 - snake.body.length}--`;
-//     location.reload();
-// }, 90 * 1000);
+setTimeout(() => {
+    // localStorage.fail += `${99 - snake.body.length}--`;
+    alert('fail')
+    location.reload();
+}, 90 * 1000);
 
 
 
