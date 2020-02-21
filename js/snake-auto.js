@@ -66,12 +66,12 @@ let snake = avalon.define({
         this.$moveStep++;
         if (this.isFood(ceil)) {
             this.eat(ceil);
-            let prevStep = this.$foodCost.length === 0 ? 0 : this.$foodCost[this.$foodCost.length - 1].moveStep; 
+            let prevStep = this.$foodCost.length === 0 ? 0 : this.$foodCost[this.$foodCost.length - 1].moveStep;
             this.$foodCost.push({
-                ...ceil, 
+                ...ceil,
                 step: this.$moveStep - prevStep,
                 moveStep: this.$moveStep
-             });
+            });
             return;
         }
         for (let i = this.body.length - 1; i > 0; i--) {
@@ -106,7 +106,7 @@ let snake = avalon.define({
     isOnBody: function (point, end = this.body.length) {
         return this.isOnPathPoints(point, this.body.slice(0, end));
     },
-    isOnPathPoints: function(point, points) {
+    isOnPathPoints: function (point, points) {
         return points.some(item => item.x === point.x && item.y === point.y);
     },
     isFood: function ({ x, y }) {
@@ -184,7 +184,7 @@ let snake = avalon.define({
             }
         }
     },
-    getFullPath: function() {
+    getFullPath: function () {
         let stack = [
             [{
                 x: this.body[0].x,
@@ -212,9 +212,9 @@ let snake = avalon.define({
                         findFood = true;
                     }
                     let pathPoints = point.pathPoints;
-                    if (this.isOutOfIndex(newPoint) || this.isOnPathPoints(newPoint, pathPoints) || 
+                    if (this.isOutOfIndex(newPoint) || this.isOnPathPoints(newPoint, pathPoints) ||
                         blankSquare[newPoint.y][newPoint.x]
-                        ) {
+                    ) {
                         continue;
                     }
                     newPoint.direction = i;
@@ -236,7 +236,7 @@ let snake = avalon.define({
                 return path;
             }
         }
-        
+
         return max.map(_ => _.direction).reverse();
     },
     tetour: function () {
@@ -253,7 +253,7 @@ let snake = avalon.define({
                     this.isSamePoint(newPoint, tail) ||
                     this.bfs(newPoint, tail, this.body.slice(0, this.body.length - 1))
                 )
-             ) {
+            ) {
                 let _d = this.getDistance(newPoint, tail);
                 if (_d > distance) {
                     distance = _d;
@@ -265,8 +265,8 @@ let snake = avalon.define({
         if (distance === 0) {
             let prevTail = this.body[this.body.length - 2];
             nextPoints.some((point, index) => {
-                if (this.validPoint(point) && !this.isSamePoint(point, tail) && 
-                this.getDistance(point, prevTail) === 1 && !this.isSamePoint(point, this.$food)) {
+                if (this.validPoint(point) && !this.isSamePoint(point, tail) &&
+                    this.getDistance(point, prevTail) === 1 && !this.isSamePoint(point, this.$food)) {
                     direction = index;
                     return true;
                 }
@@ -274,7 +274,7 @@ let snake = avalon.define({
         }
         return direction;
     },
-    getDistance: function(p1, p2) {
+    getDistance: function (p1, p2) {
         return Math.pow(Math.abs(p1.x - p2.x), 2) + Math.pow(Math.abs(p1.y - p2.y), 2);
     },
     pathfinding: function () {
@@ -322,18 +322,18 @@ let snake = avalon.define({
             return;
         }
         this.$moving = true;
-        if (Square.cfg.total / this.body.length <= 1.25) {
+        if (Square.cfg.total / this.body.length <= 1.25 && Square.cfg.total - this.body.length > 3) {
             this.runPath(this.getFullPath());
             return;
         }
         let path = this.pathfinding();
-        
+
         if (path && this.mockValid([...path])) {
             this.runPath(path);
             return;
         }
         let tetourPath = this.tetour();
-        
+
         if (tetourPath !== -1) {
             this.runPath([tetourPath]);
         }
@@ -355,9 +355,11 @@ avalon.scan();
 snake.init();
 
 setTimeout(() => {
-    // localStorage.fail += `${99 - snake.body.length}--`;
-    alert('fail')
-    location.reload();
+    if (snake.$food) {
+        // localStorage.fail += `${99 - snake.body.length}--`;
+        alert('fail')
+        location.reload();
+    }
 }, 90 * 1000);
 
 
