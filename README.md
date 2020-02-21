@@ -33,6 +33,8 @@
 * [页面滚动条出现时不抖动实践与相关问题](http://www.weimu.me/2019/07/31/css-remove-scroll-shake.html)
 
 ### 游戏
+* [贪吃蛇自动寻路](http://www.weimu.me/2020/02/18/snake-auto.html)
+* [俄罗斯方块]()http://www.weimu.me/app/tetris/tetris.html)
 * [射击测试](http://www.weimu.me/2018/07/08/shoot-test.html)
 * [魔方](http://www.weimu.me/2017/12/12/cube.html)
 * [贪吃蛇](http://www.weimu.me/2017/03/13/snake.html)
