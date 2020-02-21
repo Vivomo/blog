@@ -195,18 +195,28 @@ let snake = avalon.define({
         let tail = this.body[this.body.length - 1];
         let max = [];
         let findFood = false;
+        let pointCount = 0;
+        let blankSquare = new Array(Square.cfg.width).fill(0).map(() => {
+            return new Array(Square.cfg.width).fill(0);
+        });
+
+        this.body.slice(0, this.body.length - 1).forEach((point) => {
+            blankSquare[point.y][point.x] = 1;
+        });
         while (true) {
             let next = [];
             let last = stack[stack.length - 1];
             last.forEach((point) => {
                 for (let i = 0; i < 4; i++) {
+                    pointCount++;
                     let newPoint = Square.nextSquare(point, i);
                     if (this.isSamePoint(this.$food, newPoint)) {
                         findFood = true;
                     }
                     let pathPoints = point.pathPoints;
                     if (this.isOutOfIndex(newPoint) || this.isOnPathPoints(newPoint, pathPoints) || 
-                        this.isOnBody(newPoint, this.body.length - 1)) {
+                        blankSquare[newPoint.y][newPoint.x]
+                        ) {
                         continue;
                     }
                     newPoint.direction = i;
@@ -230,7 +240,8 @@ let snake = avalon.define({
                 return path;
             }
         }
-        // max.shift();
+        console.log(pointCount);
+        
         return max.map(_ => _.direction).reverse();
     },
     tetour: function () {
