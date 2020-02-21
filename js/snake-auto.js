@@ -11,8 +11,8 @@ let DIRECTION = {
 
 const Square = {
     cfg: {
-        width: 10,
-        total: 10 * 10
+        width: 11,
+        total: 11 * 11
     },
     createSquare: function () {
         return avalon.range(0, this.cfg.width).map(() =>
@@ -357,10 +357,10 @@ snake.init();
 setTimeout(() => {
     if (snake.$food) {
         // localStorage.fail += `${99 - snake.body.length}--`;
-        alert('fail')
+        alert('好像出现了盲点');
         location.reload();
     }
-}, 90 * 1000);
+}, 100000);
 
 
 
