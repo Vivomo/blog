@@ -5,20 +5,34 @@
     <title>数独</title>
     <style>
         :root {
-            --ceil-size: 30px;
+            --ceil-size: 60px;
+            --theme: #59ecff;
+        }
+        * {
+            box-sizing: border-box;
         }
         body {
             margin: 0;
+            padding: 20px;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        .row {
-            display: flex;
+            background: rgba(0, 0, 0, 0.8);
+            color: #999;
         }
         .wrap {
+            display: flex;
+            flex-wrap: wrap;
             margin: 0 auto;
             font-size: 0;
             width: calc(var(--ceil-size) * 9);
+            height: calc(var(--ceil-size) * 9);
+        }
+
+        .t {
+            display: flex;
+            flex-wrap: wrap;
+            width: calc(100% / 3);
+            height: calc(100% / 3);
+            outline: 3px solid var(--theme);
         }
 
         .ceil {
@@ -26,133 +40,24 @@
             justify-content: center;
             align-items: center;
             box-sizing: border-box;
-            width: var(--ceil-size);
-            height: var(--ceil-size);
+            width: calc(100% / 3);
+            height: calc(100% / 3);
             font-size: 16px;
             text-align: center;
-            vertical-align: bottom;
+            flex-wrap: wrap;
             border: 1px solid #59ecff;
         }
 
-        .row1 .ceil{
-            border-top-width: 2px;
-        }
-
-        .col1 {
-            border-left-width: 2px;
-        }
-
-        .col3, .col6, .col9 {
-            border-right-width: 2px;
-        }
-
-        .row3 .ceil, .row6 .ceil, .row9 .ceil {
-            border-bottom-width: 2px;
+        .temp {
+            min-width: calc(100% / 3);
+            height: calc(100% / 3);
+            font-size: 12px;
         }
 
     </style>
 </head>
 <body>
-<div class="wrap">
-    <div class="row row1">
-        <div class="ceil col1">1</div>
-        <div class="ceil col2">2</div>
-        <div class="ceil col3">3</div>
-        <div class="ceil col4"></div>
-        <div class="ceil col5"></div>
-        <div class="ceil col6"></div>
-        <div class="ceil col7"></div>
-        <div class="ceil col8"></div>
-        <div class="ceil col9"></div>
-    </div>
-    <div class="row row2">
-        <div class="ceil col1"></div>
-        <div class="ceil col2"></div>
-        <div class="ceil col3"></div>
-        <div class="ceil col4"></div>
-        <div class="ceil col5"></div>
-        <div class="ceil col6"></div>
-        <div class="ceil col7"></div>
-        <div class="ceil col8"></div>
-        <div class="ceil col9"></div>
-    </div>
-    <div class="row row3">
-        <div class="ceil col1"></div>
-        <div class="ceil col2"></div>
-        <div class="ceil col3"></div>
-        <div class="ceil col4"></div>
-        <div class="ceil col5"></div>
-        <div class="ceil col6"></div>
-        <div class="ceil col7"></div>
-        <div class="ceil col8"></div>
-        <div class="ceil col9"></div>
-    </div>
-    <div class="row row4">
-        <div class="ceil col1"></div>
-        <div class="ceil col2"></div>
-        <div class="ceil col3"></div>
-        <div class="ceil col4"></div>
-        <div class="ceil col5"></div>
-        <div class="ceil col6"></div>
-        <div class="ceil col7"></div>
-        <div class="ceil col8"></div>
-        <div class="ceil col9"></div>
-    </div>
-    <div class="row row5">
-        <div class="ceil col1"></div>
-        <div class="ceil col2"></div>
-        <div class="ceil col3"></div>
-        <div class="ceil col4"></div>
-        <div class="ceil col5"></div>
-        <div class="ceil col6"></div>
-        <div class="ceil col7"></div>
-        <div class="ceil col8"></div>
-        <div class="ceil col9"></div>
-    </div>
-    <div class="row row6">
-        <div class="ceil col1"></div>
-        <div class="ceil col2"></div>
-        <div class="ceil col3"></div>
-        <div class="ceil col4"></div>
-        <div class="ceil col5"></div>
-        <div class="ceil col6"></div>
-        <div class="ceil col7"></div>
-        <div class="ceil col8"></div>
-        <div class="ceil col9"></div>
-    </div>
-    <div class="row row7">
-        <div class="ceil col1"></div>
-        <div class="ceil col2"></div>
-        <div class="ceil col3"></div>
-        <div class="ceil col4"></div>
-        <div class="ceil col5"></div>
-        <div class="ceil col6"></div>
-        <div class="ceil col7"></div>
-        <div class="ceil col8"></div>
-        <div class="ceil col9"></div>
-    </div>
-    <div class="row row8">
-        <div class="ceil col1"></div>
-        <div class="ceil col2"></div>
-        <div class="ceil col3"></div>
-        <div class="ceil col4"></div>
-        <div class="ceil col5"></div>
-        <div class="ceil col6"></div>
-        <div class="ceil col7"></div>
-        <div class="ceil col8"></div>
-        <div class="ceil col9"></div>
-    </div>
-    <div class="row row9">
-        <div class="ceil col1"></div>
-        <div class="ceil col2"></div>
-        <div class="ceil col3"></div>
-        <div class="ceil col4"></div>
-        <div class="ceil col5"></div>
-        <div class="ceil col6"></div>
-        <div class="ceil col7"></div>
-        <div class="ceil col8"></div>
-        <div class="ceil col9"></div>
-    </div>
-</div>
+<div class="wrap"></div>
+<script src="./sudoku.js"></script>
 </body>
 </html>
