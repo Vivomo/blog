@@ -21,19 +21,25 @@ const App = {
             activeElem.classList.add('mark');
         }
 
-        this.virtualData[r - 1][c - 1] = {
+        this.virtualData[r][c] = {
             value,
             mark
         };
 
-        this.virtualData[r - 1].forEach((item) => {
+        this.virtualData[r].forEach((item) => {
             this.removeArrElem(item, value);
         });
 
         this.virtualData.forEach((row) => {
-            let item = row[c - 1];
+            let item = row[c];
             this.removeArrElem(item, value);
         });
+
+        let tIndex = ~~(r / 3) * 3 + ~~(c / 3);
+        this.eachTable(tIndex, (item) => {
+            this.removeArrElem(item, value);
+        })
+        
         
         Array.from(document.querySelectorAll(`[data-r="${r}"] .temp${value}, [data-c="${c}"] .temp${value}`)).forEach((ceil) => {
             ceil.remove();
@@ -71,15 +77,20 @@ const App = {
     derivationTable() {
         for (let tIndex = 0; tIndex < 9; tIndex++) {
             let counter = {};
-            let startRow = ~~(tIndex / 3) * 3;
-            let startCol = (tIndex % 3) * 3;
-            for (let rowIndex = startRow; rowIndex < startRow + 3; rowIndex++) {
-                for (let colIndex = startCol; colIndex < startCol + 3; colIndex++) {
-                    let item = this.virtualData[rowIndex][colIndex];
-                    this.setArrCounter(item, counter, rowIndex, colIndex);
-                }
-            }
+            this.eachTable(tIndex, (item, rowIndex, colIndex) => {
+                this.setArrCounter(item, counter, rowIndex, colIndex);
+            });
             this.dispatchCounter(counter);
+        }
+    },
+    eachTable(tIndex, fn) {
+        let startRow = ~~(tIndex / 3) * 3;
+        let startCol = (tIndex % 3) * 3;
+        for (let rowIndex = startRow; rowIndex < startRow + 3; rowIndex++) {
+            for (let colIndex = startCol; colIndex < startCol + 3; colIndex++) {
+                let item = this.virtualData[rowIndex][colIndex];
+                fn(item, rowIndex, colIndex)
+            }
         }
     },
     setArrCounter(item, counter, rowIndex, colIndex) {
@@ -101,10 +112,10 @@ const App = {
                 let [r, c] = counter[k].split('_');
                 console.log(r, c, 'derivation');
                 this.activeCeil = {
-                    r: ~~r + 1,
-                    c: ~~c + 1
+                    r,
+                    c
                 };
-                this.setCeil(k);
+                this.setCeil(~~k);
             }
         }
     },
@@ -122,8 +133,8 @@ const App = {
                     return `<div class="temp temp${tempIndex + 1}">${tempIndex + 1}</div>`
                 }).join('');
                 return `<div 
-                            data-r="${~~(outerIndex / 3) * 3 + ~~(innerIndex / 3) + 1}" 
-                            data-c="${(outerIndex % 3) * 3 + (innerIndex % 3) + 1}" 
+                            data-r="${~~(outerIndex / 3) * 3 + ~~(innerIndex / 3)}" 
+                            data-c="${(outerIndex % 3) * 3 + (innerIndex % 3)}" 
                             class="ceil">${tempHtml}</div>`
             }).join('');
             return `<div class="t t${outerIndex + 1}">${_html}</div>`;
@@ -196,7 +207,9 @@ const App = {
         ];
         defautData.forEach((item) => {
             let [r, c, value] = item;
-            this.activeCeil = {r, c};
+            r--;
+            c--;
+            this.activeCeil = {r , c};
             this.setCeil(value, true);
         })
     },
