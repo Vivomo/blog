@@ -15,12 +15,25 @@ const App = {
         let data = activeElem.dataset;
         data.value = value;
         let {r, c} = data;
-        console.log(r, c);
         
         activeElem.innerHTML = value;
         if (mark) {
             activeElem.classList.add('mark');
         }
+
+        this.virtualData[r - 1][c - 1] = {
+            value,
+            mark
+        };
+
+        this.virtualData[r - 1].forEach((item) => {
+            this.removeArrElem(item, value);
+        });
+
+        this.virtualData.forEach((row) => {
+            let item = row[c - 1];
+            this.removeArrElem(item, value);
+        });
         
         Array.from(document.querySelectorAll(`[data-r="${r}"] .temp${value}, [data-c="${c}"] .temp${value}`)).forEach((ceil) => {
             ceil.remove();
@@ -28,7 +41,12 @@ const App = {
 
         Array.from(activeElem.parentNode.querySelectorAll(`.temp${value}`)).forEach((ceil) => {
             ceil.remove();
-        })
+        });
+    },
+    removeArrElem(arr, elem) {
+        if (Array.isArray(arr)) {
+            arr.splice(arr.indexOf(elem), 1);
+        }
     },
     initHtml () {
         let wrap = this.wrap = document.querySelector('.wrap');
@@ -64,13 +82,25 @@ const App = {
 
         document.addEventListener('keydown', (e) => {
             if (/\d/.test(e.key)) {
-                this.setCeil(e.key, e.altKey)
+                this.setCeil(~~e.key, e.altKey)
             }
         })
+    },
+    initVirtualData() {
+        this.virtualData = new Array(9).fill(null).map(() => {
+            return new Array(9).fill(null).map(() => {
+                let arr = [];
+                for (let i = 1; i < 10; i++) {
+                    arr.push(i);
+                }
+                return arr;
+            });
+        });
     },
     init() {
         this.initHtml();
         this.initEvent();
+        this.initVirtualData();
     }
 }
 
