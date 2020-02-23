@@ -43,6 +43,61 @@ const App = {
             ceil.remove();
         });
     },
+    derivation() {
+        this.virtualData.forEach((row, rowIndex) => {
+            let counter = {};
+            row.forEach((item, colIndex) => {
+                this.setArrCounter(item, counter, rowIndex, colIndex);
+            });
+            this.dispatchCounter(counter);
+        });
+
+        for (let colIndex = 0; colIndex < 9; colIndex++) {
+            let counter = {};
+            this.virtualData.forEach((row, rowIndex) => {
+                let item = row[colIndex];
+                this.setArrCounter(item, counter, rowIndex, colIndex);
+            });
+            this.dispatchCounter(counter);
+        }
+
+        for (let tIndex = 0; tIndex < 9; tIndex++) {
+            let counter = {};
+            let startRow = ~~(tIndex / 3) * 3;
+            let startCol = (tIndex % 3) * 3;
+            for (let rowIndex = startRow; rowIndex < startRow + 3; rowIndex++) {
+                for (let colIndex = startCol; colIndex < startCol + 3; colIndex++) {
+                    let item = this.virtualData[rowIndex][colIndex];
+                    this.setArrCounter(item, counter, rowIndex, colIndex);
+                }
+            }
+            this.dispatchCounter(counter);
+        }
+    },
+    setArrCounter(item, counter, rowIndex, colIndex) {
+        if (Array.isArray(item)) {
+            item.forEach((num) => {
+                if (counter[num]) {
+                    counter[num] = 2
+                } else {
+                    counter[num] = `${rowIndex}_${colIndex}`;
+                }
+            });
+        }
+    },
+    dispatchCounter(counter) {
+        for (let k in counter) {
+            if (typeof counter[k] === 'string') {
+                let [r, c] = counter[k].split('_');
+                console.log(r, c, 'derivation');
+                this.activeCeil = {
+                    r: r + 1,
+                    c: c + 1
+                };
+                this.setCeil(k);
+            }
+        }
+    },
     removeArrElem(arr, elem) {
         if (Array.isArray(arr)) {
             arr.splice(arr.indexOf(elem), 1);
@@ -76,7 +131,7 @@ const App = {
 
         document.querySelector('.opt').addEventListener('click', (e) => {
             if (e.target.tagName === 'BUTTON') {
-                this.setCeil(e.target.dataset.value);
+                this.setCeil(~~e.target.dataset.value);
             }
         });
 
