@@ -7,7 +7,7 @@ const App = {
         this.wrap.querySelector(`[data-r="${obj.r}"][data-c="${obj.c}"]`).classList.add('active');
         this._activeCeil = obj;
     },
-    setCeil(value) {
+    setCeil(value, mark) {
         let activeElem = this.wrap.querySelector('.active');
         if (!activeElem || activeElem.dataset.value) {
             return;
@@ -18,6 +18,9 @@ const App = {
         console.log(r, c);
         
         activeElem.innerHTML = value;
+        if (mark) {
+            activeElem.classList.add('mark');
+        }
         
         Array.from(document.querySelectorAll(`[data-r="${r}"] .temp${value}, [data-c="${c}"] .temp${value}`)).forEach((ceil) => {
             ceil.remove();
@@ -58,6 +61,12 @@ const App = {
                 this.setCeil(e.target.dataset.value);
             }
         });
+
+        document.addEventListener('keydown', (e) => {
+            if (/\d/.test(e.key)) {
+                this.setCeil(e.key, e.altKey)
+            }
+        })
     },
     init() {
         this.initHtml();
