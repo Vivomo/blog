@@ -44,6 +44,12 @@ const App = {
         });
     },
     derivation() {
+        this.derivationRow();
+        this.derivationCol();
+        this.derivationTable();
+        
+    },
+    derivationRow() {
         this.virtualData.forEach((row, rowIndex) => {
             let counter = {};
             row.forEach((item, colIndex) => {
@@ -51,7 +57,8 @@ const App = {
             });
             this.dispatchCounter(counter);
         });
-
+    },
+    derivationCol() {
         for (let colIndex = 0; colIndex < 9; colIndex++) {
             let counter = {};
             this.virtualData.forEach((row, rowIndex) => {
@@ -60,7 +67,8 @@ const App = {
             });
             this.dispatchCounter(counter);
         }
-
+    },
+    derivationTable() {
         for (let tIndex = 0; tIndex < 9; tIndex++) {
             let counter = {};
             let startRow = ~~(tIndex / 3) * 3;
@@ -167,8 +175,8 @@ const App = {
             [3, 8, 9],
             [4, 1, 9],
             [4, 2, 8],
-            [4, 7, 5],
-            [4, 8, 3],
+            [4, 7, 3],
+            [4, 8, 5],
             [5, 1, 1],
             [5, 3, 3],
             [5, 8, 4],
@@ -188,7 +196,7 @@ const App = {
         defautData.forEach((item) => {
             let [r, c, value] = item;
             this.activeCeil = {r, c};
-            this.setCeil(value);
+            this.setCeil(value, true);
         })
     },
     init() {
