@@ -83,6 +83,8 @@ const App = {
                     counter[num] = `${rowIndex}_${colIndex}`;
                 }
             });
+        } else {
+            counter[item.value] = true;
         }
     },
     dispatchCounter(counter) {
@@ -91,8 +93,8 @@ const App = {
                 let [r, c] = counter[k].split('_');
                 console.log(r, c, 'derivation');
                 this.activeCeil = {
-                    r: r + 1,
-                    c: c + 1
+                    r: ~~r + 1,
+                    c: ~~c + 1
                 };
                 this.setCeil(k);
             }
@@ -152,10 +154,48 @@ const App = {
             });
         });
     },
+    setDefaultData() {
+        let defautData = [
+            [1, 3, 4],
+            [1, 4, 6],
+            [1, 6, 2],
+            [2, 1, 6],
+            [2, 5, 3],
+            [2, 9, 4],
+            [3, 2, 2],
+            [3, 4, 4],
+            [3, 8, 9],
+            [4, 1, 9],
+            [4, 2, 8],
+            [4, 7, 5],
+            [4, 8, 3],
+            [5, 1, 1],
+            [5, 3, 3],
+            [5, 8, 4],
+            [6, 2, 6],
+            [6, 7, 8],
+            [6, 9, 7],
+            [7, 2, 3],
+            [7, 5, 2],
+            [7, 8, 7],
+            [8, 5, 6],
+            [8, 6, 1],
+            [8, 9, 5],
+            [9, 3, 9],
+            [9, 4, 3],
+            [9, 7, 4]
+        ];
+        defautData.forEach((item) => {
+            let [r, c, value] = item;
+            this.activeCeil = {r, c};
+            this.setCeil(value);
+        })
+    },
     init() {
         this.initHtml();
         this.initEvent();
         this.initVirtualData();
+        this.setDefaultData();
     }
 }
 
