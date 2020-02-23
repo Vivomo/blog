@@ -16,13 +16,12 @@
             padding: 20px;
             height: 100vh;
             background: rgba(0, 0, 0, 0.8);
-            color: #999;
+            color: #ccc;
         }
         .wrap {
+            float: left;
             display: flex;
             flex-wrap: wrap;
-            margin: 0 auto;
-            font-size: 0;
             width: calc(var(--ceil-size) * 9);
             height: calc(var(--ceil-size) * 9);
         }
@@ -32,7 +31,7 @@
             flex-wrap: wrap;
             width: calc(100% / 3);
             height: calc(100% / 3);
-            border: 3px solid var(--theme);
+            border: 2px solid var(--theme);
         }
 
         .ceil {
@@ -42,7 +41,7 @@
             box-sizing: border-box;
             width: calc(100% / 3);
             height: calc(100% / 3);
-            font-size: 16px;
+            font-size: 20px;
             text-align: center;
             flex-wrap: wrap;
             border: 1px solid #59ecff;
@@ -57,12 +56,30 @@
             height: calc(100% / 3);
             font-size: 12px;
             pointer-events: none;
+            color: #777;
+        }
+
+        .btn {
+            width: 40px;
+            height: 40px;
+            margin: 10px;
         }
 
     </style>
 </head>
 <body>
 <div class="wrap"></div>
+<div class="opt">
+    <button class="btn" data-value="1">1</button>
+    <button class="btn" data-value="2">2</button>
+    <button class="btn" data-value="3">3</button>
+    <button class="btn" data-value="4">4</button>
+    <button class="btn" data-value="5">5</button>
+    <button class="btn" data-value="6">6</button>
+    <button class="btn" data-value="7">7</button>
+    <button class="btn" data-value="8">8</button>
+    <button class="btn" data-value="9">9</button>
+</div>
 <script src="./sudoku.js"></script>
 </body>
 </html>

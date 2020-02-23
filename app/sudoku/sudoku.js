@@ -7,12 +7,32 @@ const App = {
         this.wrap.querySelector(`[data-r="${obj.r}"][data-c="${obj.c}"]`).classList.add('active');
         this._activeCeil = obj;
     },
+    setCeil(value) {
+        let activeElem = this.wrap.querySelector('.active');
+        if (!activeElem || activeElem.dataset.value) {
+            return;
+        }
+        let data = activeElem.dataset;
+        data.value = value;
+        let {r, c} = data;
+        console.log(r, c);
+        
+        activeElem.innerHTML = value;
+        
+        Array.from(document.querySelectorAll(`[data-r="${r}"] .temp${value}, [data-c="${c}"] .temp${value}`)).forEach((ceil) => {
+            ceil.remove();
+        });
+
+        Array.from(activeElem.parentNode.querySelectorAll(`.temp${value}`)).forEach((ceil) => {
+            ceil.remove();
+        })
+    },
     initHtml () {
         let wrap = this.wrap = document.querySelector('.wrap');
         let html = new Array(9).fill(null).map((item, outerIndex) => {
             let _html = new Array(9).fill(null).map((innerItem, innerIndex) => {
                 let tempHtml = new Array(9).fill(null).map((temp, tempIndex) => {
-                    return `<div class="temp">${tempIndex + 1}</div>`
+                    return `<div class="temp temp${tempIndex + 1}">${tempIndex + 1}</div>`
                 }).join('');
                 return `<div 
                             data-r="${~~(outerIndex / 3) * 3 + ~~(innerIndex / 3) + 1}" 
@@ -30,6 +50,12 @@ const App = {
                     r: e.target.dataset.r,
                     c: e.target.dataset.c
                 }
+            }
+        });
+
+        document.querySelector('.opt').addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                this.setCeil(e.target.dataset.value);
             }
         });
     },
