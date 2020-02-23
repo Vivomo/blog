@@ -32,7 +32,7 @@
             flex-wrap: wrap;
             width: calc(100% / 3);
             height: calc(100% / 3);
-            outline: 3px solid var(--theme);
+            border: 3px solid var(--theme);
         }
 
         .ceil {
@@ -48,10 +48,15 @@
             border: 1px solid #59ecff;
         }
 
+        .ceil.active {
+            box-shadow: 0 0 0 2px tomato inset;
+        }
+
         .temp {
             min-width: calc(100% / 3);
             height: calc(100% / 3);
             font-size: 12px;
+            pointer-events: none;
         }
 
     </style>
