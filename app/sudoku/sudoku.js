@@ -110,7 +110,8 @@ const App = {
     },
     removeArrElem(arr, elem) {
         if (Array.isArray(arr)) {
-            arr.splice(arr.indexOf(elem), 1);
+            let index = arr.indexOf(elem);
+            index !== -1 && arr.splice(index, 1);
         }
     },
     initHtml () {
