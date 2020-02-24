@@ -49,6 +49,7 @@ const App = {
         this.derivationCol();
         this.derivationTable();
         this.derivationTableColRow();
+        this.derivationColRowTable();
     },
     derivationRow() {
         this.eachRow((row, rowIndex) => {
@@ -96,8 +97,16 @@ const App = {
             row.forEach((item, colIndex) => {
                 this.setRCTableCounter(item, counter, rowIndex, colIndex)
             });
-            this.dispatchRTableCounter(counter, rowIndex)
+            this.dispatchRCTableCounter(counter, rowIndex)
         });
+        for (let colIndex = 0; colIndex < 9; colIndex++) {
+            let counter = {};
+            this.eachRow((row, rowIndex) => {
+                let item = row[colIndex];
+                this.setRCTableCounter(item, counter, rowIndex, colIndex);
+            });
+            this.dispatchRCTableCounter(counter, null, colIndex);
+        }
     },
     rInTable(rowIndex, tIndex) {
         let startRow = this.getTableFirstR(tIndex);
@@ -213,14 +222,24 @@ const App = {
             this.removeTemp(`[data-c="${c}"] .temp${k}`, temp => !temp.parentNode.parentNode.classList.contains(`t${tIndex}`));
         });
     },
-    dispatchRTableCounter(counter, rowIndex) {
+    dispatchRCTableCounter(counter, rowIndex, colIndex) {
         this.eachOnlyOneCounter(counter, (k, tIndex) => {
-            this.eachTableItem(tIndex, (item, _rowIndex) => {
-                if (rowIndex !== _rowIndex) {
-                    this.removeArrElem(item, k);
+            this.eachTableItem(tIndex, (item, _rowIndex, _colIndex) => {
+                if (rowIndex === null) {
+                    if (colIndex !== _colIndex) {
+                        this.removeArrElem(item, k);
+                    }
+                } else {
+                    if (rowIndex !== _rowIndex) {
+                        this.removeArrElem(item, k);
+                    }
                 }
             });
-            this.removeTemp(`.t${tIndex} .temp${k}`, temp => ~~temp.parentNode.dataset.r !== rowIndex);
+            if (rowIndex === null) {
+                this.removeTemp(`.t${tIndex} .temp${k}`, temp => ~~temp.parentNode.dataset.c !== colIndex);
+            } else {
+                this.removeTemp(`.t${tIndex} .temp${k}`, temp => ~~temp.parentNode.dataset.r !== rowIndex);
+            }
         });
     },
     removeArrElem(arr, elem) {
@@ -268,10 +287,12 @@ const App = {
         });
 
         document.querySelector('.opt').addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON') {
+            if (e.target.tagName === 'BUTTON' && e.target.dataset.value) {
                 this.setCeil(~~e.target.dataset.value);
             }
         });
+
+        document.querySelector('.derivation').addEventListener('click', this.derivation.bind(this));
 
         document.addEventListener('keydown', (e) => {
             if (/\d/.test(e.key)) {
