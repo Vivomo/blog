@@ -53,7 +53,7 @@ const App = {
         this.derivationRow();
         this.derivationCol();
         this.derivationTable();
-        
+        this.derivationTableColRow();
     },
     derivationRow() {
         this.virtualData.forEach((row, rowIndex) => {
@@ -251,51 +251,22 @@ const App = {
             });
         });
     },
-    setDefaultData() {
-        let defautData = [
-            [1, 3, 4],
-            [1, 4, 6],
-            [1, 6, 2],
-            [2, 1, 6],
-            [2, 5, 3],
-            [2, 9, 4],
-            [3, 2, 2],
-            [3, 4, 4],
-            [3, 8, 9],
-            [4, 1, 9],
-            [4, 2, 8],
-            [4, 7, 3],
-            [4, 8, 5],
-            [5, 1, 1],
-            [5, 3, 3],
-            [5, 8, 4],
-            [6, 2, 6],
-            [6, 7, 8],
-            [6, 9, 7],
-            [7, 2, 3],
-            [7, 5, 2],
-            [7, 8, 7],
-            [8, 5, 6],
-            [8, 6, 1],
-            [8, 9, 5],
-            [9, 3, 9],
-            [9, 4, 3],
-            [9, 7, 4]
-        ];
-        defautData.forEach((item) => {
+    setDefaultData(data) {
+        data.forEach((item) => {
             let [r, c, value] = item;
-            r--;
-            c--;
             this.activeCeil = {r , c};
             this.setCeil(value, true);
-        })
+        });
     },
     init() {
         this.initHtml();
         this.initEvent();
         this.initVirtualData();
-        this.setDefaultData();
     }
 }
 
 App.init();
+
+let masterData = [[0,2,4],[0,3,6],[0,5,2],[1,0,6],[1,4,3],[1,8,4],[2,1,2],[2,3,4],[2,7,9],[3,0,9],[3,1,8],[3,6,3],[3,7,5],[4,0,1],[4,2,3],[4,7,4],[5,1,6],[5,6,8],[5,8,7],[6,1,3],[6,4,2],[6,7,7],[7,4,6],[7,5,1],[7,8,5],[8,2,9],[8,3,3],[8,6,4]];
+
+App.setDefaultData(masterData);
