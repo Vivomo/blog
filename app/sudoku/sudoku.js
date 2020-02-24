@@ -21,10 +21,7 @@ const App = {
             return;
         }
 
-        this.virtualData[r][c] = {
-            value,
-            mark
-        };
+        this.virtualData[r][c] = {value, mark};
 
         this.virtualData[r].forEach((item) => {
             this.removeArrElem(item, value);
@@ -223,7 +220,7 @@ const App = {
                     this.removeArrElem(item, k);
                 }
             });
-            this.removeTemp(`t${tIndex} .temp${k}`, temp => ~~temp.parentNode.dataset.r !== rowIndex);
+            this.removeTemp(`.t${tIndex} .temp${k}`, temp => ~~temp.parentNode.dataset.r !== rowIndex);
         });
     },
     removeArrElem(arr, elem) {
