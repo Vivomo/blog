@@ -45,13 +45,7 @@ const App = {
             activeElem.classList.add('mark');
         }
         
-        Array.from(document.querySelectorAll(`[data-r="${r}"] .temp${value}, [data-c="${c}"] .temp${value}`)).forEach((ceil) => {
-            ceil.remove();
-        });
-
-        Array.from(activeElem.parentNode.querySelectorAll(`.temp${value}`)).forEach((ceil) => {
-            ceil.remove();
-        });
+        this.removeTemp(`[data-r="${r}"] .temp${value}, [data-c="${c}"] .temp${value}, .t${tIndex} .temp${value}`);
     },
     derivation() {
         this.derivationRow();
@@ -185,7 +179,11 @@ const App = {
     eachOnlyOneCounter(counter, fn) {
         for (let k in counter) {
             if (typeof counter[k] === 'string') {
-                fn(~~k, ~~counter[k]);
+                let v = counter[k];
+                if (/^\d+$/.test(v)) {
+                    v = ~~v;
+                }
+                fn(~~k, v);
             }
         }
     },
@@ -204,11 +202,7 @@ const App = {
                     this.removeArrElem(item, k)
                 }
             });
-            this.find(`[data-r="${r}"] .temp${k}`).forEach((temp) => {
-                if (!temp.parentNode.parentNode.classList.contains(`t${tIndex}`)) {
-                    temp.remove();
-                }
-            });
+            this.removeTemp(`[data-r="${r}"] .temp${k}`, temp => !temp.parentNode.parentNode.classList.contains(`t${tIndex}`));
         });
     },
     dispathcTableCCounter(tIndex, counter) {
@@ -219,11 +213,7 @@ const App = {
                     this.removeArrElem(item, k)
                 }
             });
-            this.find(`[data-c="${c}"] .temp${k}`).forEach((temp) => {
-                if (!temp.parentNode.parentNode.classList.contains(`t${tIndex}`)) {
-                    temp.remove();
-                }
-            });
+            this.removeTemp(`[data-c="${c}"] .temp${k}`, temp => !temp.parentNode.parentNode.classList.contains(`t${tIndex}`));
         });
     },
     dispatchRTableCounter(counter, rowIndex) {
@@ -233,12 +223,7 @@ const App = {
                     this.removeArrElem(item, k);
                 }
             });
-            
-            this.find(`t${tIndex} .temp${k}`).forEach((temp) => {
-                if (~~temp.parentNode.dataset.r !== rowIndex) {
-                    temp.remove();
-                }
-            });
+            this.removeTemp(`t${tIndex} .temp${k}`, temp => ~~temp.parentNode.dataset.r !== rowIndex);
         });
     },
     removeArrElem(arr, elem) {
@@ -246,6 +231,15 @@ const App = {
             let index = arr.indexOf(elem);
             index !== -1 && arr.splice(index, 1);
         }
+    },
+    removeTemp(selector, fn) {
+        this.find(selector).forEach((temp) => {
+            if (fn) {
+                fn(temp) && temp.remove();
+            } else {
+                temp.remove();
+            }
+        });
     },
     find(selector) {
         return Array.from(this.wrap.querySelectorAll(selector));
