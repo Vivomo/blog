@@ -16,9 +16,9 @@ const App = {
         data.value = value;
         let {r, c} = data;
         
-        activeElem.innerHTML = value;
-        if (mark) {
-            activeElem.classList.add('mark');
+        if (!this.virtualData[r][c].includes(value)) {
+            console.error('invalid data', value, r, c);
+            return;
         }
 
         this.virtualData[r][c] = {
@@ -38,8 +38,12 @@ const App = {
         let tIndex = ~~(r / 3) * 3 + ~~(c / 3);
         this.eachTableItem(tIndex, (item) => {
             this.removeArrElem(item, value);
-        })
-        
+        });
+
+        activeElem.innerHTML = value;
+        if (mark) {
+            activeElem.classList.add('mark');
+        }
         
         Array.from(document.querySelectorAll(`[data-r="${r}"] .temp${value}, [data-c="${c}"] .temp${value}`)).forEach((ceil) => {
             ceil.remove();
@@ -56,7 +60,7 @@ const App = {
         this.derivationTableColRow();
     },
     derivationRow() {
-        this.virtualData.forEach((row, rowIndex) => {
+        this.eachRow((row, rowIndex) => {
             let counter = {};
             row.forEach((item, colIndex) => {
                 this.setArrCounter(item, counter, rowIndex, colIndex);
@@ -159,7 +163,7 @@ const App = {
         for (let k in counter) {
             if (typeof counter[k] === 'string') {
                 let [r, c] = counter[k].split('_');
-                console.log(r, c, 'derivation');
+                console.log(r, c, k,'derivation');
                 this.activeCeil = {r,c};
                 this.setCeil(~~k);
             }
@@ -186,7 +190,7 @@ const App = {
         for (let k in counter) {
             if (typeof counter[k] === 'string') {
                 let c = ~~counter[k];
-                this.virtualData.forEach((row, rowIndex) => {
+                this.eachRow((row, rowIndex) => {
                     let item = row[c];
                     if (!this.rInTable(rowIndex, tIndex)) {
                         this.removeArrElem(item, ~~k)
