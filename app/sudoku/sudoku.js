@@ -36,7 +36,7 @@ const App = {
         });
 
         let tIndex = ~~(r / 3) * 3 + ~~(c / 3);
-        this.eachTable(tIndex, (item) => {
+        this.eachTableItem(tIndex, (item) => {
             this.removeArrElem(item, value);
         })
         
@@ -77,15 +77,42 @@ const App = {
     derivationTable() {
         for (let tIndex = 0; tIndex < 9; tIndex++) {
             let counter = {};
-            this.eachTable(tIndex, (item, rowIndex, colIndex) => {
+            this.eachTableItem(tIndex, (item, rowIndex, colIndex) => {
                 this.setArrCounter(item, counter, rowIndex, colIndex);
             });
             this.dispatchCounter(counter);
         }
     },
-    eachTable(tIndex, fn) {
-        let startRow = ~~(tIndex / 3) * 3;
-        let startCol = (tIndex % 3) * 3;
+    derivationTableColRow() {
+        for (let tIndex = 0; tIndex < 9; tIndex++) {
+            let rCounter = {};
+            let cCounter = {};
+            this.eachTableItem(tIndex, (item, rowIndex, colIndex) => {
+                this.setCRCounter(item, rCounter, rowIndex);
+                this.setCRCounter(item, cCounter, colIndex);
+            });
+            this.dispathcTableRCounter(tIndex, rCounter);
+            this.dispathcTableCCounter(tIndex, cCounter);
+            // console.log(tIndex, rCounter, cCounter);
+        }
+    },
+    rInTable(rowIndex, tIndex) {
+        let startRow = this.getTableFirstR(tIndex);
+        return rowIndex >= startRow && rowIndex < startRow + 3;
+    },
+    cInTable(colIndex, tIndex) {
+        let startCol = this.getTableFirstC(tIndex);
+        return colIndex >= startCol && colIndex < startCol + 3;
+    },
+    getTableFirstR(tIndex) {
+        return ~~(tIndex / 3) * 3;
+    },
+    getTableFirstC(tIndex) {
+        return (tIndex % 3) * 3;
+    },
+    eachTableItem(tIndex, fn) {
+        let startRow = this.getTableFirstR(tIndex);
+        let startCol = this.getTableFirstC(tIndex);
         for (let rowIndex = startRow; rowIndex < startRow + 3; rowIndex++) {
             for (let colIndex = startCol; colIndex < startCol + 3; colIndex++) {
                 let item = this.virtualData[rowIndex][colIndex];
@@ -106,16 +133,63 @@ const App = {
             counter[item.value] = true;
         }
     },
+    setCRCounter(item, counter, cr) {
+        if (Array.isArray(item)) {
+            item.forEach((num) => {
+                if (counter[num]) {
+                    if (cr !== ~~counter[num]) {
+                        counter[num] = 2
+                    }
+                } else {
+                    counter[num] = `${cr}`;
+                }
+            });
+        } else {
+            counter[item.value] = true;
+        }
+    },
     dispatchCounter(counter) {
         for (let k in counter) {
             if (typeof counter[k] === 'string') {
                 let [r, c] = counter[k].split('_');
                 console.log(r, c, 'derivation');
-                this.activeCeil = {
-                    r,
-                    c
-                };
+                this.activeCeil = {r,c};
                 this.setCeil(~~k);
+            }
+        }
+    },
+    dispathcTableRCounter(tIndex, counter) {
+        for (let k in counter) {
+            if (typeof counter[k] === 'string') {
+                let r = ~~counter[k];
+                this.virtualData[r].forEach((item, colIndex) => {
+                    if (!this.cInTable(colIndex, tIndex)) {
+                        this.removeArrElem(item, ~~k)
+                    }
+                });
+                this.find(`[data-r="${r}"] .temp${k}`).forEach((temp) => {
+                    if (!temp.parentNode.parentNode.classList.contains(`t${tIndex}`)) {
+                        temp.remove();
+                    }
+                });
+            }
+        }
+    },
+    dispathcTableCCounter(tIndex, counter) {
+        for (let k in counter) {
+            if (typeof counter[k] === 'string') {
+                let c = ~~counter[k];
+                this.virtualData.forEach((row, rowIndex) => {
+                    let item = row[c];
+                    if (!this.rInTable(rowIndex, tIndex)) {
+                        this.removeArrElem(item, ~~k)
+                    }
+                });
+                this.find(`[data-c="${c}"] .temp${k}`).forEach((temp) => {
+                    if (!temp.parentNode.parentNode.classList.contains(`t${tIndex}`)) {
+                        temp.remove();
+                    }
+                });
             }
         }
     },
@@ -124,6 +198,9 @@ const App = {
             let index = arr.indexOf(elem);
             index !== -1 && arr.splice(index, 1);
         }
+    },
+    find(selector) {
+        return Array.from(this.wrap.querySelectorAll(selector));
     },
     initHtml () {
         let wrap = this.wrap = document.querySelector('.wrap');
@@ -137,7 +214,7 @@ const App = {
                             data-c="${(outerIndex % 3) * 3 + (innerIndex % 3)}" 
                             class="ceil">${tempHtml}</div>`
             }).join('');
-            return `<div class="t t${outerIndex + 1}">${_html}</div>`;
+            return `<div class="t t${outerIndex}">${_html}</div>`;
         }).join('');
         wrap.innerHTML = html;
     },
