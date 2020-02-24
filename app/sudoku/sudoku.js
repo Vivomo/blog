@@ -182,68 +182,64 @@ const App = {
             counter[item.value] = true;
         }
     },
-    dispatchCounter(counter) {
+    eachOnlyOneCounter(counter, fn) {
         for (let k in counter) {
             if (typeof counter[k] === 'string') {
-                let [r, c] = counter[k].split('_');
-                console.log(r, c, k,'derivation');
-                this.activeCeil = {r,c};
-                this.setCeil(~~k);
+                fn(~~k, ~~counter[k]);
             }
         }
+    },
+    dispatchCounter(counter) {
+        this.eachOnlyOneCounter(counter, (k, v) => {
+            let [r, c] = v.split('_');
+            console.log(r, c, k,'derivation');
+            this.activeCeil = {r,c};
+            this.setCeil(k);
+        });
     },
     dispathcTableRCounter(tIndex, counter) {
-        for (let k in counter) {
-            if (typeof counter[k] === 'string') {
-                let r = ~~counter[k];
-                this.virtualData[r].forEach((item, colIndex) => {
-                    if (!this.cInTable(colIndex, tIndex)) {
-                        this.removeArrElem(item, ~~k)
-                    }
-                });
-                this.find(`[data-r="${r}"] .temp${k}`).forEach((temp) => {
-                    if (!temp.parentNode.parentNode.classList.contains(`t${tIndex}`)) {
-                        temp.remove();
-                    }
-                });
-            }
-        }
+        this.eachOnlyOneCounter(counter, (k, r) => {
+            this.virtualData[r].forEach((item, colIndex) => {
+                if (!this.cInTable(colIndex, tIndex)) {
+                    this.removeArrElem(item, k)
+                }
+            });
+            this.find(`[data-r="${r}"] .temp${k}`).forEach((temp) => {
+                if (!temp.parentNode.parentNode.classList.contains(`t${tIndex}`)) {
+                    temp.remove();
+                }
+            });
+        });
     },
     dispathcTableCCounter(tIndex, counter) {
-        for (let k in counter) {
-            if (typeof counter[k] === 'string') {
-                let c = ~~counter[k];
-                this.eachRow((row, rowIndex) => {
-                    let item = row[c];
-                    if (!this.rInTable(rowIndex, tIndex)) {
-                        this.removeArrElem(item, ~~k)
-                    }
-                });
-                this.find(`[data-c="${c}"] .temp${k}`).forEach((temp) => {
-                    if (!temp.parentNode.parentNode.classList.contains(`t${tIndex}`)) {
-                        temp.remove();
-                    }
-                });
-            }
-        }
+        this.eachOnlyOneCounter(counter, (k, c) => {
+            this.eachRow((row, rowIndex) => {
+                let item = row[c];
+                if (!this.rInTable(rowIndex, tIndex)) {
+                    this.removeArrElem(item, k)
+                }
+            });
+            this.find(`[data-c="${c}"] .temp${k}`).forEach((temp) => {
+                if (!temp.parentNode.parentNode.classList.contains(`t${tIndex}`)) {
+                    temp.remove();
+                }
+            });
+        });
     },
     dispatchRTableCounter(counter, rowIndex) {
-        for (let k in counter) {
-            if (typeof counter[k] === 'string') {
-                let tIndex = ~~counter[k];
-                this.eachTableItem(tIndex, (item, _rowIndex) => {
-                    if (rowIndex !== _rowIndex) {
-                        this.removeArrElem(item, ~~k);
-                    }
-                });
-                
-                this.find(`t${tIndex} .temp${k}`).forEach((temp) => {
-                    if (~~temp.parentNode.dataset.r !== rowIndex) {
-                        temp.remove();
-                    }
-                });
-            }
-        }
+        this.eachOnlyOneCounter(counter, (k, tIndex) => {
+            this.eachTableItem(tIndex, (item, _rowIndex) => {
+                if (rowIndex !== _rowIndex) {
+                    this.removeArrElem(item, k);
+                }
+            });
+            
+            this.find(`t${tIndex} .temp${k}`).forEach((temp) => {
+                if (~~temp.parentNode.dataset.r !== rowIndex) {
+                    temp.remove();
+                }
+            });
+        });
     },
     removeArrElem(arr, elem) {
         if (Array.isArray(arr)) {
