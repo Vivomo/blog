@@ -30,7 +30,7 @@ const App = {
             this.removeArrElem(item, value);
         });
 
-        this.virtualData.forEach((row) => {
+        this.eachRow((row) => {
             let item = row[c];
             this.removeArrElem(item, value);
         });
@@ -67,7 +67,7 @@ const App = {
     derivationCol() {
         for (let colIndex = 0; colIndex < 9; colIndex++) {
             let counter = {};
-            this.virtualData.forEach((row, rowIndex) => {
+            this.eachRow((row, rowIndex) => {
                 let item = row[colIndex];
                 this.setArrCounter(item, counter, rowIndex, colIndex);
             });
@@ -93,8 +93,12 @@ const App = {
             });
             this.dispathcTableRCounter(tIndex, rCounter);
             this.dispathcTableCCounter(tIndex, cCounter);
-            // console.log(tIndex, rCounter, cCounter);
         }
+    },
+    derivationColRowTable() {
+        this.eachRow((row, rowIndex) => {
+
+        });
     },
     rInTable(rowIndex, tIndex) {
         let startRow = this.getTableFirstR(tIndex);
@@ -119,6 +123,9 @@ const App = {
                 fn(item, rowIndex, colIndex)
             }
         }
+    },
+    eachRow(fn) {
+        this.virtualData.forEach(fn);
     },
     setArrCounter(item, counter, rowIndex, colIndex) {
         if (Array.isArray(item)) {
@@ -268,5 +275,5 @@ const App = {
 App.init();
 
 let masterData = [[0,2,4],[0,3,6],[0,5,2],[1,0,6],[1,4,3],[1,8,4],[2,1,2],[2,3,4],[2,7,9],[3,0,9],[3,1,8],[3,6,3],[3,7,5],[4,0,1],[4,2,3],[4,7,4],[5,1,6],[5,6,8],[5,8,7],[6,1,3],[6,4,2],[6,7,7],[7,4,6],[7,5,1],[7,8,5],[8,2,9],[8,3,3],[8,6,4]];
-
-App.setDefaultData(masterData);
+let middleData = [[0,0,4],[0,2,3],[0,5,1],[0,7,2],[1,1,2],[1,2,6],[1,4,7],[1,8,5],[3,0,2],[3,3,8],[3,5,6],[3,7,3],[4,0,3],[4,1,6],[4,5,9],[5,3,2],[5,7,9],[5,8,4],[6,0,7],[6,3,3],[6,6,4],[6,7,8],[7,1,5],[7,4,8],[7,6,3],[7,8,2]];
+App.setDefaultData(middleData);
