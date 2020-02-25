@@ -1,6 +1,7 @@
 const App = {
     backups: [],
     guessIndex: [],
+    auto: false,
     set activeCeil(obj){
         let prevActive = this.wrap.querySelector('.active');
         if (prevActive) {
@@ -60,25 +61,36 @@ const App = {
     log(...args) {
         console.log(...args);
     },
-    derivation(auto) {
+    infer() {
         this.update = false;
         
-        this.derivationRow();
-        this.derivationCol();
-        this.derivationTable();
-        this.derivationTableColRow();
-        this.derivationColRowTable();
+        this.inferRow();
+        this.inferCol();
+        this.inferTable();
+        this.inferTableColRow();
+        this.inferColRowTable();
 
-        if (!this.update) {
+        if (this.update) {
+            let result = this.isInvalid();
+            if (!result) {
+                this.log('数据矛盾');
+                if (this.auto) {
+                    requestAnimationFrame(() => {
+                        this.retreated();
+                    });
+                }
+            }
+            if (this.auto) {
+                requestAnimationFrame(this.infer.bind(this));
+            }
+        } else {
             this.log('无法进一步推导');
-        } 
-
-        let result = this.isInvalid();
-        if (!result) {
-            this.log('数据矛盾');
+            if (this.auto) {
+                this.inferGuess(true);
+            }
         }
     },
-    derivationRow() {
+    inferRow() {
         this.eachRow((row, rowIndex) => {
             let counter = {};
             row.forEach((item, colIndex) => {
@@ -87,7 +99,7 @@ const App = {
             this.dispatchCounter(counter);
         });
     },
-    derivationCol() {
+    inferCol() {
         for (let colIndex = 0; colIndex < 9; colIndex++) {
             let counter = {};
             this.eachRow((row, rowIndex) => {
@@ -97,7 +109,7 @@ const App = {
             this.dispatchCounter(counter);
         }
     },
-    derivationTable() {
+    inferTable() {
         for (let tIndex = 0; tIndex < 9; tIndex++) {
             let counter = {};
             this.eachTableItem(tIndex, (item, rowIndex, colIndex) => {
@@ -106,7 +118,7 @@ const App = {
             this.dispatchCounter(counter);
         }
     },
-    derivationTableColRow() {
+    inferTableColRow() {
         for (let tIndex = 0; tIndex < 9; tIndex++) {
             let rCounter = {};
             let cCounter = {};
@@ -118,7 +130,7 @@ const App = {
             this.dispathcTableCCounter(tIndex, cCounter);
         }
     },
-    derivationColRowTable() {
+    inferColRowTable() {
         this.eachRow((row, rowIndex) => {
             let counter = {};
             row.forEach((item, colIndex) => {
@@ -174,6 +186,7 @@ const App = {
     setArrCounter(item, counter, rowIndex, colIndex) {
         if (Array.isArray(item)) {
             if (item.length === 1) {
+                this.log(`infer(${~~rowIndex+1}, ${~~colIndex+1}) =>`, item[0]);
                 this.activeCeil = {r: rowIndex, c: colIndex};
                 this.setCeil(item[0]);
                 counter[item[0]] = true;
@@ -235,7 +248,7 @@ const App = {
     dispatchCounter(counter) {
         this.eachOnlyOneCounter(counter, (k, v) => {
             let [r, c] = v.split('_');
-            this.log(r, c, k,'derivation');
+            this.log(`infer(${~~r+1}, ${~~c+1}) =>`, k);
             this.activeCeil = {r,c};
             this.setCeil(k);
         });
@@ -320,13 +333,27 @@ const App = {
             arr
         }
     },
-    guess() {
-        let {r, c, arr} = this.getMinLengthTemp();
+    inferGuess(isNew) {
         let guessIndex = this.guessIndex;
-        guessIndex.push(0);
-        this.save();
+        let {r, c, arr} = this.getMinLengthTemp();
+        let index;
+        if (isNew) {
+            index = 0;
+            guessIndex.push(index);
+            this.save();
+        } else {
+            index = guessIndex[guessIndex.length - 1] + 1;
+            if (index === arr.length) {
+                guessIndex.pop();
+                this.inferGuess();
+                return;
+            }
+        }
         this.activeCeil = {r, c};
         this.setCeil(arr[index]);
+        if (this.auto) {
+            this.infer();
+        }
     },
     save() {
         let data = JSON.stringify(this.virtualData);
@@ -396,7 +423,7 @@ const App = {
             }
         });
 
-        document.querySelector('.derivation').addEventListener('click', this.derivation.bind(this));
+        document.querySelector('.infer').addEventListener('click', this.infer.bind(this));
         document.querySelector('.save').addEventListener('click', this.save.bind(this));
         document.querySelector('.retreated').addEventListener('click', this.retreated.bind(this));
 
