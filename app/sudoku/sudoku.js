@@ -1,5 +1,6 @@
 const App = {
     backups: [],
+    guessIndex: [],
     set activeCeil(obj){
         let prevActive = this.wrap.querySelector('.active');
         if (prevActive) {
@@ -137,7 +138,13 @@ const App = {
         }
     },
     eachRow(fn) {
-        this.virtualData.forEach(fn);
+        this.virtualData.every((row, rowIndex) => {
+            let result = fn(row, rowIndex);
+            if (result === false) {
+                return false;
+            }
+            return true;
+        });
     },
     setArrCounter(item, counter, rowIndex, colIndex) {
         if (Array.isArray(item)) {
@@ -260,6 +267,43 @@ const App = {
             temp.remove();
         });
     },
+    getMinLengthTemp() {
+        let r, c, arr;
+        let minLength = 9;
+        this.eachRow((row, rowIndex) => {
+            let findMin = row.some((item, colIndex) => {
+                if (Array.isArray(item)) {
+                    if (item.length < minLength) {
+                        minLength = item.length;
+                        r = rowIndex,
+                        c = colIndex;
+                        arr = item;
+                    }
+                    if (item.length === 2) {
+                        return true;
+                    }
+                    
+                }
+            });
+            if (findMin) {
+                return false;
+            }
+        });
+        return {
+            r,
+            c,
+            arr
+        }
+    },
+    guess() {
+        this.save();
+        let minTemp = this.getMinLengthTemp();
+        if (this.guessIndex.length === 0) {
+            this.guessIndex.push(0);
+        } else {
+            
+        }
+    },
     save() {
         let data = JSON.stringify(this.virtualData);
         let backups = this.backups;
@@ -267,7 +311,7 @@ const App = {
             return;
         }
         this.backups.push(data);
-        console.log('存档成功');
+        console.log('存档');
     },
     retreated() {
         let data = this.backups.pop();
