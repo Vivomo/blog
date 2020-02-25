@@ -1,7 +1,7 @@
 const App = {
     backups: [],
     guessIndex: [],
-    auto: false,
+    auto: true,
     set activeCeil(obj){
         let prevActive = this.wrap.querySelector('.active');
         if (prevActive) {
@@ -77,8 +77,11 @@ const App = {
                 if (this.auto) {
                     requestAnimationFrame(() => {
                         this.retreated();
+                        this.inferGuess();
                     });
+
                 }
+                return;
             }
             if (this.auto) {
                 requestAnimationFrame(this.infer.bind(this));
@@ -345,10 +348,13 @@ const App = {
             index = guessIndex[guessIndex.length - 1] + 1;
             if (index === arr.length) {
                 guessIndex.pop();
+                this.log('进一步回档')
+                this.retreated();
                 this.inferGuess();
                 return;
             }
         }
+        this.log(`'guess(${r+1},${c+1})'==>${arr[index]}`)
         this.activeCeil = {r, c};
         this.setCeil(arr[index]);
         if (this.auto) {
@@ -374,7 +380,6 @@ const App = {
         this.find('.ceil').forEach((ceil) => {
             let {r, c} = ceil.dataset;
             let ceilData = data[r][c];
-            this.log(r, c, ceilData);
             if (Array.isArray(ceilData)) {
                 ceil.dataset.value = '';
                 ceil.innerHTML = ceilData.map(temp => `<div class="temp temp${temp}">${temp}</div>`).join('');
