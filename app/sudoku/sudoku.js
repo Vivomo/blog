@@ -57,6 +57,9 @@ const App = {
         });
         return result;
     },
+    log(...args) {
+        console.log(...args);
+    },
     derivation(auto) {
         this.update = false;
         
@@ -66,16 +69,13 @@ const App = {
         this.derivationTableColRow();
         this.derivationColRowTable();
 
-        if (this.update) {
-
-        } else {
-            console.log('无法进一步推导');
-            
-        }
+        if (!this.update) {
+            this.log('无法进一步推导');
+        } 
 
         let result = this.isInvalid();
         if (!result) {
-            console.log('数据矛盾');
+            this.log('数据矛盾');
         }
     },
     derivationRow() {
@@ -235,7 +235,7 @@ const App = {
     dispatchCounter(counter) {
         this.eachOnlyOneCounter(counter, (k, v) => {
             let [r, c] = v.split('_');
-            console.log(r, c, k,'derivation');
+            this.log(r, c, k,'derivation');
             this.activeCeil = {r,c};
             this.setCeil(k);
         });
@@ -335,7 +335,7 @@ const App = {
             return;
         }
         this.backups.push(data);
-        console.log('存档');
+        this.log('存档');
     },
     retreated() {
         let data = this.backups.pop();
@@ -347,7 +347,7 @@ const App = {
         this.find('.ceil').forEach((ceil) => {
             let {r, c} = ceil.dataset;
             let ceilData = data[r][c];
-            console.log(r, c, ceilData);
+            this.log(r, c, ceilData);
             if (Array.isArray(ceilData)) {
                 ceil.dataset.value = '';
                 ceil.innerHTML = ceilData.map(temp => `<div class="temp temp${temp}">${temp}</div>`).join('');
@@ -358,7 +358,7 @@ const App = {
                 }
             }
         });
-        console.log('回档');
+        this.log('回档');
         
     },
     find(selector) {
