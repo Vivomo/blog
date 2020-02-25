@@ -267,6 +267,7 @@ const App = {
             return;
         }
         this.backups.push(data);
+        console.log('存档成功');
     },
     retreated() {
         let data = this.backups.pop();
@@ -289,6 +290,8 @@ const App = {
                 }
             }
         });
+        console.log('回档');
+        
     },
     find(selector) {
         return Array.from(this.wrap.querySelectorAll(selector));
@@ -326,6 +329,8 @@ const App = {
         });
 
         document.querySelector('.derivation').addEventListener('click', this.derivation.bind(this));
+        document.querySelector('.save').addEventListener('click', this.save.bind(this));
+        document.querySelector('.retreated').addEventListener('click', this.retreated.bind(this));
 
         document.addEventListener('keydown', (e) => {
             if (/\d/.test(e.key)) {
