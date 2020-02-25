@@ -58,6 +58,16 @@ const App = {
         });
         return result;
     },
+    isAllInfered() {
+        let done = true;
+        this.eachRow((row) => {
+            done = row.every(item => !Array.isArray(item));
+            if (!done) {
+                return false;
+            }
+        });
+        return done;
+    },
     log(...args) {
         console.log(...args);
     },
@@ -71,8 +81,7 @@ const App = {
         this.inferColRowTable();
 
         if (this.update) {
-            let result = this.isInvalid();
-            if (!result) {
+            if (!this.isInvalid()) {
                 this.log('数据矛盾');
                 if (this.auto) {
                     requestAnimationFrame(() => {
@@ -81,6 +90,10 @@ const App = {
                     });
 
                 }
+                return;
+            }
+            if (this.isAllInfered()) {
+                this.log('done');
                 return;
             }
             if (this.auto) {
