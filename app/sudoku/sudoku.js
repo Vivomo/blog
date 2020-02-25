@@ -46,12 +46,27 @@ const App = {
         
         this.removeTemp(`[data-r="${r}"] .temp${value}, [data-c="${c}"] .temp${value}, .t${tIndex} .temp${value}`);
     },
+    isInvalid() {
+        let result = true;
+        this.eachRow((row) => {
+            result = row.every(item => !Array.isArray(item) || item.length > 0);
+            if (!result) {
+                return false;
+            }
+        });
+        return result;
+    },
     derivation() {
         this.derivationRow();
         this.derivationCol();
         this.derivationTable();
         this.derivationTableColRow();
         this.derivationColRowTable();
+
+        let result = this.isInvalid();
+        if (!result) {
+            console.log('数据矛盾');
+        }
     },
     derivationRow() {
         this.eachRow((row, rowIndex) => {
