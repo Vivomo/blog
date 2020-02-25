@@ -14,6 +14,7 @@ const App = {
         if (!activeElem || activeElem.dataset.value) {
             return;
         }
+        this.update = true;
         let data = activeElem.dataset;
         data.value = value;
         let {r, c} = data;
@@ -56,12 +57,21 @@ const App = {
         });
         return result;
     },
-    derivation() {
+    derivation(auto) {
+        this.update = false;
+        
         this.derivationRow();
         this.derivationCol();
         this.derivationTable();
         this.derivationTableColRow();
         this.derivationColRowTable();
+
+        if (this.update) {
+
+        } else {
+            console.log('无法进一步推导');
+            
+        }
 
         let result = this.isInvalid();
         if (!result) {
