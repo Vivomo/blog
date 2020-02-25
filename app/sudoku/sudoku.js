@@ -296,13 +296,12 @@ const App = {
         }
     },
     guess() {
+        let {r, c, arr} = this.getMinLengthTemp();
+        let guessIndex = this.guessIndex;
+        guessIndex.push(0);
         this.save();
-        let minTemp = this.getMinLengthTemp();
-        if (this.guessIndex.length === 0) {
-            this.guessIndex.push(0);
-        } else {
-            
-        }
+        this.activeCeil = {r, c};
+        this.setCeil(arr[index]);
     },
     save() {
         let data = JSON.stringify(this.virtualData);
