@@ -214,7 +214,7 @@ const App = {
                     this.removeArrElem(item, k)
                 }
             });
-            this.removeTemp(`[data-r="${r}"] .temp${k}`, temp => !temp.parentNode.parentNode.classList.contains(`t${tIndex}`));
+            this.removeTemp(`.t:not(.t${tIndex}) [data-r="${r}"] .temp${k}`);
         });
     },
     dispathcTableCCounter(tIndex, counter) {
@@ -225,7 +225,7 @@ const App = {
                     this.removeArrElem(item, k)
                 }
             });
-            this.removeTemp(`[data-c="${c}"] .temp${k}`, temp => !temp.parentNode.parentNode.classList.contains(`t${tIndex}`));
+            this.removeTemp(`.t:not(.t${tIndex}) [data-c="${c}"] .temp${k}`);
         });
     },
     dispatchRCTableCounter(counter, rowIndex, colIndex) {
@@ -242,9 +242,9 @@ const App = {
                 }
             });
             if (rowIndex === null) {
-                this.removeTemp(`.t${tIndex} .temp${k}`, temp => ~~temp.parentNode.dataset.c !== colIndex);
+                this.removeTemp(`.t${tIndex} .ceil:not([data-c="${colIndex}"]) .temp${k}`);
             } else {
-                this.removeTemp(`.t${tIndex} .temp${k}`, temp => ~~temp.parentNode.dataset.r !== rowIndex);
+                this.removeTemp(`.t${tIndex} .ceil:not([data-r="${rowIndex}"]) .temp${k}`);
             }
         });
     },
@@ -254,13 +254,9 @@ const App = {
             index !== -1 && arr.splice(index, 1);
         }
     },
-    removeTemp(selector, fn) {
+    removeTemp(selector) {
         this.find(selector).forEach((temp) => {
-            if (fn) {
-                fn(temp) && temp.remove();
-            } else {
-                temp.remove();
-            }
+            temp.remove();
         });
     },
     find(selector) {
