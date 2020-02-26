@@ -111,6 +111,27 @@
         .console .error {
             color: red;
         }
+
+        @media screen and (max-width: 750px) {
+            .wrap {
+                float: none;
+                margin: 0 auto;
+                width: 720px;
+                height: 720px;
+            }
+            .btn {
+                min-width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+
+            .ceil {
+                font-size: 30px;
+            }
+            .mobile-block {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
@@ -121,16 +142,15 @@
     <button class="btn" data-value="3">3</button>
     <button class="btn" data-value="4">4</button>
     <button class="btn" data-value="5">5</button>
+    <span class="mobile-block"></span>
     <button class="btn" data-value="6">6</button>
     <button class="btn" data-value="7">7</button>
     <button class="btn" data-value="8">8</button>
     <button class="btn" data-value="9">9</button>
-
-    <div>
-        <button class="btn save">存档</button>
-        <button class="btn retreated">回档</button>
-        <button class="btn clear">清空</button>
-    </div>
+    <span class="mobile-block"></span>
+    <button class="btn save">存档</button>
+    <button class="btn retreated">回档</button>
+    <button class="btn clear">清空</button>
     <button class="btn infer">推导</button>
 
     <div>
@@ -141,9 +161,7 @@
             <option value="2">世界最难</option>
         </select>
     </div>
-    <div>
-        <button class="btn auto-infer">自动推导</button>
-    </div>
+    <button class="btn auto-infer">自动推导</button>
     <button class="btn toggle-console">隐/现推导信息</button>
 </div>
 <div class="console">
