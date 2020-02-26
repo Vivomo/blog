@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>数独</title>
-    <style>
-        :root {
-            --ceil-size: 60px;
-            --theme: #59ecff;
+    <script>
+        if (window.innerWidth < 1200) {
+            document.write(`<meta name="viewport" content=" target-densitydpi=device-dpi, width=750,shrink-to-fit=no, maximum-scale=2, user-scalable=no">`)
+        } else {
+            document.write(`<meta name="viewport" content="width=device-width, initial-scale=1.0">`);
         }
+    </script>
+    <style>
         * {
             box-sizing: border-box;
         }
         body {
             margin: 0;
-            padding: 20px;
+            padding: 8px;
             height: 100vh;
             color: #ccc;
             background: rgba(0, 0, 0, 0.8);
@@ -23,8 +26,8 @@
             float: left;
             display: flex;
             flex-wrap: wrap;
-            width: calc(var(--ceil-size) * 9);
-            height: calc(var(--ceil-size) * 9);
+            width: 540px;
+            height: 540px;
         }
 
         .t {
@@ -32,7 +35,7 @@
             flex-wrap: wrap;
             width: calc(100% / 3);
             height: calc(100% / 3);
-            border: 2px solid var(--theme);
+            border: 2px solid #59ecff;
         }
 
         .ceil {
@@ -93,7 +96,6 @@
     <button class="btn infer">推导</button>
     <button class="btn save">存档</button>
     <button class="btn retreated">回档</button>
-    <button class="btn auto-infer">自动推导</button>
     <div>
         <button class="btn import">导入示例</button>
         <select name="" id="data-select" class="btn">
@@ -102,6 +104,7 @@
             <option value="2">世界最难</option>
         </select>
     </div>
+    <button class="btn auto-infer">自动推导</button>
     
 </div>
 
