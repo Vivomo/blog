@@ -461,6 +461,11 @@ const App = {
         document.querySelector('.import').addEventListener('click', () => {
             this.setDefaultData(this.example[document.querySelector('#data-select').value])
         });
+
+        let consoleElem = document.querySelector('.console');
+        document.querySelector('.toggle-console').addEventListener('click', () => {
+            consoleElem.classList.toggle('show');
+        });
         
         document.addEventListener('keydown', (e) => {
             if (/\d/.test(e.key)) {

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>数独</title>
+    <title>数独非暴力破解器</title>
     <script>
         if (window.innerWidth < 1200) {
             document.write(`<meta name="viewport" content=" target-densitydpi=device-dpi, width=750,shrink-to-fit=no, maximum-scale=2, user-scalable=no">`)
@@ -79,6 +79,38 @@
             margin: 10px;
         }
 
+        .console {
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            width: 540px;
+            height: 540px;
+            padding: 10px;
+            color: #fff;
+            border-radius: 6px;
+            background-color: #000;
+            clear: both;
+            opacity: 0.5;
+            transition: all 0.6s;
+            transform: rotateY(90deg);
+            transform-origin: 0;
+        }
+
+        .console.show {
+            transform: rotate(0);
+        }
+
+        .block {
+            display: block;
+        }
+
+        .console .warn {
+            color: yellow;
+        }
+
+        .console .error {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -93,9 +125,13 @@
     <button class="btn" data-value="7">7</button>
     <button class="btn" data-value="8">8</button>
     <button class="btn" data-value="9">9</button>
+
+    <div>
+        <button class="btn save">存档</button>
+        <button class="btn retreated">回档</button>
+    </div>
     <button class="btn infer">推导</button>
-    <button class="btn save">存档</button>
-    <button class="btn retreated">回档</button>
+
     <div>
         <button class="btn import">导入示例</button>
         <select name="" id="data-select" class="btn">
@@ -104,8 +140,13 @@
             <option value="2">世界最难</option>
         </select>
     </div>
-    <button class="btn auto-infer">自动推导</button>
-    
+    <div>
+        <button class="btn auto-infer">自动推导</button>
+    </div>
+    <button class="btn toggle-console">隐/现推导信息</button>
+</div>
+<div class="console">
+
 </div>
 
 <script src="./sudoku.js"></script>
