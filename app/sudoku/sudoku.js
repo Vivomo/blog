@@ -451,6 +451,7 @@ const App = {
         }).join('');
         wrap.innerHTML = html;
         this.console = document.querySelector('.console');
+        this.console.innerHTML = '';
     },
     initEvent () {
         this.wrap.addEventListener('click', (e) => {
@@ -468,6 +469,13 @@ const App = {
             }
         });
 
+        document.querySelector('.clear').addEventListener('click', () => {
+            this.initHtml();
+            this.initVirtualData();
+            this.auto = false;
+            this.backups = [];
+            this.guessIndex = [];
+        });
         document.querySelector('.infer').addEventListener('click', this.infer.bind(this));
         document.querySelector('.auto-infer').addEventListener('click', () => {
             this.auto = true;
