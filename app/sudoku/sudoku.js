@@ -7,6 +7,7 @@ const App = {
     guessIndex: [],
     example: [middleData, masterData, hardest],
     auto: false,
+    consoleType: '',
     set activeCeil(obj){
         let prevActive = this.wrap.querySelector('.active');
         if (prevActive) {
@@ -75,7 +76,22 @@ const App = {
     },
     log(...args) {
         console.log(...args);
+        let div = document.createElement('div');
+        div.className = this.consoleType;
+        div.innerHTML = [...args].join(' ');
+        this.console.appendChild(div);
+        this.consoleType = '';
+        this.console.scrollTop = this.console.scrollHeight;
     },
+    warn(...args) {
+        this.consoleType = 'warn';
+        this.log(...args);
+    },
+    error(...args) {
+        this.consoleType = 'error';
+        this.log(...args);
+    },
+
     infer() {
         this.update = false;
         
@@ -87,7 +103,7 @@ const App = {
 
         if (this.update) {
             if (!this.isInvalid()) {
-                this.log('数据矛盾');
+                this.error('数据矛盾');
                 if (this.auto) {
                     requestAnimationFrame(() => {
                         this.retreated();
@@ -105,7 +121,7 @@ const App = {
                 requestAnimationFrame(this.infer.bind(this));
             }
         } else {
-            this.log('无法进一步推导');
+            this.warn('无法进一步推导');
             if (this.auto) {
                 this.inferGuess(true);
             }
@@ -434,6 +450,7 @@ const App = {
             return `<div class="t t${outerIndex}">${_html}</div>`;
         }).join('');
         wrap.innerHTML = html;
+        this.console = document.querySelector('.console');
     },
     initEvent () {
         this.wrap.addEventListener('click', (e) => {
@@ -462,9 +479,8 @@ const App = {
             this.setDefaultData(this.example[document.querySelector('#data-select').value])
         });
 
-        let consoleElem = document.querySelector('.console');
         document.querySelector('.toggle-console').addEventListener('click', () => {
-            consoleElem.classList.toggle('show');
+            this.console.classList.toggle('show');
         });
         
         document.addEventListener('keydown', (e) => {
