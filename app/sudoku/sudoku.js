@@ -1,7 +1,12 @@
+let masterData = [[0,2,4],[0,3,6],[0,5,2],[1,0,6],[1,4,3],[1,8,4],[2,1,2],[2,3,4],[2,7,9],[3,0,9],[3,1,8],[3,6,3],[3,7,5],[4,0,1],[4,2,3],[4,7,4],[5,1,6],[5,6,8],[5,8,7],[6,1,3],[6,4,2],[6,7,7],[7,4,6],[7,5,1],[7,8,5],[8,2,9],[8,3,3],[8,6,4]];
+let middleData = [[0,0,4],[0,2,3],[0,5,1],[0,7,2],[1,1,2],[1,2,6],[1,4,7],[1,8,5],[3,0,2],[3,3,8],[3,5,6],[3,7,3],[4,0,3],[4,1,6],[4,5,9],[5,3,2],[5,7,9],[5,8,4],[6,0,7],[6,3,3],[6,6,4],[6,7,8],[7,1,5],[7,4,8],[7,6,3],[7,8,2]];
+let hardest = [[0,0,8],[1,2,3],[1,3,6],[2,1,7],[2,4,9],[2,6,2],[3,1,5],[3,5,7],[4,4,4],[4,5,5],[4,6,7],[5,3,1],[5,7,3],[6,2,1],[6,7,6],[6,8,8],[7,2,8],[7,3,5],[7,7,1],[8,1,9],[8,6,4]];
+
 const App = {
     backups: [],
     guessIndex: [],
-    auto: true,
+    example: [middleData, masterData, hardest],
+    auto: false,
     set activeCeil(obj){
         let prevActive = this.wrap.querySelector('.active');
         if (prevActive) {
@@ -15,15 +20,15 @@ const App = {
         if (!activeElem || activeElem.dataset.value) {
             return;
         }
-        this.update = true;
         let data = activeElem.dataset;
-        data.value = value;
         let {r, c} = data;
         
         if (!this.virtualData[r][c].includes(value)) {
             console.error('invalid data', value, r, c);
             return;
         }
+        this.update = true;
+        data.value = value;
 
         this.virtualData[r][c] = {value, mark};
 
@@ -367,6 +372,11 @@ const App = {
                 return;
             }
         }
+
+        if (arr[index] === undefined) {
+            alert('无解');
+            return;
+        }
         this.log(`'guess(${r+1},${c+1})'==>${arr[index]}`)
         this.activeCeil = {r, c};
         this.setCeil(arr[index]);
@@ -442,14 +452,21 @@ const App = {
         });
 
         document.querySelector('.infer').addEventListener('click', this.infer.bind(this));
+        document.querySelector('.auto-infer').addEventListener('click', () => {
+            this.auto = true;
+            this.infer();
+        });
         document.querySelector('.save').addEventListener('click', this.save.bind(this));
         document.querySelector('.retreated').addEventListener('click', this.retreated.bind(this));
-
+        document.querySelector('.import').addEventListener('click', () => {
+            this.setDefaultData(this.example[document.querySelector('#data-select').value])
+        });
+        
         document.addEventListener('keydown', (e) => {
             if (/\d/.test(e.key)) {
                 this.setCeil(~~e.key, e.altKey)
             }
-        })
+        });
     },
     initVirtualData() {
         this.virtualData = new Array(9).fill(null).map(() => {
@@ -477,8 +494,3 @@ const App = {
 }
 
 App.init();
-
-let masterData = [[0,2,4],[0,3,6],[0,5,2],[1,0,6],[1,4,3],[1,8,4],[2,1,2],[2,3,4],[2,7,9],[3,0,9],[3,1,8],[3,6,3],[3,7,5],[4,0,1],[4,2,3],[4,7,4],[5,1,6],[5,6,8],[5,8,7],[6,1,3],[6,4,2],[6,7,7],[7,4,6],[7,5,1],[7,8,5],[8,2,9],[8,3,3],[8,6,4]];
-let middleData = [[0,0,4],[0,2,3],[0,5,1],[0,7,2],[1,1,2],[1,2,6],[1,4,7],[1,8,5],[3,0,2],[3,3,8],[3,5,6],[3,7,3],[4,0,3],[4,1,6],[4,5,9],[5,3,2],[5,7,9],[5,8,4],[6,0,7],[6,3,3],[6,6,4],[6,7,8],[7,1,5],[7,4,8],[7,6,3],[7,8,2]];
-let hardest = [[0,0,8],[1,2,3],[1,3,6],[2,1,7],[2,4,9],[2,6,2],[3,1,5],[3,5,7],[4,4,4],[4,5,5],[4,6,7],[5,3,1],[5,7,3],[6,2,1],[6,7,6],[6,8,8],[7,2,8],[7,3,5],[7,7,1],[8,1,9],[8,6,4]];
-App.setDefaultData(hardest);

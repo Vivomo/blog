@@ -58,6 +58,10 @@
             box-shadow: 0 0 0 2px tomato inset;
         }
 
+        .opt {
+            max-width: 740px;
+        }
+
         .temp {
             min-width: calc(100% / 3);
             height: calc(100% / 3);
@@ -89,6 +93,16 @@
     <button class="btn infer">推导</button>
     <button class="btn save">存档</button>
     <button class="btn retreated">回档</button>
+    <button class="btn auto-infer">自动推导</button>
+    <div>
+        <button class="btn import">导入示例</button>
+        <select name="" id="data-select" class="btn">
+            <option value="0">一般</option>
+            <option value="1">困难</option>
+            <option value="2">世界最难</option>
+        </select>
+    </div>
+    
 </div>
 
 <script src="./sudoku.js"></script>
