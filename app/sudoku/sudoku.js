@@ -465,7 +465,7 @@ const App = {
 
         document.querySelector('.opt').addEventListener('click', (e) => {
             if (e.target.tagName === 'BUTTON' && e.target.dataset.value) {
-                this.setCeil(~~e.target.dataset.value);
+                this.setCeil(~~e.target.dataset.value, true);
             }
         });
 
@@ -493,7 +493,7 @@ const App = {
         
         document.addEventListener('keydown', (e) => {
             if (/\d/.test(e.key)) {
-                this.setCeil(~~e.key, e.altKey)
+                this.setCeil(~~e.key, true);
             }
         });
     },
