@@ -21,6 +21,7 @@
         td {
             width: 40px;
             height: 40px;
+            text-align: center;
             border: 1px solid #59ecff;
         }
 
@@ -43,6 +44,29 @@
             display: block;
             line-height: 2;
             color: #fff;
+        }
+        .wall {
+            background-color: #59ecff;
+        }
+
+        .target::before {
+            content: '●';
+            color: red;
+        }
+
+        .box::before {
+            content: 'X';
+            color: #59ecff;
+        }
+
+        .box.target::before {
+            content: 'X';
+            color: red;
+        }
+
+        .person::before {
+            content: '♀';
+            color: #59ecff;
         }
     </style>
 </head>
@@ -415,20 +439,21 @@
         <div class="opt">
             <form action="">
                 <label for="i1">
-                    <input type="radio" name="type" id="i1">墙
+                    <input type="radio" name="type" id="i1" checked value="wall">墙
                 </label>
                 <label for="i2">
-                    <input type="radio" name="type" id="i2">目标点
+                    <input type="radio" name="type" id="i2" value="target">目标点
                 </label>
                 <label for="i3">
-                    <input type="radio" name="type" id="i3">箱子
+                    <input type="radio" name="type" id="i3" value="box">箱子
                 </label>
                 <label for="i4">
-                    <input type="radio" name="type" id="i4">人
+                    <input type="radio" name="type" id="i4" value="person">人
                 </label>
             </form>
         </div>
     </div>
+    <script src="./pullbox.js"></script>
 </body>
 
 </html>
