@@ -1,12 +1,21 @@
 let App = {
     type: 'wall',
+    initHtml() {
+        document.querySelector('table').innerHTML = new Array(18).fill(null).map((tr, trIndex) => {
+            let tdHtml = new Array(18).fill(null)
+                        .map((td, tdIndex) => `<td data-r="${trIndex}" data-c="${tdIndex}"></td>`).join('')
+            return `<tr>${tdHtml}</tr>`;
+        }).join('');
+    },
     initEvent() {
+        let table = document.querySelector('table');
+
         Array.from(document.querySelectorAll('label')).forEach((label) => {
             label.addEventListener('click', () => {
                 this.type = document.querySelector('input:checked').value;
             });
         });
-        document.querySelector('table').addEventListener('click', (e) => {
+        table.addEventListener('click', (e) => {
             let td = e.target;
             if (td.classList.contains(this.type)) {
                 td.classList.remove(this.type);
@@ -20,6 +29,7 @@ let App = {
                         person.className = '';
                     }
                     td.className = this.type;
+                    this.person = td;
                     break;
                 case 'target':
                     if (td.className === 'box') {
@@ -41,6 +51,7 @@ let App = {
         });
     },
     init() {
+        this.initHtml();
         this.initEvent();
     }
 };
