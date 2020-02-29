@@ -34,17 +34,6 @@ const Square = {
     }
 };
 
-const Snake = {
-    createSnakeBody() {
-        const center = ~~(Square.cfg.width / 2);
-        return avalon.range(0, 4).map((i) => ({
-            x: center,
-            y: center + i
-        }));
-    },
-};
-
-
 let snake = avalon.define({
     $id: 'snake',
     $food: null,
@@ -56,6 +45,19 @@ let snake = avalon.define({
     square: [],
     direction: DIRECTION.TOP, // 0123 依次代表左上右下
     ceilWidth: 60,
+
+    createSnakeBody() {
+        const center = ~~(Square.cfg.width / 2);
+        return avalon.range(0, 4).map((i) => ({
+            x: center,
+            y: center + i
+        }));
+    },
+
+    movePoint(from, to) {
+        from.x = to.x;
+        from.y = to.y;
+    },
 
     move() {
         let head = this.body[0];
@@ -75,25 +77,9 @@ let snake = avalon.define({
             return;
         }
         for (let i = this.body.length - 1; i > 0; i--) {
-            this.body[i].x = this.body[i - 1].x;
-            this.body[i].y = this.body[i - 1].y;
+            this.movePoint(this.body[i], this.body[i- 1]);
         }
-
-        switch (this.direction) {
-            case 0:
-                head.x -= 1;
-                break;
-            case 1:
-                head.y -= 1;
-                break;
-            case 2:
-                head.x += 1;
-                break;
-            case 3:
-                head.y += 1;
-                break;
-        }
-
+        this.movePoint(head, Square.nextSquare(head, this.direction));
     },
     eat(food) {
         this.body.unshift(food);
@@ -247,7 +233,7 @@ let snake = avalon.define({
         let nextPoints = [];
         for (let i = 0; i < 4; i++) {
             let newPoint = Square.nextSquare(head, i);
-            nextPoints.push(newPoint)
+            nextPoints.push(newPoint);
             if (this.validPoint(newPoint) &&
                 (
                     this.isSamePoint(newPoint, tail) ||
@@ -340,7 +326,7 @@ let snake = avalon.define({
 
     },
     init() {
-        this.body = Snake.createSnakeBody();
+        this.body = this.createSnakeBody();
         this.square = Square.createSquare();
         this.createFood();
         setTimeout(() => {
@@ -376,6 +362,6 @@ document.addEventListener('keydown', (e) => {
         snake.direction = direction;
         snake.move();
     }
-})
+});
 
 
