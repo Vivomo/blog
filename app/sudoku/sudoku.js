@@ -163,8 +163,8 @@ const App = {
                 this.setCRCounter(item, rCounter, rowIndex);
                 this.setCRCounter(item, cCounter, colIndex);
             });
-            this.dispathcTableRCounter(tIndex, rCounter);
-            this.dispathcTableCCounter(tIndex, cCounter);
+            this.dispatchTableRCounter(tIndex, rCounter);
+            this.dispatchTableCCounter(tIndex, cCounter);
         }
     },
     inferColRowTable() {
@@ -284,7 +284,7 @@ const App = {
             this.setCeil(k);
         });
     },
-    dispathcTableRCounter(tIndex, counter) {
+    dispatchTableRCounter(tIndex, counter) {
         this.eachOnlyOneCounter(counter, (k, r) => {
             this.virtualData[r].forEach((item, colIndex) => {
                 if (!this.cInTable(colIndex, tIndex)) {
@@ -294,7 +294,7 @@ const App = {
             this.removeTemp(`.t:not(.t${tIndex}) [data-r="${r}"] .temp${k}`);
         });
     },
-    dispathcTableCCounter(tIndex, counter) {
+    dispatchTableCCounter(tIndex, counter) {
         this.eachOnlyOneCounter(counter, (k, c) => {
             this.eachRow((row, rowIndex) => {
                 let item = row[c];
@@ -358,11 +358,7 @@ const App = {
                 return false;
             }
         });
-        return {
-            r,
-            c,
-            arr
-        }
+        return {r, c, arr};
     },
     inferGuess(isNew) {
         let guessIndex = this.guessIndex;
