@@ -17,6 +17,9 @@ let App = {
         });
         table.addEventListener('click', (e) => {
             let td = e.target;
+            if (td.tagName !== 'TD') {
+                return;
+            }
             if (td.classList.contains(this.type)) {
                 td.classList.remove(this.type);
                 return;
