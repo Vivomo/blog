@@ -212,13 +212,7 @@ const App = {
         }
     },
     eachRow(fn) {
-        this.virtualData.every((row, rowIndex) => {
-            let result = fn(row, rowIndex);
-            if (result === false) {
-                return false;
-            }
-            return true;
-        });
+        this.virtualData.every((row, rowIndex) => fn(row, rowIndex) !== false);
     },
     setArrCounter(item, counter, rowIndex, colIndex) {
         if (Array.isArray(item)) {
@@ -350,7 +344,7 @@ const App = {
                 if (Array.isArray(item)) {
                     if (item.length < minLength) {
                         minLength = item.length;
-                        r = rowIndex,
+                        r = rowIndex;
                         c = colIndex;
                         arr = item;
                     }
@@ -382,7 +376,7 @@ const App = {
             index = guessIndex[guessIndex.length - 1] + 1;
             if (index === arr.length) {
                 guessIndex.pop();
-                this.log('进一步回档')
+                this.log('进一步回档');
                 this.retreated();
                 this.inferGuess();
                 return;
@@ -393,7 +387,7 @@ const App = {
             alert('无解');
             return;
         }
-        this.log(`'guess(${r+1},${c+1})'==>${arr[index]}`)
+        this.log(`guess(${r+1},${c+1})==>${arr[index]}`);
         this.activeCeil = {r, c};
         this.setCeil(arr[index]);
         if (this.auto) {
@@ -437,7 +431,7 @@ const App = {
     },
     initHtml () {
         let wrap = this.wrap = document.querySelector('.wrap');
-        let html = new Array(9).fill(null).map((item, outerIndex) => {
+        wrap.innerHTML = new Array(9).fill(null).map((item, outerIndex) => {
             let _html = new Array(9).fill(null).map((innerItem, innerIndex) => {
                 let tempHtml = new Array(9).fill(null).map((temp, tempIndex) => {
                     return `<div class="temp temp${tempIndex + 1}">${tempIndex + 1}</div>`
@@ -449,7 +443,6 @@ const App = {
             }).join('');
             return `<div class="t t${outerIndex}">${_html}</div>`;
         }).join('');
-        wrap.innerHTML = html;
         this.console = document.querySelector('.console');
         this.console.innerHTML = '';
     },
@@ -520,6 +513,6 @@ const App = {
         this.initEvent();
         this.initVirtualData();
     }
-}
+};
 
 App.init();
