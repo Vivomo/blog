@@ -14,14 +14,14 @@ const Square = {
         width: 11,
         total: 11 * 11
     },
-    createSquare: function () {
+    createSquare() {
         return avalon.range(0, this.cfg.width).map(() =>
             avalon.range(0, this.cfg.width).map(() => ({
                 isFood: false
             }))
         );
     },
-    nextSquare: function (point, direction) {
+    nextSquare(point, direction) {
         let x, y;
         if (direction % 2 === 0) {
             y = point.y;
@@ -35,7 +35,7 @@ const Square = {
 };
 
 const Snake = {
-    createSnakeBody: function () {
+    createSnakeBody() {
         const center = ~~(Square.cfg.width / 2);
         return avalon.range(0, 4).map((i) => ({
             x: center,
@@ -57,7 +57,7 @@ let snake = avalon.define({
     direction: DIRECTION.TOP, // 0123 依次代表左上右下
     ceilWidth: 60,
 
-    move: function () {
+    move() {
         let head = this.body[0];
         let ceil = Square.nextSquare(head, this.direction);
         if (!this.validPoint(ceil)) {
@@ -95,24 +95,24 @@ let snake = avalon.define({
         }
 
     },
-    eat: function (food) {
+    eat(food) {
         this.body.unshift(food);
         this.square[food.y][food.x].isFood = false;
         this.createFood();
     },
-    isOutOfIndex: function (ceil) {
+    isOutOfIndex(ceil) {
         return ceil.x < 0 || ceil.x >= Square.cfg.width || ceil.y < 0 || ceil.y >= Square.cfg.width
     },
-    isOnBody: function (point, end = this.body.length) {
+    isOnBody(point, end = this.body.length) {
         return this.isOnPathPoints(point, this.body.slice(0, end));
     },
-    isOnPathPoints: function (point, points) {
+    isOnPathPoints(point, points) {
         return points.some(item => item.x === point.x && item.y === point.y);
     },
-    isFood: function ({ x, y }) {
+    isFood({ x, y }) {
         return this.square[y][x].isFood;
     },
-    createFood: function () {
+    createFood() {
         let w = Square.cfg.width;
         let total = w * w;
         let surplus = total - this.body.length;
@@ -132,10 +132,10 @@ let snake = avalon.define({
             }
         }
     },
-    isSamePoint: function (p1, p2) {
+    isSamePoint(p1, p2) {
         return p1.x === p2.x && p1.y === p2.y;
     },
-    bfs: function (from, target, hinder) {
+    bfs(from, target, hinder) {
         let stack = [
             [{
                 x: from.x,
@@ -184,7 +184,7 @@ let snake = avalon.define({
             }
         }
     },
-    getFullPath: function () {
+    getFullPath() {
         let stack = [
             [{
                 x: this.body[0].x,
@@ -239,7 +239,7 @@ let snake = avalon.define({
 
         return max.map(_ => _.direction).reverse();
     },
-    tetour: function () {
+    detour() {
         let head = this.body[0];
         let tail = this.body[this.body.length - 1];
         let distance = -1;
@@ -274,13 +274,13 @@ let snake = avalon.define({
         }
         return direction;
     },
-    getDistance: function (p1, p2) {
+    getDistance(p1, p2) {
         return Math.pow(Math.abs(p1.x - p2.x), 2) + Math.pow(Math.abs(p1.y - p2.y), 2);
     },
-    pathfinding: function () {
+    pathfinding() {
         return this.bfs(this.body[0], this.$food, this.body);
     },
-    runPath: function (path) {
+    runPath(path) {
         requestAnimationFrame(() => {
             this.direction = path.pop();
             this.move();
@@ -288,7 +288,7 @@ let snake = avalon.define({
                 this.runPath(path);
             } else if (this.$food) {
                 this.$moving = false;
-                this.autoPathfingding();
+                this.autoPathfinding();
             } else {
                 // let time = Date.now() - this.$time;
                 // localStorage.success += 1;                
@@ -303,10 +303,10 @@ let snake = avalon.define({
             }
         })
     },
-    validPoint: function (point) {
+    validPoint(point) {
         return !this.isOutOfIndex(point) && !this.isOnBody(point, this.body.length - 1);
     },
-    mockValid: function (path) {
+    mockValid(path) {
         if (path.length > this.body.length || this.body.length === Square.cfg.total - 1) {
             return true;
         }
@@ -317,7 +317,7 @@ let snake = avalon.define({
         let hinder = newBodyPoints.concat(this.body.slice(0, this.body.length - path.length));
         return !!this.bfs(this.$food, this.body[this.body.length - path.length], hinder);
     },
-    autoPathfingding: function () {
+    autoPathfinding() {
         if (this.$moving) {
             return;
         }
@@ -332,20 +332,20 @@ let snake = avalon.define({
             this.runPath(path);
             return;
         }
-        let tetourPath = this.tetour();
+        let detourPath = this.detour();
 
-        if (tetourPath !== -1) {
-            this.runPath([tetourPath]);
+        if (detourPath !== -1) {
+            this.runPath([detourPath]);
         }
 
     },
-    init: function () {
+    init() {
         this.body = Snake.createSnakeBody();
         this.square = Square.createSquare();
         this.createFood();
         setTimeout(() => {
             // this.$time = Date.now();
-            this.autoPathfingding();
+            this.autoPathfinding();
         }, 1000);
     },
 
@@ -366,7 +366,7 @@ setTimeout(() => {
 
 document.addEventListener('keydown', (e) => {
     if (e.keyCode === 32) {
-        snake.autoPathfingding();
+        snake.autoPathfinding();
     }
     if (e.keyCode < 37 || e.keyCode > 40) {
         return
