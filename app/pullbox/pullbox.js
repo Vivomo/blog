@@ -108,15 +108,12 @@ let App = {
                 this.type = document.querySelector('input:checked').value;
             });
         });
-        table.addEventListener('click', (e) => {
-            let td = e.target;
-            if (td.tagName !== 'TD') {
-                return;
-            }
-        });
 
         let hoverTd = null;
         let mouseover = (e) => {
+            if (e.target.tagName !== 'TD') {
+                return;
+            }
             if (hoverTd !== e.target) {
                 hoverTd = e.target;
                 this.draw(hoverTd);
@@ -133,6 +130,10 @@ let App = {
         });
 
         table.addEventListener('mouseup', (e) => {
+            table.removeEventListener('mouseover', mouseover);
+        });
+
+        table.addEventListener('mouseleave', (e) => {
             table.removeEventListener('mouseover', mouseover);
         });
 
