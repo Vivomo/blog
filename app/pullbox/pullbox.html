@@ -19,6 +19,7 @@
         }
 
         td {
+            position: relative;
             width: 40px;
             height: 40px;
             text-align: center;
@@ -46,7 +47,7 @@
             color: #fff;
         }
         .wall {
-            background-color: #59ecff;
+            background-color: #ee5c23;
         }
 
         .target::before {
@@ -55,8 +56,18 @@
         }
 
         .box::before {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            left: 15%;
+            top: 15%;
+            width: 70%;
+            height: 70%;
+            border: 1px solid currentColor;
             content: 'X';
             color: #59ecff;
+            box-sizing: border-box;
         }
 
         .box.target::before {
