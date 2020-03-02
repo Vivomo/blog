@@ -68,6 +68,38 @@ let App = {
             return `<tr>${tdHtml}</tr>`;
         }).join('');
     },
+    draw(td) {
+        if (td.classList.contains(this.type)) {
+            td.classList.remove(this.type);
+            return;
+        }
+        switch(this.type) {
+            case Type.person:
+                let person = document.querySelector('.person');
+                if (person) {
+                    person.className = '';
+                }
+                td.className = this.type;
+                this.person = td;
+                break;
+            case Type.target:
+                if (td.className === Type.box) {
+                    td.classList.add(this.type);
+                } else {
+                    td.className = this.type;
+                }
+                break;
+            case Type.box:
+                if (td.className === Type.target) {
+                    td.classList.add(this.type);
+                } else {
+                    td.className = this.type;
+                }
+                break;
+            case Type.wall:
+                td.className = this.type;
+        }
+    },
     initEvent() {
         let table = document.querySelector('table');
 
@@ -81,37 +113,27 @@ let App = {
             if (td.tagName !== 'TD') {
                 return;
             }
-            if (td.classList.contains(this.type)) {
-                td.classList.remove(this.type);
-                return;
+        });
 
+        let hoverTd = null;
+        let mouseover = (e) => {
+            if (hoverTd !== e.target) {
+                hoverTd = e.target;
+                this.draw(hoverTd);
             }
-            switch(this.type) {
-                case Type.person:
-                    let person = document.querySelector('.person');
-                    if (person) {
-                        person.className = '';
-                    }
-                    td.className = this.type;
-                    this.person = td;
-                    break;
-                case Type.target:
-                    if (td.className === Type.box) {
-                        td.classList.add(this.type);
-                    } else {
-                        td.className = this.type;
-                    }
-                    break;
-                case Type.box:
-                    if (td.className === Type.target) {
-                        td.classList.add(this.type);
-                    } else {
-                        td.className = this.type;
-                    }
-                    break;
-                case Type.wall:
-                    td.className = this.type;
+            e.preventDefault();
+        };
+        table.addEventListener('mousedown', (e) => {
+            hoverTd = e.target;
+            if (hoverTd.tagName !== 'TD') {
+                return;
             }
+            this.draw(hoverTd);
+            table.addEventListener('mouseover', mouseover);
+        });
+
+        table.addEventListener('mouseup', (e) => {
+            table.removeEventListener('mouseover', mouseover);
         });
 
         window.addEventListener('keydown', (e) => {
