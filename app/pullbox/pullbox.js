@@ -39,7 +39,7 @@ let App = {
             return;
         }
         if (this.isBox(nextElem)) {
-            if (this.isWall(next2Elem)) {
+            if (this.isWall(next2Elem) || this.isBox(next2Elem)) {
                 return;
             }
             this.moveElemTo(nextElem, next2);
