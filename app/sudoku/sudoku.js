@@ -54,7 +54,7 @@ const App = {
         
         this.removeTemp(`[data-r="${r}"] .temp${value}, [data-c="${c}"] .temp${value}, .t${tIndex} .temp${value}`);
     },
-    isInvalid() {
+    isValid() {
         let result = true;
         this.eachRow((row) => {
             result = row.every(item => !Array.isArray(item) || item.length > 0);
@@ -64,7 +64,7 @@ const App = {
         });
         return result;
     },
-    isAllInfered() {
+    isAllInferred() {
         let done = true;
         this.eachRow((row) => {
             done = row.every(item => !Array.isArray(item));
@@ -102,7 +102,7 @@ const App = {
         this.inferColRowTable();
 
         if (this.update) {
-            if (!this.isInvalid()) {
+            if (!this.isValid()) {
                 this.error('数据矛盾');
                 if (this.auto) {
                     requestAnimationFrame(() => {
@@ -113,7 +113,7 @@ const App = {
                 }
                 return;
             }
-            if (this.isAllInfered()) {
+            if (this.isAllInferred()) {
                 this.log('done');
                 return;
             }
@@ -459,11 +459,7 @@ const App = {
         });
 
         document.querySelector('.clear').addEventListener('click', () => {
-            this.initHtml();
-            this.initVirtualData();
-            this.auto = false;
-            this.backups = [];
-            this.guessIndex = [];
+            this.init(false);
         });
         document.querySelector('.infer').addEventListener('click', this.infer.bind(this));
         document.querySelector('.auto-infer').addEventListener('click', () => {
@@ -504,9 +500,13 @@ const App = {
             this.setCeil(value, true);
         });
     },
-    init() {
+    init(initEvent = true) {
+        this.auto = false;
+        this.backups = [];
+        this.guessIndex = [];
+
         this.initHtml();
-        this.initEvent();
+        initEvent && this.initEvent();
         this.initVirtualData();
     }
 };
