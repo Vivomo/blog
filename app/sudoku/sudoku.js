@@ -2,6 +2,17 @@ let masterData = [[0,2,4],[0,3,6],[0,5,2],[1,0,6],[1,4,3],[1,8,4],[2,1,2],[2,3,4
 let middleData = [[0,0,4],[0,2,3],[0,5,1],[0,7,2],[1,1,2],[1,2,6],[1,4,7],[1,8,5],[3,0,2],[3,3,8],[3,5,6],[3,7,3],[4,0,3],[4,1,6],[4,5,9],[5,3,2],[5,7,9],[5,8,4],[6,0,7],[6,3,3],[6,6,4],[6,7,8],[7,1,5],[7,4,8],[7,6,3],[7,8,2]];
 let hardest = [[0,0,8],[1,2,3],[1,3,6],[2,1,7],[2,4,9],[2,6,2],[3,1,5],[3,5,7],[4,4,4],[4,5,5],[4,6,7],[5,3,1],[5,7,3],[6,2,1],[6,7,6],[6,8,8],[7,2,8],[7,3,5],[7,7,1],[8,1,9],[8,6,4]];
 
+// Flag 0(已推出) 0(已唯一) 0000(r) 0000(t)
+//
+//
+//
+
+const HAS_SET_FLAG =   0b100000000000;
+const NOT_ONLY_FLAG =   0b10000000000;
+const IS_ONLY_FLAG =     0b1000000000;
+const ROW_FLAG =           0b11110000;
+const COL_FLAG =               0b1111;
+
 const App = {
     backups: [],
     guessIndex: [],
@@ -212,29 +223,24 @@ const App = {
     eachRow(fn) {
         this.virtualData.every((row, rowIndex) => fn(row, rowIndex) !== false);
     },
-    setCounter(counter, num, includeSelf, ...args) {
+    setCounter(counter, num, r, c) {
         if (counter[num]) {
-            if (includeSelf || args[0] !== ~~counter[num]) {
-                counter[num] = 2
-            }
+            counter[num] |= NOT_ONLY_FLAG;
         } else {
-            counter[num] = `${args.join('_')}`;
+            counter[num] = c | (r << 4);
         }
     },
     setArrCounter(item, counter, rowIndex, colIndex) {
         if (Array.isArray(item)) {
             if (item.length === 1) {
-                this.log(`infer(${~~rowIndex+1}, ${~~colIndex+1}) =>`, item[0]);
-                this.activeCeil = {r: rowIndex, c: colIndex};
-                this.setCeil(item[0]);
-                counter[item[0]] = true;
+                counter[item[0]] = IS_ONLY_FLAG | colIndex | (rowIndex << 4);
                 return;
             }
             item.forEach((num) => {
-                this.setCounter(counter, num, true, rowIndex, colIndex);
+                this.setCounter(counter, num, rowIndex, colIndex);
             });
         } else {
-            counter[item.value] = true;
+            counter[item.value] = HAS_SET_FLAG;
         }
     },
     setCRCounter(item, counter, cr) {
@@ -280,11 +286,18 @@ const App = {
         }
     },
     dispatchCounter(counter) {
-        this.eachOnlyOneCounter(counter, (k, v) => {
-            let [r, c] = v.split('_');
-            this.log(`infer(${~~r+1}, ${~~c+1}) =>`, k);
-            this.activeCeil = {r,c};
-            this.setCeil(k);
+        Object.entries(counter).forEach((num, value) => {
+            if (value & HAS_SET_FLAG) {
+                return;
+            }
+            let only = !(value & NOT_ONLY_FLAG);
+            if (only) {
+                let r = (value & ROW_FLAG) >> 4;
+                let c = value & COL_FLAG;
+                this.activeCeil = {r, c};
+                this.setCeil(~~num);
+                this.log(`infer(${~~r+1}, ${~~c+1}) =>`, num);
+            }
         });
     },
     dispatchTableRCounter(tIndex, counter) {
