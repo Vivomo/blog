@@ -8,20 +8,18 @@ const App = {
     example: [middleData, masterData, hardest],
     auto: false,
     consoleType: '',
-    set activeCeil(obj){
-        let prevActive = this.wrap.querySelector('.active');
-        if (prevActive) {
-            prevActive.classList.remove('active');
-        }
-        this.wrap.querySelector(`[data-r="${obj.r}"][data-c="${obj.c}"]`).classList.add('active');
-        this._activeCeil = obj;
+    numberReg: /^\d+$/,
+    activeElem: null,
+    set activeCeil({r, c}){
+        this.activeElem && this.activeElem.classList.remove('active');
+        this.activeElem = this.wrap.querySelector(`[data-r="${r}"][data-c="${c}"]`);
+        this.activeElem.classList.add('active');
     },
     setCeil(value, mark) {
-        let activeElem = this.wrap.querySelector('.active');
-        if (!activeElem || activeElem.dataset.value) {
+        if (!this.activeElem || this.activeElem.dataset.value) {
             return;
         }
-        let data = activeElem.dataset;
+        let data = this.activeElem.dataset;
         let {r, c} = data;
         
         if (!this.virtualData[r][c].includes(value)) {
@@ -47,9 +45,9 @@ const App = {
             this.removeArrElem(item, value);
         });
 
-        activeElem.innerHTML = value;
+        this.activeElem.innerHTML = value;
         if (mark) {
-            activeElem.classList.add('mark');
+            this.activeElem.classList.add('mark');
         }
         
         this.removeTemp(`[data-r="${r}"] .temp${value}, [data-c="${c}"] .temp${value}, .t${tIndex} .temp${value}`);
@@ -214,6 +212,15 @@ const App = {
     eachRow(fn) {
         this.virtualData.every((row, rowIndex) => fn(row, rowIndex) !== false);
     },
+    setCounter(counter, num, includeSelf, ...args) {
+        if (counter[num]) {
+            if (includeSelf || args[0] !== ~~counter[num]) {
+                counter[num] = 2
+            }
+        } else {
+            counter[num] = `${args.join('_')}`;
+        }
+    },
     setArrCounter(item, counter, rowIndex, colIndex) {
         if (Array.isArray(item)) {
             if (item.length === 1) {
@@ -224,11 +231,7 @@ const App = {
                 return;
             }
             item.forEach((num) => {
-                if (counter[num]) {
-                    counter[num] = 2
-                } else {
-                    counter[num] = `${rowIndex}_${colIndex}`;
-                }
+                this.setCounter(counter, num, true, rowIndex, colIndex);
             });
         } else {
             counter[item.value] = true;
@@ -269,7 +272,7 @@ const App = {
         for (let k in counter) {
             if (typeof counter[k] === 'string') {
                 let v = counter[k];
-                if (/^\d+$/.test(v)) {
+                if (this.numberReg.test(v)) {
                     v = ~~v;
                 }
                 fn(~~k, v);
