@@ -2,14 +2,10 @@ let masterData = [[0,2,4],[0,3,6],[0,5,2],[1,0,6],[1,4,3],[1,8,4],[2,1,2],[2,3,4
 let middleData = [[0,0,4],[0,2,3],[0,5,1],[0,7,2],[1,1,2],[1,2,6],[1,4,7],[1,8,5],[3,0,2],[3,3,8],[3,5,6],[3,7,3],[4,0,3],[4,1,6],[4,5,9],[5,3,2],[5,7,9],[5,8,4],[6,0,7],[6,3,3],[6,6,4],[6,7,8],[7,1,5],[7,4,8],[7,6,3],[7,8,2]];
 let hardest = [[0,0,8],[1,2,3],[1,3,6],[2,1,7],[2,4,9],[2,6,2],[3,1,5],[3,5,7],[4,4,4],[4,5,5],[4,6,7],[5,3,1],[5,7,3],[6,2,1],[6,7,6],[6,8,8],[7,2,8],[7,3,5],[7,7,1],[8,1,9],[8,6,4]];
 
-// Flag 0(已推出) 0(已唯一) 0000(r) 0000(t)
-//
-//
-//
+// Flag 0(已推出) 0(不唯一) 0000(r) 0000(c|r|t)
 
-const HAS_SET_FLAG =   0b100000000000;
-const NOT_ONLY_FLAG =   0b10000000000;
-const IS_ONLY_FLAG =     0b1000000000;
+const HAS_SET_FLAG =    0b10000000000;
+const NOT_ONLY_FLAG =    0b1000000000;
 const ROW_FLAG =           0b11110000;
 const COL_FLAG =               0b1111;
 
@@ -18,7 +14,6 @@ const delay = (t, v) => {
         setTimeout(resolve.bind(null, v), t)
     })
 };
-
 
 Promise.prototype.delay = function(t) {
     return this.then(function(v) {
@@ -33,6 +28,12 @@ let Util = {
     indexInSection: (index, section) => index >= section && index < section + 3,
     rInTable: (r, t) => Util.indexInSection(r, Util.getTableFirstR(t)),
     cInTable: (c, t) => Util.indexInSection(c, Util.getTableFirstC(t)),
+    removeArrElem: (arr, elem) => {
+        if (Array.isArray(arr)) {
+            let index = arr.indexOf(elem);
+            index !== -1 && arr.splice(index, 1);
+        }
+    }
 };
 
 const App = {
@@ -41,8 +42,8 @@ const App = {
     example: [middleData, masterData, hardest],
     auto: false,
     consoleType: '',
-    numberReg: /^\d+$/,
     activeElem: null,
+    delayTime: 0,
     set activeCeil({r, c}){
         this.activeElem && this.activeElem.classList.remove('active');
         this.activeElem = this.wrap.querySelector(`[data-r="${r}"][data-c="${c}"]`);
@@ -65,17 +66,17 @@ const App = {
         this.virtualData[r][c] = {value, mark};
 
         this.virtualData[r].forEach((item) => {
-            this.removeArrElem(item, value);
+            Util.removeArrElem(item, value);
         });
 
         this.eachRow((row) => {
             let item = row[c];
-            this.removeArrElem(item, value);
+            Util.removeArrElem(item, value);
         });
 
         let tIndex = Util.getTIndex(r, c);
         this.eachTableItem(tIndex, (item) => {
-            this.removeArrElem(item, value);
+            Util.removeArrElem(item, value);
         });
 
         this.activeElem.innerHTML = value;
@@ -125,20 +126,20 @@ const App = {
 
     infer() {
         this.update = false;
-        this.inferRow();
-        this.inferCol();
-        this.inferTable();
-        this.inferTableColRow();
-        this.inferColRowTable();
+        delay(this.delayTime).then(this.inferRow.bind(this))
+            .delay(this.delayTime).then(this.inferCol.bind(this))
+            .delay(this.delayTime).then(this.inferTable.bind(this))
+            .delay(this.delayTime).then(this.inferTableColRow.bind(this))
+            .delay(this.delayTime).then(this.inferColRowTable.bind(this))
+            .delay(this.delayTime).then(this.loopInfer.bind(this));
+    },
+    loopInfer() {
         if (this.update) {
             if (!this.isValid()) {
                 this.error('数据矛盾');
                 if (this.auto) {
-                    requestAnimationFrame(() => {
-                        this.retreated();
-                        this.inferGuess();
-                    });
-
+                    this.retreated();
+                    this.inferGuess();
                 }
                 return;
             }
@@ -147,7 +148,7 @@ const App = {
                 return;
             }
             if (this.auto) {
-                requestAnimationFrame(this.infer.bind(this));
+                this.infer();
             }
         } else {
             this.warn('无法进一步推导');
@@ -155,44 +156,6 @@ const App = {
                 this.inferGuess(true);
             }
         }
-
-        // delay(20).then(() => {
-        //     this.inferRow();
-        // }).delay(20).then(() => {
-        //     this.inferCol();
-        // }).delay(20).then(() => {
-        //     this.inferTable();
-        // }).delay(20).then(() => {
-        //     this.inferTableColRow();
-        // }).delay(20).then(() => {
-        //     this.inferColRowTable();
-        // }).delay(20).then(() => {
-        //     if (this.update) {
-        //         if (!this.isValid()) {
-        //             this.error('数据矛盾');
-        //             if (this.auto) {
-        //                 requestAnimationFrame(() => {
-        //                     this.retreated();
-        //                     this.inferGuess();
-        //                 });
-        //
-        //             }
-        //             return;
-        //         }
-        //         if (this.isAllInferred()) {
-        //             this.log('done');
-        //             return;
-        //         }
-        //         if (this.auto) {
-        //             requestAnimationFrame(this.infer.bind(this));
-        //         }
-        //     } else {
-        //         this.warn('无法进一步推导');
-        //         if (this.auto) {
-        //             this.inferGuess(true);
-        //         }
-        //     }
-        // });
     },
     inferRow() {
         this.eachRow((row, rowIndex) => {
@@ -238,15 +201,14 @@ const App = {
         this.eachRow((row, rowIndex) => {
             let counter = {};
             row.forEach((item, colIndex) => {
-                this.setRCTableCounter(item, counter, rowIndex, colIndex)
+                this.setArrCounter(item, counter, Util.getTIndex(rowIndex, colIndex));
             });
             this.dispatchRCTableCounter(counter, rowIndex)
         });
         for (let colIndex = 0; colIndex < 9; colIndex++) {
             let counter = {};
             this.eachRow((row, rowIndex) => {
-                let item = row[colIndex];
-                this.setRCTableCounter(item, counter, rowIndex, colIndex);
+                this.setArrCounter(row[colIndex], counter, Util.getTIndex(rowIndex, colIndex));
             });
             this.dispatchRCTableCounter(counter, null, colIndex);
         }
@@ -266,130 +228,75 @@ const App = {
     },
     setArrCounter(item, counter, rct, c) {
         let multi = c === undefined;
-
         if (Array.isArray(item)) {
             // multi 时 r & c 信息不全
             if (item.length === 1 && !multi) {
-                counter[item[0]] = IS_ONLY_FLAG | c | (rct << 4);
+                counter[item[0]] = c | (rct << 4);
                 return;
             }
             item.forEach((num) => {
                 if (counter[num] === undefined) {
                     counter[num] = multi ? rct : c | (rct << 4);
                 } else {
-                    if (multi) {
-                        if (rct !== counter[num]) {
-                            counter[num] = NOT_ONLY_FLAG;
-                        }
-                    } else {
+                    if (!multi || rct !== counter[num]) {
                         counter[num] = NOT_ONLY_FLAG;
                     }
-                    // if (!multi || rct !== counter[num]) {
-                    // }
                 }
             });
         } else {
             counter[item.value] = HAS_SET_FLAG;
         }
     },
-    setRCTableCounter(item, counter, r, c) {
-        if (Array.isArray(item)) {
-            let tIndex = Util.getTIndex(r, c);
-            item.forEach((num) => {
-                if (counter[num]) {
-                    if (tIndex !== ~~counter[num]) {
-                        counter[num] = 2
-                    }
-                } else {
-                    counter[num] = `${tIndex}`;
-                }
-            });
-        } else {
-            counter[item.value] = true;
-        }
-    },
     eachOnlyOneCounter(counter, fn) {
-        for (let k in counter) {
-            if (typeof counter[k] === 'string') {
-                let v = counter[k];
-                if (this.numberReg.test(v)) {
-                    v = ~~v;
-                }
-                fn(~~k, v);
+        Object.entries(counter).forEach(([num, value]) => {
+            if (!(value & HAS_SET_FLAG) && !(value & NOT_ONLY_FLAG)) {
+                fn(~~num, value);
             }
-        }
+        });
     },
     dispatchCounter(counter) {
-        Object.entries(counter).forEach(([num, value]) => {
-            if ((value & HAS_SET_FLAG) || (value & NOT_ONLY_FLAG)) {
-                return;
-            }
+        this.eachOnlyOneCounter(counter, (num, value) => {
             let r = (value & ROW_FLAG) >> 4;
             let c = value & COL_FLAG;
             this.activeCeil = {r, c};
             this.setCeil(~~num);
-            this.log(`dispatchCounter infer(${r+1}, ${c+1}) =>`, num);
+            this.log(`infer(${r+1}, ${c+1}) =>`, num);
         });
     },
     dispatchTableRCounter(tIndex, counter) {
-        Object.entries(counter).forEach(([num, value]) => {
-            if ((value & HAS_SET_FLAG) || (value & NOT_ONLY_FLAG)) {
-                return;
-            }
+        this.eachOnlyOneCounter(counter, (num, value) => {
             // table rct 都用在col 位置(低位)
             let r = value & COL_FLAG;
-            num = ~~num;
-
             this.virtualData[r].forEach((item, colIndex) => {
                 if (!Util.cInTable(colIndex, tIndex)) {
-                    this.removeArrElem(item, num)
+                    Util.removeArrElem(item, num)
                 }
             });
             this.removeTemp(`.t:not(.t${tIndex}) [data-r="${r}"] .temp${num}`);
         });
     },
     dispatchTableCCounter(tIndex, counter) {
-        Object.entries(counter).forEach(([num, value]) => {
-            if ((value & HAS_SET_FLAG) || (value & NOT_ONLY_FLAG)) {
-                return;
-            }
+        this.eachOnlyOneCounter(counter, (num, value) => {
             let c = value & COL_FLAG;
-            num = ~~num;
-
             this.eachRow((row, rowIndex) => {
                 let item = row[c];
                 if (!Util.rInTable(rowIndex, tIndex)) {
-                    this.removeArrElem(item, num)
+                    Util.removeArrElem(item, num)
                 }
             });
             this.removeTemp(`.t:not(.t${tIndex}) [data-c="${c}"] .temp${num}`);
         });
     },
     dispatchRCTableCounter(counter, rowIndex, colIndex) {
-        this.eachOnlyOneCounter(counter, (k, tIndex) => {
+        this.eachOnlyOneCounter(counter, (num, value) => {
+            let tIndex = value & COL_FLAG;
             this.eachTableItem(tIndex, (item, _rowIndex, _colIndex) => {
-                if (rowIndex === null) {
-                    if (colIndex !== _colIndex) {
-                        this.removeArrElem(item, k);
-                    }
-                } else {
-                    if (rowIndex !== _rowIndex) {
-                        this.removeArrElem(item, k);
-                    }
-                }
+                let valid = rowIndex === null ? colIndex !== _colIndex : rowIndex !== _rowIndex;
+                valid && Util.removeArrElem(item, num);
             });
-            if (rowIndex === null) {
-                this.removeTemp(`.t${tIndex} .ceil:not([data-c="${colIndex}"]) .temp${k}`);
-            } else {
-                this.removeTemp(`.t${tIndex} .ceil:not([data-r="${rowIndex}"]) .temp${k}`);
-            }
+            let selector = rowIndex === null ? `[data-c="${colIndex}"]` : `[data-r="${rowIndex}"]`;
+            this.removeTemp(`.t${tIndex} .ceil:not(${selector}) .temp${num}`);
         });
-    },
-    removeArrElem(arr, elem) {
-        if (Array.isArray(arr)) {
-            let index = arr.indexOf(elem);
-            index !== -1 && arr.splice(index, 1);
-        }
     },
     removeTemp(selector) {
         this.find(selector).forEach((temp) => {
@@ -505,10 +412,7 @@ const App = {
     initEvent () {
         this.wrap.addEventListener('click', (e) => {
             if (e.target.className === 'ceil') {
-                this.activeCeil = {
-                    r: e.target.dataset.r,
-                    c: e.target.dataset.c
-                }
+                this.activeCeil = e.target.dataset
             }
         });
 
