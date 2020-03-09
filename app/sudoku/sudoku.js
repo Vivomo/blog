@@ -26,6 +26,15 @@ Promise.prototype.delay = function(t) {
     });
 };
 
+let Util = {
+    getTableFirstR: t => ~~(t / 3) * 3,
+    getTableFirstC: t => (t % 3) * 3,
+    getTIndex: (r, c) => ~~(r / 3) * 3 + ~~(c / 3),
+    indexInSection: (index, section) => index >= section && index < section + 3,
+    rInTable: (r, t) => Util.indexInSection(r, Util.getTableFirstR(t)),
+    cInTable: (c, t) => Util.indexInSection(c, Util.getTableFirstC(t)),
+};
+
 const App = {
     backups: [],
     guessIndex: [],
@@ -64,7 +73,7 @@ const App = {
             this.removeArrElem(item, value);
         });
 
-        let tIndex = this.getTIndex(r, c);
+        let tIndex = Util.getTIndex(r, c);
         this.eachTableItem(tIndex, (item) => {
             this.removeArrElem(item, value);
         });
@@ -116,43 +125,74 @@ const App = {
 
     infer() {
         this.update = false;
-        delay(20).then(() => {
-            this.inferRow();
-        }).delay(20).then(() => {
-            this.inferCol();
-        }).delay(20).then(() => {
-            this.inferTable();
-        }).delay(20).then(() => {
-            this.inferTableColRow();
-        }).delay(20).then(() => {
-            this.inferColRowTable();
-        }).delay(20).then(() => {
-            if (this.update) {
-                if (!this.isValid()) {
-                    this.error('数据矛盾');
-                    if (this.auto) {
-                        requestAnimationFrame(() => {
-                            this.retreated();
-                            this.inferGuess();
-                        });
+        this.inferRow();
+        this.inferCol();
+        this.inferTable();
+        this.inferTableColRow();
+        this.inferColRowTable();
+        if (this.update) {
+            if (!this.isValid()) {
+                this.error('数据矛盾');
+                if (this.auto) {
+                    requestAnimationFrame(() => {
+                        this.retreated();
+                        this.inferGuess();
+                    });
 
-                    }
-                    return;
                 }
-                if (this.isAllInferred()) {
-                    this.log('done');
-                    return;
-                }
-                if (this.auto) {
-                    requestAnimationFrame(this.infer.bind(this));
-                }
-            } else {
-                this.warn('无法进一步推导');
-                if (this.auto) {
-                    this.inferGuess(true);
-                }
+                return;
             }
-        });
+            if (this.isAllInferred()) {
+                this.log('done');
+                return;
+            }
+            if (this.auto) {
+                requestAnimationFrame(this.infer.bind(this));
+            }
+        } else {
+            this.warn('无法进一步推导');
+            if (this.auto) {
+                this.inferGuess(true);
+            }
+        }
+
+        // delay(20).then(() => {
+        //     this.inferRow();
+        // }).delay(20).then(() => {
+        //     this.inferCol();
+        // }).delay(20).then(() => {
+        //     this.inferTable();
+        // }).delay(20).then(() => {
+        //     this.inferTableColRow();
+        // }).delay(20).then(() => {
+        //     this.inferColRowTable();
+        // }).delay(20).then(() => {
+        //     if (this.update) {
+        //         if (!this.isValid()) {
+        //             this.error('数据矛盾');
+        //             if (this.auto) {
+        //                 requestAnimationFrame(() => {
+        //                     this.retreated();
+        //                     this.inferGuess();
+        //                 });
+        //
+        //             }
+        //             return;
+        //         }
+        //         if (this.isAllInferred()) {
+        //             this.log('done');
+        //             return;
+        //         }
+        //         if (this.auto) {
+        //             requestAnimationFrame(this.infer.bind(this));
+        //         }
+        //     } else {
+        //         this.warn('无法进一步推导');
+        //         if (this.auto) {
+        //             this.inferGuess(true);
+        //         }
+        //     }
+        // });
     },
     inferRow() {
         this.eachRow((row, rowIndex) => {
@@ -187,8 +227,8 @@ const App = {
             let rCounter = {};
             let cCounter = {};
             this.eachTableItem(tIndex, (item, rowIndex, colIndex) => {
-                this.setCRCounter(item, rCounter, rowIndex);
-                this.setCRCounter(item, cCounter, colIndex);
+                this.setArrCounter(item, rCounter, rowIndex);
+                this.setArrCounter(item, cCounter, colIndex);
             });
             this.dispatchTableRCounter(tIndex, rCounter);
             this.dispatchTableCCounter(tIndex, cCounter);
@@ -211,26 +251,9 @@ const App = {
             this.dispatchRCTableCounter(counter, null, colIndex);
         }
     },
-    rInTable(rowIndex, tIndex) {
-        let startRow = this.getTableFirstR(tIndex);
-        return rowIndex >= startRow && rowIndex < startRow + 3;
-    },
-    cInTable(colIndex, tIndex) {
-        let startCol = this.getTableFirstC(tIndex);
-        return colIndex >= startCol && colIndex < startCol + 3;
-    },
-    getTableFirstR(tIndex) {
-        return ~~(tIndex / 3) * 3;
-    },
-    getTableFirstC(tIndex) {
-        return (tIndex % 3) * 3;
-    },
-    getTIndex(r, c) {
-        return ~~(r / 3) * 3 + ~~(c / 3);
-    },
     eachTableItem(tIndex, fn) {
-        let startRow = this.getTableFirstR(tIndex);
-        let startCol = this.getTableFirstC(tIndex);
+        let startRow = Util.getTableFirstR(tIndex);
+        let startCol = Util.getTableFirstC(tIndex);
         for (let rowIndex = startRow; rowIndex < startRow + 3; rowIndex++) {
             for (let colIndex = startCol; colIndex < startCol + 3; colIndex++) {
                 let item = this.virtualData[rowIndex][colIndex];
@@ -245,7 +268,8 @@ const App = {
         let multi = c === undefined;
 
         if (Array.isArray(item)) {
-            if (item.length === 1) {
+            // multi 时 r & c 信息不全
+            if (item.length === 1 && !multi) {
                 counter[item[0]] = IS_ONLY_FLAG | c | (rct << 4);
                 return;
             }
@@ -255,10 +279,10 @@ const App = {
                 } else {
                     if (multi) {
                         if (rct !== counter[num]) {
-                            counter[num] |= NOT_ONLY_FLAG;
+                            counter[num] = NOT_ONLY_FLAG;
                         }
                     } else {
-                        counter[num] |= NOT_ONLY_FLAG;
+                        counter[num] = NOT_ONLY_FLAG;
                     }
                     // if (!multi || rct !== counter[num]) {
                     // }
@@ -268,24 +292,9 @@ const App = {
             counter[item.value] = HAS_SET_FLAG;
         }
     },
-    setCRCounter(item, counter, cr) {
-        if (Array.isArray(item)) {
-            item.forEach((num) => {
-                if (counter[num]) {
-                    if (cr !== ~~counter[num]) {
-                        counter[num] = 2
-                    }
-                } else {
-                    counter[num] = `${cr}`;
-                }
-            });
-        } else {
-            counter[item.value] = true;
-        }
-    },
     setRCTableCounter(item, counter, r, c) {
         if (Array.isArray(item)) {
-            let tIndex = this.getTIndex(r, c);
+            let tIndex = Util.getTIndex(r, c);
             item.forEach((num) => {
                 if (counter[num]) {
                     if (tIndex !== ~~counter[num]) {
@@ -323,55 +332,37 @@ const App = {
         });
     },
     dispatchTableRCounter(tIndex, counter) {
-        // Object.entries(counter).forEach(([num, value]) => {
-        //     if ((value & HAS_SET_FLAG) || (value & NOT_ONLY_FLAG)) {
-        //         return;
-        //     }
-        //     // table rct 都用在col 位置(低位)
-        //     let r = value & COL_FLAG;
-        //     num = ~~num;
-        //
-        //     this.virtualData[r].forEach((item, colIndex) => {
-        //         if (!this.cInTable(colIndex, tIndex)) {
-        //             this.removeArrElem(item, num)
-        //         }
-        //     });
-        //     this.removeTemp(`.t:not(.t${tIndex}) [data-r="${r}"] .temp${num}`);
-        // });
-        this.eachOnlyOneCounter(counter, (k, r) => {
+        Object.entries(counter).forEach(([num, value]) => {
+            if ((value & HAS_SET_FLAG) || (value & NOT_ONLY_FLAG)) {
+                return;
+            }
+            // table rct 都用在col 位置(低位)
+            let r = value & COL_FLAG;
+            num = ~~num;
+
             this.virtualData[r].forEach((item, colIndex) => {
-                if (!this.cInTable(colIndex, tIndex)) {
-                    this.removeArrElem(item, k)
+                if (!Util.cInTable(colIndex, tIndex)) {
+                    this.removeArrElem(item, num)
                 }
             });
-            this.removeTemp(`.t:not(.t${tIndex}) [data-r="${r}"] .temp${k}`);
+            this.removeTemp(`.t:not(.t${tIndex}) [data-r="${r}"] .temp${num}`);
         });
     },
     dispatchTableCCounter(tIndex, counter) {
-        // Object.entries(counter).forEach(([num, value]) => {
-        //     if ((value & HAS_SET_FLAG) || (value & NOT_ONLY_FLAG)) {
-        //         return;
-        //     }
-        //     let c = value & COL_FLAG;
-        //     num = ~~num;
-        //
-        //     this.eachRow((row, rowIndex) => {
-        //         let item = row[c];
-        //         if (!this.rInTable(rowIndex, tIndex)) {
-        //             this.removeArrElem(item, num)
-        //         }
-        //     });
-        //     this.removeTemp(`.t:not(.t${tIndex}) [data-c="${c}"] .temp${num}`);
-        // });
+        Object.entries(counter).forEach(([num, value]) => {
+            if ((value & HAS_SET_FLAG) || (value & NOT_ONLY_FLAG)) {
+                return;
+            }
+            let c = value & COL_FLAG;
+            num = ~~num;
 
-        this.eachOnlyOneCounter(counter, (k, c) => {
             this.eachRow((row, rowIndex) => {
                 let item = row[c];
-                if (!this.rInTable(rowIndex, tIndex)) {
-                    this.removeArrElem(item, k)
+                if (!Util.rInTable(rowIndex, tIndex)) {
+                    this.removeArrElem(item, num)
                 }
             });
-            this.removeTemp(`.t:not(.t${tIndex}) [data-c="${c}"] .temp${k}`);
+            this.removeTemp(`.t:not(.t${tIndex}) [data-c="${c}"] .temp${num}`);
         });
     },
     dispatchRCTableCounter(counter, rowIndex, colIndex) {
