@@ -3,7 +3,6 @@ let middleData = [[0,0,4],[0,2,3],[0,5,1],[0,7,2],[1,1,2],[1,2,6],[1,4,7],[1,8,5
 let hardest = [[0,0,8],[1,2,3],[1,3,6],[2,1,7],[2,4,9],[2,6,2],[3,1,5],[3,5,7],[4,4,4],[4,5,5],[4,6,7],[5,3,1],[5,7,3],[6,2,1],[6,7,6],[6,8,8],[7,2,8],[7,3,5],[7,7,1],[8,1,9],[8,6,4]];
 
 // Flag 0(已推出) 0(不唯一) 0000(r) 0000(c|r|t)
-
 const HAS_SET_FLAG =    0b10000000000;
 const NOT_ONLY_FLAG =    0b1000000000;
 const ROW_FLAG =           0b11110000;
@@ -259,7 +258,7 @@ const App = {
             let r = (value & ROW_FLAG) >> 4;
             let c = value & COL_FLAG;
             this.activeCeil = {r, c};
-            this.setCeil(~~num);
+            this.setCeil(num);
             this.log(`infer(${r+1}, ${c+1}) =>`, num);
         });
     },
@@ -305,7 +304,7 @@ const App = {
     },
     getMinLengthTemp() {
         let r, c, arr;
-        let minLength = 9;
+        let minLength = 10;
         this.eachRow((row, rowIndex) => {
             let findMin = row.some((item, colIndex) => {
                 if (Array.isArray(item)) {
@@ -318,7 +317,6 @@ const App = {
                     if (item.length === 2) {
                         return true;
                     }
-                    
                 }
             });
             if (findMin) {
