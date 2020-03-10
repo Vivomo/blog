@@ -144,6 +144,7 @@ const App = {
             }
             if (this.isAllInferred()) {
                 this.log('done');
+                this.auto = false;
                 return;
             }
             if (this.auto) {
@@ -431,6 +432,7 @@ const App = {
         document.querySelector('.save').addEventListener('click', this.save.bind(this));
         document.querySelector('.retreated').addEventListener('click', this.retreated.bind(this));
         document.querySelector('.import').addEventListener('click', () => {
+            this.init(false);
             this.setDefaultData(this.example[document.querySelector('#data-select').value])
         });
 
