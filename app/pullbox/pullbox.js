@@ -18,9 +18,9 @@ let App = {
     nextPoint(point, direction) {
         let {x, y} = point;
         if (direction % 2 === 0) {
-            y = point.y + direction - 1;
+            x = point.x + direction - 1;
         } else {
-            x = point.x + direction - 2;
+            y = point.y + direction - 2;
         }
         return {x, y};
     },
@@ -64,7 +64,7 @@ let App = {
     initHtml() {
         document.querySelector('table').innerHTML = new Array(18).fill(null).map((tr, trIndex) => {
             let tdHtml = new Array(18).fill(null)
-                        .map((td, tdIndex) => `<td data-x="${trIndex}" data-y="${tdIndex}"></td>`).join('')
+                        .map((td, tdIndex) => `<td data-x="${tdIndex}" data-y="${trIndex}"></td>`).join('')
             return `<tr>${tdHtml}</tr>`;
         }).join('');
     },
