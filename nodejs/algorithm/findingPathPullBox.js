@@ -5,17 +5,30 @@ const TARGET = 0b100;
 const WALL = 0b1000;
 const SOLID = BOX | WALL;
 
-let getTargetPoints = (boxMap) => {
+/**
+ * 一个数表示坐标 8|8 x|y
+ * @param boxMap
+ * @param type
+ * @returns {[]}
+ */
+let getPoints = (boxMap, type) => {
     let points = [];
     boxMap.forEach((line, x) => {
         line.forEach((item, y) => {
-            if (item & TARGET) {
-                points.push({x, y})
+            if (item & type) {
+                points.push(x << 8 | y)
             }
         });
     });
     return points;
 };
+
+let formatNumPoint = (point) => {
+    let x = point & 0b11111111;
+    let y = point >> 8 & 0b11111111;
+    return {x, y};
+};
+
 
 let formatMap = {
     '#': WALL,
@@ -62,12 +75,14 @@ let move = ({person, data}, direction, max) => {
     }
 
     let copyData;
+    let pushed = false;
     if (nextItem & BOX) {
         let next2 = getNextPoint(next, direction);
         let next2Item = data[next2.y][next2.x];
         if (next2Item & SOLID) {
             return;
         }
+        pushed = true;
         copyData = copy(data);
         moveTo(copyData, next, next2);
     }
@@ -75,7 +90,8 @@ let move = ({person, data}, direction, max) => {
     moveTo(copyData, person, next);
     return {
         data: copyData,
-        person: next
+        person: next,
+        pushed
     }
 };
 
@@ -85,36 +101,16 @@ let moveTo = (boxMap, from, to) => {
     boxMap[to.y][to.x] |= type;
 };
 
-/**
- * 获取人的坐标
- * @param boxMap
- * @returns {{x: *, y: *}}
- */
-let getPersonPoint = (boxMap) => {
-    let x = -1, y = -1;
-    boxMap.some((line, rIndex) => {
-        return line.some((item, cIndex) => {
-            if (item & PERSON) {
-                x = rIndex;
-                y = cIndex;
-                return true;
-            }
-        })
-    });
-    return {x, y};
-};
 
 let findingPath = (boxMap) => {
-    let targetPoints = getTargetPoints(boxMap);
-    let personPoint = getPersonPoint(boxMap);
+    let targetPoints = getPoints(boxMap, TARGET);
+    let boxPoints = getPoints(boxMap, BOX);
+    let personPoint = getPoints(boxMap, PERSON)[0];
     let max = {
         x: boxMap[0].length - 1,
         y: boxMap.length - 1
     };
-    let history = {
-        person: personPoint,
-        data: boxMap,
-    };
+    let history = [personPoint, ...boxPoints];
     let historyList = [history];
     let temp = [history];
     let count = 0;
@@ -125,11 +121,17 @@ let findingPath = (boxMap) => {
             // safe
             break;
         }
+        let newTemp = [];
         temp.forEach((bm) => {
             for (let i = 0; i < 4; i++) {
-                let _history = move(history, i, max);
+                let _history = move(bm, i, max);
+                if (!_history) {
+                    continue;
+                }
+                newTemp.push(_history);
             }
         });
+        temp = newTemp;
     }
 };
 
