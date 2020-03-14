@@ -17,6 +17,20 @@ let getTargetPoints = (boxMap) => {
     return points;
 };
 
+let formatMap = {
+    '#': WALL,
+    '-': EMPTY,
+    '.': TARGET,
+    '*': TARGET | BOX,
+    '+': TARGET | PERSON,
+    '$': BOX,
+    '@': PERSON
+};
+
+let format = (boxMap) => {
+    return boxMap.trim().split('\n').map(line => line.split('').map(item => formatMap[item]));
+};
+
 /**
  * 是否已解决
  * @param boxMap
@@ -28,3 +42,15 @@ let findingPath = (boxMap) => {
     let targetPoints = getTargetPoints(boxMap);
     console.log(targetPoints);
 };
+
+let example = `
+####--
+#-*#--
+#-@###
+#*---#
+#----#
+#--###
+####--
+`;
+
+console.log(format(example));
