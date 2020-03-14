@@ -4,6 +4,7 @@ const BOX = 0b10;
 const TARGET = 0b100;
 const WALL = 0b1000;
 const SOLID = BOX | WALL;
+const REMOVABLE = PERSON | BOX;
 
 /**
  * 一个数表示坐标 8|8 x|y
@@ -16,18 +17,20 @@ let getPoints = (boxMap, type) => {
     boxMap.forEach((line, x) => {
         line.forEach((item, y) => {
             if (item & type) {
-                points.push(x << 8 | y)
+                points.push(pointToNum({x, y}))
             }
         });
     });
     return points;
 };
 
-let formatNumPoint = (point) => {
-    let x = point & 0b11111111;
-    let y = point >> 8 & 0b11111111;
+let numToPoint = (point) => {
+    let y = point & 0b11111111;
+    let x = point >> 8 & 0b11111111;
     return {x, y};
 };
+
+let pointToNum = ({x, y}) => x << 8 | y;
 
 
 let formatMap = {
@@ -64,35 +67,41 @@ let isIndexOutOf = ({x, y}, max) => x < 0 || y < 0 || x > max.x || y > max.y;
 
 let copy = boxMap => boxMap.map(line => line.concat());
 
-let move = ({person, data}, direction, max) => {
+let getFixedMap = boxMap => boxMap.map(line => line.map(item => item ^ REMOVABLE));
+
+let join = (boxMap, points, type) => {
+    points.forEach((point) => {
+        let {x, y} = numToPoint(point);
+        boxMap[y][x] |= type;
+    });
+    return boxMap;
+};
+
+let move = (fixedMap, [opt, person, ...boxes], direction, max) => {
+    person = numToPoint(person);
     let next = getNextPoint(person, direction);
     if (isIndexOutOf(next, max)) {
         return;
     }
-    let nextItem = data[next.y][next.x];
-    if (nextItem & WALL) {
+    if (fixedMap[next.y][next.x] & WALL) {
         return;
     }
 
-    let copyData;
-    let pushed = false;
-    if (nextItem & BOX) {
+    let nextNumPoint = pointToNum(next);
+    let boxIndex = boxes.indexOf(nextNumPoint);
+    if (boxIndex !== -1) {
         let next2 = getNextPoint(next, direction);
-        let next2Item = data[next2.y][next2.x];
-        if (next2Item & SOLID) {
+        if (fixedMap[next2.y][next2.x] & WALL) {
             return;
         }
-        pushed = true;
-        copyData = copy(data);
-        moveTo(copyData, next, next2);
+        let next2NumPoint = pointToNum(next2);
+        if (boxes.includes(next2NumPoint)) {
+            return;
+        }
+        boxes.split(boxIndex, 1, nextNumPoint);
     }
-    copyData = copyData || copy(data);
-    moveTo(copyData, person, next);
-    return {
-        data: copyData,
-        person: next,
-        pushed
-    }
+
+    return [[...opt, direction], nextNumPoint, ...boxes];
 };
 
 let moveTo = (boxMap, from, to) => {
@@ -106,11 +115,13 @@ let findingPath = (boxMap) => {
     let targetPoints = getPoints(boxMap, TARGET);
     let boxPoints = getPoints(boxMap, BOX);
     let personPoint = getPoints(boxMap, PERSON)[0];
+    let fixedMap = getFixedMap(boxMap);
+
     let max = {
         x: boxMap[0].length - 1,
         y: boxMap.length - 1
     };
-    let history = [personPoint, ...boxPoints];
+    let history = [[], personPoint, ...boxPoints];
     let historyList = [history];
     let temp = [history];
     let count = 0;
@@ -122,9 +133,9 @@ let findingPath = (boxMap) => {
             break;
         }
         let newTemp = [];
-        temp.forEach((bm) => {
+        temp.forEach((item) => {
             for (let i = 0; i < 4; i++) {
-                let _history = move(bm, i, max);
+                let _history = move(fixedMap, item, i, max);
                 if (!_history) {
                     continue;
                 }
