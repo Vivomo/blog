@@ -77,7 +77,7 @@ let join = (boxMap, points, type) => {
     return boxMap;
 };
 
-let move = (fixedMap, [opt, person, ...boxes], direction, max) => {
+let move = (fixedMap, {opt, data: [person, ...boxes]}, direction, max) => {
     person = numToPoint(person);
     let next = getNextPoint(person, direction);
     if (isIndexOutOf(next, max)) {
@@ -98,10 +98,10 @@ let move = (fixedMap, [opt, person, ...boxes], direction, max) => {
         if (boxes.includes(next2NumPoint)) {
             return;
         }
-        boxes.split(boxIndex, 1, nextNumPoint);
+        boxes.splice(boxIndex, 1, nextNumPoint);
     }
 
-    return [[...opt, direction], nextNumPoint, ...boxes];
+    return {opt: [...opt, direction], data: [nextNumPoint, ...boxes]};
 };
 
 let moveTo = (boxMap, from, to) => {
@@ -121,7 +121,10 @@ let findingPath = (boxMap) => {
         x: boxMap[0].length - 1,
         y: boxMap.length - 1
     };
-    let history = [[], personPoint, ...boxPoints];
+    let history = {
+        opt: [],
+        data: [personPoint, ...boxPoints]
+    };
     let historyList = [history];
     let temp = [history];
     let count = 0;
