@@ -5,6 +5,9 @@ const TARGET = 0b100;
 const WALL = 0b1000;
 const SOLID = BOX | WALL;
 const REMOVABLE = PERSON | BOX;
+const PUSHED_OPT = 0b100;
+const POINT_BIT = 5;
+const POINT_COMPLEMENT = 2 ** POINT_BIT - 1;
 
 /**
  * 一个数表示坐标 8|8 x|y
@@ -24,13 +27,21 @@ let getPoints = (boxMap, type) => {
     return points;
 };
 
+let pointsToMap = (points) => {
+    let obj = {};
+    points.forEach((item) => {
+        obj[item] = true;
+    });
+    return obj;
+};
+
 let numToPoint = (point) => {
-    let y = point & 0b11111111;
-    let x = point >> 8 & 0b11111111;
+    let y = point & POINT_COMPLEMENT;
+    let x = point >> POINT_BIT & POINT_COMPLEMENT;
     return {x, y};
 };
 
-let pointToNum = ({x, y}) => x << 8 | y;
+let pointToNum = ({x, y}) => x << POINT_BIT | y;
 
 
 let formatMap = {
@@ -58,10 +69,10 @@ let getNextPoint = ({x, y}, direction) => {
 
 /**
  * 是否已解决
- * @param boxMap
+ * @param pointsMap target
  * @param points
  */
-let isSolved = (boxMap, points) => points.every(({x, y}) => boxMap[x][y] & BOX);
+let isSolved = (pointsMap, points) => points.every(point => pointsMap[point]);
 
 let isIndexOutOf = ({x, y}, max) => x < 0 || y < 0 || x > max.x || y > max.y;
 
@@ -98,6 +109,7 @@ let move = (fixedMap, {opt, data: [person, ...boxes]}, direction, max) => {
         if (boxes.includes(next2NumPoint)) {
             return;
         }
+        direction |= PUSHED_OPT;
         boxes.splice(boxIndex, 1, nextNumPoint);
     }
 
@@ -110,9 +122,30 @@ let moveTo = (boxMap, from, to) => {
     boxMap[to.y][to.x] |= type;
 };
 
+let addHistory = (historyMap, data) => {
+    let _map = historyMap;
+    data.forEach(point => {
+        if (!_map[point]) {
+            _map[point] = {};
+        }
+        _map = _map[point]
+    });
+};
+
+let historyContains = (historyMap, data) => {
+    let _map = historyMap;
+    return data.every(point => {
+        if (!_map[point]) {
+            return false;
+        }
+        _map = _map[point];
+        return true;
+    });
+};
+
 
 let findingPath = (boxMap) => {
-    let targetPoints = getPoints(boxMap, TARGET);
+    let targetPointsMap = pointsToMap(getPoints(boxMap, TARGET));
     let boxPoints = getPoints(boxMap, BOX);
     let personPoint = getPoints(boxMap, PERSON)[0];
     let fixedMap = getFixedMap(boxMap);
@@ -122,10 +155,12 @@ let findingPath = (boxMap) => {
         y: boxMap.length - 1
     };
     let history = {
-        opt: [],
+        opt: [NaN],
         data: [personPoint, ...boxPoints]
     };
-    let historyList = [history];
+    let historyMap = {};
+    addHistory(historyMap, history.data);
+
     let temp = [history];
     let count = 0;
 
@@ -138,11 +173,22 @@ let findingPath = (boxMap) => {
         let newTemp = [];
         temp.forEach((item) => {
             for (let i = 0; i < 4; i++) {
+                let prevOpt = item.opt[item.opt.length - 1];
+                if (Math.pow(prevOpt - i, 2) === 4 && !(prevOpt & PUSHED_OPT)) {
+                    // 与上一步相反, 且没有推箱子, 则此移动为无效移动
+                    continue;
+                }
                 let _history = move(fixedMap, item, i, max);
                 if (!_history) {
                     continue;
                 }
-                newTemp.push(_history);
+                if (isSolved(targetPointsMap, _history.data.slice(1))) {
+                    return _history.opt.slice(1);
+                }
+                if (!historyContains(historyMap, _history.data)) {
+                    newTemp.push(_history);
+                    addHistory(historyMap, _history.data);
+                }
             }
         });
         temp = newTemp;
