@@ -136,8 +136,26 @@ let App = {
             return Array.from(tr.querySelectorAll('td')).slice(minX, maxX + 1)
                 .map((td) => this.classToTxt(td.classList)).join('') + '\n';
         }).join('');
-        console.log(txt);
         document.getElementById('txt').value = txt;
+    },
+
+    load() {
+        Array.from(document.querySelectorAll('td')).forEach(td => td.className = '');
+        let txt = document.getElementById('txt').value;
+        let formatMap = {
+            '#': Type.wall,
+            '.': Type.target,
+            '*': `${Type.target} ${Type.box}`,
+            '+': `${Type.target} ${Type.person}`,
+            '$': Type.box,
+            '@': Type.person
+        };
+        let table = document.querySelector('table');
+        txt.trim().split('\n').forEach((line, y) => {
+            line.split('').forEach((item, x) => {
+                table.querySelector(`[data-x="${x}"][data-y="${y}"]`).className = formatMap[item] || '';
+            })
+        })
     },
     initEvent() {
         let table = document.querySelector('table');
@@ -190,6 +208,7 @@ let App = {
         });
 
         document.getElementById('export').addEventListener('click', this.export.bind(this));
+        document.getElementById('load').addEventListener('click', this.load.bind(this));
     },
     init() {
         this.initHtml();
