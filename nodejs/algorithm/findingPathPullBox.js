@@ -380,12 +380,30 @@ let example3 = `
 #.#@--#
 #######
 `;
+let example4 = `
+#######
+#.-.-.#
+#-$$$-#
+#.$@$.#
+#-$$$-#
+#.-.-.#
+#######
+`;
 
-let boxMap = format(example3);
+let example5 = `
+#######
+#.---.#
+#-*$$-#
+#-$+$.#
+#-$$*-#
+#.---.#
+#######
+`;
+let boxMap = format(example5);
 let a = getDeadPointsMap(boxMap);
 for (let k in a) {
     console.log(numToPoint(~~k))
 }
-console.time('a');
-console.log(findingPath(boxMap));
-console.timeEnd('a')
+// console.time('a');
+// console.log(findingPath(boxMap));
+// console.timeEnd('a')
