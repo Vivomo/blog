@@ -47,6 +47,8 @@ let pointToNum = ({x, y}) => x << POINT_BIT | y;
 let formatMap = {
     '#': WALL,
     '_': EMPTY,
+    '-': EMPTY,
+    ' ': EMPTY,
     '.': TARGET,
     '*': TARGET | BOX,
     '+': TARGET | PERSON,
@@ -110,10 +112,13 @@ let move = (fixedMap, {opt, data: [person, ...boxes]}, direction, max) => {
             return;
         }
         direction |= PUSHED_OPT;
-        boxes.splice(boxIndex, 1, nextNumPoint);
+        boxes.splice(boxIndex, 1, next2NumPoint);
     }
-
-    return {opt: [...opt, direction], data: [nextNumPoint, ...boxes]};
+    let history = {opt: [...opt, direction], data: [nextNumPoint, ...boxes]};
+    if (boxIndex !== -1) {
+        history.movedBoxIndex = boxIndex;
+    }
+    return history;
 };
 
 let moveTo = (boxMap, from, to) => {
@@ -143,10 +148,25 @@ let historyContains = (historyMap, data) => {
     });
 };
 
+let answerMap = 'lurd';
+
+let formatAnswer = (answer) => {
+    return answer.map(opt => {
+        let result = answerMap[opt & 0b11];
+        if (opt & PUSHED_OPT) {
+            result = result.toUpperCase();
+        }
+        return result;
+    }).join('');
+};
 
 let findingPath = (boxMap) => {
-    let targetPointsMap = pointsToMap(getPoints(boxMap, TARGET));
+    let targetPoints = getPoints(boxMap, TARGET);
     let boxPoints = getPoints(boxMap, BOX);
+    if (targetPoints.length !== boxPoints.length) {
+        throw '箱子与目标点数量不符合';
+    }
+    let targetPointsMap = pointsToMap(targetPoints);
     let personPoint = getPoints(boxMap, PERSON)[0];
     let fixedMap = getFixedMap(boxMap);
 
@@ -159,11 +179,11 @@ let findingPath = (boxMap) => {
         data: [personPoint, ...boxPoints]
     };
     let historyMap = {};
-    addHistory(historyMap, history.data.slice(1));
+    addHistory(historyMap, history.data);
 
     let temp = [history];
     let count = 0;
-
+    let answer = [];
     while (true) {
         count ++;
         if (count > 10000000) {
@@ -172,7 +192,7 @@ let findingPath = (boxMap) => {
             break;
         }
         let newTemp = [];
-        temp.forEach((item) => {
+        let find = temp.some((item) => {
             for (let i = 0; i < 4; i++) {
                 let prevOpt = item.opt[item.opt.length - 1];
                 if (Math.pow(prevOpt - i, 2) === 4 && !(prevOpt & PUSHED_OPT)) {
@@ -184,16 +204,23 @@ let findingPath = (boxMap) => {
                     continue;
                 }
                 if (isSolved(targetPointsMap, _history.data.slice(1))) {
-                    return _history.opt.slice(1);
+                    answer = _history.opt.slice(1);
+                    return true;
                 }
+
+              
                 if (!historyContains(historyMap, _history.data)) {
                     newTemp.push(_history);
                     addHistory(historyMap, _history.data);
                 }
             }
         });
+        if (find) {
+            break;
+        }
         temp = newTemp;
     }
+    return formatAnswer(answer);
 };
 
 let example = `
@@ -206,5 +233,27 @@ let example = `
 ####__
 `;
 
-let boxMap = format(example);
+let example2 = `
+__######
+_##--.-#
+_#-*-#-#
+_#-.$--#
+_#--#$##
+_##-@-#_
+__#####_
+`;
+
+let example3 = `
+#######
+#.----#
+#*#---#
+#.*-$-#
+#.$$$-#
+#.#@--#
+#######
+`;
+
+let boxMap = format(example2);
+console.time('a');
 console.log(findingPath(boxMap));
+console.timeEnd('a')
