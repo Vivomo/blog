@@ -8,6 +8,7 @@ const REMOVABLE = PERSON | BOX;
 const PUSHED_OPT = 0b100;
 const POINT_BIT = 5;
 const POINT_COMPLEMENT = 2 ** POINT_BIT - 1;
+const OPT = 0b11;
 
 /**
  * 一个数表示坐标 8|8 x|y
@@ -152,12 +153,34 @@ let answerMap = 'lurd';
 
 let formatAnswer = (answer) => {
     return answer.map(opt => {
-        let result = answerMap[opt & 0b11];
+        let result = answerMap[opt & OPT];
         if (opt & PUSHED_OPT) {
             result = result.toUpperCase();
         }
         return result;
     }).join('');
+};
+
+let isNegativeDirection = (d1, d2) => Math.abs(d1 - d2) === 2;
+
+
+let isDeadWay = (boxMap, box, from) => {
+    let point = numToPoint(box);
+    let {x, y} = point;
+    if (boxMap[y][x] & TARGET) {
+        return false;
+    }
+    let wallCount = 0;
+    for (let i = 0; i < 4; i++) {
+        if (isNegativeDirection(from, i)) {
+            continue;
+        }
+        let next = getNextPoint(point, i);
+        if (boxMap[next.y][next.x] & WALL) {
+            wallCount ++
+        }
+    }
+    return wallCount >= 2;
 };
 
 let findingPath = (boxMap) => {
@@ -195,7 +218,7 @@ let findingPath = (boxMap) => {
         let find = temp.some((item) => {
             for (let i = 0; i < 4; i++) {
                 let prevOpt = item.opt[item.opt.length - 1];
-                if (Math.pow(prevOpt - i, 2) === 4 && !(prevOpt & PUSHED_OPT)) {
+                if (isNegativeDirection(prevOpt & OPT, i) && !(prevOpt & PUSHED_OPT)) {
                     // 与上一步相反, 且没有推箱子, 则此移动为无效移动
                     continue;
                 }
@@ -208,7 +231,10 @@ let findingPath = (boxMap) => {
                     return true;
                 }
 
-              
+                if (_history.movedBoxIndex !== undefined &&
+                    isDeadWay(boxMap, _history.data[_history.movedBoxIndex + 1], i)) {
+                    continue;
+                }
                 if (!historyContains(historyMap, _history.data)) {
                     newTemp.push(_history);
                     addHistory(historyMap, _history.data);
@@ -223,7 +249,7 @@ let findingPath = (boxMap) => {
     return formatAnswer(answer);
 };
 
-let example = `
+let example1 = `
 ####__
 #-.#__
 #--###
@@ -253,7 +279,7 @@ let example3 = `
 #######
 `;
 
-let boxMap = format(example2);
+let boxMap = format(example1);
 console.time('a');
 console.log(findingPath(boxMap));
 console.timeEnd('a')
