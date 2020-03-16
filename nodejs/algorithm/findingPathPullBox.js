@@ -91,7 +91,7 @@ let join = (boxMap, points, type) => {
     return boxMap;
 };
 
-let move = (fixedMap, {opt, data: [person, ...boxes]}, direction, max) => {
+let move = (fixedMap, {opt, data: [person, ...boxes]}, direction, max, deadPointsMap) => {
     person = numToPoint(person);
     let next = getNextPoint(person, direction);
     if (isIndexOutOf(next, max)) {
@@ -109,7 +109,7 @@ let move = (fixedMap, {opt, data: [person, ...boxes]}, direction, max) => {
             return;
         }
         let next2NumPoint = pointToNum(next2);
-        if (boxes.includes(next2NumPoint)) {
+        if (boxes.includes(next2NumPoint) || deadPointsMap[next2NumPoint]) {
             return;
         }
         direction |= PUSHED_OPT;
@@ -189,6 +189,103 @@ let isDeadWay = (boxMap, box, from) => {
     return false;
 };
 
+let getLineData = (boxMap, {x, y}, isX) => {
+    let result = {target: true};
+    if (isX) {
+        let line = boxMap[y];
+        for (let i = x - 1; i >= 0; i--) {
+            if (line[i] & TARGET) {
+                return result;
+            } else if (line[i] & WALL) {
+                result.start = i;
+                break;
+            }
+        }
+
+        for (let i = x + 1; i < boxMap[0].length; i++) {
+            if (line[i] & TARGET) {
+                return result;
+            } else if (line[i] & WALL) {
+                result.end = i;
+                break;
+            }
+        }
+    } else {
+        for (let i = y - 1; i >= 0; i--) {
+            if (boxMap[i][x] & TARGET) {
+                return result;
+            } else if (boxMap[i][x] & WALL) {
+                result.start = i;
+                break;
+            }
+        }
+
+        for (let i = y + 1; i < boxMap.length; i++) {
+            if (boxMap[i][x] & TARGET) {
+                return result;
+            } else if (boxMap[i][x] & WALL) {
+                result.end = i;
+                break;
+            }
+        }
+    }
+    result.target = false;
+    return result;
+};
+
+let isDeadWall = (boxMap, lineNum, start, end, isX) => {
+    let notWallCount = 0;
+    if (isX) {
+        for (let i = start; i <= end; i++) {
+            if (!(boxMap[lineNum][i] & WALL)) {
+                notWallCount++;
+            }
+        }
+    } else {
+        for (let i = start; i <= end; i++) {
+            if (!(boxMap[i][lineNum] & WALL)) {
+                notWallCount++;
+            }
+        }
+    }
+    return notWallCount < 2;
+};
+
+let getDeadPointsMap = (boxMap) => {
+    let emptyPoints = getPoints(boxMap, EMPTY | PERSON);
+    let deadPointsMap = {};
+    let max = {
+        x: boxMap[0].length - 1,
+        y: boxMap.length - 1
+    }
+    emptyPoints.forEach(pointNum => {
+        let point = numToPoint(pointNum);
+        let wallDirection = [];
+        for (let i = 0; i < 4; i++) {
+            let next = getNextPoint(point, i);
+            if (isIndexOutOf(next, max)) {
+                continue;
+            }
+            if (boxMap[next.y][next.x] & WALL) {
+                wallDirection.push(i);
+            }
+        }
+        if (wallDirection.length === 3) {
+            deadPointsMap[pointNum] = true;
+        } else if (wallDirection.length === 2 && wallDirection[1] - wallDirection[0] !== 2) {
+            deadPointsMap[pointNum] = true;
+        } else if (wallDirection.length === 1) {
+            let isX = wallDirection[0] % 2 !== 0;
+            let {target, start, end} = getLineData(boxMap, point, isX);
+            let lineNum = (isX ? point.y - 2 : point.x - 1) + wallDirection[0];
+            if (!target && isDeadWall(boxMap, lineNum, start, end, isX)) {
+                deadPointsMap[pointNum] = true;
+            }
+        }
+
+    });
+    return deadPointsMap;
+};
 
 let findingPath = (boxMap) => {
     let targetPoints = getPoints(boxMap, TARGET);
@@ -197,6 +294,7 @@ let findingPath = (boxMap) => {
         throw '箱子与目标点数量不符合';
     }
     let targetPointsMap = pointsToMap(targetPoints);
+    let deadPointsMap = getDeadPointsMap(boxMap)
     let personPoint = getPoints(boxMap, PERSON)[0];
     let fixedMap = getFixedMap(boxMap);
 
@@ -223,7 +321,7 @@ let findingPath = (boxMap) => {
                     // 与上一步相反, 且没有推箱子, 则此移动为无效移动
                     continue;
                 }
-                let _history = move(fixedMap, item, i, max);
+                let _history = move(fixedMap, item, i, max, deadPointsMap);
                 if (!_history) {
                     continue;
                 }
@@ -234,7 +332,6 @@ let findingPath = (boxMap) => {
 
                 if (_history.movedBoxIndex !== undefined &&
                     isDeadWay(boxMap, _history.data[_history.movedBoxIndex + 1], i)) {
-                    // console.log(++deadWayCount)
                     continue;
                 }
                 if (!historyContains(historyMap, _history.data)) {
@@ -265,13 +362,13 @@ let example1 = `
 `;
 
 let example2 = `
-__######
-_##--.-#
-_#-*-#-#
-_#-.$--#
-_#--#$##
-_##-@-#_
-__#####_
+_######
+##--.-#
+#-*-#-#
+#-.$--#
+#--#$##
+##-@-#_
+_#####_
 `;
 
 let example3 = `
@@ -285,10 +382,10 @@ let example3 = `
 `;
 
 let boxMap = format(example3);
+let a = getDeadPointsMap(boxMap);
+for (let k in a) {
+    console.log(numToPoint(~~k))
+}
 console.time('a');
 console.log(findingPath(boxMap));
 console.timeEnd('a')
-// let a = getDeadPointsMap(boxMap);
-// for (let k in a) {
-//     console.log(numToPoint(~~k))
-// }
