@@ -79,11 +79,15 @@ let App = {
                 if (person) {
                     person.className = '';
                 }
-                td.className = this.type;
+                if (td.className === Type.target) {
+                    td.classList.add(this.type);
+                } else {
+                    td.className = this.type;
+                }
                 this.person = td;
                 break;
             case Type.target:
-                if (td.className === Type.box) {
+                if (td.className === Type.box || td.className === Type.person) {
                     td.classList.add(this.type);
                 } else {
                     td.className = this.type;
