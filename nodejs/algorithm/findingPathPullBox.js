@@ -1,8 +1,8 @@
-const EMPTY = 0;
-const PERSON = 1;
-const BOX = 0b10;
-const TARGET = 0b100;
-const WALL = 0b1000;
+const EMPTY = 1;
+const PERSON = 0b10;
+const BOX = 0b100;
+const TARGET = 0b1000;
+const WALL = 0b10000;
 const SOLID = BOX | WALL;
 const REMOVABLE = PERSON | BOX;
 const PUSHED_OPT = 0b100;
@@ -170,18 +170,25 @@ let isDeadWay = (boxMap, box, from) => {
     if (boxMap[y][x] & TARGET) {
         return false;
     }
-    let wallCount = 0;
-    for (let i = 0; i < 4; i++) {
-        if (isNegativeDirection(from, i)) {
-            continue;
+    let next = getNextPoint(point, from);
+    if (boxMap[next.y][next.x] & WALL) {
+        let left = getNextPoint(point, (from + 3) % 4);
+        let right = getNextPoint(point, (from + 1) % 4);
+        if ((boxMap[left.y][left.x] & WALL) || (boxMap[right.y][right.x] & WALL)) {
+            return true;
         }
-        let next = getNextPoint(point, i);
-        if (boxMap[next.y][next.x] & WALL) {
-            wallCount ++
+        let leftTop = getNextPoint(left, from);
+        if ((boxMap[left.y][left.x] & BOX) && boxMap[leftTop.y][leftTop.x] & SOLID) {
+            return true;
+        }
+        let RightTop = getNextPoint(right, from);
+        if ((boxMap[right.y][right.x] & BOX) && boxMap[RightTop.y][RightTop.x] & SOLID) {
+            return true;
         }
     }
-    return wallCount >= 2;
+    return false;
 };
+
 
 let findingPath = (boxMap) => {
     let targetPoints = getPoints(boxMap, TARGET);
@@ -205,15 +212,9 @@ let findingPath = (boxMap) => {
     addHistory(historyMap, history.data);
 
     let temp = [history];
-    let count = 0;
     let answer = [];
+    let deadWayCount = 0;
     while (true) {
-        count ++;
-        if (count > 10000000) {
-            console.log('safe break');
-            // safe
-            break;
-        }
         let newTemp = [];
         let find = temp.some((item) => {
             for (let i = 0; i < 4; i++) {
@@ -233,6 +234,7 @@ let findingPath = (boxMap) => {
 
                 if (_history.movedBoxIndex !== undefined &&
                     isDeadWay(boxMap, _history.data[_history.movedBoxIndex + 1], i)) {
+                    // console.log(++deadWayCount)
                     continue;
                 }
                 if (!historyContains(historyMap, _history.data)) {
@@ -243,6 +245,9 @@ let findingPath = (boxMap) => {
         });
         if (find) {
             break;
+        }
+        if (newTemp.length === 0) {
+            throw '无解';
         }
         temp = newTemp;
     }
@@ -279,7 +284,11 @@ let example3 = `
 #######
 `;
 
-let boxMap = format(example1);
+let boxMap = format(example3);
 console.time('a');
 console.log(findingPath(boxMap));
 console.timeEnd('a')
+// let a = getDeadPointsMap(boxMap);
+// for (let k in a) {
+//     console.log(numToPoint(~~k))
+// }
