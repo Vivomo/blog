@@ -123,7 +123,7 @@ let App = {
             return '-';
         }
     },
-    export() {
+    export(onlyTxt) {
         let wall = Array.from(document.querySelectorAll('.wall'));
         let xArrOfWall = wall.map(item => ~~item.dataset.x);
         let yArrOfWall = wall.map(item => ~~item.dataset.y);
@@ -136,6 +136,9 @@ let App = {
             return Array.from(tr.querySelectorAll('td')).slice(minX, maxX + 1)
                 .map((td) => this.classToTxt(td.classList)).join('') + '\n';
         }).join('');
+        if (onlyTxt) {
+            return txt;
+        }
         document.getElementById('txt').value = txt;
     },
 
@@ -156,6 +159,33 @@ let App = {
                 table.querySelector(`[data-x="${x}"][data-y="${y}"]`).className = formatMap[item] || '';
             })
         })
+    },
+    solve() {
+        let txt = this.export(true);
+        let boxMap = format(txt);
+
+        console.time('a');
+        document.getElementById('answer').value = findingPath(boxMap);
+        console.timeEnd('a')
+    },
+    runAnswerAnimate() {
+        let keyMap = {
+            l: 0,
+            u: 1,
+            r: 2,
+            d: 3
+        };
+        let answer = document.getElementById('answer').value.toLowerCase()
+            .split('').map(item => keyMap[item]);
+        this._move(answer);
+    },
+    _move(answer) {
+        requestAnimationFrame(() => {
+            this.move(answer.shift());
+            if (answer.length > 0) {
+                this._move(answer);
+            }
+        });
     },
     initEvent() {
         let table = document.querySelector('table');
@@ -209,6 +239,8 @@ let App = {
 
         document.getElementById('export').addEventListener('click', this.export.bind(this));
         document.getElementById('load').addEventListener('click', this.load.bind(this));
+        document.getElementById('solve').addEventListener('click', this.solve.bind(this));
+        document.getElementById('runResult').addEventListener('click', this.runAnswerAnimate.bind(this));
     },
     init() {
         this.initHtml();
