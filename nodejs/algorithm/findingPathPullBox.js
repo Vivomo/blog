@@ -17,8 +17,8 @@ const POINT_COMPLEMENT = 2 ** POINT_BIT - 1;
  */
 let getPoints = (boxMap, type) => {
     let points = [];
-    boxMap.forEach((line, x) => {
-        line.forEach((item, y) => {
+    boxMap.forEach((line, y) => {
+        line.forEach((item, x) => {
             if (item & type) {
                 points.push(pointToNum({x, y}))
             }
@@ -46,7 +46,7 @@ let pointToNum = ({x, y}) => x << POINT_BIT | y;
 
 let formatMap = {
     '#': WALL,
-    '-': EMPTY,
+    '_': EMPTY,
     '.': TARGET,
     '*': TARGET | BOX,
     '+': TARGET | PERSON,
@@ -159,14 +159,15 @@ let findingPath = (boxMap) => {
         data: [personPoint, ...boxPoints]
     };
     let historyMap = {};
-    addHistory(historyMap, history.data);
+    addHistory(historyMap, history.data.slice(1));
 
     let temp = [history];
     let count = 0;
 
     while (true) {
         count ++;
-        if (count > 100000) {
+        if (count > 10000000) {
+            console.log('safe break');
             // safe
             break;
         }
@@ -196,14 +197,14 @@ let findingPath = (boxMap) => {
 };
 
 let example = `
-####--
-#-*#--
-#-@###
-#*---#
-#----#
+####__
+#-.#__
 #--###
-####--
+#*@--#
+#--$-#
+#--###
+####__
 `;
 
 let boxMap = format(example);
-// console.log(getPersonPoint(boxMap));
+console.log(findingPath(boxMap));
