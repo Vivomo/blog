@@ -80,6 +80,12 @@
             content: '♀';
             color: #59ecff;
         }
+        #txt {
+            margin: 10px 0;
+            width: 300px;
+            height: 200px;
+            display: block;
+        }
     </style>
 </head>
 
@@ -101,7 +107,12 @@
                 <label for="i4">
                     <input type="radio" name="type" id="i4" value="person">人
                 </label>
+
+                <textarea id="txt" placeholder="地图文本"></textarea>
+<!--                <button id="load">载入地图文本</button>-->
             </form>
+            <button id="export">生成地图文本</button>
+
         </div>
     </div>
     <script src="./pullbox.js"></script>

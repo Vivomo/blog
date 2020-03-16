@@ -100,6 +100,41 @@ let App = {
                 td.className = this.type;
         }
     },
+    classToTxt(classList) {
+        if (classList.contains(Type.wall)) {
+            return '#'
+        } else if (classList.contains(Type.target)) {
+            if (classList.contains(Type.box)) {
+                return '*';
+            }
+            if (classList.contains(Type.person)) {
+                return '+';
+            }
+            return '.'
+        } else if (classList.contains(Type.box)) {
+            return '$';
+        }  else if (classList.contains(Type.person)) {
+            return '@';
+        } else {
+            return '-';
+        }
+    },
+    export() {
+        let wall = Array.from(document.querySelectorAll('.wall'));
+        let xArrOfWall = wall.map(item => ~~item.dataset.x);
+        let yArrOfWall = wall.map(item => ~~item.dataset.y);
+        let minX = Math.min(...xArrOfWall);
+        let maxX = Math.max(...xArrOfWall);
+        let minY = Math.min(...yArrOfWall);
+        let maxY = Math.max(...yArrOfWall);
+
+        let txt = Array.from(document.querySelectorAll('tr')).slice(minY, maxY + 1).map((tr) => {
+            return Array.from(tr.querySelectorAll('td')).slice(minX, maxX + 1)
+                .map((td) => this.classToTxt(td.classList)).join('') + '\n';
+        }).join('');
+        console.log(txt);
+        document.getElementById('txt').value = txt;
+    },
     initEvent() {
         let table = document.querySelector('table');
 
@@ -149,6 +184,8 @@ let App = {
             }
             this.move(direction);
         });
+
+        document.getElementById('export').addEventListener('click', this.export.bind(this));
     },
     init() {
         this.initHtml();
