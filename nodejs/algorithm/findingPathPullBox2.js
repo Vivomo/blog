@@ -2,6 +2,9 @@ const {format, getPoints, pointsToMap, getDeadPointsMap, addHistory, numToPoint,
     isIndexOutOf,
     historyContains, isSolved, formatAnswer, CONSTANTS, getPrevPoint, isDeadWay} = require('../util/pushBox');
 
+let map = require('../pushBoxMap');
+
+
 const {TARGET, BOX, PERSON, PUSHED_OPT, WALL, EMPTY} = CONSTANTS;
 
 
@@ -79,6 +82,7 @@ let findingPath = (boxMap) => {
 
     let temp = [history];
     let answer = [];
+    let dw = 0;
     while (true) {
         let newTemp = [];
         let find = temp.some(({opt, data}) => {
@@ -115,11 +119,14 @@ let findingPath = (boxMap) => {
                     };
                     if (isSolved(targetPointsMap, _boxNums)) {
                         answer = _history.opt;
+                        console.log(dw);
+
                         // console.log(JSON.stringify(historyMap).length)
                         return true;
                     }
 
                     if (isDeadWay(boxMap, _history.data[index + 1], i)) {
+                        dw++;
                         continue;
                     }
 
@@ -142,59 +149,8 @@ let findingPath = (boxMap) => {
     return formatAnswer(answer);
 };
 
-let example1 = `
-####__
-#-.#__
-#--###
-#*@--#
-#--$-#
-#--###
-####__
-`;
+let boxMap = format(map.example1);
 
-let example2 = `
-_######
-##--.-#
-#-*-#-#
-#-.$--#
-#--#$##
-##-@-#_
-_#####_
-`;
-
-let example3 = `
-#######
-#.----#
-#*#---#
-#.*-$-#
-#.$$$-#
-#.#@--#
-#######
-`;
-let example4 = `
-#######
-#.-.-.#
-#-$$$-#
-#.$@$.#
-#-$$$-#
-#.-.-.#
-#######
-`;
-
-let example5 = `
-########
-##----##
-#-$-$$-#
-#......#
-#-$$-$-#
-###-@###
-########
-`;
-let boxMap = format(example2);
-// let a = getDeadPointsMap(boxMap);
-// for (let k in a) {
-//     console.log(numToPoint(~~k))
-// }
 console.time('a');
 console.log(findingPath(boxMap));
 console.timeEnd('a')

@@ -1,6 +1,8 @@
 const {format, getPoints, pointsToMap, getDeadPointsMap, getFixedMap, addHistory, isNegativeDirection,
     move, isDeadWay, historyContains, isSolved, formatAnswer, CONSTANTS} = require('../util/pushBox');
 
+let map = require('../pushBoxMap');
+
 const {TARGET, BOX, PERSON, PUSHED_OPT, OPT} = CONSTANTS;
 
 let findingPath = (boxMap) => {
@@ -27,6 +29,7 @@ let findingPath = (boxMap) => {
 
     let temp = [history];
     let answer = [];
+    let dw = 0;
     while (true) {
         let newTemp = [];
         let find = temp.some((item) => {
@@ -42,14 +45,16 @@ let findingPath = (boxMap) => {
                 }
                 if (isSolved(targetPointsMap, _history.data.slice(1))) {
                     answer = _history.opt.slice(1);
+                    console.log(dw);
                     // console.log(JSON.stringify(historyMap).length)
                     return true;
                 }
 
-                if (_history.movedBoxIndex !== undefined &&
-                    isDeadWay(boxMap, _history.data[_history.movedBoxIndex + 1], i)) {
-                    continue;
-                }
+                // if (_history.movedBoxIndex !== undefined &&
+                //     isDeadWay(boxMap, _history.data[_history.movedBoxIndex + 1], i)) {
+                //     dw++
+                //     continue;
+                // }
                 if (!historyContains(historyMap, _history.data)) {
                     newTemp.push(_history);
                     addHistory(historyMap, _history.data);
@@ -67,60 +72,9 @@ let findingPath = (boxMap) => {
     return formatAnswer(answer);
 };
 
-let example1 = `
-####__
-#-.#__
-#--###
-#*@--#
-#--$-#
-#--###
-####__
-`;
 
-let example2 = `
-_######
-##--.-#
-#-*-#-#
-#-.$--#
-#--#$##
-##-@-#_
-_#####_
-`;
+let boxMap = format(map.example3);
 
-let example3 = `
-#######
-#.----#
-#*#---#
-#.*-$-#
-#.$$$-#
-#.#@--#
-#######
-`;
-let example4 = `
-#######
-#.-.-.#
-#-$$$-#
-#.$@$.#
-#-$$$-#
-#.-.-.#
-#######
-`;
-
-let example5 = `
-########
-##----##
-#-$-$$-#
-#......#
-#-$$-$-#
-###-@###
-########
-`;
-
-let boxMap = format(example1);
-// let a = getDeadPointsMap(boxMap);
-// for (let k in a) {
-//     console.log(numToPoint(~~k))
-// }
 console.time('a');
 console.log(findingPath(boxMap));
-console.timeEnd('a')
+console.timeEnd('a');
