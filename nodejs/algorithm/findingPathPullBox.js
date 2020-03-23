@@ -83,13 +83,6 @@ let copy = boxMap => boxMap.map(line => line.concat());
 
 let getFixedMap = boxMap => boxMap.map(line => line.map(item => item ^ REMOVABLE));
 
-let join = (boxMap, points, type) => {
-    points.forEach((point) => {
-        let {x, y} = numToPoint(point);
-        boxMap[y][x] |= type;
-    });
-    return boxMap;
-};
 
 let move = (fixedMap, {opt, data: [person, ...boxes]}, direction, max, deadPointsMap) => {
     person = numToPoint(person);
@@ -122,11 +115,6 @@ let move = (fixedMap, {opt, data: [person, ...boxes]}, direction, max, deadPoint
     return history;
 };
 
-let moveTo = (boxMap, from, to) => {
-    let type = boxMap[from.y][from.x] & PERSON ? PERSON : BOX;
-    boxMap[from.y][from.x] ^= type;
-    boxMap[to.y][to.x] |= type;
-};
 
 let addHistory = (historyMap, data) => {
     let _map = historyMap;
@@ -311,7 +299,6 @@ let findingPath = (boxMap) => {
 
     let temp = [history];
     let answer = [];
-    let deadWayCount = 0;
     while (true) {
         let newTemp = [];
         let find = temp.some((item) => {
@@ -399,11 +386,11 @@ let example5 = `
 ###-@###
 ########
 `;
-let boxMap = format(example5);
-let a = getDeadPointsMap(boxMap);
-for (let k in a) {
-    console.log(numToPoint(~~k))
-}
+let boxMap = format(example1);
+// let a = getDeadPointsMap(boxMap);
+// for (let k in a) {
+//     console.log(numToPoint(~~k))
+// }
 console.time('a');
 console.log(findingPath(boxMap));
 console.timeEnd('a')
