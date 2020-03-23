@@ -324,7 +324,7 @@ let findingPath = (boxMap) => {
                 for (let i = 0; i < 4; i++) {
                     let nextPoint = getNextPoint(boxPoint, i);
                     let nextNum = pointToNum(nextPoint);
-                    if (deadPointsMap[nextNum]) {
+                    if (deadPointsMap[nextNum] || _fixedMap[nextPoint.y][nextPoint.x] & WALL) {
                         continue;
                     }
 
@@ -333,7 +333,7 @@ let findingPath = (boxMap) => {
                     if (!path) {
                         continue;
                     }
-                    path.push(i);
+                    path.push(i | PUSHED_OPT);
                     let _boxNums = boxNums.concat();
                     _boxNums.splice(index, 1, nextNum);
                     let _history = {
@@ -412,7 +412,7 @@ let example5 = `
 ###-@###
 ########
 `;
-let boxMap = format(example1);
+let boxMap = format(example2);
 // let a = getDeadPointsMap(boxMap);
 // for (let k in a) {
 //     console.log(numToPoint(~~k))
