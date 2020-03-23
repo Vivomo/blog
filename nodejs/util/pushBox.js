@@ -82,6 +82,16 @@ let getNextPoint = ({x, y}, direction) => {
     return {x, y};
 };
 
+let getPrevPoint = ({x, y}, direction) => {
+    if (direction % 2 === 0) {
+        x = x - direction + 1;
+    } else {
+        y = y - direction + 2;
+    }
+    return {x, y};
+};
+
+
 /**
  * 是否已解决
  * @param pointsMap target
@@ -289,7 +299,7 @@ let getDeadPointsMap = (boxMap) => {
 
 
 module.exports = {
-    format,
+    format, numToPoint, copy, pointToNum, getNextPoint, isIndexOutOf,
     getPoints, pointsToMap, getDeadPointsMap, getFixedMap, addHistory, isNegativeDirection,
-    move, isDeadWay, historyContains, isSolved, formatAnswer, CONSTANTS
+    move, isDeadWay, historyContains, isSolved, formatAnswer, CONSTANTS, getPrevPoint
 };
