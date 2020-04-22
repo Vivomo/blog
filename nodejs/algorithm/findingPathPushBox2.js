@@ -13,7 +13,7 @@ let isSamePoint = (p1, p2) => p1.x === p2.x && p1.y === p2.y;
 
 let getFixedMap = boxMap => boxMap.map(line => line.map(item => item & WALL ? WALL : EMPTY));
 
-
+let bfsC = 0;
 let bfs = (start, end, map, max) => {
     if (isSamePoint(start, end)) {
         return [];
@@ -61,7 +61,7 @@ let findingPath = (boxMap) => {
     let targetPoints = getPoints(boxMap, TARGET);
     let boxPoints = getPoints(boxMap, BOX);
     let boxLength = boxPoints.length;
-    if (targetPoints.length !== boxPoints.length) {
+    if (targetPoints.length !== boxLength) {
         throw '箱子与目标点数量不符合';
     }
     let targetPointsMap = pointsToMap(targetPoints);
@@ -119,6 +119,7 @@ let findingPath = (boxMap) => {
                     };
                     if (isSolved(targetPointsMap, _boxNums)) {
                         answer = _history.opt;
+                        console.log(bfsC);
                         console.log(dw);
 
                         // console.log(JSON.stringify(historyMap).length)
@@ -149,7 +150,7 @@ let findingPath = (boxMap) => {
     return formatAnswer(answer);
 };
 
-let boxMap = format(map.example1);
+let boxMap = format(map.example3);
 
 console.time('a');
 console.log(findingPath(boxMap));
