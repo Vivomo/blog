@@ -1,7 +1,7 @@
 {
   "name": "blog",
   "version": "1.0.0",
-  "description": "访问地址(http://www.weimu.me)",
+  "description": "访问地址(http://www.weimu.xyz)",
   "main": "server.js",
   "directories": {
     "doc": "doc",

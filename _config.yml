@@ -1,3 +1,3 @@
 baseurl: /
-cname: http://www.weimu.me/
+# cname: http://www.weimu.xyz/
 exclude: ["build", "scss", "eg_build", "chrome_plugins", "doc", "SPA", "README.md"]
