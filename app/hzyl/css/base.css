@@ -8,7 +8,7 @@ body,html{
     height: auto;
     color:#333;
     /* overflow: hidden;*/
-    background: url('../images/bg1.jpg') no-repeat;
+    background: url('http://f.saihuitong.com/4/attachment/22/FsAyNant9qEcJPT3W76rAtmqb1JT.jpg?attname=bg1.jpg') no-repeat;
     background-size: 100% 100%;
 }
 /*各浏览器显示不同，去掉蓝色边框*/
