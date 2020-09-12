@@ -24,6 +24,24 @@ let compress = (arr) => {
     return result.join('');
 };
 
+let RLE = (arr) => {
+    let result = [];
+    let temp = arr[0];
+    let count = 1;
+    for (let i = 1; i < arr.length; i++) {
+        if (arr[i] === temp) {
+            count ++;
+        } else {
+            result.push(temp + '' + count);
+            temp = arr[i];
+            count = 1;
+        }
+    }
+    result = result.join('');
+    console.log(result.length);
+    return result;
+};
+
 loadImage(imgPath).then((img) => {
     ctx.drawImage(img, 0, 0);
 
@@ -59,6 +77,9 @@ loadImage(imgPath).then((img) => {
     }
     let result = compress(letterArea);
     console.log(result);
+
+    let result2 = RLE(letterArea);
+    console.log(result2);
 
 });
 
