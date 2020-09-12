@@ -10,7 +10,22 @@ const ctx = canvas.getContext('2d');
 
 let imgPath = path.join(__dirname, '../../ignore/6186.jpg');
 
-
+let compress = (arr) => {
+    let result = [];
+    let temp = 0;
+    arr.forEach((row) => {
+        row.forEach((item, index) => {
+            temp += item << (index % 16);
+            if (index % 16 === 15) {
+                // console.log(temp)
+                result.push(String.fromCharCode(temp));
+                temp = 0;
+            }
+        });
+    });
+    console.log(result.length)
+    return result.join('');
+};
 
 loadImage(imgPath).then((img) => {
     ctx.drawImage(img, 0, 0);
@@ -48,7 +63,9 @@ loadImage(imgPath).then((img) => {
             // });
         }
     }
-    let result = letterArea.map(item => item.join(''));
+    // let result = letterArea.map(item => item.join(''));
+    let result = compress(letterArea);
     console.log(result);
 
 });
+
