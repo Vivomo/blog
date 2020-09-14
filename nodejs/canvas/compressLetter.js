@@ -28,7 +28,7 @@ let compressLetterList = letterList.map((line) => {
     if (line.length > compressLine.length) {
         return 'R' + compressLine;
     } else {
-        return 'D' + line;
+        return 'H' + line;
     }
 });
 
