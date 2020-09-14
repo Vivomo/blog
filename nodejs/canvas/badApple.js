@@ -25,28 +25,10 @@ let compress = (arr) => {
             temp = 0;
         }
     });
-    // result = RLE(result);
-    // console.log(result.length);
     return result.join('');
 };
 
-let RLE = (arr) => {
-    let result = [];
-    let temp = arr[0];
-    let count = 1;
-    for (let i = 1; i < arr.length; i++) {
-        if (arr[i] === temp) {
-            count ++;
-        } else {
-            result.push(temp + '' + count);
-            temp = arr[i];
-            count = 1;
-        }
-    }
-    result.push(temp + '' + count);
-    result = result.join('');
-    return result;
-};
+
 
 let getImageData =  (startX = 0, startY = 0, width, height) => {
     return ctx.getImageData(startX, startY, width, height);
