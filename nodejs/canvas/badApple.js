@@ -1,5 +1,4 @@
 const {createCanvas, loadImage} = require('canvas');
-const path = require('path');
 const fs = require('fs');
 const {getFilesByPath} = require('../util/fileUtil');
 
@@ -10,7 +9,6 @@ let height = 720;
 const canvas = createCanvas(width, height);
 const ctx = canvas.getContext('2d');
 
-let imgPath = path.join(__dirname, '../../ignore/1.jpg');
 let letterList = [];
 let imgCount = 0;
 let numReg = /\d+/;
@@ -19,15 +17,14 @@ let compress = (arr) => {
     let result = [];
     let temp = 0;
     arr.forEach((item, index) => {
-        temp += item << (index % 16);
+        temp += item << (15 - index % 16);
         if (index % 16 === 15) {
-            result.push(String.fromCharCode(temp));
+            result.push(temp);
             temp = 0;
         }
     });
-    return result.join('');
+    return result;
 };
-
 
 
 let getImageData =  (startX = 0, startY = 0, width, height) => {
@@ -43,7 +40,7 @@ let imgToLetter = (pathList) => {
     let imgIndexInfo = numReg.exec(imgPath);
     let imgIndex;
     if (imgIndexInfo) {
-        imgIndex = ~~imgIndexInfo[0];
+        imgIndex = imgIndexInfo[0] - 1;
     } else {
         console.log('error path', imgPath);
         return;
@@ -91,7 +88,8 @@ let imgToLetter = (pathList) => {
 };
 
 let writeFile = () => {
-    fs.writeFileSync('D:\\code\\git\\blog\\ignore\\letter.txt', letterList.join('\n'));
+    let arr = new Int16Array(letterList.flat(1));
+    fs.writeFileSync('D:\\code\\git\\blog\\ignore\\buffer.b', Buffer.from(arr));
 };
 
 console.time('time');
