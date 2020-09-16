@@ -17,8 +17,8 @@ let compress = (arr) => {
     let result = [];
     let temp = 0;
     arr.forEach((item, index) => {
-        temp += item << (15 - index % 16);
-        if (index % 16 === 15) {
+        temp += item << (7 - index % 8);
+        if (index % 8 === 7) {
             result.push(temp);
             temp = 0;
         }
@@ -88,7 +88,7 @@ let imgToLetter = (pathList) => {
 };
 
 let writeFile = () => {
-    let arr = new Int16Array(letterList.flat(1));
+    let arr = new Int8Array(letterList.flat(1));
     fs.writeFileSync('D:\\code\\git\\blog\\ignore\\buffer.b', Buffer.from(arr));
 };
 
