@@ -16,6 +16,7 @@ let getImageData =  (startX = 0, startY = 0, width, height) => {
 
 function verify(imgIndex) {
     let imgPath = basePath + imgIndex + '.jpg';
+    let filePath = `D:\\code\\git\\blog\\ignore\\bufferRLE${imgIndex}.b`;
     let w = width / pixelValue;
     let h = height / pixelValue;
 
@@ -66,9 +67,18 @@ function verify(imgIndex) {
         return compressLetter;
     }).then((data) => {
         let rleData = RLE(data);
-        console.log(rleData);
+        console.log(rleData, rleData.length);
         return rleData;
+    }).then((rleData) => {
+        let [start, ...countData] = rleData;
+        let arr = Int16Array.from([129, 1, 6912, (start << 7) | 1, countData.length, ...countData]);
+        fs.writeFileSync(filePath, Buffer.from(arr.buffer));
+        console.log(arr);
+        return arr;
+    }).then((int16Arr) => {
+        let buff = fs.readFileSync(filePath);
+        console.log(buff)
     });
 }
 
-verify(67);
+verify(45);
