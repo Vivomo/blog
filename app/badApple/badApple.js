@@ -19,17 +19,16 @@ let unzip = (resp) => {
     while (cursor < framesData.length) {
         let curFrameData = framesData[cursor];
         if (curFrameData & isZipFrame) {
-            let startPx = (curFrameData >> 7) & 1;
+            // let startPx = (curFrameData >> 7) & 1;
             let endIndex = cursor + 2 + framesData[cursor + 1];
-            let countData = framesData.slice(cursor + 2, endIndex);
-            let frame = unzipFrame(startPx, countData);
+            let frame = framesData.slice(cursor, endIndex);
             unzipFrames.push(frame);
-            cursor += endIndex;
+            cursor = endIndex;
         } else {
-            let endIndex = cursor + 1 + pxBtCount;
-            let frame = restore(framesData.slice(cursor + 1, endIndex));
+            let endIndex = cursor + 1 + pxBtCount / 2;
+            let frame = framesData.slice(cursor + 1, endIndex);
             unzipFrames.push(frame);
-            cursor += endIndex;
+            cursor = endIndex;
         }
     }
     return unzipFrames;
