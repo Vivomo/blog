@@ -17,7 +17,7 @@ let RLE = (arr) => {
             } else {
                 result.push(count);
                 current = current ? 0 : 1;
-                count = 0;
+                count = 1;
             }
         }
     }
