@@ -1,6 +1,7 @@
 const {createCanvas, loadImage} = require('canvas');
 const fs = require('fs');
 const {getFilesByPath} = require('../util/fileUtil');
+const {compress} = require('./utils');
 
 let pixelValue = 10;
 let width = 960;
@@ -13,18 +14,7 @@ let letterList = [];
 let imgCount = 0;
 let numReg = /\d+/;
 
-let compress = (arr) => {
-    let result = [];
-    let temp = 0;
-    arr.forEach((item, index) => {
-        temp += item << (7 - index % 8);
-        if (index % 8 === 7) {
-            result.push(temp);
-            temp = 0;
-        }
-    });
-    return result;
-};
+
 
 
 let getImageData =  (startX = 0, startY = 0, width, height) => {

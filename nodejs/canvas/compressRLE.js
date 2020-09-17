@@ -1,30 +1,5 @@
 const fs = require('fs');
-
-/**
- *
- * @param arr 原帧
- * @returns
- */
-let RLE = (arr) => {
-    let current = arr[0] >> 7;
-    let result = [current];
-    let count = 0;
-
-    for (let i = 0; i < arr.length; i++) {
-        for (let j = 7; j >= 0; j--) {
-            if (((arr[i] >> j) & 1) === current) {
-                count++;
-            } else {
-                result.push(count);
-                current = current ? 0 : 1;
-                count = 1;
-            }
-        }
-    }
-
-    result.push(count || 1);
-    return result;
-};
+const {RLE} = require('./utils');
 
 
 console.time('a');
