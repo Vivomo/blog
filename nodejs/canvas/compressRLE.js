@@ -18,7 +18,8 @@ for (let i = 0; i < frameCount; i++) {
         zipFrames.push([(startPx << 7) | 1, zipFrame.length, zipFrame]);
     }
 }
-
-fs.writeFileSync('D:\\code\\git\\blog\\ignore\\bufferRLE.b', Buffer.from(new Int16Array(zipFrames.flat(1)).buffer));
+let flatData= zipFrames.flat(2);
+let data = new Int16Array(flatData);
+fs.writeFileSync('D:\\code\\git\\blog\\ignore\\bufferRLE.b', Buffer.from(data.buffer));
 
 console.timeEnd('a');
