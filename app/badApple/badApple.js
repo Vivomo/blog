@@ -26,8 +26,10 @@ let unzip = (resp) => {
             unzipFrames.push(frame);
             cursor += endIndex;
         } else {
-            unzipFrames.push(framesData.slice(cursor + 1, cursor + 1 + pxBtCount));
-            cursor += 1 + pxBtCount;
+            let endIndex = cursor + 1 + pxBtCount;
+            let frame = restore(framesData.slice(cursor + 1, endIndex));
+            unzipFrames.push(frame);
+            cursor += endIndex;
         }
     }
     return unzipFrames;
@@ -35,13 +37,19 @@ let unzip = (resp) => {
 
 let unzipFrame = (startPx, countData) => {
     let curPx = startPx;
-    return countData.map((count) => {
-         let data = new Int8Array(count);
-         if (curPx) {
-             data.fill(curPx);
-             curPx = 0;
-         } else {
-             curPx = 1;
-         }
+    return Array.from(countData).map((count) => {
+         let data = new Array(count).fill(curPx);
+         curPx = curPx ? 0 : 1;
+         return data;
     }).flat(1);
+};
+
+let restore = (frameData) => {
+    let result = [];
+    for (let i = 0; i < frameData.length; i++) {
+        for (let j = 7; j >= 0; j--) {
+            result.push((frameData >> j) & 1);
+        }
+    }
+    return result;
 };
