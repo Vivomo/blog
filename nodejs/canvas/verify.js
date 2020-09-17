@@ -112,6 +112,35 @@ let unzip = (resp) => {
 };
 
 let data = fs.readFileSync('D:\\code\\git\\blog\\ignore\\bufferRLE.b');
-unzip(data);
+let unzipFrame = unzip(data);
 
-verify(45);
+let frames = fs.readFileSync('D:\\code\\git\\blog\\ignore\\buffer.b');
+let frameCount = frames.length / pxBtCount;
+let zipFrames = [];
+
+for (let i = 0; i < frameCount; i++) {
+    let frame = frames.slice(i * pxBtCount, (i + 1) * pxBtCount);
+    let [startPx, ...zipFrame] = RLE(frame);
+    if (zipFrame.length / 2 > pxBtCount) {
+        zipFrames.push([0, ...frame]);
+    } else {
+        zipFrames.push([(startPx << 7) | 1, zipFrame.length, ...zipFrame]);
+    }
+}
+
+unzipFrame.forEach((frame, index) => {
+    if (index === unzipFrame.length - 1) {
+        debugger
+    }
+    let frame2 = zipFrames[index];
+    if (frame.length !== frame2.length) {
+        debugger;
+    }
+    let equal = frame2.every((item, itemIndex) => item === frame[itemIndex]);
+    if (!equal) {
+        debugger
+    }
+
+});
+
+// verify(45);
