@@ -38,7 +38,7 @@ for (let i = 0; i < frameCount; i++) {
     let frame = frames.slice(i * pxBtCount, (i + 1) * pxBtCount);
     let [startPx, ...zipFrame] = RLE(frame);
     if (zipFrame.length * 2 > pxBtCount) {
-        zipFrames.push([0, 0, ...frame]);
+        zipFrames.push([0, ...frame]);
     } else {
         zipFrames.push([(startPx << 7) | 1, zipFrame.length, zipFrame]);
     }
