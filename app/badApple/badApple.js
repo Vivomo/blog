@@ -32,7 +32,7 @@ ctx.font = "10px Arial";
 
 
 let draw = (frames, index = 0) => {
-    if (index === frames.length) {
+    if (index === 6569) {
         return;
     }
     let result = restore(frames.slice(index * pxBtCount, (index + 1) * pxBtCount));
