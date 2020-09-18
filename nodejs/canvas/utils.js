@@ -73,8 +73,12 @@ let unzip = (resp) => {
 let diff = (prev, cur) => {
     let diffPoint = [];
     for (let i = 0; i < prev.length; i++) {
-        if (prev[i] === cur[i]) {
-            diffPoint.push(i);
+        for (let j = 7; j >=0; j--) {
+            let a = (prev[i] >> j) & 1;
+            let b = (cur[i] >> j) & 1;
+            if (a !== b) {
+                diffPoint.push(i * 8 + 7 -j)
+            }
         }
     }
     return diffPoint;
