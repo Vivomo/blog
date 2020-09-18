@@ -5,6 +5,7 @@ JSZipUtils.getBinaryContent('http://f.saihuitong.com/8/attachment/22/FjpS9ehtWVA
     JSZip.loadAsync(data).then(function (zip) {
         return zip.files["buffer.b"].async('uint8array');
     }).then((data) => {
+        window.staticData = data;
         draw(data);
     });
 });
@@ -24,6 +25,7 @@ let restore = (frameData) => {
 
 let apple = document.getElementById('apple');
 let ctx = apple.getContext('2d');
+let stop = false;
 
 ctx.fillStyle = '#00aa00';
 ctx.font = "10px Arial";
@@ -40,6 +42,11 @@ let draw = (frames, index = 0) => {
         ctx.fillText(result.slice((i - 1) * 96, i * 96).join(' '), 0, i * 10);
     }
     setTimeout(() => {
-        draw(frames, index + 1);
+        !stop && draw(frames, index + 1);
     }, 33)
+};
+
+let drawStatic = (index) => {
+    stop = true;
+    draw(staticData, index);
 };
