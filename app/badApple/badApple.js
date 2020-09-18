@@ -1,4 +1,4 @@
-JSZipUtils.getBinaryContent('buffer.zip', function(err, data) {
+JSZipUtils.getBinaryContent('http://f.saihuitong.com/8/attachment/22/FjpS9ehtWVA1wKAb_X79UIYxXQj7.zip?attname=buffer.zip', function(err, data) {
     if(err) {
         throw err; // or handle err
     }
