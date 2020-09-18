@@ -42,7 +42,37 @@ let RLE = (arr) => {
     return result;
 };
 
+let unzip = (resp) => {
+    const isZipFrame = 1;
+    let framesData8 = new Uint8Array(resp);
+    let framesData = new Int16Array(framesData8.byteLength / 2);
+    framesData.forEach((item, index) => {
+        let a = framesData8[index * 2];
+        let b = framesData8[index * 2 + 1] << 8;
+        framesData[index] = a + b;
+    });
+    let unzipFrames = [];
+    let cursor = 0;
+    while (cursor < framesData.length) {
+        let curFrameData = framesData[cursor];
+        if (curFrameData & isZipFrame) {
+            let endIndex = cursor + 2 + framesData[cursor + 1];
+            let frame = framesData.slice(cursor, endIndex);
+            unzipFrames.push(frame);
+            cursor = endIndex;
+        } else {
+            let endIndex = cursor + 1 + pxBtCount / 2;
+            let frame = framesData.slice(cursor, endIndex);
+            unzipFrames.push(frame);
+            cursor = endIndex;
+        }
+    }
+    return unzipFrames;
+};
+
+
 module.exports = {
     compress,
-    RLE
+    RLE,
+    unzip
 };
