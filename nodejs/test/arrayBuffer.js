@@ -1,30 +1,24 @@
 const fs = require('fs');
 
-let buff = new ArrayBuffer(8 * 1024);
-let arr = new Int16Array(buff);
+let a = Int16Array.from([2048, 1025]);
+console.log( Buffer.from(a).buffer);
+console.log( Buffer.from(a.buffer));
+console.log(a.buffer);
 
-console.log(arr[1]);
-
-arr[1] = 3;
-
-// fs.writeFileSync('D:\\code\\git\\blog\\ignore\\buffer.b', Buffer.from(arr));
-
-let compress = (arr) => {
-    let result = [];
-    let temp = 0;
-    arr.forEach((item, index) => {
-        temp += item << (15 - index % 16);
-        if (index % 16 === 15) {
-            result.push(temp);
-            temp = 0;
-        }
-    });
-    return result;
-};
 
 // let a = [0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1];
 // console.log(compress(a))
 
-console.log(Buffer.from([10]))
-console.log(Buffer.from([255]))
-console.log(Buffer.from(new Int16Array([1023]).buffer));
+// console.log(Buffer.from([10]))
+// console.log(Buffer.from([255]))
+// console.log(Buffer.from(new Int16Array([6912]).buffer));
+
+
+// let b = Buffer.from(Int16Array.from([6912]).buffer);
+
+// let a = Array.from(Int16Array.from(b));
+// let f = fs.readFileSync('D:\\code\\git\\blog\\ignore\\buffertest.b');
+// console.log(new Int16Array(f))
+
+// let a = Int8Array.from([1, 1]);
+// console.log(Int16Array.from(a));
