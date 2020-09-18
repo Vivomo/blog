@@ -70,9 +70,20 @@ let unzip = (resp) => {
     return unzipFrames;
 };
 
+let diff = (prev, cur) => {
+    let diffPoint = [];
+    for (let i = 0; i < prev.length; i++) {
+        if (prev[i] === cur[i]) {
+            diffPoint.push(i);
+        }
+    }
+    return diffPoint;
+};
+
 
 module.exports = {
     compress,
     RLE,
-    unzip
+    unzip,
+    diff
 };
