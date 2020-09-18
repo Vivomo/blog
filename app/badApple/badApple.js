@@ -2,7 +2,8 @@ const xhr = new XMLHttpRequest();
 
 xhr.onreadystatechange = () => {
     if (xhr.readyState === 4 && xhr.status === 200) {
-        unzip(xhr.response);
+        let frames = unzip(xhr.response);
+        draw(frames);
     }
 };
 xhr.responseType = 'arraybuffer';
@@ -51,4 +52,35 @@ let restore = (frameData) => {
         }
     }
     return result;
+};
+
+
+let apple = document.getElementById('apple');
+let ctx = apple.getContext('2d');
+
+// ctx.beginPath();
+ctx.fillStyle = '#00aa00';
+ctx.font = "10px Microsoft Yahei"
+// ctx.stroke();
+
+let draw = (frames, index = 0) => {
+    if (index === frames.length) {
+        return;
+    }
+    let frame = frames[index];
+    let data = frame[0];
+    let result;
+    if (data & isZipFrame) {
+        let start = (data >> 7) & 1;
+        result = unzipFrame(start, frame.slice(2));
+    } else {
+        result = restore(frame.slice(1));
+    }
+    ctx.clearRect(0, 0, 960, 720);
+    for (let i = 1; i <= 72; i++) {
+        ctx.fillText(result.slice((i - 1) * 96, i * 96).join(' '), 0, i * 10);
+    }
+    setTimeout(() => {
+        draw(frames, index + 1);
+    }, 33)
 };
