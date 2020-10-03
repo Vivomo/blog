@@ -403,65 +403,64 @@ const Canvas = (function () {
             let lastWidth = wRemainder === 0 ? pixelValue : wRemainder;
             let lastHeight = hRemainder === 0 ? pixelValue : hRemainder;
 
-            // console.time('a');
-            // let imgDataObj = this.getImageData(0, 0, cWidth, cHeight);
-            // let imgData = imgDataObj.data;
-            //
-            // let updateImgData = (wBC, hBC) => {
-            //     let w = wBC === wBlockCount - 1 ? lastWidth : pixelValue;
-            //     let h = hBC === hBlockCount - 1 ? lastHeight : pixelValue;
-            //     let color = [0, 0, 0, 0];
-            //     let start = cWidth * hBC * pixelValue + wBC * pixelValue;
-            //     for (let col = 0; col < h; col++) {
-            //         for (let row = 0; row < w; row ++) {
-            //             let pxIndex = start + row + col * cWidth;
-            //
-            //             color.forEach((item, index) => {
-            //                 color[index] += imgData[pxIndex * 4 + index];
-            //             });
-            //         }
-            //     }
-            //     let total = w * h;
-            //     color.forEach((item, index) => {
-            //         color[index] = ~~(item / total);
-            //     });
-            //
-            //     for (let col = 0; col < h; col++) {
-            //         for (let row = 0; row < w; row ++) {
-            //             let pxIndex = start + row + col * cWidth;
-            //             for (let i = 0; i < 4; i++) {
-            //                 imgData[pxIndex * 4 + i] = color[i]
-            //             }
-            //         }
-            //     }
-            // };
-            for (let i = 0; i < wBlockCount; i++) {
-                for (let j = 0; j < hBlockCount; j++) {
-                    // updateImgData(i, j)
-                    setTimeout(() => {
-                        let w = i === wBlockCount - 1 ? lastWidth : pixelValue;
-                        let h = j === hBlockCount - 1 ? lastHeight : pixelValue;
-                        let imageData = this.getImageData(i * pixelValue, j * pixelValue, w, h);
-                        let color = [0, 0, 0, 0];
-                        imageData.data.forEach((item, index) => {
-                            color[index % 4] += item;
-                        });
+            console.time('a');
+            let imgDataObj = this.getImageData(0, 0, cWidth, cHeight);
+            let imgData = imgDataObj.data;
+
+            let updateImgData = (wBC, hBC) => {
+                let w = wBC === wBlockCount - 1 ? lastWidth : pixelValue;
+                let h = hBC === hBlockCount - 1 ? lastHeight : pixelValue;
+                let color = [0, 0, 0, 0];
+                let start = cWidth * hBC * pixelValue + wBC * pixelValue;
+                for (let col = 0; col < h; col++) {
+                    for (let row = 0; row < w; row ++) {
+                        let pxIndex = start + row + col * cWidth;
 
                         color.forEach((item, index) => {
-                            color[index] = ~~ (item / (imageData.data.length / 4))
+                            color[index] += imgData[pxIndex * 4 + index];
                         });
+                    }
+                }
+                let total = w * h;
+                color.forEach((item, index) => {
+                    color[index] = ~~(item / total);
+                });
 
-                        imageData.data.forEach((item, index) => {
-                            imageData.data[index] = color[index % 4]
-                        });
-
-                        this.pen.putImageData(imageData, i * pixelValue, j * pixelValue);
-                    });
+                for (let col = 0; col < h; col++) {
+                    for (let row = 0; row < w; row ++) {
+                        let pxIndex = start + row + col * cWidth;
+                        for (let i = 0; i < 4; i++) {
+                            imgData[pxIndex * 4 + i] = color[i]
+                        }
+                    }
+                }
+            };
+            for (let i = 0; i < wBlockCount; i++) {
+                for (let j = 0; j < hBlockCount; j++) {
+                    updateImgData(i, j)
+                    // setTimeout(() => {
+                    //     let w = i === wBlockCount - 1 ? lastWidth : pixelValue;
+                    //     let h = j === hBlockCount - 1 ? lastHeight : pixelValue;
+                    //     let imageData = this.getImageData(i * pixelValue, j * pixelValue, w, h);
+                    //     let color = [0, 0, 0, 0];
+                    //     imageData.data.forEach((item, index) => {
+                    //         color[index % 4] += item;
+                    //     });
+                    //
+                    //     color.forEach((item, index) => {
+                    //         color[index] = ~~ (item / (imageData.data.length / 4))
+                    //     });
+                    //
+                    //     imageData.data.forEach((item, index) => {
+                    //         imageData.data[index] = color[index % 4]
+                    //     });
+                    //
+                    //     this.pen.putImageData(imageData, i * pixelValue, j * pixelValue);
+                    // });
                 }
             }
-            // this.pen.putImageData(imgDataObj, 0, 0);
-            // console.log(imgDataObj.data.slice(0, 100));
-            // console.timeEnd('a');
+            this.pen.putImageData(imgDataObj, 0, 0);
+            console.timeEnd('a');
         },
 
         /**
