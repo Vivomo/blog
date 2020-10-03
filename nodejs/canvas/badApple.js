@@ -16,12 +16,6 @@ let numReg = /\d+/;
 
 
 
-
-let getImageData =  (startX = 0, startY = 0, width, height) => {
-    return ctx.getImageData(startX, startY, width, height);
-};
-
-
 let imgToLetter = (pathList) => {
     let imgPath = pathList.pop();
     if (!imgPath) {
@@ -53,7 +47,7 @@ let imgToLetter = (pathList) => {
             for (let i = 0; i < wBlockCount; i++) {
                 let w = i === wBlockCount - 1 ? lastWidth : pixelValue;
                 let h = j === hBlockCount - 1 ? lastHeight : pixelValue;
-                let imageData = getImageData(i * pixelValue, j * pixelValue, w, h);
+                let imageData = ctx.getImageData(i * pixelValue, j * pixelValue, w, h);
                 let color = 0;
                 imageData.data.forEach((item, index) => {
                     if (index % 4 !== 3) {
