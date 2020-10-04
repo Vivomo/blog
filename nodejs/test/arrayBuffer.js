@@ -3,6 +3,7 @@ const fs = require('fs');
 let a = Int16Array.from([2048, 1025]);
 console.log( Buffer.from(a).buffer);
 console.log( Buffer.from(a.buffer));
+console.log( Buffer.from(a));
 console.log(a.buffer);
 
 
