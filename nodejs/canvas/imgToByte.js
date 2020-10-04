@@ -5,17 +5,16 @@ const {getFilesByPath} = require('../util/fileUtil');
 const {compress} = require('./utils');
 
 
-let cfg = {
-    inputPath: 'D:\\code\\git\\blog\\ignore\\ex_jljt\\',
-    outputPath: 'D:\\code\\git\\blog\\ignore\\jljt.b',
-    name: ''
-};
+let cfgContent = fs.readFileSync('D:\\code\\git\\blog\\ignore\\imgByte\\test.json', 'utf-8');
+let cfg = JSON.parse(cfgContent);
+
+// ffmpeg -i src01.avi %d.jpg
 
 let App = (() => {
 
     let imgCount = 0;
     let tempData;
-    let letterList = [];
+    let byteList = [];
     let numReg = /\d+/;
 
     /**
@@ -117,25 +116,44 @@ let App = (() => {
                         letterArea.push(isWhite ? 0 : 1);
                     }
                 }
-                letterList[imgIndex] = compress(letterArea);
+                byteList[imgIndex] = compress(letterArea);
                 imgCount--;
                 console.log(imgCount);
                 if (imgCount > 0) {
-                    this.imgToByte(this.imgPathList);
+                    this.imgToByte();
                 } else {
                     this.save();
                     console.timeEnd('time');
                 }
             });
         },
+        /**
+         * 返回信息头
+         * 5个字节 表示 宽2 高2 帧数1
+         */
+        getHeadData() {
+            let b = new Uint8Array(5);
+            let w = this.cfg.width / this.cfg.pixelValue;
+            let h = this.cfg.height / this.cfg.pixelValue;
+            let wh = new Uint8Array(Int16Array.from([w, h]).buffer);
+            wh.forEach((item, index) => {
+                b[index] = wh[index];
+            });
+            b[4] = this.cfg.frames;
+            return b;
+        },
         save() {
-            let arr = Int8Array.from(letterList.flat(1));
-            fs.writeFileSync(this.cfg.outputPath, Buffer.from(arr));
+            let imgByte = Uint8Array.from(byteList.flat(1));
+            let headData = this.getHeadData();
+            let result = new Uint8Array(imgByte.length + headData.length);
+            result.set(headData);
+            result.set(imgByte, headData.length);
+            fs.writeFileSync(`${this.cfg.outputPath}\\${this.cfg.name}.b`, Buffer.from(result));
         },
         init() {
             Object.assign(this.cfg, cfg);
 
-            let exImg = images(`${this.cfg.inputPath}1.jpg`);
+            let exImg = images(`${this.cfg.inputPath}\\1.jpg`);
             let width = exImg.width();
             let height = exImg.height();
             let pxWidth = width * 4;
