@@ -1,13 +1,7 @@
-var gulp = require('gulp'),
+let gulp = require('gulp'),
     scss = require('gulp-sass'),
     scssSrc = '../scss/**/*.scss';
-    // scssSrc = '../scss/calendar.scss';
 
-// gulp.task('testLess', function () {
-//     gulp.src('../less/questionnaire-survey.less')
-//         .pipe(less())
-//         .pipe(gulp.dest('../css'));
-// });
 /**
  * 安装scss 报错参照此网址, 推荐方法2
  * https://github.com/lmk123/blog/issues/28
@@ -17,40 +11,26 @@ var gulp = require('gulp'),
  * https://github.com/sass/node-sass/releases/tag/v4.5.3
  * 则npm rebuild node-sass
  */
-gulp.task('scss', function () {
-    gulp.src(scssSrc)
+let gulpScss = () => {
+    return gulp.src(scssSrc)
         .pipe(scss({
             linefeed: 'crlf'
             // outputStyle: 'expanded',
             // indentWidth: 4
         }))
         .pipe(gulp.dest('../css'));
-});
-
-let shareCss = '../ignore/share/scss/share.scss'
-gulp.task('share', function () {
-    gulp.src(shareCss)
-        .pipe(scss({
-            // outputStyle: 'expanded',
-            // indentWidth: 4
-        }))
-        .pipe(gulp.dest('../ignore/share/css'));
-});
+};
 
 
-
-gulp.task('testWatch', function () {
-    gulp.watch(shareCss, ['scss', 'share']);
-});
-
-gulp.task('scss2', function () {
-    gulp.src('../src/scss/**/*.scss')
+let gulpScss2 = () => {
+    return gulp.src('../src/scss/**/*.scss')
         .pipe(scss({
             linefeed: 'crlf'
             // outputStyle: 'expanded',
             // indentWidth: 4
         }))
         .pipe(gulp.dest('../src/css'));
-});
+};
 
-gulp.task('default', ['scss', 'scss2', 'testWatch', 'share']);
+exports.default = gulp.series(gulpScss, gulpScss2);
+
