@@ -1,0 +1,34 @@
+@charset "UTF-8";
+@import "inc/mixins";
+@import "inc/theme";
+
+$d: 30px;
+$margin: 6px;
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #000;
+}
+
+#wrap {
+
+}
+
+.row {
+    display: flex;
+    margin-bottom: $margin;
+
+    &:nth-child(2n) {
+        margin-left: ($d + $margin) / 2;
+    }
+}
+
+.point {
+    @include circle($d);
+    margin-right: $margin;
+    background: $theme1;
+}
