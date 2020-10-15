@@ -32,7 +32,6 @@
   #snake li:before {
     background: #ccc; }
   #snake li:first-child::before {
-      background-color: yellowgreen; }
+    background-color: yellowgreen; }
   #snake li:last-child::before {
-      background-color: tomato; }
-
+    background-color: tomato; }
