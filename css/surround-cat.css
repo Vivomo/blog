@@ -4,7 +4,18 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #000; }
+  background: #0d8050; }
+
+#wrap {
+  position: relative; }
+
+.cat {
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  background-image: url("../img/cat.png");
+  background-repeat: no-repeat;
+  animation: run-h steps(5) 0.5s infinite; }
 
 .row {
   display: flex;
@@ -18,3 +29,21 @@ body {
   border-radius: 50%;
   margin-right: 6px;
   background: #1EEDFF; }
+
+@keyframes run-down {
+  from {
+    background-position: 0 0; }
+  to {
+    background-position: -300px 0px; } }
+
+@keyframes run-h {
+  from {
+    background-position: 0 -62px; }
+  to {
+    background-position: -300px -62px; } }
+
+@keyframes run-up {
+  from {
+    background-position: 0 -124px; }
+  to {
+    background-position: -300px -124px; } }

@@ -8,7 +8,7 @@ let App = {
             let items = '<div class="point"></div>'.repeat(col);
             return `<div class="row">${items}</div>`;
         }).join('');
-        this.wrap.innerHTML = html;
+        this.wrap.innerHTML = html + '<div class="cat"></div>';
     }
 };
 
