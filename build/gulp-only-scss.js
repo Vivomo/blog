@@ -2,20 +2,18 @@ let gulp = require('gulp'),
     scss = require('gulp-sass'),
     scssSrc = '../scss/**/*.scss';
 
-gulp.task('scss', function () {
-    gulp.src(scssSrc)
+let gulpScss = () => {
+    return gulp.src(scssSrc)
         .pipe(scss({
             linefeed: 'crlf'
             // outputStyle: 'expanded',
             // indentWidth: 4
         }))
         .pipe(gulp.dest('../css'));
-});
+};
+
+let gulpWatch = () => gulp.watch(scssSrc, gulp.series(gulpScss));
 
 
 
-gulp.task('testWatch', function () {
-    gulp.watch(scssSrc, ['scss']);
-});
-
-gulp.task('default', ['scss', 'testWatch']);
+exports.default = gulp.series(gulpScss, gulpWatch);
