@@ -11,9 +11,9 @@
 	display: block;
 	clear: both;
 }
-@mixin circle($r) {
-	width: $r;
-	height: $r;
+@mixin circle($d) {
+	width: $d;
+	height: $d;
 	border-radius: 50%;
 }
 @mixin ellipsis($line:1){
