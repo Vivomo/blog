@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   margin: 0;
   display: flex;
@@ -28,6 +29,13 @@ body {
     animation: run-down steps(5) 0.5s; }
   .cat.d1, .cat.d2, .cat.d3 {
     transform: rotateY(180deg); }
+  .cat.end::before {
+    position: absolute;
+    bottom: 95%;
+    left: 10px;
+    font-size: 13px;
+    content: '溜了, 溜了....';
+    white-space: nowrap; }
 
 .row {
   display: flex; }

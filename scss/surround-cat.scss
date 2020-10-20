@@ -45,6 +45,15 @@ body {
     &.d1, &.d2, &.d3 {
         transform: rotateY(180deg);
     }
+
+    &.end::before {
+        position: absolute;
+        bottom: 95%;
+        left: 10px;
+        font-size: 13px;
+        content: '溜了, 溜了....';
+        white-space: nowrap;
+    }
 }
 
 .row {

@@ -13,6 +13,7 @@ let App = {
     catDirection: null,
     map: null,
     activatedList: [],
+    end: false,
     move({x, y, direction}) {
         let target = this.rowElem[y].children[x];
         this.cat.style.left = target.offsetLeft - this.catWidth / 2 + this.ceilWidth / 2 + 'px';
@@ -26,6 +27,13 @@ let App = {
                 this.cat.classList.add('d' + direction);
             }
         });
+        if (this.isBoundary(x, y)) {
+            this.gameOver();
+        }
+    },
+    gameOver() {
+        this.end = true;
+        this.cat.classList.add('end');
     },
     initHtml() {
         this.wrap.querySelector('.map').innerHTML = new Array(MAP_WIDTH).fill(0).map((_, rowIndex) => {
@@ -46,7 +54,8 @@ let App = {
     },
     initMap() {
         this.map = this.createMap();
-        let points = [{x: 5, y: 5}];
+        let mid = ~~(MAP_WIDTH / 2);
+        let points = [{x: mid, y: mid}];
         while (points.length < 8) {
             let x = ~~(Math.random() * MAP_WIDTH);
             let y = ~~(Math.random() * MAP_WIDTH);
@@ -64,6 +73,9 @@ let App = {
     },
     initEvent() {
         this.wrap.addEventListener('click', (e) => {
+            if (this.end) {
+                return;
+            }
             let target = e.target;
             let classList = target.classList;
             if (!classList.contains('point')) {
@@ -137,7 +149,6 @@ let App = {
                 }
                 let nextPoint = stack[stack.length - 2];
                 this.move(nextPoint);
-                console.log(boundaryPoint);
                 break;
             }
             ergodicPoint = newErgodicPoint;
