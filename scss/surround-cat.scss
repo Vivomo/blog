@@ -32,7 +32,10 @@ body {
 
 .row {
     display: flex;
-    margin-bottom: $margin;
+
+    &:not(:last-child) {
+        margin-bottom: $margin;
+    }
 
     &:nth-child(2n) {
         margin-left: ($d + $margin) / 2;
@@ -44,11 +47,17 @@ body {
     margin-right: $margin;
     background: $theme1;
     cursor: pointer;
+    transition: background-color 0.3s;
 
     &.active {
         cursor: default;
         background: #265377;
     }
+}
+
+.row:first-child .point, .row:last-child .point, .point:first-child, .point:last-child{
+    background: transparent;
+    pointer-events: none;
 }
 
 @keyframes run-down {

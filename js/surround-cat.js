@@ -1,4 +1,5 @@
-const MAP_WIDTH = 11;
+const MAP_WIDTH = 13;
+
 let App = {
     wrap: document.getElementById('wrap'),
     colElem: null,
@@ -24,8 +25,10 @@ let App = {
                 `<div class="point" data-y="${rowIndex}" data-x="${colIndex}"></div>`).join('');
             return `<div class="row">${items}</div>`;
         }).join('');
-        this.wrap.innerHTML = html + '<div class="cat"></div>';
-
+        this.wrap.querySelector('.map').innerHTML = html;
+        let cat = this.cat = document.createElement('div');
+        cat.className = 'cat';
+        this.wrap.appendChild(cat);
         this.rowElem = this.wrap.querySelectorAll('.row');
         this.cat = this.wrap.querySelector('.cat');
         this.catWidth = this.cat.offsetWidth;
@@ -39,9 +42,13 @@ let App = {
             return new Array(MAP_WIDTH).fill(0).map(_ => ({active: false}));
         });
         let points = [{x: 5, y: 5}];
+        let maxIndex = MAP_WIDTH - 1;
         while (points.length < 8) {
             let x = ~~(Math.random() * MAP_WIDTH);
             let y = ~~(Math.random() * MAP_WIDTH);
+            if (x === 0 || x === maxIndex || y === 0 || y === maxIndex) {
+                continue;
+            }
             let isCreated = points.some(point => point.x === x && point.y === y);
             if (!isCreated) {
                 points.push({x, y});
@@ -80,7 +87,9 @@ let App = {
         this.initHtml();
         this.initMap();
         this.initEvent();
-        this.move(5, 5);
+
+        let mid = ~~(MAP_WIDTH / 2)
+        this.move(mid, mid);
     }
 };
 

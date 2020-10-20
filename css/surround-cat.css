@@ -20,8 +20,9 @@ body {
   transition: left 0.5s, top 0.5s; }
 
 .row {
-  display: flex;
-  margin-bottom: 6px; }
+  display: flex; }
+  .row:not(:last-child) {
+    margin-bottom: 6px; }
   .row:nth-child(2n) {
     margin-left: 18px; }
 
@@ -31,10 +32,15 @@ body {
   border-radius: 50%;
   margin-right: 6px;
   background: #1EEDFF;
-  cursor: pointer; }
+  cursor: pointer;
+  transition: background-color 0.3s; }
   .point.active {
     cursor: default;
     background: #265377; }
+
+.row:first-child .point, .row:last-child .point, .point:first-child, .point:last-child {
+  background: transparent;
+  pointer-events: none; }
 
 @keyframes run-down {
   from {
