@@ -164,6 +164,7 @@ let App = {
                 this.move(nextPoint);
                 break;
             }
+            this.disarrange(newErgodicPoint);
             ergodicPoint = newErgodicPoint;
             distance++;
             if (App.debug) {
@@ -175,6 +176,17 @@ let App = {
             this.showSuccess();
         }
 
+    },
+    /**
+     * 打乱寻路节点, 避免每次都是固定方向
+     */
+    disarrange(points) {
+        for (let i = 0, l = points.length; i < l; i++) {
+            let randomIndex = ~~(Math.random() * l);
+            let temp = points[i];
+            points[i] = points[randomIndex];
+            points[randomIndex] = temp;
+        }
     },
     showSuccess() {
         this.end = true;
