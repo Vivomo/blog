@@ -13,7 +13,7 @@ let App = {
     ceilHeight: null,
     map: null,
     activatedList: [],
-    move(x, y) {
+    move({x, y, direction}) {
         let target = this.rowElem[y].children[x];
         this.cat.style.left = target.offsetLeft - this.catWidth / 2 + this.ceilWidth / 2 + 'px';
         this.cat.style.top = target.offsetTop - this.catHeight + this.ceilHeight / 2 + 'px';
@@ -69,7 +69,8 @@ let App = {
             this.activate({
                 x: ~~data.x,
                 y: ~~data.y
-            })
+            });
+            this.findWay();
         });
     },
     activate({x, y}) {
@@ -95,27 +96,40 @@ let App = {
         for (let point of this.activatedList) {
             tempMap[point.y][point.x].active = true;
         }
-        let path = {
-            points: [{x: this.catX, y: this.catY}]
-        };
         let ergodicPoint = [{x: this.catX, y: this.catY}];
 
         let success = false;
+        let distance = 1;
         while (true) {
             let newErgodicPoint = [];
             ergodicPoint.forEach((point) => {
                 newErgodicPoint.push(...this.getNextPoints(point, tempMap));
             });
             if (newErgodicPoint.length === 0) {
-                success = true;
+                if (distance === 1) {
+                    success = true;
+                } else {
+                    // 随机走一步
+                    let nextPoints = this.getNextPoints({x: this.catX, y: this.catY}, this.createMap());
+                    this.move(nextPoints[~~(nextPoints.length * Math.random())])
+                }
                 break;
             }
             let boundaryPoint = this.getBoundaryPoint(newErgodicPoint);
             if (boundaryPoint) {
+                let stack = [boundaryPoint];
+                let temp = boundaryPoint;
+                while (temp.prev) {
+                    temp = temp.prev;
+                    stack.push(temp)
+                }
+                let nextPoint = stack[stack.length - 2];
+                this.move(nextPoint);
                 console.log(boundaryPoint);
                 break;
             }
             ergodicPoint = newErgodicPoint;
+            distance++;
         }
 
     },
@@ -131,15 +145,15 @@ let App = {
         //  4 3
         if (y % 2) {
             // 奇数行
-            this.pushIfNotActive(map, nextPoints, x - 1, y - 1, 0);
-            this.pushIfNotActive(map, nextPoints, x, y - 1, 1);
-            this.pushIfNotActive(map, nextPoints, x, y - 1, 3);
-            this.pushIfNotActive(map, nextPoints, x - 1, y - 1, 4);
-        } else {
             this.pushIfNotActive(map, nextPoints, x, y - 1, 0);
             this.pushIfNotActive(map, nextPoints, x + 1, y - 1, 1);
-            this.pushIfNotActive(map, nextPoints, x + 1, y - 1, 3);
-            this.pushIfNotActive(map, nextPoints, x, y - 1, 4);
+            this.pushIfNotActive(map, nextPoints, x + 1, y + 1, 3);
+            this.pushIfNotActive(map, nextPoints, x, y + 1, 4);
+        } else {
+            this.pushIfNotActive(map, nextPoints, x - 1, y - 1, 0);
+            this.pushIfNotActive(map, nextPoints, x, y - 1, 1);
+            this.pushIfNotActive(map, nextPoints, x, y + 1, 3);
+            this.pushIfNotActive(map, nextPoints, x - 1, y + 1, 4);
         }
         this.pushIfNotActive(map, nextPoints, x + 1, y, 2);
         this.pushIfNotActive(map, nextPoints, x - 1, y, 5);
@@ -160,7 +174,10 @@ let App = {
         this.initEvent();
 
         let mid = ~~(MAP_WIDTH / 2);
-        this.move(mid, mid);
+        this.move({
+            x: mid,
+            y: mid
+        });
     }
 };
 
