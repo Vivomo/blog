@@ -27,6 +27,7 @@ body {
     background-repeat: no-repeat;
 
     animation: run-h steps(5) 0.5s infinite;
+    transition: left 0.5s, top 0.5s;
 }
 
 .row {
@@ -42,6 +43,10 @@ body {
     @include circle($d);
     margin-right: $margin;
     background: $theme1;
+
+    &.active {
+        background: #265377;
+    }
 }
 
 @keyframes run-down {

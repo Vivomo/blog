@@ -15,7 +15,8 @@ body {
   height: 62px;
   background-image: url("../img/cat.png");
   background-repeat: no-repeat;
-  animation: run-h steps(5) 0.5s infinite; }
+  animation: run-h steps(5) 0.5s infinite;
+  transition: left 0.5s, top 0.5s; }
 
 .row {
   display: flex;
@@ -29,6 +30,8 @@ body {
   border-radius: 50%;
   margin-right: 6px;
   background: #1EEDFF; }
+  .point.active {
+    background: #265377; }
 
 @keyframes run-down {
   from {
