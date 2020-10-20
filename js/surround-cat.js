@@ -12,7 +12,7 @@ let App = {
     ceilWidth: null,
     ceilHeight: null,
     map: null,
-    activatedList: null,
+    activatedList: [],
     move(x, y) {
         let target = this.rowElem[y].children[x];
         this.cat.style.left = target.offsetLeft - this.catWidth / 2 + this.ceilWidth / 2 + 'px';
@@ -40,11 +40,10 @@ let App = {
     initMap() {
         this.map = this.createMap();
         let points = [{x: 5, y: 5}];
-        let maxIndex = MAP_WIDTH - 1;
         while (points.length < 8) {
             let x = ~~(Math.random() * MAP_WIDTH);
             let y = ~~(Math.random() * MAP_WIDTH);
-            if (x === 0 || x === maxIndex || y === 0 || y === maxIndex) {
+            if (this.isBoundary(x, y)) {
                 continue;
             }
             let isCreated = points.some(point => point.x === x && point.y === y);
@@ -87,6 +86,10 @@ let App = {
             return new Array(MAP_WIDTH).fill(0).map(_ => ({active: false}));
         });
     },
+    isBoundary(x, y) {
+        let maxIndex = MAP_WIDTH - 1;
+        return x === 0 || x === maxIndex || y === 0 || y === maxIndex;
+    },
     findWay() {
         let tempMap = this.createMap();
         for (let point of this.activatedList) {
@@ -107,9 +110,17 @@ let App = {
                 success = true;
                 break;
             }
+            let boundaryPoint = this.getBoundaryPoint(newErgodicPoint);
+            if (boundaryPoint) {
+                console.log(boundaryPoint);
+                break;
+            }
             ergodicPoint = newErgodicPoint;
         }
 
+    },
+    getBoundaryPoint(points) {
+        return points.find(({x, y}) => this.isBoundary(x, y));
     },
     getNextPoints(point, map) {
         let {x, y} = point;
