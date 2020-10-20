@@ -12,6 +12,7 @@ let App = {
     ceilWidth: null,
     ceilHeight: null,
     map: null,
+    activatedList: null,
     move(x, y) {
         let target = this.rowElem[y].children[x];
         this.cat.style.left = target.offsetLeft - this.catWidth / 2 + this.ceilWidth / 2 + 'px';
@@ -20,12 +21,11 @@ let App = {
         this.catY = y;
     },
     initHtml() {
-        let html = new Array(MAP_WIDTH).fill(0).map((_, rowIndex) => {
+        this.wrap.querySelector('.map').innerHTML = new Array(MAP_WIDTH).fill(0).map((_, rowIndex) => {
             let items = new Array(MAP_WIDTH).fill(0).map((_, colIndex) =>
                 `<div class="point" data-y="${rowIndex}" data-x="${colIndex}"></div>`).join('');
             return `<div class="row">${items}</div>`;
         }).join('');
-        this.wrap.querySelector('.map').innerHTML = html;
         let cat = this.cat = document.createElement('div');
         cat.className = 'cat';
         this.wrap.appendChild(cat);
@@ -38,9 +38,7 @@ let App = {
         this.catHeight = ceil.offsetHeight;
     },
     initMap() {
-        this.map = new Array(MAP_WIDTH).fill(0).map(_ => {
-            return new Array(MAP_WIDTH).fill(0).map(_ => ({active: false}));
-        });
+        this.map = this.createMap();
         let points = [{x: 5, y: 5}];
         let maxIndex = MAP_WIDTH - 1;
         while (points.length < 8) {
@@ -82,13 +80,75 @@ let App = {
         }
         point.activate = true;
         this.rowElem[y].children[x].classList.add('active');
+        this.activatedList.push({x, y});
+    },
+    createMap() {
+        return new Array(MAP_WIDTH).fill(0).map(_ => {
+            return new Array(MAP_WIDTH).fill(0).map(_ => ({active: false}));
+        });
+    },
+    findWay() {
+        let tempMap = this.createMap();
+        for (let point of this.activatedList) {
+            tempMap[point.y][point.x].active = true;
+        }
+        let path = {
+            points: [{x: this.catX, y: this.catY}]
+        };
+        let ergodicPoint = [{x: this.catX, y: this.catY}];
+
+        let success = false;
+        while (true) {
+            let newErgodicPoint = [];
+            ergodicPoint.forEach((point) => {
+                newErgodicPoint.push(...this.getNextPoints(point, tempMap));
+            });
+            if (newErgodicPoint.length === 0) {
+                success = true;
+                break;
+            }
+            ergodicPoint = newErgodicPoint;
+        }
+
+    },
+    getNextPoints(point, map) {
+        let {x, y} = point;
+        let nextPoints = [];
+        // 6个方向
+        //  0 1
+        // 5 * 2
+        //  4 3
+        if (y % 2) {
+            // 奇数行
+            this.pushIfNotActive(map, nextPoints, x - 1, y - 1, 0);
+            this.pushIfNotActive(map, nextPoints, x, y - 1, 1);
+            this.pushIfNotActive(map, nextPoints, x, y - 1, 3);
+            this.pushIfNotActive(map, nextPoints, x - 1, y - 1, 4);
+        } else {
+            this.pushIfNotActive(map, nextPoints, x, y - 1, 0);
+            this.pushIfNotActive(map, nextPoints, x + 1, y - 1, 1);
+            this.pushIfNotActive(map, nextPoints, x + 1, y - 1, 3);
+            this.pushIfNotActive(map, nextPoints, x, y - 1, 4);
+        }
+        this.pushIfNotActive(map, nextPoints, x + 1, y, 2);
+        this.pushIfNotActive(map, nextPoints, x - 1, y, 5);
+        nextPoints.forEach((item) => {
+            item.prev = point;
+        });
+        return nextPoints;
+    },
+    pushIfNotActive(map, points, x, y, direction) {
+        if (!map[y][x].active) {
+            points.push({x, y, direction});
+            map[y][x].active = true;
+        }
     },
     init() {
         this.initHtml();
         this.initMap();
         this.initEvent();
 
-        let mid = ~~(MAP_WIDTH / 2)
+        let mid = ~~(MAP_WIDTH / 2);
         this.move(mid, mid);
     }
 };
