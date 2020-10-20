@@ -212,14 +212,19 @@ body {
     animation: run-down steps(5) 0.5s; }
   .cat.d1, .cat.d2, .cat.d3 {
     transform: rotateY(180deg); }
-  .cat.end::before {
+    .cat.d1.end::before, .cat.d1.success::before, .cat.d2.end::before, .cat.d2.success::before, .cat.d3.end::before, .cat.d3.success::before {
+      transform: rotateY(180deg); }
+  .cat.end::before, .cat.success::before {
     position: absolute;
     bottom: 95%;
     left: 10px;
     font-size: 13px;
-    content: '溜了, 溜了....';
     white-space: nowrap;
     color: #fff; }
+  .cat.end::before {
+    content: "(ฅ'ω'ฅ)溜了, 溜了...."; }
+  .cat.success::before {
+    content: '喵(=^‥^=)~'; }
 
 .row {
   display: flex; }

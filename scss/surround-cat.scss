@@ -47,16 +47,26 @@ body {
 
     &.d1, &.d2, &.d3 {
         transform: rotateY(180deg);
+        &.end::before, &.success::before {
+            transform: rotateY(180deg);
+        }
     }
 
-    &.end::before {
+    &.end::before, &.success::before {
         position: absolute;
         bottom: 95%;
         left: 10px;
         font-size: 13px;
-        content: '溜了, 溜了....';
         white-space: nowrap;
         color: #fff;
+    }
+
+    &.end::before {
+        content: "(ฅ'ω'ฅ)溜了, 溜了....";
+    }
+
+    &.success::before {
+        content: '喵(=^‥^=)~';
     }
 }
 

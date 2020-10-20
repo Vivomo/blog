@@ -172,9 +172,13 @@ let App = {
         }
 
         if (success) {
-
+            this.showSuccess();
         }
 
+    },
+    showSuccess() {
+        this.end = true;
+        this.cat.classList.add('success');
     },
     clearPath() {
         for (let row of this.rowElem) {
