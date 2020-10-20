@@ -1,6 +1,8 @@
 @charset "UTF-8";
 @import "inc/mixins";
 @import "inc/theme";
+@import "inc/form";
+@import "inc/normalize";
 
 $d: 30px;
 $margin: 6px;
@@ -11,6 +13,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    flex-direction: column;
     background: #0d8050;
 }
 
@@ -53,6 +56,7 @@ body {
         font-size: 13px;
         content: '溜了, 溜了....';
         white-space: nowrap;
+        color: #fff;
     }
 }
 

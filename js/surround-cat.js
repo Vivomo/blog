@@ -91,6 +91,14 @@ let App = {
             });
             this.findWay();
         });
+
+        document.querySelector('.restart').addEventListener('click', () => {
+            this.restart();
+        });
+    },
+    restart() {
+        this.cat.remove();
+        this.init(false);
     },
     activate({x, y}) {
         let point = this.map[y][x];
@@ -195,10 +203,12 @@ let App = {
             map[y][x].active = true;
         }
     },
-    init() {
+    init(first = true) {
         this.initHtml();
         this.initMap();
-        this.initEvent();
+        if (first) {
+            this.initEvent();
+        }
 
         let mid = ~~(MAP_WIDTH / 2);
         this.move({
