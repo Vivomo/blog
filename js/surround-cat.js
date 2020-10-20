@@ -2,7 +2,6 @@ const MAP_WIDTH = 13;
 
 let App = {
     wrap: document.getElementById('wrap'),
-    colElem: null,
     rowElem: null,
     cat: null,
     catWidth: null,
@@ -11,6 +10,7 @@ let App = {
     catY: null,
     ceilWidth: null,
     ceilHeight: null,
+    catDirection: null,
     map: null,
     activatedList: [],
     move({x, y, direction}) {
@@ -19,6 +19,13 @@ let App = {
         this.cat.style.top = target.offsetTop - this.catHeight + this.ceilHeight / 2 + 'px';
         this.catX = x;
         this.catY = y;
+        this.cat.classList.remove('d' + this.catDirection);
+        requestAnimationFrame(() => {
+            if (direction !== undefined) {
+                this.catDirection = direction;
+                this.cat.classList.add('d' + direction);
+            }
+        });
     },
     initHtml() {
         this.wrap.querySelector('.map').innerHTML = new Array(MAP_WIDTH).fill(0).map((_, rowIndex) => {
@@ -70,7 +77,7 @@ let App = {
                 x: ~~data.x,
                 y: ~~data.y
             });
-            // this.findWay();
+            this.findWay();
         });
     },
     activate({x, y}) {
@@ -135,6 +142,10 @@ let App = {
             }
             ergodicPoint = newErgodicPoint;
             distance++;
+        }
+
+        if (success) {
+
         }
 
     },

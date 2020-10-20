@@ -26,8 +26,25 @@ body {
     background-image: url("../img/cat.png");
     background-repeat: no-repeat;
 
-    animation: run-h steps(5) 0.5s infinite;
+
     transition: left 0.5s, top 0.5s;
+
+    &.d0, &.d1 {
+        background-position: 2px -120px;
+        animation: run-up steps(5) 0.5s;
+    }
+    &.d2, &.d5 {
+        background-position: 4px -62px;
+        animation: run-h steps(5) 0.5s;
+    }
+    &.d3, &.d4 {
+        background-position: 0 0;
+        animation: run-down steps(5) 0.5s;
+    }
+
+    &.d1, &.d2, &.d3 {
+        transform: rotateY(180deg);
+    }
 }
 
 .row {

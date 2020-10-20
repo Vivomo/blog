@@ -16,8 +16,18 @@ body {
   pointer-events: none;
   background-image: url("../img/cat.png");
   background-repeat: no-repeat;
-  animation: run-h steps(5) 0.5s infinite;
   transition: left 0.5s, top 0.5s; }
+  .cat.d0, .cat.d1 {
+    background-position: 2px -120px;
+    animation: run-up steps(5) 0.5s; }
+  .cat.d2, .cat.d5 {
+    background-position: 4px -62px;
+    animation: run-h steps(5) 0.5s; }
+  .cat.d3, .cat.d4 {
+    background-position: 0 0;
+    animation: run-down steps(5) 0.5s; }
+  .cat.d1, .cat.d2, .cat.d3 {
+    transform: rotateY(180deg); }
 
 .row {
   display: flex; }
