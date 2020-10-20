@@ -22,7 +22,7 @@ body {
     position: absolute;
     width: 62px;
     height: 62px;
-
+    pointer-events: none;
     background-image: url("../img/cat.png");
     background-repeat: no-repeat;
 
@@ -43,8 +43,10 @@ body {
     @include circle($d);
     margin-right: $margin;
     background: $theme1;
+    cursor: pointer;
 
     &.active {
+        cursor: default;
         background: #265377;
     }
 }

@@ -13,6 +13,7 @@ body {
   position: absolute;
   width: 62px;
   height: 62px;
+  pointer-events: none;
   background-image: url("../img/cat.png");
   background-repeat: no-repeat;
   animation: run-h steps(5) 0.5s infinite;
@@ -29,8 +30,10 @@ body {
   height: 30px;
   border-radius: 50%;
   margin-right: 6px;
-  background: #1EEDFF; }
+  background: #1EEDFF;
+  cursor: pointer; }
   .point.active {
+    cursor: default;
     background: #265377; }
 
 @keyframes run-down {

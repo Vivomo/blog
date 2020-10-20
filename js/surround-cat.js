@@ -6,6 +6,8 @@ let App = {
     cat: null,
     catWidth: null,
     catHeight: null,
+    catX: null,
+    catY: null,
     ceilWidth: null,
     ceilHeight: null,
     map: null,
@@ -13,10 +15,13 @@ let App = {
         let target = this.rowElem[y].children[x];
         this.cat.style.left = target.offsetLeft - this.catWidth / 2 + this.ceilWidth / 2 + 'px';
         this.cat.style.top = target.offsetTop - this.catHeight + this.ceilHeight / 2 + 'px';
+        this.catX = x;
+        this.catY = y;
     },
     initHtml() {
-        let html = new Array(MAP_WIDTH).fill(0).map(_ => {
-            let items = '<div class="point"></div>'.repeat(MAP_WIDTH);
+        let html = new Array(MAP_WIDTH).fill(0).map((_, rowIndex) => {
+            let items = new Array(MAP_WIDTH).fill(0).map((_, colIndex) =>
+                `<div class="point" data-y="${rowIndex}" data-x="${colIndex}"></div>`).join('');
             return `<div class="row">${items}</div>`;
         }).join('');
         this.wrap.innerHTML = html + '<div class="cat"></div>';
@@ -46,9 +51,26 @@ let App = {
             this.activate(point);
         });
     },
+    initEvent() {
+        this.wrap.addEventListener('click', (e) => {
+            let target = e.target;
+            let classList = target.classList;
+            if (!classList.contains('point')) {
+                return;
+            }
+            if (classList.contains('active')) {
+                return;
+            }
+            let data = target.dataset;
+            this.activate({
+                x: ~~data.x,
+                y: ~~data.y
+            })
+        });
+    },
     activate({x, y}) {
         let point = this.map[y][x];
-        if (point.active) {
+        if (point.active || (this.catX === x && this.catY === y)) {
             return;
         }
         point.activate = true;
@@ -57,6 +79,7 @@ let App = {
     init() {
         this.initHtml();
         this.initMap();
+        this.initEvent();
         this.move(5, 5);
     }
 };
