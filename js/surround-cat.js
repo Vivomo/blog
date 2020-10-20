@@ -14,6 +14,7 @@ let App = {
     map: null,
     activatedList: [],
     end: false,
+    debug: false,
     move({x, y, direction}) {
         let target = this.rowElem[y].children[x];
         this.cat.style.left = target.offsetLeft - this.catWidth / 2 + this.ceilWidth / 2 + 'px';
@@ -97,6 +98,8 @@ let App = {
         });
     },
     restart() {
+        this.end = false;
+        this.activatedList = [];
         this.cat.remove();
         this.init(false);
     },
@@ -127,18 +130,20 @@ let App = {
         return x === 0 || x === maxIndex || y === 0 || y === maxIndex;
     },
     findWay() {
+        if (App.debug) {
+            this.clearPath();
+        }
         let tempMap = this.getActiveDataMap();
-
         let ergodicPoint = [{x: this.catX, y: this.catY}];
         let success = false;
-        let distance = 1;
+        let distance = 0;
         while (true) {
             let newErgodicPoint = [];
             ergodicPoint.forEach((point) => {
                 newErgodicPoint.push(...this.getNextPoints(point, tempMap));
             });
             if (newErgodicPoint.length === 0) {
-                if (distance === 1) {
+                if (distance === 0) {
                     success = true;
                 } else {
                     // 随机走一步
@@ -161,12 +166,27 @@ let App = {
             }
             ergodicPoint = newErgodicPoint;
             distance++;
+            if (App.debug) {
+                this.showPath(ergodicPoint, distance);
+            }
         }
 
         if (success) {
 
         }
 
+    },
+    clearPath() {
+        for (let row of this.rowElem) {
+            for (let elem of row.children) {
+                elem.innerHTML = '';
+            }
+        }
+    },
+    showPath(ergodicPoint, distance) {
+        ergodicPoint.forEach(({x, y}) => {
+            this.rowElem[y].children[x].innerHTML = distance;
+        });
     },
     getBoundaryPoint(points) {
         return points.find(({x, y}) => this.isBoundary(x, y));
@@ -218,4 +238,5 @@ let App = {
     }
 };
 
+// App.debug = true;
 App.init();

@@ -75,9 +75,14 @@ body {
 .point {
     @include circle($d);
     margin-right: $margin;
+    font-size: 16px;
+    text-align: center;
+    line-height: $d;
+    color: #fff;
     background: $theme1;
     cursor: pointer;
     transition: background-color 0.3s;
+
 
     &.active {
         cursor: default;
