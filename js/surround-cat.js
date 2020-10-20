@@ -70,7 +70,7 @@ let App = {
                 x: ~~data.x,
                 y: ~~data.y
             });
-            this.findWay();
+            // this.findWay();
         });
     },
     activate({x, y}) {
@@ -87,17 +87,22 @@ let App = {
             return new Array(MAP_WIDTH).fill(0).map(_ => ({active: false}));
         });
     },
+    getActiveDataMap() {
+        let tempMap = this.createMap();
+        for (let point of this.activatedList) {
+            tempMap[point.y][point.x].active = true;
+        }
+        tempMap[this.catY][this.catX].active = true;
+        return tempMap;
+    },
     isBoundary(x, y) {
         let maxIndex = MAP_WIDTH - 1;
         return x === 0 || x === maxIndex || y === 0 || y === maxIndex;
     },
     findWay() {
-        let tempMap = this.createMap();
-        for (let point of this.activatedList) {
-            tempMap[point.y][point.x].active = true;
-        }
-        let ergodicPoint = [{x: this.catX, y: this.catY}];
+        let tempMap = this.getActiveDataMap();
 
+        let ergodicPoint = [{x: this.catX, y: this.catY}];
         let success = false;
         let distance = 1;
         while (true) {
@@ -110,7 +115,7 @@ let App = {
                     success = true;
                 } else {
                     // 随机走一步
-                    let nextPoints = this.getNextPoints({x: this.catX, y: this.catY}, this.createMap());
+                    let nextPoints = this.getNextPoints({x: this.catX, y: this.catY}, this.getActiveDataMap());
                     this.move(nextPoints[~~(nextPoints.length * Math.random())])
                 }
                 break;
