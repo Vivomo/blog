@@ -253,6 +253,21 @@ body {
   background: transparent;
   pointer-events: none; }
 
+@media screen and (max-width: 450px) {
+  .point {
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    margin-right: 2px; }
+  .row:not(:last-child) {
+    margin-bottom: 2px; }
+  .cat {
+    transform: scale(0.9); }
+    .cat.d1, .cat.d2, .cat.d3 {
+      transform: rotateY(180deg) scale(0.9); }
+      .cat.d1.end::before, .cat.d1.success::before, .cat.d2.end::before, .cat.d2.success::before, .cat.d3.end::before, .cat.d3.success::before {
+        transform: rotateY(180deg); } }
+
 @keyframes run-down {
   from {
     background-position: 0 0; }

@@ -29,7 +29,6 @@ body {
     background-image: url("../img/cat.png");
     background-repeat: no-repeat;
 
-
     transition: left 0.5s, top 0.5s;
 
     &.d0, &.d1 {
@@ -103,6 +102,31 @@ body {
 .row:first-child .point, .row:last-child .point, .point:first-child, .point:last-child{
     background: transparent;
     pointer-events: none;
+}
+
+@media screen and (max-width: 450px) {
+    .point {
+        @include circle($d * 0.9);
+        margin-right: 2px;
+    }
+
+    .row {
+        &:not(:last-child) {
+            margin-bottom: 2px;
+        }
+    }
+
+    .cat {
+        
+        transform: scale(0.9);
+
+        &.d1, &.d2, &.d3 {
+            transform: rotateY(180deg) scale(0.9);
+            &.end::before, &.success::before {
+                transform: rotateY(180deg);
+            }
+        }
+    }
 }
 
 @keyframes run-down {
