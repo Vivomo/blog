@@ -15,10 +15,16 @@ let App = {
     activatedList: [],
     end: false,
     debug: false,
+    /**
+     * 移动猫, 移动后判断边界, 是否游戏结束
+     * @param x
+     * @param y
+     * @param direction 移动方向,与动画有关
+     */
     move({x, y, direction}) {
         let target = this.rowElem[y].children[x];
         this.cat.style.left = target.offsetLeft - this.catWidth / 2 + this.ceilWidth / 2 + 'px';
-        this.cat.style.top = target.offsetTop - this.catHeight + this.ceilHeight / 2 + 'px';
+        this.cat.style.top = target.offsetTop - this.catHeight * 0.75 + this.ceilHeight / 2 + 'px';
         this.catX = x;
         this.catY = y;
         this.cat.classList.remove('d' + this.catDirection);
@@ -32,27 +38,33 @@ let App = {
             this.gameOver();
         }
     },
+    /**
+     * 游戏结束, 赋值对应状态
+     */
     gameOver() {
         this.end = true;
         this.cat.classList.add('end');
     },
+    /**
+     * 初始化html, 并设置猫和地图点的数据
+     */
     initHtml() {
         this.wrap.querySelector('.map').innerHTML = new Array(MAP_WIDTH).fill(0).map((_, rowIndex) => {
             let items = new Array(MAP_WIDTH).fill(0).map((_, colIndex) =>
                 `<div class="point" data-y="${rowIndex}" data-x="${colIndex}"></div>`).join('');
             return `<div class="row">${items}</div>`;
         }).join('');
-        let cat = this.cat = document.createElement('div');
-        cat.className = 'cat';
-        this.wrap.appendChild(cat);
         this.rowElem = this.wrap.querySelectorAll('.row');
         this.cat = this.wrap.querySelector('.cat');
         this.catWidth = this.cat.offsetWidth;
         this.catHeight = this.cat.offsetHeight;
         let ceil = this.wrap.querySelector('.point');
         this.ceilWidth = ceil.offsetWidth;
-        this.catHeight = ceil.offsetHeight;
+        this.ceilHeight = ceil.offsetHeight;
     },
+    /**
+     * 初始化地图, 并随机生成7个随机点
+     */
     initMap() {
         this.map = this.createMap();
         let mid = ~~(MAP_WIDTH / 2);
@@ -72,6 +84,10 @@ let App = {
             this.activate(point);
         });
     },
+    /**
+     * 事件绑定
+     * 地图点击逻辑 和 重新开始
+     */
     initEvent() {
         this.wrap.addEventListener('click', (e) => {
             if (this.end) {
@@ -86,10 +102,12 @@ let App = {
                 return;
             }
             let data = target.dataset;
-            this.activate({
-                x: ~~data.x,
-                y: ~~data.y
-            });
+            let x = ~~data.x;
+            let y = ~~data.y;
+            if (x === this.catX && y === this.catY) {
+                return;
+            }
+            this.activate({x, y});
             this.findWay();
         });
 
@@ -97,12 +115,20 @@ let App = {
             this.restart();
         });
     },
+    /**
+     * 重新开始
+     */
     restart() {
         this.end = false;
         this.activatedList = [];
-        this.cat.remove();
+        this.cat.className = 'cat';
         this.init(false);
     },
+    /**
+     * 生成猫的拦截点
+     * @param x
+     * @param y
+     */
     activate({x, y}) {
         let point = this.map[y][x];
         if (point.active || (this.catX === x && this.catY === y)) {
@@ -112,11 +138,19 @@ let App = {
         this.rowElem[y].children[x].classList.add('active');
         this.activatedList.push({x, y});
     },
+    /**
+     * 生成地图初始状态的映射数组
+     * @returns {{active: boolean}[][]}
+     */
     createMap() {
         return new Array(MAP_WIDTH).fill(0).map(_ => {
             return new Array(MAP_WIDTH).fill(0).map(_ => ({active: false}));
         });
     },
+    /**
+     * 生成地图的映射数组, 包含拦截点
+     * @returns {*|{active: boolean}[][]}
+     */
     getActiveDataMap() {
         let tempMap = this.createMap();
         for (let point of this.activatedList) {
@@ -125,10 +159,20 @@ let App = {
         tempMap[this.catY][this.catX].active = true;
         return tempMap;
     },
+    /**
+     * 边界判断
+     * @param x
+     * @param y
+     * @returns {boolean}
+     */
     isBoundary(x, y) {
         let maxIndex = MAP_WIDTH - 1;
         return x === 0 || x === maxIndex || y === 0 || y === maxIndex;
     },
+    /**
+     * bfs随机寻路, 随机应用在洗牌算法打乱上一次寻得的点, 避免总是偏向于某一固定方向
+     * 寻路执行后,会判断是否已是围住状态, 如果是则执行游戏成功方法
+     */
     findWay() {
         if (App.debug) {
             this.clearPath();
@@ -188,10 +232,16 @@ let App = {
             points[randomIndex] = temp;
         }
     },
+    /**
+     * 游戏成功
+     */
     showSuccess() {
         this.end = true;
         this.cat.classList.add('success');
     },
+    /**
+     * 清除路径距离提示, debug模式专用
+     */
     clearPath() {
         for (let row of this.rowElem) {
             for (let elem of row.children) {
@@ -199,14 +249,28 @@ let App = {
             }
         }
     },
+    /**
+     * 显示路径距离提示, debug模式专用
+     */
     showPath(ergodicPoint, distance) {
         ergodicPoint.forEach(({x, y}) => {
             this.rowElem[y].children[x].innerHTML = distance;
         });
     },
+    /**
+     * 找出在边界的点
+     * @param points
+     * @returns {*}
+     */
     getBoundaryPoint(points) {
         return points.find(({x, y}) => this.isBoundary(x, y));
     },
+    /**
+     * 从参照点6个方向获取下一个非拦截点, 并与参照点建立连接 (prev字段)
+     * @param point
+     * @param map
+     * @returns {[]}
+     */
     getNextPoints(point, map) {
         let {x, y} = point;
         let nextPoints = [];
@@ -233,12 +297,24 @@ let App = {
         });
         return nextPoints;
     },
+    /**
+     * 将非拦截点改为拦截点
+     * @param map
+     * @param points
+     * @param x
+     * @param y
+     * @param direction
+     */
     pushIfNotActive(map, points, x, y, direction) {
         if (!map[y][x].active) {
             points.push({x, y, direction});
             map[y][x].active = true;
         }
     },
+    /**
+     * 初始化
+     * @param first 是否是第一次
+     */
     init(first = true) {
         this.initHtml();
         this.initMap();
