@@ -1,0 +1,105 @@
+@charset "UTF-8";
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  background: #0d8050; }
+
+#wrap {
+  position: relative; }
+
+.cat {
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  pointer-events: none;
+  background-image: url("../img/cat.png");
+  background-repeat: no-repeat;
+  transition: left 0.5s, top 0.5s; }
+  .cat.d0, .cat.d1 {
+    background-position: 2px -120px;
+    animation: run-up steps(5) 0.5s; }
+  .cat.d2, .cat.d5 {
+    background-position: 4px -62px;
+    animation: run-h steps(5) 0.5s; }
+  .cat.d3, .cat.d4 {
+    background-position: 0 0;
+    animation: run-down steps(5) 0.5s; }
+  .cat.d1, .cat.d2, .cat.d3 {
+    transform: rotateY(180deg); }
+    .cat.d1.end::before, .cat.d1.success::before, .cat.d2.end::before, .cat.d2.success::before, .cat.d3.end::before, .cat.d3.success::before {
+      transform: rotateY(180deg); }
+  .cat.end::before, .cat.success::before {
+    position: absolute;
+    bottom: 95%;
+    left: 10px;
+    font-size: 13px;
+    white-space: nowrap;
+    color: #fff; }
+  .cat.end::before {
+    content: "(ฅ'ω'ฅ)溜了, 溜了...."; }
+  .cat.success::before {
+    content: '喵(=^‥^=)~'; }
+
+.row {
+  display: flex; }
+  .row:not(:last-child) {
+    margin-bottom: 6px; }
+  .row:nth-child(2n) {
+    margin-left: 18px; }
+
+.point {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 6px;
+  font-size: 16px;
+  text-align: center;
+  line-height: 30px;
+  color: #fff;
+  background: #1EEDFF;
+  cursor: pointer;
+  transition: background-color 0.3s; }
+  .point.active {
+    cursor: default;
+    background: #265377; }
+
+.row:first-child .point, .row:last-child .point, .point:first-child, .point:last-child {
+  background: transparent;
+  pointer-events: none; }
+
+@media screen and (max-width: 450px) {
+  .point {
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    margin-right: 2px; }
+  .row:not(:last-child) {
+    margin-bottom: 2px; }
+  .cat {
+    transform: scale(0.9); }
+    .cat.d1, .cat.d2, .cat.d3 {
+      transform: rotateY(180deg) scale(0.9); }
+      .cat.d1.end::before, .cat.d1.success::before, .cat.d2.end::before, .cat.d2.success::before, .cat.d3.end::before, .cat.d3.success::before {
+        transform: rotateY(180deg); } }
+
+@keyframes run-down {
+  from {
+    background-position: 0 0; }
+  to {
+    background-position: -300px 0px; } }
+
+@keyframes run-h {
+  from {
+    background-position: 0 -62px; }
+  to {
+    background-position: -300px -62px; } }
+
+@keyframes run-up {
+  from {
+    background-position: 0 -124px; }
+  to {
+    background-position: -300px -124px; } }
