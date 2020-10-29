@@ -3,8 +3,6 @@ window.onload = () => {
     let canvas = document.getElementById('canvas');
     let ctx = canvas.getContext('2d');
     let {width, height} = img;
-    let scale = Math.min(window.innerWidth / width, window.innerHeight / height);
-    canvas.style.transform = `scale(${scale})`;
     canvas.width = width;
     canvas.height = height;
     ctx.drawImage(img, 0, 0);
