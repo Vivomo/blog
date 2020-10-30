@@ -6,9 +6,12 @@
     <meta name="viewport" content="{{page.viewport}}" />
     {% endif %}
     <title>{{ page.title }}</title>
-    <link rel="stylesheet" href="{{site.cname}}css/common.css"/>
+
     {% if page.css != null %}
-    <link rel="stylesheet" href="{{site.cname}}src/css/{{page.css}}"/>
+    {% assign cssList = page.css | split:',' %}
+    {% for css in cssList %}
+    <link rel="stylesheet" href="{{site.cname}}src/css/{{css}}.css"/>
+    {% endfor %}
     {% endif %}
     <link rel="shortcut icon" href="{{site.cname}}img/favicon.ico">
 </head>
@@ -16,8 +19,12 @@
 
 {{ content }}
 
+
 {% if page.js != null %}
-<script src="{{site.cname}}src/js/{{page.js}}"></script>
+{% assign jsList = page.js | split:',' %}
+{% for js in jsList %}
+<script src="{{site.cname}}js/{{js}}.js"></script>
+{% endfor %}
 {% endif %}
 </body>
 </html>
