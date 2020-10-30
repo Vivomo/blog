@@ -1,0 +1,27 @@
+---
+layout: default
+title: 帷幕的博客
+css: index
+wap: true
+---
+<canvas id="canvas-bg" style="position: fixed; top: 0; pointer-events: none;"></canvas>
+<ol class="post-list box u-content">
+    {% for post in site.posts %}
+    <li><a href="{{site.origin}}{{ post.url }}" target="_blank">{{ post.title }}</a></li>
+    {% endfor %}
+</ol>
+<script>
+    var q = document.getElementById('canvas-bg'), w = q.width = document.body.clientWidth, h = q.height = window.innerHeight,
+        p = new Array(256).join(1).split(''), c = q.getContext('2d'), m = Math;
+    setInterval(function () {
+        c.fillStyle = 'rgba(0,0,0,0.05)';
+        c.fillRect(0, 0, w, h);
+        c.fillStyle = 'rgba(0,255,0,1)';
+        p = p.map(function (v, i) {
+            r = m.random();
+            c.fillText(String.fromCharCode(m.floor(2720 + r * 33)), i * 10, v);
+            v += 10;
+            return v > 768 + r * 1e4 ? 0 : v
+        })
+    }, 33)
+</script>

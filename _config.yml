@@ -1,4 +1,5 @@
 baseurl: /
 cname: http://www.weimu.xyz/
-src: http://www.weimu.xyz/src
+origin: http://www.weimu.xyz
+src: http://www.weimu.xyz/src/
 exclude: ["build", "scss", "eg_build", "chrome_plugins", "doc", "SPA", "README.md"]
