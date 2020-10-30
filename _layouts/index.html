@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>帷幕的博客</title>
+    <link rel="shortcut icon" href="{{site.cname}}img/favicon.ico">
+    <script>
+        let userAgent = window.navigator.userAgent;
+        let mobileAgents = ['Android','iPhone','Symbian','WindowsPhone','iPod','BlackBerry','Windows CE'];
+        for (let agent of mobileAgents) {
+            if (userAgent.includes(agent)) {
+                window.location.replace('http://www.weimu.xyz/app/wap/index.html');
+            }
+        }
+    </script>
+</head>
+<body>
+<ol class="post-list" style="display: none;">
+    {% for post in site.posts %}
+    <li><a href="{{ post.url }}" target="_blank">{{ post.title }}</a></li>
+    {% endfor %}
+</ol>
+
+{{content}}
+</body>
+</html>

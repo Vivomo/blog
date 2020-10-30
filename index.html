@@ -1,28 +1,9 @@
-<!DOCTYPE html>
-<html lang="ch">
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>帷幕的博客</title>
-    <link rel="shortcut icon" href="{{site.cname}}img/favicon.ico">
-    <script>
-        let userAgent = window.navigator.userAgent;
-        let mobileAgents = ['Android','iPhone','Symbian','WindowsPhone','iPod','BlackBerry','Windows CE'];
-        for (let agent of mobileAgents) {
-            if (userAgent.includes(agent)) {
-                window.location.replace('http://www.weimu.xyz/app/wap/index.html');
-            }
-        }
-    </script>
-</head>
-<body>
-<ol class="post-list" style="display: none;">
-    {% for post in site.posts %}
-    <li><a href="{{ post.url }}" target="_blank">{{ post.title }}</a></li>
-    {% endfor %}
-</ol>
+---
+layout: index
+---
 <div id="root"></div>
-<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+<script crossOrigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossOrigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
 <script>!function (e) {
     function r(r) {
         for (var n, i, l = r[0], f = r[1], a = r[2], c = 0, s = []; c < l.length; c++) i = l[c], Object.prototype.hasOwnProperty.call(o, i) && o[i] && s.push(o[i][0]), o[i] = 0;
@@ -82,5 +63,3 @@
     t()
 }([])</script>
 <script src="/static/js/main.9623c288.chunk.js"></script>
-</body>
-</html>
