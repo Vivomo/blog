@@ -28,5 +28,7 @@
     "rollup-plugin-node-resolve": "3.4.0",
     "webpack": "4.24.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "liquid": "^5.1.0"
+  }
 }

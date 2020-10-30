@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 const {getFilesByPath} = require('../nodejs/util/fileUtil');
-const {parseScript, parseBodyData, parseViewport, parseCSS, createBlog} = require('./utils');
+const {parseScript, parseBodyData, parseViewport, parseCSS, createBlog, parseContent} = require('./utils');
 
 const { JSDOM } = jsdom;
 
@@ -26,7 +26,7 @@ htmlPaths.forEach((htmlPath) => {
         layout: bodyData.layout,
         viewport: parseViewport(document),
         title: document.title,
-        content: document.body.innerHTML,
+        content: parseContent(document.body.innerHTML),
     };
 
     let targetPath = path.join(__dirname, outputPath, bodyData.date + '-' + path.basename(htmlPath));
