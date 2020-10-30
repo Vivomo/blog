@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 二维码转换
-js: toQRCode
+js: jq/jquery,lib/qrcode,lib/jquery.qrcode,toQRCode
 ---
 
 <div class="box u-content">
@@ -9,7 +9,3 @@ js: toQRCode
     <button class="btn" id="run">转换</button>
     <div id="qr-wrap" style="margin: 30px"></div>
 </div>
-
-<script src="{{site.cname}}js/jq/jquery.js"></script>
-<script src="{{site.cname}}js/lib/qrcode.js"></script>
-<script src="{{site.cname}}js/lib/jquery.qrcode.js"></script>
