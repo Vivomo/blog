@@ -10,7 +10,7 @@
     {% if page.css != null %}
     {% assign cssList = page.css | split:',' %}
     {% for css in cssList %}
-    <link rel="stylesheet" href="{{site.cname}}src/css/{{css}}.css"/>
+    <link rel="stylesheet" href="{{site.src}}css/{{css}}"/>
     {% endfor %}
     {% endif %}
     <link rel="shortcut icon" href="{{site.cname}}img/favicon.ico">
@@ -23,7 +23,7 @@
 {% if page.js != null %}
 {% assign jsList = page.js | split:',' %}
 {% for js in jsList %}
-<script src="{{site.cname}}js/{{js}}.js"></script>
+<script src="{{site.src}}js/{{js}}"></script>
 {% endfor %}
 {% endif %}
 </body>
