@@ -12,18 +12,22 @@ body,html{
 header{
     position: relative;
     z-index: 10;
-    height: 200px;
     margin-bottom: 40px;
     background: rgba(#333, 0.8);
     box-shadow: 2px 2px 3px rgba(0,0,0,0.28);
     h1{
-        font: normal 0 "Georgia","Microsoft Yahei","Arial";
+        font: normal 0 '华文行楷','楷体','Microsoft YaHei', 'Arial', "Georgia";
         text-align: center;
         color: #FFF;
         span{
             font-size: 60px;
             line-height: 2;
         }
+    }
+    .github-link {
+        position: absolute;
+        right: 20px;
+        top: 20px;
     }
 }
 .t-c{

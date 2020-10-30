@@ -148,3 +148,5 @@ function getTranslate(elem) {
 function getInt(num) {
     return parseInt(num);
 }
+
+$('.duang-wrap').duang();
