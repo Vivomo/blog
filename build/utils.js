@@ -24,6 +24,10 @@ exports.parseViewport = (dom) => {
     return viewport && viewport.getAttribute('content');
 };
 
+exports.parseContent = (content) => {
+    return content.replace(/src="\.\.\/img\/([^"]+)"/, 'src={{site.cname}}src/img/$1')
+}
+
 exports.createBlog = (blog) => {
     return `
 ---
