@@ -35,7 +35,7 @@ window.onload = () => {
     setInterval(function () {
         c.fillStyle = 'rgba(0,0,0,0.05)';
         c.fillRect(0, 0, w, h);
-        c.fillStyle = 'rgba(0,255,0,1)';
+        c.fillStyle = 'rgba(0,125,0,1)';
         p = p.map((v, i) => {
             let r = Math.random();
             c.fillText(String.fromCharCode(Math.floor(2720 + r * 33)), i * 10, v);
