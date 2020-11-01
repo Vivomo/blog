@@ -46,6 +46,24 @@
             flex: 1 1 auto;
             border: 1px solid;
         }
+
+        .big {
+            width: 200px;
+            height: 200px;
+            background: #0d8050;
+        }
+
+        .little {
+            margin: 3px;
+            width: 40px;
+            height: 40px;
+            background: #00a2d4;
+        }
+
+        .wrap-box {
+            flex-wrap: wrap;
+            break-inside: auto;
+        }
     </style>
 </head>
 <body>
@@ -65,6 +83,18 @@
     <div>123</div>
     <div></div>
     <div></div>
+</div>
+
+<div class="box wrap-box">
+    <div class="big"></div>
+    <div class="little"></div>
+    <div class="little"></div>
+    <div class="little"></div>
+    <div class="little"></div>
+    <div class="little"></div>
+    <div class="little"></div>
+    <div class="little"></div>
+    <div class="little"></div>
 </div>
 </body>
 </html>

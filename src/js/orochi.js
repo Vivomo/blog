@@ -22,4 +22,7 @@ window.onload = () => {
         }
         ctx.putImageData(imgData, 0, 0)
     }, 300);
+    setTimeout(() => {
+        canvas.style.opacity = '1';
+    }, 400);
 }
