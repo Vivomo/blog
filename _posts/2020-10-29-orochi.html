@@ -6,5 +6,6 @@ css: common.css
 js: orochi.js
 ---
 
-<img src="{{site.cname}}src/img/orochi.png" alt="" id="orochi" style="position: absolute;">
-<canvas id="canvas" style="background: #000; display: block; position:relative; height: 100vh; max-height: 100vw;"></canvas>
+<img src="{{site.cname}}src/img/orochi.png" alt="" id="orochi" style="position: absolute; opacity: 0">
+<canvas id="canvas-bg" style="position: fixed; top: 0;"></canvas>
+<canvas id="canvas" style="display: block; position: relative; margin: auto; height: 100vh; max-height: 100vw; opacity: 0;"></canvas>
