@@ -35,14 +35,17 @@ let App = (() => {
         },
         toggleDirection() {
             this.rotateDirection = this.rotateDirection === 1 ? -1 : 1;
+            clearInterval(TaiChiInterval);
+            this.rotate();
+            this.updateTaiChi();
         },
         rotate() {
-            this.degree += this.rotateDirection * 8;
+            this.degree += this.rotateDirection * 6;
         },
         initDangerLine() {
             let bound = TaiChi.getBoundingClientRect();
             dangerLine.top = bound.top - ballSize;
-            dangerLine.bottom = bound.bottom + ballSize * 0.1;
+            dangerLine.bottom = bound.bottom;
 
         },
         /**
@@ -133,13 +136,21 @@ let App = (() => {
         },
 
         updateBall() {
+            let ballTime = Date.now();
             ballInterval = setInterval(() => {
                 this.moveBall();
+                let now = Date.now();
+                console.log('ball', now - ballTime)
+                ballTime = now;
             }, 16);
         },
         updateTaiChi() {
+            let TaiChiTime = Date.now();
             TaiChiInterval = setInterval(() => {
                 this.rotate();
+                let now = Date.now();
+                console.log('TaiChi', now - TaiChiTime)
+                TaiChiTime = now;
             }, 16);
         },
         gameOver(){
