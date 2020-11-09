@@ -1,6 +1,7 @@
 let gulp = require('gulp'),
     scss = require('gulp-sass'),
-    scssSrc = '../scss/**/*.scss';
+    scssSrc = '../scss/**/*.scss',
+    scssSrc2 = '../src/scss/**/*.scss';
 
 /**
  * 安装scss 报错参照此网址, 推荐方法2
@@ -23,7 +24,7 @@ let gulpScss = () => {
 
 
 let gulpScss2 = () => {
-    return gulp.src('../src/scss/**/*.scss')
+    return gulp.src(scssSrc2)
         .pipe(scss({
             linefeed: 'crlf'
             // outputStyle: 'expanded',
@@ -32,5 +33,8 @@ let gulpScss2 = () => {
         .pipe(gulp.dest('../src/css'));
 };
 
-exports.default = gulp.series(gulpScss, gulpScss2);
+let gulpWatch = () => gulp.watch(scssSrc, gulp.series(gulpScss));
+let gulpWatch2 = () => gulp.watch(scssSrc2, gulp.series(gulpScss2));
+
+exports.default = gulp.series(gulpScss, gulpScss2, gulpWatch, gulpWatch2);
 
