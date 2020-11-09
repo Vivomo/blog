@@ -3,7 +3,10 @@
 
 @include TaiChi(400px);
 
-
+.TaiChi {
+    margin: 100px auto;
+    animation: rotate 3s linear infinite;
+}
 
 @keyframes rotate {
     0% {
