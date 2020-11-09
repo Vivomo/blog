@@ -20,6 +20,9 @@ htmlPaths.forEach((htmlPath) => {
     if (!bodyData.date) {
         throw htmlPath + ' no date';
     }
+    if (bodyData.done === 'false') {
+        return;
+    }
     let blog = {
         js: parseScript(document),
         css: parseCSS(document),
