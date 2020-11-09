@@ -1,63 +1,9 @@
 @import "inc/mixins";
+@import "inc/TaiChi-base";
 
-$d: 400px;
-#TaiChi {
-    margin: 100px auto;
-    font-size: 0;
-    @include circle($d);
-    overflow: hidden;
+@include TaiChi(400px);
 
-    animation: rotate 3s linear infinite;
 
-    & > * {
-        position: relative;
-        display: inline-block;
-        height: 100%;
-        width: 50%;
-
-        &:before, &:after {
-            position: absolute;
-            content: '';
-        }
-
-        &:before {
-            @include circle($d / 16);
-            z-index: 2;
-        }
-
-        &:after {
-            @include circle($d / 2);
-            z-index: 1;
-        }
-    }
-
-    #black {
-        background: #000;
-
-        &:before {
-            top: ($d / 2 - $d / 16) / 2;
-            right: - $d / 32;
-            background: #fff;
-        }
-        &:after {
-            left: $d / 4;
-            background: #000;
-        }
-    }
-    #white {
-        background: #fff;
-        &:before {
-            background: #000;
-            left: - $d / 32;
-            bottom: ($d / 2 - $d / 16) / 2;
-        }
-        &:after {
-            bottom: 0;
-            right: $d / 4;
-            background: #fff;
-        }
-    }
-}
 
 @keyframes rotate {
     0% {
