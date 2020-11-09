@@ -13,7 +13,7 @@ let gulp = require('gulp'),
  * 则npm rebuild node-sass
  */
 let gulpScss = () => {
-    return gulp.src([scssSrc, scssSrc2], {base: './'})
+    return gulp.src(scssSrc)
         .pipe(scss({
             linefeed: 'crlf'
             // outputStyle: 'expanded',
