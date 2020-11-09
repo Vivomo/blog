@@ -13,7 +13,7 @@ let gulp = require('gulp'),
  * 则npm rebuild node-sass
  */
 let gulpScss = () => {
-    return gulp.src(scssSrc)
+    return gulp.src([scssSrc, scssSrc2], {base: './'})
         .pipe(scss({
             linefeed: 'crlf'
             // outputStyle: 'expanded',
@@ -33,8 +33,7 @@ let gulpScss2 = () => {
         .pipe(gulp.dest('../src/css'));
 };
 
-let gulpWatch = () => gulp.watch(scssSrc, gulp.series(gulpScss));
-let gulpWatch2 = () => gulp.watch(scssSrc2, gulp.series(gulpScss2));
+let gulpWatch = () => gulp.watch([scssSrc, scssSrc2], gulp.series(gulpScss, gulpScss2));
 
-exports.default = gulp.series(gulpScss, gulpScss2, gulpWatch, gulpWatch2);
+exports.default = gulp.series(gulpScss, gulpScss2, gulpWatch);
 
