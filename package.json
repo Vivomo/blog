@@ -15,6 +15,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "build": "node build/transformHTML.js && cd build && gulp scss2",
+    "build-html": "node build/transformHTML.js",
     "build-odd-scss": "cd build && gulp scss"
   },
   "repository": {
