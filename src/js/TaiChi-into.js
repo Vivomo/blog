@@ -1,18 +1,9 @@
-class Ball{
-    constructor(direction){
-        let ball = document.createElement('div');
-        let directionClass = direction === 1 ? 'from-top' : 'from-bottom';
-        let colorClass = Math.random() < 0.5 ? 'black' : 'white';
-        ball.className = `ball ${directionClass} ${colorClass}`;
-        return ball;
-    }
-}
 let App = (() => {
     let w = window.innerWidth;
     let h = window.innerHeight;
     let containerHeight = h;
     let containerWidth = Math.min(w, ~~(h * 0.618));
-    let ballSize = ~~(w / 12);
+    let ballSize = ~~(containerWidth / 12);
     let TaiChiSize = containerWidth * 0.3;
 
     let TaiChi = document.querySelector('.TaiChi');
@@ -46,12 +37,12 @@ let App = (() => {
             this.rotateDirection = this.rotateDirection === 1 ? -1 : 1;
         },
         rotate() {
-            this.degree += this.rotateDirection * 6;
+            this.degree += this.rotateDirection * 8;
         },
         initDangerLine() {
             let bound = TaiChi.getBoundingClientRect();
             dangerLine.top = bound.top - ballSize;
-            dangerLine.bottom = bound.bottom + ballSize;
+            dangerLine.bottom = bound.bottom + ballSize * 0.1;
 
         },
         /**
@@ -87,7 +78,7 @@ let App = (() => {
         moveBall() {
             let ball = this.curBall;
             let top = parseInt(ball.style.top);
-            let next = top + ballDirection * 10;
+            let next = top + ballDirection * 5;
 
             let state = this.getBallState(next);
 
@@ -111,7 +102,7 @@ let App = (() => {
         getBallState(value) {
             let degree = this.getEquivalentAngle();
             let ballColor = this.curBall.dataset.color;
-            if (ballDirection === 1 && value < dangerLine.top || ballDirection === -1 && value < dangerLine.bottom) {
+            if (ballDirection === 1 && value < dangerLine.top || ballDirection === -1 && value > dangerLine.bottom) {
                 return ballState.pending;
             }
             if (ballDirection === 1) { // 上 -> 下
@@ -129,6 +120,8 @@ let App = (() => {
          * 吸收
          */
         absorb() {
+            this.curBall.remove();
+            this.addBall();
             console.log('吸收')
         },
         /**
@@ -140,9 +133,9 @@ let App = (() => {
         },
 
         updateBall() {
-              ballInterval = setInterval(() => {
-                  this.moveBall();
-              }, 16);
+            ballInterval = setInterval(() => {
+                this.moveBall();
+            }, 16);
         },
         updateTaiChi() {
             TaiChiInterval = setInterval(() => {
@@ -150,13 +143,15 @@ let App = (() => {
             }, 16);
         },
         gameOver(){
-
+            alert('over');
+            clearInterval(ballInterval);
+            clearInterval(TaiChiInterval);
         },
         start() {
             this.initDangerLine();
             this.addBall();
-            // this.updateTaiChi();
-            // this.updateBall();
+            this.updateTaiChi();
+            this.updateBall();
         }
     }
 })();
