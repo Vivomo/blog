@@ -16,3 +16,33 @@
 .TaiChi, .half, .half::before, .half::after {
     transition: width 0.6s cubic-bezier(0.4, 0.3, 0.6, 1.47), height 0.6s cubic-bezier(0.4, 0.3, 0.6, 1.47);
 }
+
+.ball {
+    position: absolute;
+    width: 8.3333%;
+    border-radius: 50%;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+
+    &:after {
+        display: block;
+        content: '';
+        padding-top: 100%;
+    }
+
+    &.black {
+        background: #000;
+    }
+
+    &.white {
+        background: #fff;
+    }
+
+    &.from-top {
+        top: 0;
+    }
+
+    &.from-bottom {
+        top: 100%;
+    }
+}
