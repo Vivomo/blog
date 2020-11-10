@@ -18,7 +18,8 @@ htmlPaths.forEach((htmlPath) => {
 
     let bodyData = parseBodyData(document);
     if (!bodyData.date) {
-        throw htmlPath + ' no date';
+        console.log(htmlPath + ' no date');
+        return;
     }
     if (bodyData.done === 'false') {
         return;
