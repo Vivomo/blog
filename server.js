@@ -3,6 +3,7 @@ let fs = require('fs');
 let path = require('path');
 
 let root = '.';
+const PORT = 9999;
 const DEFAULT_URL = '/index.html';
 
 const getContentType = (suffix) => {
@@ -50,6 +51,6 @@ http.createServer((req, res) => {
         res.end();
     });
 
-}).listen(9999);
+}).listen(PORT);
 
-console.log('服务器开启成功');
+console.log('服务器开启成功', PORT);
