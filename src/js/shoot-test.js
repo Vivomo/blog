@@ -65,12 +65,15 @@ class ShootTest{
         this.hitCountElem = this.screen.querySelector('.hit');
         this.lvElem = this.screen.querySelector('.lv');
 
+        let shot = document.querySelector('#shot');
+
         this.screen.addEventListener('click', ({target}) => {
             if (target.classList.contains('target')) {
                 target.remove();
                 this.targetCount -= 1;
                 this.hitCount += 1;
             }
+            shot.play();
         });
     }
 
