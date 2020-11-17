@@ -1,35 +1,38 @@
 ---
-layout: blank
+layout: new-blank
+viewport: null
 title: 射击测试
-css: shoot-test
-js: shoot-test
+css: common.css,shoot-test.css
+js: shoot-test.js
 ---
-<div class="screen">
-    <div class="scene">
-        <div class="floor"></div>
-        <div class="wall wall1">
-            <div class="wall wall1-1"></div>
-            <div class="wall wall1-2"></div>
-            <div class="wall wall1-3"></div>
-            <div class="wall wall1-4"></div>
-            <div class="target-wrap">
-                <div class="scoreboard">
-                    <div class="score-item">
-                        Target: <span class="target-count">0</span>
-                    </div>
-                    <div class="score-item">
-                        Miss: <span class="miss">0</span>
-                    </div>
-                    <div class="score-item">
-                        Hit: <span class="hit">0</span>
-                    </div>
-                    <div class="score-item">
-                        LV: <span class="lv">1</span>
+
+    <div class="screen">
+        <div class="scene">
+            <div class="floor"></div>
+            <div class="wall wall1">
+                <div class="wall wall1-1"></div>
+                <div class="wall wall1-2"></div>
+                <div class="wall wall1-3"></div>
+                <div class="wall wall1-4"></div>
+                <div class="target-wrap">
+                    <div class="scoreboard">
+                        <div class="score-item">
+                            Target: <span class="target-count">0</span>
+                        </div>
+                        <div class="score-item">
+                            Miss: <span class="miss">0</span>
+                        </div>
+                        <div class="score-item">
+                            Hit: <span class="hit">0</span>
+                        </div>
+                        <div class="score-item">
+                            LV: <span class="lv">1</span>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="wall wall2"></div>
+            <img src="{{site.cname}}src/img/ak47.png" class="gun">
         </div>
-        <div class="wall wall2"></div>
-        <img src="/img/ak47.png" class="gun">
     </div>
-</div>
+    <audio src="{{site.cname}}src/media/gun.mp3" id="shot" preload="auto"></audio>
