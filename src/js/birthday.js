@@ -90,19 +90,15 @@ class Letter {
 
     step() {
         if (this.phase === 'firework') {
-
+            this.tick++;
             if (!this.spawned) {
-                this.tick++;
                 if (this.tick >= this.spawningTime) {
                     this.tick = 0;
                     this.spawned = true;
                 }
 
             } else {
-
-                this.tick++;
-
-                var linearProportion = this.tick / this.reachTime,
+                let linearProportion = this.tick / this.reachTime,
                     armonicProportion = Math.sin(linearProportion * TauQuarter),
 
                     x = linearProportion * this.x,
@@ -115,8 +111,7 @@ class Letter {
 
                 let lineWidthProportion = 1 / (this.prevPoints.length - 1);
 
-                for (var i = 1; i < this.prevPoints.length; ++i) {
-
+                for (let i = 1; i < this.prevPoints.length; i++) {
                     let point = this.prevPoints[i],
                         point2 = this.prevPoints[i - 1];
 
@@ -144,7 +139,7 @@ class Letter {
 
                     this.shards = [];
 
-                    var shardCount = opts.fireworkBaseShards + opts.fireworkAddedShards * Math.random() | 0,
+                    let shardCount = opts.fireworkBaseShards + opts.fireworkAddedShards * Math.random() | 0,
                         angle = Tau / shardCount,
                         cos = Math.cos(angle),
                         sin = Math.sin(angle),
@@ -152,7 +147,7 @@ class Letter {
                         x = 1,
                         y = 0;
 
-                    for (var i = 0; i < shardCount; ++i) {
+                    for (let i = 0; i < shardCount; ++i) {
                         let x1 = x;
                         x = x * cos - y * sin;
                         y = y * cos + x1 * sin;
@@ -162,7 +157,8 @@ class Letter {
                 }
 
             }
-        } else if (this.phase === 'contemplate') {
+        } else if (this.phase === 'contemplate')
+        {
 
             ++this.tick;
 
@@ -189,7 +185,7 @@ class Letter {
                 ctx.fillText(this.char, this.x + this.dx, this.y + this.dy);
 
                 ++this.tick2;
-                var proportion = this.tick2 / this.circleFadeTime,
+                let proportion = this.tick2 / this.circleFadeTime,
                     armonic = -Math.cos(proportion * Math.PI) / 2 + .5;
 
                 ctx.beginPath();
@@ -233,7 +229,8 @@ class Letter {
                 this.vx = Math.cos(rad) * vel;
                 this.vy = Math.sin(rad) * vel;
             }
-        } else if (this.phase === 'balloon') {
+        } else if (this.phase === 'balloon')
+        {
 
             ctx.strokeStyle = this.lightColor.replace('light', 80);
 
@@ -252,7 +249,7 @@ class Letter {
 
                 ++this.tick;
 
-                var proportion = this.tick / this.inflateTime,
+                let proportion = this.tick / this.inflateTime,
                     x = this.cx = this.x,
                     y = this.cy = this.y - this.size * proportion;
 
@@ -370,19 +367,13 @@ function anim() {
 
     ctx.translate(hw, hh);
 
-    let done = true;
-    for (let i = 0; i < letters.length; ++i) {
-        letters[i].step();
-        if (letters[i].phase !== 'done')
-            done = false;
-    }
+    let done = letters.every(letter => letter.phase === 'done');
+    letters.forEach(letter => letter.step());
 
     ctx.translate(-hw, -hh);
 
     if (done) {
-        for (let letter of letters) {
-            letter.reset();
-        }
+        letters.forEach(letter => letter.reset());
     }
 }
 
@@ -395,14 +386,3 @@ for (let i = 0; i < opts.strings.length; i++) {
 }
 
 anim();
-
-window.addEventListener('resize', function () {
-
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-
-    hw = w / 2;
-    hh = h / 2;
-
-    ctx.font = opts.charSize + 'px Verdana';
-})
