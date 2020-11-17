@@ -73,6 +73,8 @@ class ShootTest{
                 this.targetCount -= 1;
                 this.hitCount += 1;
             }
+            shot.currentTime = 0;
+            shot.pause();
             shot.play();
         });
     }
