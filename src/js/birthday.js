@@ -7,10 +7,10 @@ let hw = w / 2,
     hh = h / 2;
 
 let opts = {
-        strings: ['HAPPY', 'BIRTHDAY!'],
-        charSize: 30,
-        charSpacing: 35,
-        lineHeight: 40,
+        strings: ['祝', '聪明伶俐', '活泼可爱', '机智勇敢的', '耳朵', '生日快乐!'],
+        charSize: 60,
+        charSpacing: 65,
+        lineHeight: 80,
 
         cx: w / 2,
         cy: h / 2,
