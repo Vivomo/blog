@@ -11,10 +11,6 @@ let opts = {
         charSize: 60,
         charSpacing: 65,
         lineHeight: 80,
-
-        cx: w / 2,
-        cy: h / 2,
-
         fireworkPrevPoints: 10,
         fireworkBaseLineWidth: 5,
         fireworkAddedLineWidth: 8,
@@ -88,13 +84,6 @@ class Letter {
         this.prevPoints = [[0, hh, 0]];
     }
 
-    line(x1, y1, x2, y2) {
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.stroke();
-    }
-
     runFirework() {
         this.tick++;
         if (!this.spawned) {
@@ -102,7 +91,6 @@ class Letter {
                 this.tick = 0;
                 this.spawned = true;
             }
-
         } else {
             let linearProportion = this.tick / this.reachTime,
                 armonicProportion = Math.sin(linearProportion * TauQuarter),
@@ -123,11 +111,10 @@ class Letter {
 
                 ctx.strokeStyle = this.alphaColor.replace('alp', i / this.prevPoints.length);
                 ctx.lineWidth = point[2] * lineWidthProportion * i;
-                this.line(point[0], point[1], point2[0], point2[1]);
+                line(point[0], point[1], point2[0], point2[1]);
             }
 
             if (this.tick >= this.reachTime) {
-
                 this.phase = 'contemplate';
 
                 this.circleFinalSize = opts.fireworkCircleBaseSize + opts.fireworkCircleAddedSize * Math.random();
@@ -149,7 +136,7 @@ class Letter {
                     x = 1,
                     y = 0;
 
-                for (let i = 0; i < shardCount; ++i) {
+                for (let i = 0; i < shardCount; i++) {
                     let x1 = x;
                     x = x * cos - y * sin;
                     y = y * cos + x1 * sin;
@@ -166,7 +153,7 @@ class Letter {
         if (this.circleCreating) {
 
             ++this.tick2;
-            var proportion = this.tick2 / this.circleCompleteTime,
+            let proportion = this.tick2 / this.circleCompleteTime,
                 armonic = -Math.cos(proportion * Math.PI) / 2 + .5;
 
             ctx.beginPath();
@@ -181,7 +168,6 @@ class Letter {
                 this.circleFading = true;
             }
         } else if (this.circleFading) {
-
             ctx.fillStyle = this.lightColor.replace('light', 70);
             ctx.fillText(this.char, this.x + this.dx, this.y + this.dy);
 
@@ -198,13 +184,11 @@ class Letter {
                 this.circleFading = false;
 
         } else {
-
             ctx.fillStyle = this.lightColor.replace('light', 70);
             ctx.fillText(this.char, this.x + this.dx, this.y + this.dy);
         }
 
-        for (var i = 0; i < this.shards.length; ++i) {
-
+        for (let i = 0; i < this.shards.length; i++) {
             this.shards[i].step();
 
             if (!this.shards[i].alive) {
@@ -237,7 +221,6 @@ class Letter {
         ctx.strokeStyle = this.lightColor.replace('light', 80);
 
         if (this.spawning) {
-
             ++this.tick;
             ctx.fillStyle = this.lightColor.replace('light', 70);
             ctx.fillText(this.char, this.x + this.dx, this.y + this.dy);
@@ -248,7 +231,6 @@ class Letter {
                 this.inflating = true;
             }
         } else if (this.inflating) {
-
             ++this.tick;
 
             let proportion = this.tick / this.inflateTime,
@@ -260,7 +242,7 @@ class Letter {
             generateBalloonPath(x, y, this.size * proportion);
             ctx.fill();
 
-            this.line(x, y, x, this.y);
+            line(x, y, x, this.y);
 
             ctx.fillStyle = this.lightColor.replace('light', 70);
             ctx.fillText(this.char, this.x + this.dx, this.y + this.dy);
@@ -271,7 +253,6 @@ class Letter {
             }
 
         } else {
-
             this.cx += this.vx;
             this.cy += this.vy += opts.upFlow;
 
@@ -280,7 +261,7 @@ class Letter {
             generateBalloonPath(this.cx, this.cy, this.size);
             ctx.fill();
 
-            this.line(this.cx, this.cy, this.cx, this.cy + this.size);
+            line(this.cx, this.cy, this.cx, this.cy + this.size);
 
             ctx.fillStyle = this.lightColor.replace('light', 70);
             ctx.fillText(this.char, this.cx + this.dx, this.cy + this.dy + this.size);
@@ -339,10 +320,7 @@ class Shard {
 
             ctx.strokeStyle = this.color.replace('alp', k / this.prevPoints.length);
             ctx.lineWidth = k * lineWidthProportion;
-            ctx.beginPath();
-            ctx.moveTo(point[0], point[1]);
-            ctx.lineTo(point2[0], point2[1]);
-            ctx.stroke();
+            line(point[0], point[1], point2[0], point2[1])
 
         }
 
@@ -351,9 +329,15 @@ class Shard {
     }
 }
 
+function line(x1, y1, x2, y2) {
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+}
+
 
 function generateBalloonPath(x, y, size) {
-
     ctx.moveTo(x, y);
     ctx.bezierCurveTo(x - size / 2, y - size / 2,
         x - size / 4, y - size,
@@ -364,8 +348,7 @@ function generateBalloonPath(x, y, size) {
 }
 
 function anim() {
-
-    window.requestAnimationFrame(anim);
+    requestAnimationFrame(anim);
 
     ctx.fillStyle = '#111';
     ctx.fillRect(0, 0, w, h);
