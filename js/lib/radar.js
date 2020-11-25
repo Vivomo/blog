@@ -13,6 +13,7 @@ class Radar{
         let {width, height} = this.canvas;
         let minSide = Math.min(width, height);
         this.r = minSide * 0.85 / 2; //参照了百度雷达半径和短边的对比
+        this.ctx.lineWidth = 1;
     }
 
     draw() {
@@ -22,20 +23,23 @@ class Radar{
         this._drawArea();
     }
 
+    getCenter() {
+        let {width, height} = this.canvas;
+        return [~~(width / 2), ~~(height / 2)]
+    }
+
     /**
      * 绘制背景线条
      * @private
      */
     _drawBg() {
         let {ctx, r, indicatorCount, indicatorRad} = this;
-        let centerX = ~~(width / 2);
-        let centerY = ~~(height / 2);
-        ctx.lineWidth = 1;
+        let [centerX, centerY] = this.getCenter();
         ctx.strokeStyle = '#999';
         for (let i = 0; i < indicatorCount; i++) {
             let degree = Math.PI / 2 -  indicatorRad * i;
             let x = centerX + Math.cos(degree) * r;
-            let y = centerX - Math.sin(degree) * r;
+            let y = centerY - Math.sin(degree) * r;
             ctx.moveTo(centerX, centerY);
             ctx.lineTo(~~x, ~~y);
         }
@@ -46,7 +50,7 @@ class Radar{
                 let _r = r * j / 5;
                 let degree = Math.PI / 2 -  indicatorRad * i;
                 let x = ~~(centerX + Math.cos(degree) * _r);
-                let y = ~~(centerX - Math.sin(degree) * _r);
+                let y = ~~(centerY - Math.sin(degree) * _r);
                 if (i === 0) {
                     startX = x;
                     startY = y;
@@ -66,18 +70,18 @@ class Radar{
      * @private
      */
     _drawArea() {
-        let {ctx, indicatorCount, data, indicatorRad} = this;
-        ctx.beginPath();
+        let {ctx, r, indicatorCount, data, indicatorRad} = this;
+        let [centerX, centerY] = this.getCenter();
         ctx.strokeStyle = '#13bbff';
         ctx.fillStyle = 'rgba(19, 187, 255, 0.7)';
-
+        ctx.beginPath();
         let startX, startY;
 
         for (let i = 0; i < indicatorCount; i++) {
             let _r = r * data.data[i] / data.indicator[i].max;
             let degree = Math.PI / 2 -  indicatorRad * i;
             let x = ~~(centerX + Math.cos(degree) * _r);
-            let y = ~~(centerX - Math.sin(degree) * _r);
+            let y = ~~(centerY - Math.sin(degree) * _r);
             if (i === 0) {
                 startX = x;
                 startY = y;
