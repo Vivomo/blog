@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>魔方</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<script type="module">
+    import * as THREE from 'https://cdn.bootcdn.net/ajax/libs/three.js/r122/three.module.min.js';
+    import {OrbitControls} from './OrbitControls.js';
+
+    let App = {
+
+        size: 3,
+        // right, left, up, bottom, front, back 此顺序受Three MeshFaceMaterial的6面顺序影响
+        indexMap: [
+            [2, 5, 8, 11, 14, 17, 20, 23, 26], // right green
+            [0, 3, 6, 9, 12, 15, 18, 21, 24], // left blue
+            [0, 1, 2, 9, 10, 11, 18, 19, 20], // up white
+            [6, 7, 8, 15, 16, 17, 24, 25, 26], // bottom yellow
+            [18, 19, 20, 21, 22, 23, 24, 25, 26], // front orange
+            [0, 1, 2, 3, 4, 5, 6, 7, 8] // back red
+        ],
+        mouse: new THREE.Vector2(),
+        raycaster: new THREE.Raycaster(),
+
+        createCubeMat() {
+            let black = new THREE.MeshBasicMaterial({color: 0x000000});
+            let faceMatList = new Array(27).fill(0).map(_ => new Array(6).fill(black));
+
+            let faceMat = [0x009D54, 0x3D81F6, 0xffffff, 0xFDCC09, 0xFF6C00, 0xDC422F].map(color => {
+                let texture = new THREE.CanvasTexture(this.createCanvasMat(color));
+                return  new THREE.MeshLambertMaterial({ map: texture })
+            });
+
+            for (let f = 0; f < 6; f++) {
+                let surfaceIndex = this.indexMap[f];
+                for (let index of surfaceIndex) {
+                    faceMatList[index][f] = faceMat[f];
+                }
+            }
+            return faceMatList;
+        },
+
+        drawCube() {
+            let cubeMats = this.createCubeMat();
+            let cubes = [];
+            let {scene, size} = this;
+            for (let i = 0; i < 27; i++) {
+                let cube = new THREE.Mesh(new THREE.BoxGeometry(size, size, size),
+                    new THREE.MeshFaceMaterial(cubeMats[i]));
+                cubes.push(cube);
+                scene.add(cube);
+            }
+
+            let offsetCfg = [['x', 1], ['x', -1], ['y', 1], ['y', -1], ['z', 1], ['z', -1]];
+            for (let f = 0; f < 6; f++) {
+                let surfaceIndex = this.indexMap[f];
+                let [p, value] = offsetCfg[f];
+                for (let index of surfaceIndex) {
+                    cubes[index].position[p] += size * value;
+                }
+            }
+            this.cubes = cubes;
+        },
+
+        createCanvasMat(color) {
+            let margin = 32;
+            let size = margin * 16;
+            let _color = '#' + color.toString(16).padStart(6, '0');
+
+            let canvas = document.createElement('canvas');
+            canvas.width = canvas.height = size;
+            let ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, size, size);
+            ctx.rect(margin, margin, size - margin * 2, size - margin * 2);
+            ctx.lineJoin = 'round';
+            ctx.lineWidth = margin;
+            ctx.fillStyle = _color;
+            ctx.strokeStyle = _color;
+            ctx.stroke();
+            ctx.fill();
+            return canvas;
+        },
+
+        rotate(axis, direction, index) {
+            if (this.rotating) {
+                return;
+            }
+            this.rotating = true;
+            let filterMap = {
+                0: value => value < -this.size / 2,
+                1: value => Math.abs(value) < this.size / 2,
+                2: value => value > this.size / 2,
+            };
+            let filter = filterMap[index];
+            let list = this.cubes.filter(cube => filter(cube.position[axis]));
+            let finalRad = direction * Math.PI / 2;
+            let startRad = 0;
+            let rotateRad = 0.1 * direction;
+            let rotateFunKey = `makeRotation${axis.toUpperCase()}`;
+            let animate = () => {
+                startRad += rotateRad;
+                if (Math.abs(startRad) < Math.abs(finalRad)) {
+                    requestAnimationFrame(animate);
+                } else {
+                    rotateRad = finalRad - startRad + rotateRad;
+                    this.rotating = false;
+                }
+                for (let cube of list) {
+                    let _m = cube.matrix.clone()[rotateFunKey](rotateRad);
+                    cube.applyMatrix4(_m);
+                }
+            };
+            animate();
+        },
+
+        rotateByCube(start, end) {
+
+        },
+
+
+        render() {
+            this.renderer.render(this.scene, this.camera);
+            requestAnimationFrame(this.render.bind(this));
+        },
+
+        drawAxes() {
+            let axesHelper = new THREE.AxesHelper(20);
+            this.scene.add(axesHelper);
+        },
+
+        initRender() {
+            this.scene = new THREE.Scene();
+            let renderer = this.renderer = new THREE.WebGLRenderer({
+                antialias: true,
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.body.appendChild(renderer.domElement);
+        },
+
+        initCamera() {
+            let camera = this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
+            camera.position.set(24, 24, 24);
+            camera.lookAt(0, 0, 0);
+        },
+
+        initControls() {
+            let controls = this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+            // controls.enabled = false;
+            // controls.update();
+        },
+
+        getIntersectD(v1, v2) {
+            return {
+                x: v2.x - v1.x,
+                y: v2.y - v1.y,
+                z: v2.z - v1.z,
+            }
+        },
+
+        getTouchSurface(v) {
+            let abs = [v.x, v.y, v.z].map(num => Math.abs(num));
+            let maxIndex = abs.indexOf(Math.max(...abs));
+            return 'xyz'[maxIndex];
+        },
+
+        getWillRotateData(moveInfo) {
+            let intersectD = this.getIntersectD(moveInfo.startInter.point, moveInfo.target.point);
+            let surface = this.getTouchSurface(moveInfo.startInter.point);
+            let indexMap = this.getHoverIndexMap(moveInfo.startInter.point);
+            let axis, moveAxis;
+            switch (surface) {
+                case 'x':
+                    [axis, moveAxis] = (Math.abs(intersectD.y) < Math.abs(intersectD.z) ? 'yz' : 'zy').split('');
+                    break;
+                case 'y':
+                    [axis, moveAxis] = (Math.abs(intersectD.x) < Math.abs(intersectD.z) ? 'xz' : 'zx').split('');
+                    break;
+                default:
+                    [axis, moveAxis] = (Math.abs(intersectD.y) < Math.abs(intersectD.x) ? 'yx' : 'xy').split('');
+            }
+            let index = indexMap[axis];
+            let direction = moveInfo.startInter.point[surface] * intersectD[moveAxis] > 0 ? 1 : -1;
+            if (axis === 'x' && moveAxis === 'y') {
+                direction *= -1;
+            }
+            if (axis === 'y' && moveAxis === 'z') {
+                direction *= -1;
+            }
+            if (axis === 'z' && moveAxis === 'x') {
+                direction *= -1;
+            }
+            console.log(axis, moveAxis, intersectD[moveAxis], direction);
+            return [axis, direction, index];
+        },
+
+        getHoverIndexMap(point){
+            let surface = this.getTouchSurface(point);
+            let indexMap = {
+                x: Math.floor((point.x + this.size * 1.5) / this.size),
+                y: Math.floor((point.y + this.size * 1.5) / this.size),
+                z: Math.floor((point.z + this.size * 1.5) / this.size),
+            };
+            delete indexMap[surface];
+            return indexMap;
+        },
+
+        getHoverTarget(e){
+            this.mouse.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
+            this.raycaster.setFromCamera(this.mouse, this.camera);
+            let intersects = this.raycaster.intersectObjects(this.cubes);
+            return intersects.length > 0 ? intersects[0] : null;
+        },
+
+        listenEvent() {
+            let kMap = ['x', 'y', 'z'];
+            document.body.addEventListener('keydown', (e) => {
+                let k = Number(e.key) - 1;
+                if (k >= 0 && k <= 8) {
+                    this.rotate(kMap[~~(k / 3)], e.altKey ? -1 : 1, k % 3);
+                }
+            });
+
+
+            let moveInfo = {
+                startInter: null,
+                startMouse: {},
+                end: null
+            };
+
+
+            let minD = 15;
+
+            let mouseMove = (e) => {
+                if (this.rotating) {
+                    return;
+                }
+                let mouseXD = e.clientX - moveInfo.startMouse.x;
+                let mouseYD = e.clientY - moveInfo.startMouse.y;
+                if (Math.abs(mouseXD) < minD && Math.abs(mouseYD) < minD) {
+                    return;
+                }
+
+                let target = this.getHoverTarget(e);
+                if (!target) {
+                    element.removeEventListener('pointermove', mouseMove);
+                    return;
+                }
+                moveInfo.target = target;
+                let willRotateData = this.getWillRotateData(moveInfo);
+                this.rotate(...willRotateData);
+            };
+
+            let element = this.renderer.domElement;
+            element.addEventListener('pointerdown', (e) => {
+                let target = this.getHoverTarget(e);
+                if (target) {
+                    this.controls.enabled = false;
+                    moveInfo.startInter = target;
+                    moveInfo.startMouse = {
+                        x: e.clientX,
+                        y: e.clientY
+                    };
+                    element.addEventListener('pointermove', mouseMove);
+                }
+            });
+            //
+            // element.addEventListener('touchmove', (e) => {
+            //     console.log(e.touches);
+            //     if (moveInfo.startInter) {
+            //         mouseMove(e)
+            //     }
+            // });
+
+
+            element.addEventListener('mouseup', () => {
+                this.controls.enabled = true;
+                if (moveInfo.end) {
+                    this.rotateByCube(moveInfo.start, moveInfo.end);
+                    moveInfo = {}
+                }
+                element.removeEventListener('pointermove', mouseMove);
+            });
+        },
+
+        addLight() {
+            this.scene.add(new THREE.AmbientLight(0xffffff));
+        },
+
+        init() {
+            this.initRender();
+            this.initCamera();
+            this.addLight();
+            this.drawAxes();
+            this.drawCube();
+            this.render();
+            this.listenEvent();
+            this.initControls();
+        }
+    };
+
+    App.init();
+
+    window.App = App;
+</script>
+</body>
+</html>
