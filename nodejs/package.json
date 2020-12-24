@@ -17,6 +17,7 @@
     "dom-parser": "^0.1.5",
     "images": "^3.2.3",
     "progress": "^2.0.3",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "transliteration": "^2.2.0"
   }
 }
