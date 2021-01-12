@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>events</title>
+    <style>
+        canvas {
+            display: block;
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+<button id="btn">button</button>
+<canvas id="canvas" width="300" height="300"></canvas>
+<script>
+    let btn = document.getElementById('btn');
+    let c = document.getElementById('canvas');
+
+    bindListener('mouseup');
+    bindListener('mousedown');
+    bindListener('pointerdown');
+    bindListener('pointerup');
+    bindListener('click');
+
+    function bindListener(name) {
+        btn.addEventListener(name, (e) => {
+            e.preventDefault();
+            console.log(name);
+        })
+        c.addEventListener(name, (e) => {
+            // e.preventDefault();
+            console.log(name);
+        }, name.startsWith('mouse'))
+    }
+
+</script>
+</body>
+</html>
