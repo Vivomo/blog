@@ -7,3 +7,4 @@ webpack-test/dist/
 **/package-lock.json
 exportToHTML/
 **/node_modules/
+**/ignore/
