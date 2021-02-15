@@ -70,9 +70,17 @@ vue 也支持组件化，不过是在 MVVM 上的扩展
 
 ```
 
+### React 生命周期
+
+* start  constructor -> componentWillMount -> render -> componentDidMount
+* running ->
+* state update shouldComponentUpdate -> componentWillUpdate -> render -> componentDidUpdate
+* props update getDerivedStateFromProps
+* error componentDidCatch
 
 ### redux 三大原则
 
 * 单一数据源
 * State 是只读的
 * 使用纯函数来执行修改
+
