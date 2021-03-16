@@ -7,9 +7,9 @@ setState异步
 高阶组件
 diff算法
 触发render
-有没有关注最近React版本的变化
 单页面应用的路由实现原理 popstate pushstate onhashchange
 状态管理
+用过哪些hooks
 React 解决嵌套问题
 React 模块懒加载
 React 处理组件渲染出错 ErrorBoundary
@@ -57,9 +57,11 @@ http请求和https请求区别(证书,端口,安全性)
 zepto的点击穿透
 location.query => object
 判断一个dom元素在可视区
+前端数值计算保证精度
 瀑布流/lazyload
 懒加载
 并发请求处理
+最近看的技术书
 =====
 html
 ---
