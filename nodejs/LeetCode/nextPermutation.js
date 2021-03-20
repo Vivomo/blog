@@ -35,8 +35,39 @@ let nextPermutation = function(nums) {
         }
     }
 };
-let num = [3, 2, 1];
+let num = [10, 10, 10, 10, 10];
 nextPermutation(num);
 console.log(num);
 
-// TODO
+let swap = (arr, from, to) => {
+    let tmp = arr[from];
+    arr[from] = arr[to];
+    arr[to] = tmp;
+};
+
+let nextPermutation2 = (nums) => {
+    let len = nums.length;
+    let i = len - 2;
+    let j = len - 1;
+
+    while (i >= 0 && nums[i] >= nums[i + 1]) i--;
+
+    if (i >= 0) {
+        while (j > i && nums[j] <= nums[i]) j--;
+        swap(nums, i, j);
+        reverse(nums, i + 1, len - 1);
+    } else {
+        reverse(nums, 0, len - 1);
+    }
+};
+
+
+let reverse = (arr, start, end) => {
+    while (start < end) {
+        swap(arr, start, end);
+        start++;
+        end--;
+    }
+};
+
+
