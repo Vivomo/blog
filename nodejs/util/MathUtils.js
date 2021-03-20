@@ -1,3 +1,13 @@
+const factorial = (n) => {
+    if (n === 0) {
+        return 1;
+    }
+    let result = 1;
+    for (let i = 2; i < n; i++) {
+        result *= i;
+    }
+    return result;
+}
 /**
  * 排列 n 个不同元素 取m个 有多少种取法, m, n 必须为自然数且, m <= n
  * @param n
@@ -42,14 +52,43 @@ const combination = (n, m) => {
     for (let i = (n - m + 1); i <= n; i++) {
         result *= i;
     }
-    let factorialOfM = 1;
-    for (let i = 2; i <= m; i++) {
-        factorialOfM *= i;
-    }
-    return result / factorialOfM;
+    return result / factorial(m);
 };
 
-module.export = {
+let swap = (arr, from, to) => {
+    let tmp = arr[from];
+    arr[from] = arr[to];
+    arr[to] = tmp;
+};
+
+let reverse = (arr, start, end) => {
+    while (start < end) {
+        swap(arr, start, end);
+        start++;
+        end--;
+    }
+};
+
+let nextPermutation = (arr) => {
+    let len = arr.length;
+    let i = len - 2;
+    let j = len - 1;
+
+    while (i >= 0 && arr[i] >= arr[i + 1]) i--;
+
+    if (i >= 0) {
+        while (j > i && arr[j] <= arr[i]) j--;
+        swap(arr, i, j);
+        reverse(arr, i + 1, len - 1);
+    } else {
+        reverse(arr, 0, len - 1);
+    }
+};
+
+
+module.exports = {
     permutation,
-    combination
+    combination,
+    factorial,
+    nextPermutation
 };
