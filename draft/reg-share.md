@@ -10,7 +10,7 @@
 * 元字符的转义, 在`[]`中只有`-`才是元字符,需要转义. 例子: /\+-/ /[+\-]/
 * `$1` 与`\1` 'aabbab'.replace(/(a)(b)\2\1/, '$1') => 'aab'
 * `(?:…)`非捕获型括号, 例如 'abcde'.match(/(?:a)(b)(c)/) => `["abc", "b", "c", index: 0, input: "abcde", groups: undefined]`
-* (?<name>) 命名捕获 'abcde'.match(/(?<o>a)(b)/) => `['ab', 'a', 'b']`arr, 此时arr还有一个groups属性, 值为 `{o: 'a'}`
+* `(?<name>)` 命名捕获 'abcde'.match(/(?<o>a)(b)/) => `['ab', 'a', 'b']`arr, 此时arr还有一个groups属性, 值为 `{o: 'a'}`
 * 环视(?:=) 不占空间 例子: '23456789'.replace(/(\d)(?=(\d\d\d)+$)/g, '$1,') => '23,456,789'
 * (?!...) 与上相反
 
