@@ -1,5 +1,7 @@
 const ts = require('typescript');
 const fs = require('fs');
+const mapStream = require('map-stream');
+const vfs = require('vinyl-fs');
 
 const SyntaxKind = ts.SyntaxKind;
 
@@ -17,22 +19,13 @@ const translateJSON = {
     '1234': '1234',
 }
 
-const fileContent = fs.readFileSync('./example.tsx', 'utf8');
-const sourceFile = ts.createSourceFile(
-    'example',
-    fileContent,
-    ts.ScriptTarget.Latest,
-    true,
-    ts.ScriptKind.TSX
-);
-
 const isFormatNode = (node) => {
     return node.kind === SyntaxKind.Identifier
     && node.escapedText === 'format'
     && node.parent.kind === SyntaxKind.CallExpression
 }
 
-const addTargetParam = (target, node) => {
+const addTargetParam = (target, node, fileContent) => {
     let param = {};
     let props = node.parent.arguments[1].properties;
     props.forEach((prop) => {
@@ -69,25 +62,6 @@ const dealTargetPos = (target, node, content) => {
             console.error('不明情况', target, node);
         }
     }
-}
-
-const targetList = [];
-function findTarget (node) {
-    if (isFormatNode(node)) {
-        const id = node.parent.arguments[0].properties[0].initializer.text;
-        let target = {
-            id,
-            pos: node.parent.pos,
-            end: node.parent.end,
-            kind: node.parent.parent.kind
-        }
-        if (node.parent.arguments[1]) {
-            addTargetParam(target, node);
-        }
-        dealTargetPos(target, node, fileContent);
-        targetList.push(target)
-    }
-    ts.forEachChild(node, findTarget)
 }
 
 const template = (str, param, es6Temp = false) => {
@@ -136,14 +110,47 @@ const translate = (content, targetList) => {
     return translateContent.join('');
 }
 
-ts.forEachChild(sourceFile, findTarget)
 
-// console.log(targetList)
-//
-// targetList.forEach((target) => {
-//     console.log(fileContent.substring(target.pos, target.end))
-// });
+const translateTask = (fileContent) => {
+    const sourceFile = ts.createSourceFile(
+        'example',
+        fileContent,
+        ts.ScriptTarget.Latest,
+        true,
+        ts.ScriptKind.TSX
+    );
+    const targetList = [];
+    const findTarget = (node) => {
+        if (isFormatNode(node)) {
+            const id = node.parent.arguments[0].properties[0].initializer.text;
+            let target = {
+                id,
+                pos: node.parent.pos,
+                end: node.parent.end,
+                kind: node.parent.parent.kind
+            }
+            if (node.parent.arguments[1]) {
+                addTargetParam(target, node, fileContent);
+            }
+            dealTargetPos(target, node, fileContent);
+            targetList.push(target)
+        }
+        ts.forEachChild(node, findTarget)
+    }
 
-let translateFileContent = translate(fileContent, targetList);
+    ts.forEachChild(sourceFile, findTarget);
 
-fs.writeFileSync('./example-translate.tsx', translateFileContent);
+    return translate(fileContent, targetList);
+}
+
+
+const test = (file, cb) => {
+    const fileContent = file.contents.toString();
+    const translateContent = translateTask(fileContent);
+    file.contents = Buffer.from(translateContent, 'utf8');
+    cb(null, file);
+}
+
+vfs.src('../ignore/a/example[12].tsx', {base: './'})
+    .pipe(mapStream(test))
+    .pipe(vfs.dest('./'), { overwrite: true })
