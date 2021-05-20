@@ -1,60 +1,149 @@
 const ts = require('typescript');
 const fs = require('fs');
 
+const SyntaxKind = ts.SyntaxKind;
+
 // https://ts-ast-viewer.com/
 // https://zhuanlan.zhihu.com/p/145278299
+
+const translateJSON = {
+    value: '值',
+    'obj-data': '对象数据value: {value} 数字: {num}',
+    alert: '弹出',
+    msg: '消息',
+    title: '标题',
+    'data-msg': '消息数据{name}',
+    '123': '123 {easy} num: {num}',
+    '1234': '1234',
+}
 
 const fileContent = fs.readFileSync('./example.tsx', 'utf8');
 const sourceFile = ts.createSourceFile(
     'example',
     fileContent,
     ts.ScriptTarget.Latest,
-    /*setParentNodes */ true,
+    true,
     ts.ScriptKind.TSX
 );
 
 const isFormatNode = (node) => {
-    return node.kind === ts.SyntaxKind.Identifier
+    return node.kind === SyntaxKind.Identifier
     && node.escapedText === 'format'
-    && node.parent.kind === ts.SyntaxKind.CallExpression
+    && node.parent.kind === SyntaxKind.CallExpression
 }
 
-let count = 0;
+const addTargetParam = (target, node) => {
+    let param = {};
+    let props = node.parent.arguments[1].properties;
+    props.forEach((prop) => {
+        let key = prop.name.escapedText.trim();
+        let value;
+        if (prop.kind === SyntaxKind.ShorthandPropertyAssignment) {
+            value = key;
+        } else {
+            value = fileContent.substring(prop.initializer.pos, prop.initializer.end).trim();
+        }
+        param[key] = value;
+    });
+    target.param = param;
+}
+
+const dealTargetPos = (target, node, content) => {
+    if (target.kind === SyntaxKind.PropertyAssignment || target.kind === SyntaxKind.VariableDeclaration) {
+        if (content[target.pos] === ' ') {
+            target.pos++;
+        }
+    } else if (target.kind === SyntaxKind.JsxExpression) {
+        const wrap = node.parent.parent;
+        const block = wrap.parent;
+        target.blockKind = block.kind;
+        if (block.kind === SyntaxKind.JsxElement) {
+            target.pos = wrap.pos;
+            target.end = wrap.end;
+        } else if (block.kind === SyntaxKind.JsxAttribute) {
+            if (!target.param) {
+                target.pos = wrap.pos;
+                target.end = wrap.end;
+            }
+        } else {
+            console.error('不明情况', target, node);
+        }
+    }
+}
+
 const targetList = [];
-function changesVisitor (node) {
+function findTarget (node) {
     if (isFormatNode(node)) {
         const id = node.parent.arguments[0].properties[0].initializer.text;
         let target = {
             id,
             pos: node.parent.pos,
-            end: node.parent.end
+            end: node.parent.end,
+            kind: node.parent.parent.kind
         }
         if (node.parent.arguments[1]) {
-            let param = {};
-            let props = node.parent.arguments[1].properties;
-            props.forEach((prop) => {
-                let key = prop.name.escapedText.trim();
-                let value;
-                if (prop.kind === ts.SyntaxKind.ShorthandPropertyAssignment) {
-                    value = key;
-                } else {
-                    value = fileContent.substring(prop.initializer.pos, prop.initializer.end).trim();
-                }
-                param[key] = value;
-            });
-            target.param = param;
+            addTargetParam(target, node);
         }
+        dealTargetPos(target, node, fileContent);
         targetList.push(target)
-        // console.log(node)
-        count++;
-        // console.log(fileContent.substring(node.pos, node.end));
-        // console.log(fileContent.substring(node.parent.pos, node.parent.end));
     }
-    // console.log(fileContent.substring(node.pos, node.end), node.kind)
-    ts.forEachChild(node, changesVisitor)
+    ts.forEachChild(node, findTarget)
 }
 
-ts.forEachChild(sourceFile, changesVisitor)
+const template = (str, param, es6Temp = false) => {
+    let leftSymbol = es6Temp ? '${' : '{';
+    for (let k in param) {
+        let reg = new RegExp('\{' + k + '}', 'g');
+        let replaceStr = leftSymbol + param[k] + '}'
+        str = str.replace(reg, replaceStr)
+    }
+    return str;
+}
 
-console.log(targetList)
-console.log(count)
+const translate = (content, targetList) => {
+    let cursor = 0;
+    const translateContent = [];
+    targetList.forEach((target) => {
+        translateContent.push(content.substring(cursor, target.pos));
+        let translateStr;
+        let str = translateJSON[target.id];
+        if (target.kind === SyntaxKind.JsxExpression) {
+            if (target.blockKind === SyntaxKind.JsxAttribute) {
+                if (target.param) {
+                    translateStr = `\`${template(str, target.param, true)}\``;
+                } else {
+                    translateStr = `"${str}"`;
+                }
+            } else {
+                if (target.param) {
+                    translateStr = template(str, target.param);
+                } else {
+                    translateStr = str;
+                }
+            }
+        } else {
+            if (target.param) {
+                translateStr = `\`${template(str, target.param, true)}\``;
+            } else {
+                translateStr = `'${str}'`;
+            }
+        }
+
+        translateContent.push(translateStr);
+        cursor = target.end;
+    });
+    translateContent.push(content.substring(targetList[targetList.length - 1].end))
+    return translateContent.join('');
+}
+
+ts.forEachChild(sourceFile, findTarget)
+
+// console.log(targetList)
+//
+// targetList.forEach((target) => {
+//     console.log(fileContent.substring(target.pos, target.end))
+// });
+
+let translateFileContent = translate(fileContent, targetList);
+
+fs.writeFileSync('./example-translate.tsx', translateFileContent);

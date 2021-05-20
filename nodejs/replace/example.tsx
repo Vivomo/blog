@@ -3,9 +3,11 @@ import { format } from 'format';
 
 const Example = () => {
 
+    const one = 1;
+    const two = 2;
     let obj = {
         value: format({ id: 'value'}),
-        data: format({ id: 'obj-data'}, { value: 1, num: 2 })
+        data: format({ id: 'obj-data'}, { value: one, num: two })
     }
 
     let easy = 'easy';
@@ -17,14 +19,13 @@ const Example = () => {
     return (
         <div
             title={format({id: 'title'})}
-            data-msg={format({id: 'data-msg'}, {name: 'data-msg'})}
+            data-msg={format({id: 'data-msg'}, {name: msg})}
         >
             {
                 format({
                     id: '123'
                 }, {
                     easy,
-                    name: 'name',
                     num: 1 + 2 + 3
                 })
             }
