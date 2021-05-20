@@ -13,15 +13,24 @@ const sourceFile = ts.createSourceFile(
     ts.ScriptKind.TSX
 );
 
+const isFormatNode = (node) => {
+    return node.kind === ts.SyntaxKind.Identifier
+    && node.escapedText === 'format'
+    && node.parent.kind === ts.SyntaxKind.CallExpression
+}
+
 let count = 0;
+const targetList = [];
 function changesVisitor (node) {
-    if (node.kind === ts.SyntaxKind.Identifier
-        && node.escapedText === 'format'
-        && node.parent.kind === ts.SyntaxKind.CallExpression
-    ) {
-        console.log('id:', node.parent.arguments[0].properties[0].initializer.text);
-        let obj = {};
+    if (isFormatNode(node)) {
+        const id = node.parent.arguments[0].properties[0].initializer.text;
+        let target = {
+            id,
+            pos: node.parent.pos,
+            end: node.parent.end
+        }
         if (node.parent.arguments[1]) {
+            let param = {};
             let props = node.parent.arguments[1].properties;
             props.forEach((prop) => {
                 let key = prop.name.escapedText.trim();
@@ -31,18 +40,15 @@ function changesVisitor (node) {
                 } else {
                     value = fileContent.substring(prop.initializer.pos, prop.initializer.end).trim();
                 }
-                if (!prop.initializer) {
-                    // console.log(prop);
-                }
-                obj[key] = value;
-
+                param[key] = value;
             });
-            console.log(obj)
+            target.param = param;
         }
+        targetList.push(target)
         // console.log(node)
         count++;
         // console.log(fileContent.substring(node.pos, node.end));
-        console.log(fileContent.substring(node.parent.pos, node.parent.end));
+        // console.log(fileContent.substring(node.parent.pos, node.parent.end));
     }
     // console.log(fileContent.substring(node.pos, node.end), node.kind)
     ts.forEachChild(node, changesVisitor)
@@ -50,4 +56,5 @@ function changesVisitor (node) {
 
 ts.forEachChild(sourceFile, changesVisitor)
 
+console.log(targetList)
 console.log(count)
