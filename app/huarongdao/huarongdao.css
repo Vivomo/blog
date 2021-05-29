@@ -26,23 +26,25 @@ body {
     position: relative;
     width: calc(var(--size) * 4);
     height: calc(var(--size) * 5);
-    background: #666;
+    color: #666;
 }
 
-.block {
+.map > div {
     position: absolute;
+    background-color: currentColor;
+    box-shadow: 0 0 20px #333 inset;
 }
 
 .cc {
     width: calc(var(--size) * 2);
     height: calc(var(--size) * 2);
-    background: #eee;
+    color: #eee;
 }
 
-.soldier {
+.b1, .b2, .b3, .b4 {
     width: var(--size);
     height: var(--size);
-    background: #777;
+    color: #777;
 }
 
 .zf, .hz, .zy, .mc {
@@ -51,23 +53,23 @@ body {
 }
 
 .zf {
-    background: #000;
+    color: #000;
 }
 
 .hz {
-    background: #fcbe04;
+    color: #fcbe04;
 }
 
 .zy {
-    background: #077bf6;
+    color: #077bf6;
 }
 
 .mc {
-    background: #a214ee;
+    color: #a214ee;
 }
 
 .gy {
     width: calc(var(--size) * 2);
     height: var(--size);
-    background: #f5272e;
+    color: #f5272e;
 }
