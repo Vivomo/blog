@@ -1,0 +1,73 @@
+:root {
+    --size: 100px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: calc(var(--size) * 4);
+    min-height: calc(var(--size) * 5);
+    height: 100vh;
+    background: #333;
+}
+
+.wrap {
+    border: 3px double #00a2d4;
+}
+
+.map {
+    position: relative;
+    width: calc(var(--size) * 4);
+    height: calc(var(--size) * 5);
+    background: #666;
+}
+
+.block {
+    position: absolute;
+}
+
+.cc {
+    width: calc(var(--size) * 2);
+    height: calc(var(--size) * 2);
+    background: #eee;
+}
+
+.soldier {
+    width: var(--size);
+    height: var(--size);
+    background: #777;
+}
+
+.zf, .hz, .zy, .mc {
+    width: var(--size);
+    height: calc(var(--size) * 2);
+}
+
+.zf {
+    background: #000;
+}
+
+.hz {
+    background: #fcbe04;
+}
+
+.zy {
+    background: #077bf6;
+}
+
+.mc {
+    background: #a214ee;
+}
+
+.gy {
+    width: calc(var(--size) * 2);
+    height: var(--size);
+    background: #f5272e;
+}
