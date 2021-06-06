@@ -1,9 +1,4 @@
-const LevelMap = [
-    {
-        xAxis: 0b011010001000011000011000001001,
-        yAxis: 0b100011011100010010000000010000,
-    }
-]
+import LevelMap from './levelMap.js';
 
 const App = {
     mapPointOrder: ['cc', 'gy', 'zf', 'zy', 'hz', 'mc', 'b1', 'b2', 'b3', 'b4'],
@@ -34,7 +29,7 @@ const App = {
     initMap() {
         this.initMapBit();
         let { xAxis, yAxis} = LevelMap[this.lv];
-        let mapElem = document.querySelector('.map');
+        let mapElem = this.mapElem = document.querySelector('.map');
         mapElem.innerHTML = '';
         this.mapPointOrder.forEach((item, index) => {
             let x = xAxis & 7;
@@ -43,14 +38,38 @@ const App = {
             yAxis >>= 3;
             this.setMapInit(x, y, item);
             let elem = document.createElement('div');
+            elem.dataset.category = item;
+            elem.dataset.x = x;
+            elem.dataset.y = y;
             elem.className = `${item} block`;
             elem.style.left = x * 100 + 'px';
             elem.style.top = y * 100 + 'px';
             mapElem.appendChild(elem);
         });
     },
+    initEvent() {
+        let startX = 0;
+        let startY = 0;
+        let onPointerMove = (e) => {
+
+        };
+        this.mapElem.addEventListener('pointerdown', (e) => {
+            console.log(e)
+            let target = e.target;
+            if (!target.classList.contains('block')) {
+                return;
+            }
+            startX = e.pageX;
+            startY = e.pageY;
+            this.mapElem.addEventListener('pointermove', onPointerMove);
+        });
+        this.mapElem.addEventListener('pointerup', () => {
+            this.mapElem.removeEventListener('pointermove', onPointerMove)
+        })
+    },
     init() {
         this.initMap();
+        this.initEvent();
         console.log(this.mapBit)
     }
 }
