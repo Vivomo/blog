@@ -5,6 +5,12 @@ const App = {
     lv: 0,
     size: 100,
     mapBit: null,
+    moveCfg: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+    },
     initMapBit() {
         this.mapBit = Array(5).fill(0).map(_ => Array(4).fill(0));
     },
@@ -26,6 +32,29 @@ const App = {
                 this.mapBit[y + 1][x + 1] = 1;
         }
     },
+    updateMoveCfg(target) {
+
+    },
+    getBlocksPoints(blocks) {
+        return blocks.map((block) => {
+            let data = block.dataset;
+            let { x, y } = data;
+            let points = [[x, y]];
+            switch (data.category) {
+                case 'cc':
+                    return points.concat([[ x, y + 1 ], [x + 1, y], [x + 1, y + 1]]);
+                case 'gy':
+                    return points.concat([[x + 1, y]]);
+                case 'zf':
+                case 'zy':
+                case 'hz':
+                case 'mc':
+                    return points.concat([[x, y + 1]]);
+                default:
+                    return points;
+            }
+        });
+    },
     initMap() {
         this.initMapBit();
         let { xAxis, yAxis} = LevelMap[this.lv];
@@ -42,15 +71,20 @@ const App = {
             elem.dataset.x = x;
             elem.dataset.y = y;
             elem.className = `${item} block`;
-            elem.style.left = x * 100 + 'px';
-            elem.style.top = y * 100 + 'px';
+            elem.style.left = x * this.size + 'px';
+            elem.style.top = y * this.size + 'px';
             mapElem.appendChild(elem);
         });
     },
     initEvent() {
         let startX = 0;
         let startY = 0;
+        let movedBlockPoints = [];
+        let staticBlockPoints = [];
         let onPointerMove = (e) => {
+            let block = e.target;
+            let mX = e.pageX;
+            let mY = e.pageY;
 
         };
         this.mapElem.addEventListener('pointerdown', (e) => {
@@ -61,6 +95,9 @@ const App = {
             }
             startX = e.pageX;
             startY = e.pageY;
+            movedBlockPoints = this.getBlocksPoints([e.target]);
+            let staticBlocks = [...this.mapElem.querySelectorAll('.block')].filter(block => block !== e.target);
+            staticBlockPoints = this.getBlocksPoints(staticBlocks);
             this.mapElem.addEventListener('pointermove', onPointerMove);
         });
         this.mapElem.addEventListener('pointerup', () => {
