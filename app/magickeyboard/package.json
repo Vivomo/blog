@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "browserify": "^14.0.0",
-    "ecstatic": "^2.1.0",
+    "ecstatic": "^4.1.4",
     "simple-get": "^2.3.0",
     "standard": "*",
     "watchify": "^3.6.1"
