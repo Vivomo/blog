@@ -10,6 +10,10 @@
             padding: 0;
         }
 
+        a {
+            text-decoration: none;
+        }
+
         body {
             height: 100vh;
         }
@@ -31,17 +35,12 @@
         }
 
         .green {
-            position: absolute;
             height: 486px;
-            width: 100%;
             background: #4eb05d;
         }
 
         .center {
-            width: 1122px;
-            position: relative;
-            left: 54px;
-            top: 54px;
+            margin: -430px 54px 43px;
             background: white;
             border-radius: 52px;
             box-shadow: 0 0 16px #f4f4f4;
@@ -141,14 +140,51 @@
             border-radius: 48px;
             color: #fff;
             background: #0289ff;
-            text-decoration: none;
+
+        }
+
+        .links{
+            padding: 33px 0;
+            display: flex;
+            font-size: 44px;
+            justify-content: center;
+        }
+
+        .links a {
+            color: #0088fe;
+        }
+        .vertical-line{
+            border-right: 5px solid #ebebeb;
+            margin: 0 28px;
+        }
+        .health-app {
+            margin: 40px 54px 100px;
+            border-radius: 81px;
+            font-size: 54px;
+            text-align: center;
+            line-height: 162px;
+            color: #fff;
+            background: #1592fe;
+        }
+
+        .footer-text1 {
+            margin-bottom: 50px;
+            font-size: 42px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .footer-text2 {
+            font-size: 40px;
+            text-align: center;
+            line-height: 1.5;
+            color: #7a8187;
         }
 
     </style>
 </head>
 <body>
 
-<div>
     <div class="green">
 
     </div>
@@ -190,7 +226,32 @@
         </div>
 
     </div>
-</div>
+
+    <div class="links">
+        <a href="javascript:">网络申诉</a>
+        <div class="vertical-line"></div>
+        <a href="javascript:">我去就医</a>
+    </div>
+    <div class="links">
+        <a href="javascript:">新冠疫苗接种</a>
+        <div class="vertical-line"></div>
+        <a href="../healthHeSuan/index.html">核酸报告</a>
+        <div class="vertical-line"></div>
+        <a href="javascript:">核酸检测预约</a>
+    </div>
+    <div class="health-app">
+        健康应用
+    </div>
+    <div class="footer-text1">
+        依托全国一体化政务服务平台 <br>
+        开展跨省(区、 市)数据共享和互通互认
+    </div>
+    <div class="footer-text2">
+        服务热线: 0571-12345-6 <br>
+        本服务由杭州市人民政府提供
+    </div>
+
+
 <script>
   const fillZero = (num) => {
     return num < 10 ? `0${num}` : num
