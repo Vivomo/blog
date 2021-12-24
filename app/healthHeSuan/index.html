@@ -7,10 +7,15 @@
 
     <style>
         * {
+            box-sizing: border-box;
             max-height: 9999px;
         }
 
+
         body {
+            position: relative;
+            margin: 0;
+            min-height: 100vh;
             background: #f8f8f8;
             padding: 30px;
             font-size: 24px;
@@ -20,6 +25,7 @@
         .box-wrap {
             background: white;
             padding: 32px;
+            margin: 0 auto;
         }
 
         .username {
@@ -77,6 +83,11 @@
         }
 
         footer {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 3em;
+            color: #989898;
             text-align: center;
         }
 
@@ -103,11 +114,10 @@
         <dd>浙江医院（省）</dd>
     </dl>
 
-    <footer>
-        —— 本服务由浙江省人民政府提供 ——
-    </footer>
-
 </div>
+<footer>
+    —— 本服务由浙江省人民政府提供 ——
+</footer>
 
 </body>
 </html>
