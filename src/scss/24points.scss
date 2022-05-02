@@ -1,0 +1,28 @@
+.form {
+    padding: 20px;
+    text-align: center;
+
+    .input-wrap {
+        text-align: center;
+    }
+
+    input[type="number"] {
+        width: 200px;
+        height: 120px;
+        margin: 10px;
+        font-size: 72px;
+    }
+    .submit {
+        margin: 10px;
+        width: 160px;
+        height: 90px;
+        font-size: 48px;
+    }
+}
+
+.result {
+    padding: 20px;
+    font-size: 24px;
+    max-height: 600px;
+    overflow-x: hidden;
+}
