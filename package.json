@@ -14,7 +14,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "build": "node build/transformHTML.js && cd build && gulp scss2",
+    "build": "node build/transformHTML.js && cd build && gulp",
     "build-html": "node build/transformHTML.js",
     "build-css": "cd build && gulp"
   },
