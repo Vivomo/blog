@@ -22,7 +22,10 @@
 
 .result {
     padding: 20px;
+    margin: 20px;
     font-size: 24px;
     max-height: 600px;
+    min-height: 200px;
     overflow-x: hidden;
+    border: 2px solid #1EEDFF;
 }

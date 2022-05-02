@@ -48,7 +48,6 @@ const utils = {
         return utils.calcNumber(pre, cur, (opts >> index * 2) & 3);
       }, arr[0]);
       if (result === 24) {
-        console.log(arr, opts);
         resultList.push([arr, opts])
       }
     }
@@ -78,11 +77,10 @@ form.addEventListener('submit', (e) => {
     resultList = resultList.concat(utils.calc24Result(numbers));
   }
   if (resultList.length === 0) {
-    resultElem.value = '无解';
+    resultElem.innerHTML = '无解';
   } else {
     const resultTxt = resultList.map((result) => utils.formatResult(result));
     resultElem.innerHTML = Array.from(new Set(resultTxt)).join('\n');
-    // resultElem.value = resultTxt.join('\n');
   }
   e.preventDefault();
   return false;
