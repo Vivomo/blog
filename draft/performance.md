@@ -88,3 +88,31 @@ function updateConnectionStatus() {
 connection.addEventListener('change', updateConnectionStatus);
 ```
 
+## Webpack 优化配置
+
+### Tree-shaking
+* 基于es6 import
+* package.json 可以配置 sideEffects: [ /* 一些文件通配符 */]
+
+### 作用域提升
+
+### Babel 7 优化
+
+### webpack 依赖优化
+
+#### noParse
+* 提高构建速度
+* 通知webpack 忽略比较大的库
+* 被忽略的库不能有import, require, define的引入方式
+
+#### DllPlugin
+* 避免打包时对不变的库重复构建
+#### webpage 资源压缩
+#### webpage 资源持久化缓存
+#### webpage 应用大小监测和分析
+* Stats分析和可视化
+* webpack-bundle-analyzer 体积分析
+* speed-measure-webpack-plugin 速度分析
+
+#### React 按需加载
+* loadable
