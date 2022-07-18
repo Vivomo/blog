@@ -109,3 +109,9 @@ Number('0xff000000') | 0
 * 误删远程分支
 1.使用git log -g 找回之前提交的commit
 2.使用git branch recover_branch[新分支] commit_id命令用这个commit创建一个分支
+
+* mac pengding 过长, windows 正常
+```
+设置tcp net.ipv4.tcp_tw_recycle = 0
+net.ipv4.tcp_tw_recycle = 1，这个参数开启后 tcp 的 tcp retransmission syn包 被服务器直接丢掉
+```
