@@ -117,6 +117,7 @@ net.ipv4.tcp_tw_recycle = 1，这个参数开启后 tcp 的 tcp retransmission s
 ```
 
 * 文件名变换大小写在Git无法提交的三个解决方法
+
 1.修改Git的默认配置，从而让其对大小写敏感：
 ```
 git config core.ignorecase false
