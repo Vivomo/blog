@@ -115,3 +115,15 @@ Number('0xff000000') | 0
 设置tcp net.ipv4.tcp_tw_recycle = 0
 net.ipv4.tcp_tw_recycle = 1，这个参数开启后 tcp 的 tcp retransmission syn包 被服务器直接丢掉
 ```
+
+* 文件名变换大小写在Git无法提交的三个解决方法
+1.修改Git的默认配置，从而让其对大小写敏感：
+```
+git config core.ignorecase false
+```
+2.可以先将文件移出该项目，然后进行提交，提交之后，再移回来，再次提交。
+
+3.使用 git mv 命令修改文件名
+```
+git mv aaa.js aAa.js
+```
