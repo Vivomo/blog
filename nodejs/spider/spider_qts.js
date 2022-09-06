@@ -17,11 +17,10 @@ http.get(startUrl, (res) => {
   res.on('end', () => {
     arr = Buffer.concat(arr)
     let dom = parser.parseFromString(encoding.convert(arr, 'utf8', 'gbk').toString())
-    let list = dom.getElementsByClassName('licol4').slice(0, 10)
+    let list = dom.getElementsByClassName('licol4')
     list.forEach((li) => {
       let link = li.getElementsByTagName('a')[0]
       let href = 'http://www.shiren.org/shiku/gs/tangshi/' + link.getAttribute('href');
-      console.log(link.textContent.trim())
       download(href, link.textContent.trim())
     })
   })
@@ -63,8 +62,22 @@ const requestControl = {
           let contentDiv = divList.find((div) => {
             return div.getAttribute('align') === 'left'
           });
-          fs.writeFileSync(filePath, contentDiv.textContent)
+          try {
+            fs.writeFileSync(filePath, contentDiv.textContent);
+          } catch (e) {
+            console.error('write error', filePath)
+          }
+          this.onRequest--;
+          this.check();
         })
+      }).on('error', () => {
+        if (count === 3) {
+          this.onRequest--;
+          console.error('error', url, filePath)
+          this.check();
+        } else {
+          this.downloadImg(url, filePath, count + 1);
+        }
       })
     } catch (e) {
       console.error('---------------------------')
