@@ -177,6 +177,7 @@ class Tetris {
         this.ground = document.querySelector('.ground');
         this.scoreElem = document.querySelector('.score');
         this.nextElem = document.querySelector('.next');
+        this.downKey = null;
     }
 
     createCeil() {
@@ -193,6 +194,7 @@ class Tetris {
         this.nextElem.appendChild(this.cloneCeil(this.nextCeil));
         if (!this.impactCheck(this.curCeil.getPoints())) {
             this.gameOver = true;
+            clearInterval(this.downKey);
             alert('游戏结束, 得分:'+ this.score);
         }
     }
@@ -344,16 +346,15 @@ class Tetris {
         });
 
         let ctrlDown = document.querySelector('.down');
-        let downKey;
         ctrlDown.addEventListener('touchstart', () => {
             this.next();
-            downKey = setInterval(() => {
+            this.downKey = setInterval(() => {
                 this.next();
             }, 30);
         });
 
         ctrlDown.addEventListener('touchend', () => {
-            clearInterval(downKey);
+            clearInterval(this.downKey);
         });
 
         document.querySelector('.transform').addEventListener('click', () => {
