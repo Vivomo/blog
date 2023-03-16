@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas 基础碰撞检测</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        body {
+        }
+
+        .wrap {
+            margin: 0 auto;
+            width: 1280px;
+        }
+
+        canvas {
+            display: block;
+            margin: 10px 0;
+            background: #333;
+        }
+
+        section {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #4EA9F3;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body data-date="2023-3-15">
+<div class="wrap">
+    <section>
+        <h2>外接矩形判定</h2>
+        <button class="btn" id="insert-br">随机位置插入</button>
+        <select name="" id="graph-br">
+            <option value="1">圆</option>
+            <option value="2">正方形</option>
+            <option value="3">五角星</option>
+        </select>
+        <p>红色虚线代表碰撞，绿色代表没有</p>
+
+        <canvas id="bounding-rectangle" width="800" height="400"></canvas>
+    </section>
+
+    <section>
+        <h2>外接圆判定</h2>
+        <button class="btn" id="insert-bc">随机位置插入</button>
+        <select name="" id="graph-bc">
+            <option value="1">圆</option>
+            <option value="2">正方形</option>
+            <option value="3">五角星</option>
+        </select>
+        <p>红色虚线代表碰撞，绿色代表没有</p>
+
+        <canvas id="bounding-circle" width="800" height="400"></canvas>
+    </section>
+
+    <section>
+        <h2>小球碰撞动画</h2>
+        <button class="btn" id="insert-ba">随机位置插入小球</button>
+        <canvas id="circle-animate" width="1200" height="400"></canvas>
+    </section>
+</div>
+<script src="../js/bounding-rectangle.js"></script>
+</body>
+</html>
