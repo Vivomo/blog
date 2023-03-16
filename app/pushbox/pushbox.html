@@ -41,9 +41,13 @@
         .wrap {
             display: flex;
         }
-
+        .label-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            width: 300px;
+        }
         label {
-            display: block;
+            width: 50%;
             line-height: 2;
             color: #fff;
         }
@@ -95,19 +99,20 @@
         <table></table>
         <div class="opt">
             <form action="">
-                <label for="i1">
-                    <input type="radio" name="type" id="i1" checked value="wall">墙
-                </label>
-                <label for="i2">
-                    <input type="radio" name="type" id="i2" value="target">目标点
-                </label>
-                <label for="i3">
-                    <input type="radio" name="type" id="i3" value="box">箱子
-                </label>
-                <label for="i4">
-                    <input type="radio" name="type" id="i4" value="person">人
-                </label>
-
+                <div class="label-wrap">
+                    <label for="i1">
+                        <input type="radio" name="type" id="i1" checked value="wall">墙
+                    </label>
+                    <label for="i2">
+                        <input type="radio" name="type" id="i2" value="target">目标点
+                    </label>
+                    <label for="i3">
+                        <input type="radio" name="type" id="i3" value="box">箱子
+                    </label>
+                    <label for="i4">
+                        <input type="radio" name="type" id="i4" value="person">人
+                    </label>
+                </div>
                 <textarea id="txt" placeholder="地图文本"></textarea>
             </form>
             <button id="export">生成地图文本</button>

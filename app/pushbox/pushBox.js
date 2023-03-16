@@ -123,7 +123,7 @@ let App = {
             return '-';
         }
     },
-    export(onlyTxt) {
+    export() {
         let wall = Array.from(document.querySelectorAll('.wall'));
         let xArrOfWall = wall.map(item => ~~item.dataset.x);
         let yArrOfWall = wall.map(item => ~~item.dataset.y);
@@ -136,15 +136,13 @@ let App = {
             return Array.from(tr.querySelectorAll('td')).slice(minX, maxX + 1)
                 .map((td) => this.classToTxt(td.classList)).join('') + '\n';
         }).join('');
-        if (onlyTxt) {
-            return txt;
-        }
         document.getElementById('txt').value = txt;
+        return txt;
     },
 
     load() {
         Array.from(document.querySelectorAll('td')).forEach(td => td.className = '');
-        let txt = document.getElementById('txt').value;
+        let txt = document.getElementById('txt').value.trim();
         let formatMap = {
             '#': Type.wall,
             '.': Type.target,
@@ -154,7 +152,8 @@ let App = {
             '@': Type.person
         };
         let table = document.querySelector('table');
-        txt.trim().split('\n').forEach((line, y) => {
+        let splitTxt = txt.indexOf('|') === -1 ? '\n' : '|';
+        txt.split(splitTxt).forEach((line, y) => {
             line.split('').forEach((item, x) => {
                 table.querySelector(`[data-x="${x}"][data-y="${y}"]`).className = formatMap[item] || '';
             })
