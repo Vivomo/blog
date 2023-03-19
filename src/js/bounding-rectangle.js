@@ -15,8 +15,7 @@ class Graph {
     this.y = y;
     this.speedX = speedX;
     this.speedY = speedY;
-    // this.speed = speed;
-    // this.direction = direction
+
     if (type === GRAPH_MAP.RECT) {
       this.r = r * Math.sqrt(2);
     } else {
@@ -25,13 +24,14 @@ class Graph {
     this.coincident = false;
   }
 
-  // get speedX() {
-  //   return this.speed * Math.cos(this.direction);
+  // get speed () {
+  //   return Math.sqrt(Math.pow(this.speedX, 2) + Math.pow(this.speedY, 2));
   // }
   //
-  // get speedY() {
-  //   return this.speed * Math.sin(this.direction);
+  // get degree () {
+  //   return Math.atan2(this.speedY, this.speedX);
   // }
+
 }
 
 const randomInt = (...args) => {
@@ -43,23 +43,11 @@ const randomInt = (...args) => {
     [min, max] = args;
   }
   return min + ~~(Math.random() * (max - min));
-}
+};
 
-const reflectDirection = (speedX, speedY, angle) => {
-  //将速度向量(speedX,speedY)和法向量(Nx,Ny)转换为单位向量(Ix,Iy)和(Nx,Ny)
-  const Ix = speedX / Math.sqrt(speedX * speedX + speedY * speedY);
-  const Iy = speedY / Math.sqrt(speedX * speedX + speedY * speedY);
-  const Nx = -Math.sin(angle);
-  const Ny = Math.cos(angle);
-  //根据反射定律计算反射光线的单位向量(Rx,Ry)
-  const Rx = Ix - 2 * (Ix * Nx + Iy * Ny) * Nx;
-  const Ry = Iy - 2 * (Ix * Nx + Iy * Ny) * Ny;
-  //将反射光线的单位向量(Rx,Ry)转换为速度向量(speedX,speedY)
-  speedX = Rx * Math.sqrt(speedX * speedX + speedY * speedY);
-  speedY = Ry * Math.sqrt(speedX * speedX + speedY * speedY);
-  return [speedX, speedY]
-}
-
+const getGraphDistance = (graph1, graph2) => {
+  return Math.sqrt(Math.pow(graph1.x - graph2.x, 2) + Math.pow(graph1.y - graph2.y, 2));
+};
 
 const updateGraphCoincident = (graphList, bounding) => {
   for (let i = 0; i < graphList.length - 1; i++) {
@@ -72,7 +60,7 @@ const updateGraphCoincident = (graphList, bounding) => {
           graph2.coincident = true;
         }
       } else {
-        const distance = Math.sqrt(Math.pow(graph1.x - graph2.x, 2) + Math.pow(graph1.y - graph2.y, 2));
+        const distance = getGraphDistance(graph1, graph2);
         if (distance < graph1.r + graph2.r) {
           graph1.coincident = true;
           graph2.coincident = true;
@@ -80,7 +68,7 @@ const updateGraphCoincident = (graphList, bounding) => {
       }
     }
   }
-}
+};
 
 const drawGraphList = (ctx, graphList, bounding) => {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -108,7 +96,7 @@ const drawGraphList = (ctx, graphList, bounding) => {
         const y = graph.y;
         const r = 50;
 
-        const points = []
+        const points = [];
         for (let i = 0; i < 5; i++) {
           const angle = (i * 72 - 18) * Math.PI / 180;
           const px = x + r * Math.cos(angle);
@@ -193,13 +181,13 @@ const drawGraphList = (ctx, graphList, bounding) => {
   const cw = canvas.width;
   const ch = canvas.height;
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#0f0';
+
+  ctx.strokeStyle = '#0f0';
   const maxX = cw - PADDING;
   const maxY = ch - PADDING;
   let graphList = [];
 
-  const animate = () => {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  const boundingCheck = () => {
     graphList.forEach((graph) => {
       let { x, y, r } = graph;
       graph.x += graph.speedX;
@@ -221,21 +209,95 @@ const drawGraphList = (ctx, graphList, bounding) => {
         graph.y = 2 * r - y;
         graph.speedY *= -1;
       }
+    });
+  };
 
+  const calcContactPoint = function (graph1, graph2) {
+    return {
+      x: (graph1.x * graph1.r + graph2.x * graph2.r) / (graph1.r + graph2.r),
+      y: (graph1.y * graph1.r + graph2.y * graph2.r) / (graph1.r + graph2.r),
+    };
+  };
+
+  const pnSign = function (n) {
+    return n / Math.abs(n);
+  };
+
+  const collisionCheck = () => {
+
+    for (let i = 0; i < graphList.length - 1; i++) {
+      let graph1 = graphList[i];
+      for (let j = i + 1; j < graphList.length; j++) {
+        let graph2 = graphList[j];
+        const distance = getGraphDistance(graph1, graph2);
+        if (distance < graph1.r + graph2.r) {
+          const collisionDegree = Math.atan2(graph2.y - graph1.y, graph2.x - graph1.x);
+          const contactPoint = calcContactPoint(graph1, graph2);
+
+          const graph1PNSign = {
+            x: pnSign(contactPoint.x - graph1.x),
+            y: pnSign(contactPoint.y - graph1.y)
+          };
+          const graph2PNSign = {
+            x: pnSign(contactPoint.x - graph2.x),
+            y: pnSign(contactPoint.y - graph2.y)
+          };
+
+          graph1.x = contactPoint.x - graph1PNSign.x * graph1.r * Math.abs(Math.cos(collisionDegree));
+          graph1.y = contactPoint.y - graph1PNSign.y * graph1.r * Math.abs(Math.sin(collisionDegree));
+          graph2.x = contactPoint.x - graph2PNSign.x * graph2.r * Math.abs(Math.cos(collisionDegree));
+          graph2.y = contactPoint.y - graph2PNSign.y * graph2.r * Math.abs(Math.sin(collisionDegree));
+
+          graph1.degree = Math.atan2(graph1.speedY, graph1.speedX);
+          graph2.degree = Math.atan2(graph2.speedY, graph2.speedX);
+
+          graph1.speed = Math.hypot(graph1.speedX, graph1.speedY);
+          graph2.speed = Math.hypot(graph2.speedX, graph2.speedY);
+
+          const d1 = collisionDegree - graph1.degree;
+          const d2 = collisionDegree - graph2.degree;
+
+          graph1.degree -= Math.PI - 2 * d1;
+          graph2.degree -= Math.PI - 2 * d2;
+
+          graph1.speedX = graph1.speed * Math.cos(graph1.degree);
+          graph1.speedY = graph1.speed * Math.sin(graph1.degree);
+
+          graph2.speedX = graph2.speed * Math.cos(graph2.degree);
+          graph2.speedY = graph2.speed * Math.sin(graph2.degree);
+
+        }
+      }
+    }
+
+  };
+
+  const renderGraph = () => {
+    graphList.forEach((graph) => {
       ctx.beginPath();
       ctx.arc(graph.x, graph.y, graph.r, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.stroke();
     });
+  };
+
+  const animate = () => {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    boundingCheck();
+    collisionCheck();
+    renderGraph();
     requestAnimationFrame(animate);
   };
 
   insert.addEventListener('click', () => {
     const x = randomInt(PADDING, maxX);
     const y = randomInt(PADDING, maxY);
-    // const r = randomInt(DEFAULT_R - 30, DEFAULT_R + 30);
+    const r = randomInt(DEFAULT_R - 35, DEFAULT_R - 10);
+    // const theta = Math.PI * 2 * Math.random();
+    // const speedX = 15 * Math.sin(theta);
+    // const speedY = 15 * Math.cos(theta);
     const speedX = randomInt(-10, 10);
     const speedY = randomInt(-10, 10);
-    graphList.push(new Graph(GRAPH_MAP.CIRCLE, x, y, 50, speedX, speedY));
+    graphList.push(new Graph(GRAPH_MAP.CIRCLE, x, y, r, speedX, speedY));
   });
 
   animate();
