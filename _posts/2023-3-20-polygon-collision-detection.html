@@ -3,7 +3,7 @@ layout: new-blank
 viewport: null
 title: Canvas 多边形碰撞检测
 css: common.css,collision-detection.css
-js: polygon-collision-detection.js
+js: https://unpkg.com/earcut@2.2.4/dist/earcut.min.js,polygon-collision-detection.js
 ---
 
 <div class="wrap">
@@ -15,6 +15,16 @@ js: polygon-collision-detection.js
         <p>点击画布创建顶点，点击创建生成多边形</p>
         <p>是否碰撞：<span id="sat-result"></span></p>
         <canvas id="sat" width="800" height="400"></canvas>
+    </section>
+
+    <section>
+        <h2>凹多边形碰撞检测 耳朵减法 + SAT</h2>
+        <button class="btn" id="clear-sat2">清空画布</button>
+        <button class="btn" id="create-polygon2">创建多边形</button>
+        <button class="btn" id="check-polygon2">检测多边形是否有重合</button>
+        <p>点击画布创建顶点，点击创建生成多边形</p>
+        <p>是否碰撞：<span id="sat-result2"></span></p>
+        <canvas id="sat2" width="800" height="400"></canvas>
     </section>
 
 </div>
