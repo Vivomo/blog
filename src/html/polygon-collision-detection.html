@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas 多边形碰撞检测</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/collision-detection.css">
+</head>
+<body data-date="2023-3-20">
+<div class="wrap">
+    <section>
+        <h2>凸多边形碰撞检测 SAT算法</h2>
+        <button class="btn" id="clear-sat">清空画布</button>
+        <button class="btn" id="create-polygon">创建多边形</button>
+        <button class="btn" id="check-polygon">检测多边形是否有重合</button>
+        <p>点击画布创建顶点，点击创建生成多边形</p>
+        <p>是否碰撞：<span id="sat-result"></span></p>
+        <canvas id="sat" width="800" height="400"></canvas>
+    </section>
+
+</div>
+<script src="../js/polygon-collision-detection.js"></script>
+</body>
+</html>
