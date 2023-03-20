@@ -45,10 +45,6 @@ const randomInt = (...args) => {
   return min + ~~(Math.random() * (max - min));
 };
 
-const getGraphDistance = (graph1, graph2) => {
-  return Math.sqrt(Math.pow(graph1.x - graph2.x, 2) + Math.pow(graph1.y - graph2.y, 2));
-};
-
 const updateGraphCoincident = (graphList, bounding) => {
   for (let i = 0; i < graphList.length - 1; i++) {
     let graph1 = graphList[i];
@@ -60,7 +56,7 @@ const updateGraphCoincident = (graphList, bounding) => {
           graph2.coincident = true;
         }
       } else {
-        const distance = getGraphDistance(graph1, graph2);
+        const distance = Math.hypot(graph1.x - graph2.x, graph1.y - graph2.y);
         if (distance < graph1.r + graph2.r) {
           graph1.coincident = true;
           graph2.coincident = true;
@@ -229,7 +225,7 @@ const drawGraphList = (ctx, graphList, bounding) => {
       let graph1 = graphList[i];
       for (let j = i + 1; j < graphList.length; j++) {
         let graph2 = graphList[j];
-        const distance = getGraphDistance(graph1, graph2);
+        const distance = Math.hypot(graph1.x - graph2.x, graph1.y - graph2.y);
         if (distance < graph1.r + graph2.r) {
           const collisionDegree = Math.atan2(graph2.y - graph1.y, graph2.x - graph1.x);
           const contactPoint = calcContactPoint(graph1, graph2);
