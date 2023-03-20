@@ -24,7 +24,7 @@
 {% assign jsList = page.js | split:',' %}
 
 {% for js in jsList %}
-    {% assign start_str = js | 4 %}
+    {% assign start_str = js | slice: 0, 4 %}
     {% if start_str == "http" %}
     <script src="{{js}}"></script>
     {% else %}
