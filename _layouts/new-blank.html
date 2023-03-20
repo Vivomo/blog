@@ -22,9 +22,15 @@
 
 {% if page.js != null %}
 {% assign jsList = page.js | split:',' %}
+
 {% for js in jsList %}
-<script src="{{site.src}}js/{{js}}"></script>
-{% endfor %}
+    {% assign start_str = js | 4 %}
+    {% if start_str == "http" %}
+    <script src="{{js}}"></script>
+    {% else %}
+    <script src="{{site.src}}js/{{js}}"></script>
+    {% endif %}
+    {% endfor %}
 {% endif %}
 </body>
 </html>
