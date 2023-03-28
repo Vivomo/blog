@@ -1,0 +1,103 @@
+$theme1 : #1EEDFF;
+
+.blog-wrap {
+    position: absolute;
+    top: 60px;
+    bottom: 60px;
+    left: 60px;
+    right: 60px;
+    border: 4px solid $theme1;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.blog-title {
+    padding: 0.5em 0;
+    letter-spacing: 3px;
+    text-align: center;
+    color: #eee;
+    font-weight: normal;
+    font-family: '华文行楷','楷体',"Microsoft Yahei", "宋体", Arial, sans-serif;
+    border-bottom: 1px solid $theme1;
+}
+
+.blog-list {
+    display: flex;
+    padding: 20px;
+    flex-wrap: wrap;
+
+    li {
+        padding: 20px;
+        min-width: 100px;
+        list-style: none;
+        text-align: center;
+        cursor: pointer;
+        //transition: transform 0.3s;
+        border-radius: 4px;
+        border: 1px solid transparent;
+
+        &:hover {
+            //transform: scale(110%);
+            border: 1px solid currentColor;
+        }
+    }
+
+    p {
+        font-size: 24px;
+    }
+
+    .blog-icon {
+        display: block;
+        text-align: center;
+        font-size: 48px;
+
+        svg {
+            width: 1em;
+            height: 1em;
+        }
+
+        path {
+            fill: currentColor;
+        }
+    }
+}
+
+.category-algorithm {
+    color: #00a2d4;
+}
+
+.category-canvas {
+    color: #4eb05d;
+}
+
+.category-animate {
+    color: #4dd7c7;
+}
+
+.category-base {
+    color: #dddddd;
+}
+
+.category-comp {
+    color: #4EA9F3;
+}
+
+.category-css {
+    color: #be5cf3;
+}
+
+.category-js {
+    color: #f64444;
+}
+
+.category-game {
+    color: #ecae18;
+}
+
+.category-math {
+    color: #02d8f3;
+}
+
+.category-text {
+    color: #d35417;
+}

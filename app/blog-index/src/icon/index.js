@@ -1,0 +1,11 @@
+export { default as AlgorithmIcon } from './AlgorithmIcon';
+export { default as AnimateIcon } from './AnimateIcon';
+export { default as BaseIcon } from './BaseIcon';
+export { default as CanvasIcon } from './CanvasIcon';
+export { default as CompIcon } from './CompIcon';
+export { default as CSSIcon } from './CSSIcon';
+export { default as GameIcon } from './GameIcon';
+export { default as HTML5Icon } from './HTML5Icon';
+export { default as JSIcon } from './JSIcon';
+export { default as MathIcon } from './MathIcon';
+export { default as TextIcon } from './TextIcon';
