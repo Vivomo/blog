@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+  //定义一个多边形类
+  class Polygon {
+    constructor(vertices) {
+      this.vertices = vertices; //顶点数组
+      this.edges = []; //边数组
+      this.normals = []; //法向量数组
+      this.calculateEdges(); //计算边和法向量
+    }
+
+    //计算每条边和对应的法向量（中垂线）
+    calculateEdges() {
+      for (let i = 0; i < this.vertices.length; i++) {
+        let j = (i + 1) % this.vertices.length; //下一个顶点的索引
+        let edge = {x: this.vertices[j].x - this.vertices[i].x, y: this.vertices[j].y - this.vertices[i].y}; //边向量
+        let normal = {x: edge.y, y: -edge.x}; //法向量（逆时针旋转90度）
+        this.edges.push(edge);
+        this.normals.push(normal);
+      }
+    }
+
+    //计算多边形在某个轴上的投影范围（最小值和最大值）
+    project(axis) {
+      let min = Infinity;
+      let max = -Infinity;
+      for (let v of this.vertices) {
+        let dot = v.x * axis.x + v.y * axis.y; //点乘运算
+        if (dot < min) min = dot;
+        if (dot > max) max = dot;
+      }
+      console.log(axis, min, max);
+      return {min: min, max: max};
+    }
+  }
+
+  //定义一个碰撞检测函数，接受两个多边形作为参数
+  function SATCollision(polygonA, polygonB) {
+    let axes = polygonA.normals.concat(polygonB.normals); //所有可能的分离轴
+    for (let axis of axes) {
+      let projectionA = polygonA.project(axis); //多边形A在该轴上的投影范围
+      let projectionB = polygonB.project(axis); //多边形B在该轴上的投影范围
+      if (projectionA.max < projectionB.min || projectionB.max < projectionA.min) return false; //如果有一条轴能分离两个多边形，则返回false表示没有碰撞
+    }
+    return true; //如果没有找到分离轴，则返回true表示有碰撞
+  }
+
+  const p1 = new Polygon([{ x: 4, y: 3 }, { x: 6, y: 3 }, { x: 4, y: 0 }, { x: 2, y: 0 }]);
+  const p2 = new Polygon([{ x: 7, y: 3 }, { x: 9, y: 3 }, { x: 5, y: 0 }, { x: 7, y: 0 }]);
+  const result = SATCollision(p1, p2);
+  console.log(result);
+</script>
+</body>
+</html>
