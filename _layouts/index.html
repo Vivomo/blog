@@ -18,7 +18,7 @@
 <body>
 <ol class="post-list" style="display: none;">
     {% for post in site.posts %}
-    <li><a href="{{ post.url }}" target="_blank" data-category="{{post.category}}">{{ post.title }}</a></li>
+    <li><a href="{{ post.url }}" target="_blank" data-tags="{{post.tags}}">{{ post.title }}</a></li>
     {% endfor %}
 </ol>
 
