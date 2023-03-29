@@ -26,6 +26,8 @@ const Blog = () => {
     const tag = e.target.tagName.toLowerCase();
     let li;
     switch (tag) {
+      case 'ul':
+        return;
       case 'li':
         li = e.target;
         break;
@@ -33,7 +35,7 @@ const Blog = () => {
         li = e.target.parentNode;
     }
     const category = li.className.split('-')[1];
-    const titles = window.BlogTags[category];
+    const titles = window.BlogTags[category].reverse();
     setFilteredPosts(titles.map((title) => ({
       title: title,
       url: blogUrlMapRef.current[title]
@@ -50,6 +52,12 @@ const Blog = () => {
     <div className="blog-wrap">
       <h1 className="blog-title">帷幕的博客</h1>
       <ul className="blog-category-list" onClick={handleClick}>
+        <li className="category-game">
+          <i className="blog-icon">
+            <GameIcon/>
+          </i>
+          <p>小游戏</p>
+        </li>
         <li className="category-algorithm">
           <i className="blog-icon">
             <AlgorithmIcon/>
@@ -92,12 +100,7 @@ const Blog = () => {
           </i>
           <p>Javascript</p>
         </li>
-        <li className="category-game">
-          <i className="blog-icon">
-            <GameIcon/>
-          </i>
-          <p>小游戏</p>
-        </li>
+
         <li className="category-math">
           <i className="blog-icon">
             <MathIcon/>

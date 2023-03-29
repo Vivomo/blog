@@ -2,6 +2,8 @@ $theme1 : #1EEDFF;
 
 .blog-wrap {
     position: absolute;
+    display: flex;
+    flex-direction: column;
     top: 60px;
     bottom: 60px;
     left: 60px;
@@ -105,4 +107,32 @@ $theme1 : #1EEDFF;
 
 .category-util {
     color: #0be879;
+}
+
+.blog-list {
+    flex: 1;
+    margin: 60px;
+    padding: 2em;
+    border: 1px solid $theme1;
+    border-radius: 8px;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background: $theme1;
+    }
+
+    li {
+        padding: 0.5em 0;
+    }
+
+    a {
+        font-size: 18px;
+        color: #dddddd;
+        text-decoration: none;
+    }
 }

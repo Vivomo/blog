@@ -13,7 +13,7 @@
             }
         }
     </script>
-    <link href="/static/css/main.css?r=123" rel="stylesheet">
+    <link href="/static/blog-index/css/main.6157513c.css" rel="stylesheet">
 </head>
 <body>
 <ol class="post-list" style="display: none;">
@@ -21,13 +21,6 @@
     <li><a href="{{ post.url }}" target="_blank">{{ post.title }}</a></li>
     {% endfor %}
 </ol>
-<textarea style="display: none" id="postTitleUrlMap">
-    {
-    {% for post in site.posts %}
-    "{{ post.title }}": "{{ post.url }}",
-    {% endfor %}
-    }
-</textarea>
 
 {{content}}
 </body>
