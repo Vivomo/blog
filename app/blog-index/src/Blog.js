@@ -8,6 +8,7 @@ import {
   CSSIcon,
   GameIcon,
   // HTML5Icon,
+  UtilIcon,
   JSIcon,
   MathIcon,
   TextIcon
@@ -102,6 +103,12 @@ const Blog = () => {
             <MathIcon/>
           </i>
           <p>数学</p>
+        </li>
+        <li className="category-util">
+          <i className="blog-icon">
+            <UtilIcon/>
+          </i>
+          <p>工具</p>
         </li>
         <li className="category-text">
           <i className="blog-icon">

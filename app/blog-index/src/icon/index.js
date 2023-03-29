@@ -6,6 +6,7 @@ export { default as CompIcon } from './CompIcon';
 export { default as CSSIcon } from './CSSIcon';
 export { default as GameIcon } from './GameIcon';
 export { default as HTML5Icon } from './HTML5Icon';
+export { default as UtilIcon } from './UtilIcon';
 export { default as JSIcon } from './JSIcon';
 export { default as MathIcon } from './MathIcon';
 export { default as TextIcon } from './TextIcon';
