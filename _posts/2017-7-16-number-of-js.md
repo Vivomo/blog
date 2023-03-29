@@ -3,6 +3,7 @@ layout: blog
 title: 基础——重中之重之JS中的数值
 description: JavaScript中有关数值的介绍
 keywords: JavaScript, Number
+tags: js,base
 ---
 
 数值与字符串可以说是几乎所有业务逻辑都会打交道的东西了, 本篇博客重点讲解JS中数值的相关概念与操作.

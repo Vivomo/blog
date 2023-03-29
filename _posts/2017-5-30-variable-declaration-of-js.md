@@ -3,6 +3,7 @@ layout: blog
 title: 基础——重中之重之JS的变量的声明
 description: JavaScript中的变量声明-var,let,const的各个特性
 keywords: JavaScript变量声明 var let const的特性
+tags: js,base
 ---
 
 在现在这个浮躁的前端圈，人们盲目学着所谓火热的框架，都多多少少疏忽了基础，但任其框架万变，都万变不离其宗——JS尔。

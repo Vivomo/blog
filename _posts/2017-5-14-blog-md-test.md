@@ -1,6 +1,7 @@
 ---
 layout: blog
 title: markdown语法
+tags: base
 ---
 ## github支持的markdown
 [https://github.com/guodongxiaren/README]

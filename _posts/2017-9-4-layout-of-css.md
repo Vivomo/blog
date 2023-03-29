@@ -3,6 +3,7 @@ layout: blog
 title: 基础——重中之重之CSS中的布局
 description: CSS中的经典布局
 keywords: CSS布局,垂直居中,水平居中,自适应布局,栅格布局
+tags: css,base
 ---
 <style>
         .window {

@@ -3,6 +3,7 @@ layout: blog
 title: 重构-改善既有代码的设计 总结
 description: 总结一下 重构-改善既有代码的设计 这本书的主要知识点
 keywords: 代码重构
+tags: text
 ---
 
 # 重构笔记

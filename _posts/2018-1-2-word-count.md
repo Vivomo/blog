@@ -3,6 +3,7 @@ layout: blog
 title: 看懂ES6规范需要掌握多少词汇
 description: 看懂ES6规范需要掌握多少词汇
 keywords: 看懂ES6规范需要掌握多少词汇 NodeJS 单词统计
+tags: text
 ---
 
 ### JS的编程规范

@@ -3,6 +3,7 @@ layout: blog
 title: 高性能网站建设指南总结
 description: 总结一下 高性能网站建设指南 这本书的主要知识点
 keywords: 高性能网站 网站性能优化
+tags: text
 ---
 
 ### 1.减少HTTP请求
