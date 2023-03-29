@@ -21,7 +21,7 @@ $theme1 : #1EEDFF;
     border-bottom: 1px solid $theme1;
 }
 
-.blog-list {
+.blog-category-list {
     display: flex;
     padding: 20px;
     flex-wrap: wrap;
@@ -50,6 +50,7 @@ $theme1 : #1EEDFF;
         display: block;
         text-align: center;
         font-size: 48px;
+        pointer-events: none;
 
         svg {
             width: 1em;

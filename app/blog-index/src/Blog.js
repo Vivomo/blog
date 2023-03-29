@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   AlgorithmIcon,
   AnimateIcon,
@@ -18,6 +18,9 @@ import './Blog.scss';
 
 const Blog = () => {
 
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const blogUrlMapRef = useRef({});
+
   const handleClick = (e) => {
     const tag = e.target.tagName.toLowerCase();
     let li;
@@ -25,19 +28,27 @@ const Blog = () => {
       case 'li':
         li = e.target;
         break;
-      case 'svg':
-        li = e.target.parentNode.parentNode;
-        break;
       default:
         li = e.target.parentNode;
     }
     const category = li.className.split('-')[1];
+    const titles = window.BlogTags[category];
+    setFilteredPosts(titles.map((title) => ({
+      title: title,
+      url: blogUrlMapRef.current[title]
+    })))
   };
+
+  useEffect(() => {
+    [...document.querySelectorAll('.post-list a')].forEach((post) => {
+      blogUrlMapRef.current[post.innerText.trim()] = post.href;
+    });
+  }, []);
 
   return (
     <div className="blog-wrap">
       <h1 className="blog-title">帷幕的博客</h1>
-      <ul className="blog-list" onClick={handleClick}>
+      <ul className="blog-category-list" onClick={handleClick}>
         <li className="category-algorithm">
           <i className="blog-icon">
             <AlgorithmIcon/>
@@ -99,6 +110,16 @@ const Blog = () => {
           <p>杂文</p>
         </li>
       </ul>
+
+      <ol className="blog-list">
+        {
+          filteredPosts.map((post) => {
+            return (
+              <li key={post.title}><a href={post.url} target="_blank">{post.title}</a></li>
+            )
+          })
+        }
+      </ol>
     </div>
   );
 };
