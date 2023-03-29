@@ -23,7 +23,6 @@ const findMaxSumOfArr = (nums) => {
   return ans;
 }
 
-console.log(findMaxSumOfArr(dataOfQ1));
 ```
 
 ## 数组寻找一个区间和等于某数字
