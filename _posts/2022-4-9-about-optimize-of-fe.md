@@ -1,6 +1,6 @@
 ---
 layout: blog
-title: 关于前端优化(更新中...)
+title: 关于前端优化
 tags: text
 ---
 
@@ -113,6 +113,11 @@ connection.addEventListener('change', updateConnectionStatus);
 * 关闭透明度
 
 [developer.mozilla.org-canvas 的优化](https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas)
+
+### CSS 3D 加速
+* 3D加速是一种利用GPU（图形处理器）来渲染页面元素的技术，可以提高网站的性能和流畅度。
+* 3D加速依赖于浏览器渲染页面时使用的分层模型，当对页面上的元素进行某些操作（比如3D变换）时，该元素会被移动到属于它自己的“图层”，在那里它可以独立于页面的其他部分进行渲染，并在之后被合成（画到屏幕上）。
+* 3D加速可以通过使用特定的CSS属性或函数来开启，比如使用transform: translateZ(0)、transform: translate3d()、will-change等，这样可以告诉浏览器该元素需要GPU加速。
 
 ### React 优化
 * 使用生产版本的React库，避免开发版本中的警告信息和额外的检查，提高性能。
