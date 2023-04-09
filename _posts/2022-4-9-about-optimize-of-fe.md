@@ -32,7 +32,7 @@ tags: text
 * Performance API包含一组高精度时间定义，以及配套的接口和方法，如Performance、PerformanceEntry、PerformanceObserver、PerformanceNavigationTiming、PerformanceResourceTiming等。
 * Performance API可以测量页面中的各种性能指标，如白屏时间、首屏时间、用户可操作的时间节点、页面总下载的时间、DNS查询的时间、TCP链接的时间等。
 
-[Performance - Web API 接口参考 | MDN - Mozilla Developer](https://developer.mozilla.org/zh-CN/docs/Web/API/Performance_API)
+[Performance - Web API 接口参考 \| MDN - Mozilla Developer](https://developer.mozilla.org/zh-CN/docs/Web/API/Performance_API)
 
 ```js
 // 计算一些关键的性能指标
@@ -111,6 +111,7 @@ connection.addEventListener('change', updateConnectionStatus);
 * 使用CSS transform代替canvas计算缩放，利用GPU加速，提高性能。
 * 用CSS设置大的背景图
 * 关闭透明度
+
 [developer.mozilla.org-canvas 的优化](https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas)
 
 ### React 优化
@@ -128,6 +129,7 @@ connection.addEventListener('change', updateConnectionStatus);
 * JIT优化是指JIT编译器在编译过程中对代码进行分析和优化，以生成更高质量的机器码，减少运行时的开销。
 * JIT优化的方法有很多，例如内联、数据流分析、循环优化、逃逸分析、同步优化等。
 * JIT优化的难点在于如何平衡编译时间和执行时间，以及如何处理动态变化的代码。
+
 [A crash course in just-in-time (JIT) compilers](https://hacks.mozilla.org/2017/02/a-crash-course-in-just-in-time-jit-compilers/)
 
 ### 为什么 ESBuild 会那么快
@@ -135,4 +137,5 @@ connection.addEventListener('change', updateConnectionStatus);
 * ESBuild使用了并行处理的技术，利用多核CPU的优势，同时处理多个文件，提高了打包速度。
 * ESBuild使用了自定义的解析器和打包器，避免了使用第三方库带来的额外开销，也减少了不必要的抽象和中间层。
 * ESBuild使用了一些简化和近似的策略，比如忽略注释和空白字符，不支持source map和HMR等功能，牺牲了一些精确性和功能性，换取了更快的速度。
+
 [Esbuild 为什么那么快 - 知乎](https://zhuanlan.zhihu.com/p/379164359)
