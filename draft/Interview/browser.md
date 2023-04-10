@@ -47,3 +47,12 @@
 - 选择最后一个堆内存快照，在顶部的All objects下拉框中选择Objects allocated between snapshots 1 and 2（或者其他两个快照），过滤出两个快照之间新分配的对象。
 - 在过滤出的对象中，找到可能发生内存泄露的对象，例如Detached DOM tree（已经从DOM树上移除但仍被JS引用的DOM节点），或者Retained Size大于Shallow Size的对象（被其他对象保留引用的对象）。
 - 点击对象，查看其Retainers面板，找到保留该对象引用的源头，定位到对应的代码行。
+
+### HTML数据存储方案
+
+HTML数据存储方案是指在HTML页面中使用不同的方法来存储数据，以便在本地或服务器上进行数据的保存、读取、修改和删除¹。HTML数据存储方案主要有以下几种：
+
+- Cookie：Cookie是一种在客户端和服务器端之间传递的小型文本文件，它可以用来保存用户的偏好、状态和会话信息。Cookie的优点是可以跨域访问，缺点是大小受限（一般为4KB），数量受限（一般为20个），安全性低，每次请求都会携带，影响性能。
+- LocalStorage：LocalStorage是HTML5提供的一种本地存储方法，它可以用来保存用户浏览器中的键值对数据。LocalStorage的优点是可以永久保存数据，直到手动删除，大小一般为5MB，数量不限，不会随请求发送，缺点是不能跨域访问，安全性低。
+- SessionStorage：SessionStorage是HTML5提供的另一种本地存储方法，它与LocalStorage类似，但是它只在当前会话有效，即当用户关闭浏览器窗口或标签页后，数据会被删除。SessionStorage的优点是可以临时保存数据，不会随请求发送，缺点是不能跨域访问，安全性低，大小和数量与LocalStorage相同。
+- IndexedDB：IndexedDB是HTML5提供的一种本地数据库存储方法，它可以用来保存复杂的结构化数据。IndexedDB的优点是可以存储大量的数据（一般为50MB或更多），支持事务、索引、游标等操作，缺点是不能跨域访问，兼容性较差，使用较复杂。
