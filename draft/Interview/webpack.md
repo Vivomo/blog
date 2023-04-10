@@ -63,4 +63,14 @@ rollup和webpack都是JavaScript模块打包器，它们的相同点有以下几
 - 根据模块列表，再次向WDS发送jsonp请求，获取模块的更新代码
 - 用更新代码中的新模块替换掉旧模块，并执行模块的accept回调函数
 
+### Babel 核心流程
+Babel是一个JavaScript编译器，可以将ES6或更高版本的代码转换为ES5或更低版本的代码，以便在不支持新特性的浏览器或环境中运行。Babel的核心流程是解析、转换和生成：
+
+- 解析：Babel使用@babel/parser库将源代码解析为一个抽象语法树（AST），AST是一种用对象表示代码结构和语义的数据结构。
+- 转换：Babel使用@babel/traverse库遍历AST，根据配置的插件或预设对AST进行修改或替换，实现代码的转换。
+- 生成：Babel使用@babel/generator库将修改后的AST重新生成目标代码，并输出到文件或控制台。
+
+Babel的配置文件可以是babel.config.js、.babelrc或.babelrc.js，其中可以指定要使用的插件或预设。插件是实现单一功能的转换规则，
+例如@babel/plugin-transform-arrow-functions可以将箭头函数转换为普通函数。预设是一组插件的集合，例如@babel/preset-env可以根据目标环境自动选择需要的插件。
+
 
