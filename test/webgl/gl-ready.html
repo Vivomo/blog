@@ -10,7 +10,11 @@
     <script>
         let canvas = document.getElementById('canvas');
         let gl = canvas.getContext('webgl');
+        // 指定清空 canvas 颜色 clearColor(r, g, b, a) 取值0.0 ~ 1.0
         gl.clearColor(0, 0, 0, 1);
+        // COLOR_BUFFER_BIT 清空颜色缓存
+        // DEPTH_BUFFER_BIT 清空深度缓冲区
+        // STENCIL_BUFFER_BIT 清空模板缓冲区
         gl.clear(gl.COLOR_BUFFER_BIT);
     </script>
 </body>
