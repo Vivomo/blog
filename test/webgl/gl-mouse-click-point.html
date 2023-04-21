@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>webgl mouse click</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        canvas {
+            display: block;
+            background: gray;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="600" height="400"></canvas>
+
+<script src="./lib/index.js"></script>
+<script>
+  let canvas = document.getElementById('canvas');
+  let gl = canvas.getContext('webgl');
+
+  // 创建着色器源码
+  const VERTEX_SHADER_SOURCE = `
+    // 只传递顶点数据
+    attribute vec4 aPosition;
+    void main() {
+      gl_Position = aPosition;
+      gl_PointSize = 30.0;
+    }
+  `; // 顶点着色器
+
+  const FRAGMENT_SHADER_SOURCE = `
+    void main() {
+      gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+    }
+  `; // 片元着色器
+
+  const program = initShader(gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE);
+
+  const aPosition = gl.getAttribLocation(program, 'aPosition'); // 返回存储地址
+
+  const points = []
+  canvas.onclick = function(ev) {
+    // 坐标
+    const x = ev.clientX
+    const y = ev.clientY
+
+    const domPosition = ev.target.getBoundingClientRect();
+
+    const domx = x - domPosition.left
+    const domy = y - domPosition.top;
+
+
+    const halfWidth = canvas.offsetWidth / 2
+    const halfHeight = canvas.offsetHeight / 2
+
+    const clickX = (domx - halfWidth) / halfWidth
+    const clickY = (halfHeight - domy) / halfHeight
+
+    points.push({
+      clickX, clickY
+    })
+
+    for (let i = 0; i < points.length; i++) {
+      gl.vertexAttrib2f(aPosition, points[i].clickX, points[i].clickY)
+
+      gl.drawArrays(gl.POINTS, 0, 1);
+    }
+  }
+
+</script>
+</body>
+</html>
