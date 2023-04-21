@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>webgl point</title>
+
+</head>
+<body>
+<canvas id="canvas" width="600" height="400"></canvas>
+
+<script src="./lib/index.js"></script>
+<script>
+  let canvas = document.getElementById('canvas');
+  let gl = canvas.getContext('webgl');
+  // 着色器就是让开发者自己去编写一段程序，用来代替固定渲染管线，来处理图像的渲染
+  // 创建着色器源码
+  const VERTEX_SHADER_SOURCE = `
+    // 必须要存在 main 函数
+    void main() {
+      // 要绘制的点的坐标
+      gl_Position = vec4(0.0,0.0,0.0,1.0);
+      // 点的大小
+      gl_PointSize = 30.0;
+    }
+  `; // 顶点着色器
+
+  //  gl_Position vec4(0.0,0.0,0.0,1.0)  x, y, z, w齐次坐标 (x/w, y/w, z/w)
+
+  // gl_FragColor vec4(1.0,0.0,0.0,1.0) r, g, b, a
+  const FRAGMENT_SHADER_SOURCE = `
+    void main() {
+      gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+    }
+  `; // 片元着色器
+
+
+  const program = initShader(gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE);
+
+  // 执行绘制
+
+  // 要绘制的图形是什么， 从哪个开始，   使用几个顶点
+  gl.drawArrays(gl.POINTS, 0, 1);
+  gl.drawArrays(gl.LINES, 0, 1); // 最少需要有两个点，
+  gl.drawArrays(gl.TRIANGLES, 0, 1); // 3个点
+
+  // 3个顶点
+  // 0.0, 0.0, 0.0
+  // 0.2, 0.0, 0.0
+  // 0.4, 0.0, 0.0
+  gl.drawArrays(gl.POINTS, 0, 1);
+  gl.drawArrays(gl.LINES, 1, 2);
+</script>
+</body>
+</html>
