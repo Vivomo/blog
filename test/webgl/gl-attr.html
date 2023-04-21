@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>webgl attribute</title>
+
+</head>
+<body>
+<canvas id="canvas" width="600" height="400"></canvas>
+
+<script src="./lib/index.js"></script>
+<script>
+  let canvas = document.getElementById('canvas');
+  let gl = canvas.getContext('webgl');
+
+  // 创建着色器源码
+  const VERTEX_SHADER_SOURCE = `
+    // 只传递顶点数据
+    attribute vec4 aPosition;
+    void main() {
+      gl_Position = aPosition;
+      gl_PointSize = 30.0;
+    }
+  `; // 顶点着色器
+
+  const FRAGMENT_SHADER_SOURCE = `
+    void main() {
+      gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+    }
+  `; // 片元着色器
+
+  const program = initShader(gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE);
+
+  const aPosition = gl.getAttribLocation(program, 'aPosition'); // 返回存储地址
+
+  // gl.vertexAttrib4f(aPosition, 0.5,0.5,0.0,1.0)
+  // gl.vertexAttrib3f(aPosition, 0.5,0.5,0.0)
+  // gl.vertexAttrib2f(aPosition, 0.5,0.5)
+
+
+  let x = 0;
+  setInterval(() => {
+    x += 0.1;
+    if (x > 1.0) {
+      x = 0;
+    }
+    gl.vertexAttrib1f(aPosition, x)
+
+    gl.drawArrays(gl.POINTS, 0, 1);
+  }, 200)
+
+</script>
+</body>
+</html>
