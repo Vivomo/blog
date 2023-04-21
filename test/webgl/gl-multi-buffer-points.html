@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多缓冲区绘制多个点</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        canvas {
+            display: block;
+            background: gray;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="600" height="400"></canvas>
+
+<script src="./lib/index.js"></script>
+<script>
+  let canvas = document.getElementById('canvas');
+  let gl = canvas.getContext('webgl');
+
+  // 创建着色器源码
+  const VERTEX_SHADER_SOURCE = `
+    // 只传递顶点数据
+    attribute vec4 aPosition;
+    attribute float aPointSize;
+    void main() {
+      gl_Position = aPosition;
+      gl_PointSize = aPointSize;
+    }
+  `; // 顶点着色器
+
+  const FRAGMENT_SHADER_SOURCE = `
+    precision mediump float;
+    uniform vec2 uColor;
+    void main() {
+      gl_FragColor = vec4(uColor.r, uColor.g, 0.0, 1.0);
+    }
+  `; // 片元着色器
+
+  const program = initShader(gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE);
+
+  const aPosition = gl.getAttribLocation(program, 'aPosition');
+  const aPointSize = gl.getAttribLocation(program, 'aPointSize');
+
+  // 缓冲区对象是WebGL系统中的一块内存区域，可以一次性地向缓冲区对象中填充大量的顶点数据，然后将这些数据保存在其中，供顶点着色器使用。
+  const points = new Float32Array([
+    -0.5, -0.5, 10.0,
+    0.5, -0.5, 20.0,
+    0.0,  0.5, 30.0
+  ]);
+
+  const BYTES = points.BYTES_PER_ELEMENT;
+
+  const buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, points, gl.STATIC_DRAW);
+  gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, BYTES * 3, 0);
+  gl.enableVertexAttribArray(aPosition);
+
+  gl.vertexAttribPointer(aPointSize, 1, gl.FLOAT, false, BYTES * 3, BYTES * 2);
+  gl.enableVertexAttribArray(aPointSize);
+
+  gl.drawArrays(gl.POINTS, 0, 3);
+
+
+</script>
+</body>
+</html>
