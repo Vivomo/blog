@@ -191,3 +191,97 @@ const isValid = function(s) {
   return arr.length === 0;
 };
 ```
+### 只出现一次的数字
+```js
+/**
+ * 给你一个 非空 整数数组 nums ，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
+ */
+const singleNumber = (nums) => {
+  return nums.reduce((prev, cur) => {
+    return prev ^ cur;  
+  }, 0);
+};
+```
+### 比特位计数
+```js
+/**
+ * 给你一个整数 n ，对于 0 <= i <= n 中的每个 i ，计算其二进制表示中 1 的个数 ，返回一个长度为 n + 1 的数组 ans 作为答案。
+ * 输入：n = 5
+ 输出：[0,1,1,2,1,2]
+ 解释：
+ 0 --> 0
+ 1 --> 1
+ 2 --> 10
+ 3 --> 11
+ 4 --> 100
+ 5 --> 101
+ */
+const countBits = (n) => {
+  const bits = new Array(n + 1).fill(0);
+  let highBit = 0;
+  for (let i = 1; i <= n; i++) {
+    if ((i & (i - 1)) == 0) {
+      highBit = i;
+    }
+    bits[i] = bits[i - highBit] + 1;
+  }
+  return bits;
+};
+```
+### 移动零
+```js
+/**
+ * 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
+ 请注意 ，必须在不复制数组的情况下原地对数组进行操作。
+ 示例 1:
+ 输入: nums = [0,1,0,3,12]
+ 输出: [1,3,12,0,0]
+ */
+const moveZeroes = (nums) => {
+  for (let i = 0, l = nums.length; i < l; i++) {
+    if (nums[i] === 0) {
+      nums.splice(i, 1);
+      nums.push(0);
+      i -= 1;
+      l -= 1;
+    }
+  }
+};
+```
+### 找到所有数组中消失的数字
+```js
+/**
+ * 给你一个含 n 个整数的数组 nums ，其中 nums[i] 在区间 [1, n] 内。请你找出所有在 [1, n] 范围内但没有出现在 nums 中的数字，并以数组的形式返回结果。
+ 输入：nums = [4,3,2,7,8,2,3,1]
+ 输出：[5,6]
+ */
+var findDisappearedNumbers = function(nums) {
+  const n = nums.length;
+  for (const num of nums) {
+    const x = (num - 1) % n;
+    nums[x] += n;
+  }
+  const ret = [];
+  for (const [i, num] of nums.entries()) {
+    if (num <= n) {
+      ret.push(i + 1);
+    }
+  }
+  return ret;
+};
+```
+### 汉明距离
+```js
+/**
+ * 两个整数之间的 汉明距离 指的是这两个数字对应二进制位不同的位置的数目。
+ 给你两个整数 x 和 y，计算并返回它们之间的汉明距离。
+ */
+const hammingDistance = (x, y) => {
+  let s = x ^ y, res = 0;
+  while (s != 0) {
+    s &= s - 1;
+    res++;
+  }
+  return res;
+};
+```
