@@ -168,21 +168,17 @@ const isValid = function(s) {
   }
   
   let map = {
-    '(': 1,
-    '[': 3,
-    '{': 5,
-    ')': 10,
-    ']': 30,
-    '}': 50
+    '(': ')',
+    '[': ']',
+    '{': '}',
   };
   let arr = [];
   for (let i = 0; i < s.length; i++) {
-    let c = s[i];
-    let n = map[c]; 
-    if (n < 10) {
-      arr.push(n)
+    let char = s[i];
+    if (map[char]) {
+      arr.push(char)
     } else {
-      if (n / arr[arr.length - 1] === 10) {
+      if (map[arr[arr.length - 1]] === char) {
         arr.pop();
       } else {
         return false;
