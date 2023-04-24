@@ -46,7 +46,7 @@ const getRotateMatrix = deg => new Float32Array([
 ]);
 
 // 矩阵复合函数
-const mixMatrix = (A, B) => {
+const mixMatrix = (A, B, ...res) => {
   const result = new Float32Array(16);
 
   for (let i = 0; i < 4; i++) {
@@ -56,7 +56,11 @@ const mixMatrix = (A, B) => {
     result[i + 12] = A[i] * B[12] + A[i + 4] * B[13] + A[i + 8] * B[14] + A[i + 12] * B[15]
   }
 
-  return result;
+  if (res.length === 0) {
+    return result;
+  }
+
+  return (mixMatrix(result, ...res))
 };
 
 // 归一化函数
