@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多图形绘制</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        canvas {
+            display: block;
+            background: gray;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="600" height="400"></canvas>
+
+<script src="./lib/index.js"></script>
+<script>
+  let canvas = document.getElementById('canvas');
+  let gl = canvas.getContext('webgl');
+
+  // 创建着色器源码
+  const VERTEX_SHADER_SOURCE = `
+    // 只传递顶点数据
+    attribute vec4 aPosition;
+
+    attribute vec4 aTex;
+
+    varying vec2 vTex;
+
+    void main() {
+      gl_Position = aPosition;
+      vTex = vec2(aTex.x, aTex.y);
+    }
+  `; // 顶点着色器
+
+  const FRAGMENT_SHADER_SOURCE = `
+    precision lowp float;
+    uniform sampler2D uSampler;
+    varying vec2 vTex;
+
+    void main() {
+      gl_FragColor = texture2D(uSampler, vTex);
+    }
+  `; // 片元着色器
+
+  const program = initShader(gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE);
+
+  const aPosition = gl.getAttribLocation(program, 'aPosition');
+  const aTex = gl.getAttribLocation(program, 'aTex');
+  const uSampler = gl.getUniformLocation(program, 'uSampler');
+
+  // 缓冲区对象是WebGL系统中的一块内存区域，可以一次性地向缓冲区对象中填充大量的顶点数据，然后将这些数据保存在其中，供顶点着色器使用。
+  const points = new Float32Array([
+    -0.5,  0.5, 0.0, 1.0,
+    -0.5, -0.5, 0.0, 0.0,
+    0.5,  0.5, 1.0, 1.0,
+    0.5, -0.5, 1.0, 0.0,
+  ]);
+
+
+  const buffer = gl.createBuffer();
+  const BYTES = points.BYTES_PER_ELEMENT;
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, points, gl.STATIC_DRAW);
+  gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, BYTES * 4, 0);
+  gl.enableVertexAttribArray(aPosition);
+
+  gl.vertexAttribPointer(aTex, 2, gl.FLOAT, false, BYTES * 4, BYTES * 2);
+
+  gl.enableVertexAttribArray(aTex)
+
+
+  const img = new Image();
+  img.onload = () => {
+    const texture = gl.createTexture();
+    // 翻转，因为纹理坐标系和webgl不一样
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+    // 开启纹理单元
+    gl.activeTexture(gl.TEXTURE0);
+    // 绑定纹理
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    // 处理放大缩小逻辑
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    // 处理填充逻辑
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    // 配置纹理图像
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
+
+    gl.uniform1i(uSampler, 0);
+
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  };
+  img.src = './assets/border.jpg';
+
+
+</script>
+</body>
+</html>
