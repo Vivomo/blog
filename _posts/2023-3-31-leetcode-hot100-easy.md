@@ -285,3 +285,141 @@ const hammingDistance = (x, y) => {
   return res;
 };
 ```
+### 合并两个有序链表
+```js
+/**
+ * 将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的
+ */
+const mergeTwoLists = (list1, list2) => {
+  const result = new ListNode(-1);
+  let prev = result;
+  while (list1 != null && list2 != null) {
+    if (list1.val <= list2.val) {
+      prev.next = list1;
+      list1 = list1.next;
+    } else {
+      prev.next = list2;
+      list2 = list2.next;
+    }
+    prev = prev.next;
+  }
+  prev.next = list1 === null ? list2 : list1;
+  return result.next;
+};
+```
+### 买卖股票的最佳时机
+```js
+/**
+ * 给定一个数组 prices ，它的第 i 个元素 prices[i] 表示一支给定股票第 i 天的价格。
+ 你只能选择 某一天 买入这只股票，并选择在 未来的某一个不同的日子 卖出该股票。设计一个算法来计算你所能获取的最大利润。
+ 返回你可以从这笔交易中获取的最大利润。如果你不能获取任何利润，返回 0 。
+ */
+const maxProfit = (prices) => {
+  let minprice = Number.MAX_SAFE_INTEGER;
+  let maxprofit = 0;
+  for (let i = 0; i < prices.length; i++) {
+    if (prices[i] < minprice) {
+      minprice = prices[i];
+    } else if (prices[i] - minprice > maxprofit) {
+      maxprofit = prices[i] - minprice;
+    }
+  }
+  return maxprofit;
+};
+```
+### 多数元素
+```js
+/**
+ * 给定一个大小为 n 的数组 nums ，返回其中的多数元素。多数元素是指在数组中出现次数 大于 ⌊ n/2 ⌋ 的元素。
+ 你可以假设数组是非空的，并且给定的数组总是存在多数元素。
+ */
+const majorityElement = (nums) => {
+  let count = 0;
+  let candidate = null;
+  for (let num of nums) {
+    if (count == 0) {
+      candidate = num;
+    }
+    count += (num == candidate) ? 1 : -1;
+  }
+  return candidate;
+};
+```
+### 环形链表
+```js
+/**
+ * 给你一个链表的头节点 head ，判断链表中是否有环。
+ 如果链表中有某个节点，可以通过连续跟踪 next 指针再次到达，则链表中存在环。 为了表示给定链表中的环，评测系统内部使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。注意：pos 不作为参数进行传递 。仅仅是为了标识链表的实际情况。
+ 如果链表中存在环 ，则返回 true 。 否则，返回 false 。
+ */
+const hasCycle = (head) => {
+  if (head == null || head.next == null) {
+    return false;
+  }
+  let slow = head;
+  let fast = head.next;
+  while (slow != fast) {
+    if (fast == null || fast.next == null) {
+      return false;
+    }
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  return true;
+};
+```
+### 相交链表
+```js
+/**
+ * 给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。如果两个链表不存在相交节点，返回 null
+ * 题目数据 保证 整个链式结构中不存在环。
+ 注意，函数返回结果后，链表必须 保持其原始结构 。
+ */
+const getIntersectionNode = (headA, headB) => {
+  if (headA === null || headB === null) {
+    return null;
+  }
+  let pA = headA, pB = headB;
+  while (pA !== pB) {
+    pA = pA === null ? headB : pA.next;
+    pB = pB === null ? headA : pB.next;
+  }
+  return pA;
+};
+```
+### 反转链表
+```js
+/**
+ * 给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
+ */
+const reverseList = (head) => {
+  let prev = null;
+  let curr = head;
+  while (curr) {
+    const next = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = next;
+  }
+  return prev;
+};
+```
+### 回文链表
+```js
+/**
+ * 给你一个单链表的头节点 head ，请你判断该链表是否为回文链表。如果是，返回 true ；否则，返回 false 。
+ */
+const isPalindrome = (head) => {
+  const vals = [];
+  while (head !== null) {
+    vals.push(head.val);
+    head = head.next;
+  }
+  for (let i = 0, j = vals.length - 1; i < j; ++i, --j) {
+    if (vals[i] !== vals[j]) {
+      return false;
+    }
+  }
+  return true;
+};
+```
