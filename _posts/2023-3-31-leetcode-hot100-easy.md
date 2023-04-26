@@ -1,59 +1,8 @@
 ---
 layout: blog
-title: LeetCode hot 100简单篇（更新中……）
+title: LeetCode hot 100简单篇
 tags: algorithm
 ---
-
-
-### 合并二叉树
-```js
-/**
- *  * Definition for a binary tree node.
- *  * function TreeNode(val, left, right) {
- *  *     this.val = (val===undefined ? 0 : val)
- *  *     this.left = (left===undefined ? null : left)
- *  *     this.right = (right===undefined ? null : right)
- *  * }
- *  *
- * 给你两棵二叉树： root1 和 root2 。
- * 想象一下，当你将其中一棵覆盖到另一棵之上时，两棵树上的一些节点将会重叠（而另一些不会）。你需要将这两棵树合并成一棵新二叉树。合并的规则是：如果两个节点重叠，那么将这两个节点的值相加作为合并后节点的新值；否则，不为 null 的节点将直接作为新二叉树的节点。
- * 返回合并后的二叉树。
- * 注意: 合并过程必须从两个树的根节点开始
- *
- * 输入：root1 = [1,3,2,5], root2 = [2,1,3,null,4,null,7]
- * 输出：[3,4,5,5,4,null,7]
- */
-
-const mergeTrees = function(root1, root2) {
-  if (root1 === null) return root2;
-  if (root2 === null) return root1;
-
-  let queue = [];
-  queue.push(root1);
-  queue.push(root2);
-  while (queue.length) {
-    let node1 = queue.shift();
-    let node2 = queue.shift();;
-    node1.val += node2.val;
-    if (node1.left !== null && node2.left !== null) {
-      queue.push(node1.left);
-      queue.push(node2.left);
-    }
-    if (node1.right !== null && node2.right !== null) {
-      queue.push(node1.right);
-      queue.push(node2.right);
-    }
-    if (node1.left === null && node2.left !== null) {
-      node1.left = node2.left;
-    }
-    if (node1.right === null && node2.right !== null) {
-      node1.right = node2.right;
-    }
-  }
-  return root1;
-};
-
-```
 
 ### 爬楼梯(菲波那切数列)
 ```js
@@ -421,5 +370,159 @@ const isPalindrome = (head) => {
     }
   }
   return true;
+};
+```
+### 合并二叉树
+```js
+/**
+ *  * Definition for a binary tree node.
+ *  * function TreeNode(val, left, right) {
+ *  *     this.val = (val===undefined ? 0 : val)
+ *  *     this.left = (left===undefined ? null : left)
+ *  *     this.right = (right===undefined ? null : right)
+ *  * }
+ *  *
+ * 给你两棵二叉树： root1 和 root2 。
+ * 想象一下，当你将其中一棵覆盖到另一棵之上时，两棵树上的一些节点将会重叠（而另一些不会）。你需要将这两棵树合并成一棵新二叉树。合并的规则是：如果两个节点重叠，那么将这两个节点的值相加作为合并后节点的新值；否则，不为 null 的节点将直接作为新二叉树的节点。
+ * 返回合并后的二叉树。
+ * 注意: 合并过程必须从两个树的根节点开始
+ * 输入：root1 = [1,3,2,5], root2 = [2,1,3,null,4,null,7]
+ * 输出：[3,4,5,5,4,null,7]
+ */
+
+const mergeTrees = function(root1, root2) {
+  if (root1 === null) return root2;
+  if (root2 === null) return root1;
+
+  let queue = [];
+  queue.push(root1);
+  queue.push(root2);
+  while (queue.length) {
+    let node1 = queue.shift();
+    let node2 = queue.shift();;
+    node1.val += node2.val;
+    if (node1.left !== null && node2.left !== null) {
+      queue.push(node1.left);
+      queue.push(node2.left);
+    }
+    if (node1.right !== null && node2.right !== null) {
+      queue.push(node1.right);
+      queue.push(node2.right);
+    }
+    if (node1.left === null && node2.left !== null) {
+      node1.left = node2.left;
+    }
+    if (node1.right === null && node2.right !== null) {
+      node1.right = node2.right;
+    }
+  }
+  return root1;
+};
+```
+### 二叉树的直径
+```js
+/**
+ * 给定一棵二叉树，你需要计算它的直径长度。一棵二叉树的直径长度是任意两个结点路径长度中的最大值。这条路径可能穿过也可能不穿过根结点。
+ */
+const depth = (node) =>{
+  if (node == null) {
+    return 0; // 访问到空节点了，返回0
+  }
+  let L = depth(node.left); // 左儿子为根的子树的深度
+  let R = depth(node.right); // 右儿子为根的子树的深度
+  ans = Math.max(ans, L+R+1); // 计算d_node即L+R+1 并更新ans
+  return Math.max(L, R) + 1; // 返回该节点为根的子树的深度
+};
+const diameterOfBinaryTree = (root) => {
+  ans = 1;
+  depth(root);
+  return ans - 1;
+};
+```
+### 翻转二叉树
+```js
+/**
+ * 给你一棵二叉树的根节点 root ，翻转这棵二叉树，并返回其根节点。
+ */
+const invertTree = (root) => {
+  if (root === null) {
+    return null;
+  }
+  const left = invertTree(root.left);
+  const right = invertTree(root.right);
+  root.left = right;
+  root.right = left;
+  return root;
+};
+```
+### 二叉树的最大深度
+```js
+/**
+ * 给定一个二叉树，找出其最大深度。二叉树的深度为根节点到最远叶子节点的最长路径上的节点数
+ */
+const maxDepth = function(root) {
+  if (root == null) {
+    return 0;
+  } else {
+    const leftHeight = maxDepth(root.left);
+    const rightHeight = maxDepth(root.right);
+    return Math.max(leftHeight, rightHeight) + 1;
+  }
+};
+```
+### 对称二叉树
+```js
+/**
+ * 给你一个二叉树的根节点 root ， 检查它是否轴对称
+ */
+const check = (l, r) => {
+  if (l == null && r == null) {
+    return true;
+  }
+  if (l == null || r == null) {
+    return false;
+  }
+  return l.val == r.val && check(l.left, r.right) && check(l.right, r.left);
+}
+
+const isSymmetric = (root) => {
+  return check(root, root);
+};
+```
+### 二叉树的中序遍历
+```js
+/**
+ * 二叉树遍历中的一种，即先遍历左子树，后访问根结点，然后遍历右子树
+ */
+const inorderTraversal = (root) => {
+  const res = [];
+  let predecessor = null;
+  while (root) {
+    if (root.left) {
+      // predecessor 节点就是当前 root 节点向左走一步，然后一直向右走至无法走为止
+      predecessor = root.left;
+      while (predecessor.right && predecessor.right !== root) {
+        predecessor = predecessor.right;
+      }
+        // 让 predecessor 的右指针指向 root，继续遍历左子树
+      if (!predecessor.right) {
+        predecessor.right = root;
+        root = root.left;
+      }
+      // 说明左子树已经访问完了，我们需要断开链接
+      else {
+        res.push(root.val);
+        predecessor.right = null;
+        root = root.right;
+      }
+    }
+    // 如果没有左节点，则直接访问右节点
+    else {
+      res.push(root.val);
+      root = root.right;
+    }
+  }
+
+  return res;
 };
 ```
