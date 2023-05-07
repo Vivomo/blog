@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>圆点</title>
+    <link rel="stylesheet" href="./style/common.css">
+</head>
+<body>
+<canvas id="canvas" width="600" height="400"></canvas>
+
+<script src="./lib/index.js"></script>
+</body>
+<script>
+  const ctx = document.getElementById('canvas')
+
+  const gl = ctx.getContext('webgl')
+
+  // 创建着色器源码
+  const VERTEX_SHADER_SOURCE = `
+    void main() {
+      gl_Position = vec4(0.0,0.0,0.0,1.0);
+      gl_PointSize = 100.0;
+    }
+  `; // 顶点着色器
+
+  const FRAGMENT_SHADER_SOURCE = `
+    precision lowp float;
+
+    // float distanceSelf(vec3 a, vec3 b) {
+    //   float x = a.x - b.x;
+    //   float y = a.y - b.y;
+    //   float z = a.z - b.z;
+    //
+    //   float v = x * x + y * y + z * z;
+    //
+    //   return sqrt(v);
+    // }
+
+    float distanceSelf(vec2 a, vec2 b) {
+      float x = a.x - b.x;
+      float y = a.y - b.y;
+
+      float v = x * x + y * y;
+
+      return sqrt(v);
+    }
+
+    void main() {
+      // 计算距离
+      // float dis = distance(gl_PointCoord, vec2(0.5,0.5));
+      float dis = distanceSelf(gl_PointCoord, vec2(0.5,0.5));
+
+      if (dis > 0.5 || (dis < 0.4 && dis > 0.3) || dis < 0.2) {
+        // 放弃绘制
+        discard;
+      }
+      gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+    }
+  `; // 片元着色器
+
+  const program = initShader(gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE)
+
+  gl.drawArrays(gl.POINTS, 0, 1);
+</script>
+</html>
