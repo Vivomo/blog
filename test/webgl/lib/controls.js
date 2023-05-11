@@ -36,14 +36,12 @@ const basicType = {
     extends: [0,1],
     getValue: item => item.opacity,
     setValue: (item, value) => {
-      console.log(value, item);
       item.opacity = +value
     },
   },
   transparent: {
     getValue: item => item.transparent,
     setValue: (item, value) => {
-      console.log(value);
       item.transparent = value
     },
   },
@@ -83,15 +81,20 @@ const basicType = {
     },
   },
   // 材料的环境颜色
-  ambient: {
-    method: 'addColor',
-    getValue: (item) => item.ambient.getHex(),
-    setValue: (item, value, camera) => item.ambient = new THREE.Color(value),
-  },
+  // ambient: {
+  //   method: 'addColor',
+  //   getValue: (item) => {
+  //     console.log(item.ambient);
+  //     return item.ambient.getHex()
+  //   },
+  //   setValue: (item, value, camera) => item.ambient = new THREE.Color(value),
+  // },
   // 物体材料本身发出的颜色
   emissive: {
     method: 'addColor',
-    getValue: (item) => item.emissive.getHex(),
+    getValue: (item) => {
+      return item.emissive.getHex()
+    },
     setValue: (item, value, camera) => item.emissive = new THREE.Color(value),
   },
   // 设置高亮部分的颜色
@@ -253,8 +256,8 @@ const itemType = {
   MeshBasicMaterial: ['color', 'opacity', 'transparent', 'wireframe', 'visible'],
   MeshDepthMaterial: ['wireframe', 'cameraNear', 'cameraFar'],
   MeshNormalMaterial: ['opacity', 'transparent', 'wireframe', 'visible', 'side'],
-  MeshLambertMaterial: ['opacity', 'transparent', 'wireframe', 'visible', 'side', 'ambient', 'emissive', 'color'],
-  MeshPhongMaterial: ['opacity', 'transparent', 'wireframe', 'visible', 'side', 'ambient', 'emissive', 'color', 'specular', 'shininess'],
+  MeshLambertMaterial: ['opacity', 'transparent', 'wireframe', 'visible', 'side', 'emissive', 'color'],
+  MeshPhongMaterial: ['opacity', 'transparent', 'wireframe', 'visible', 'side', 'emissive', 'color', 'specular', 'shininess'],
   ShaderMaterial: ['red', 'alpha'],
   LineBasicMaterial: ['color'],
   LineDashedMaterial: ['dashSize', 'gapSize'],
@@ -274,7 +277,6 @@ const itemType = {
 }
 
 export default function initControls(item, camera, mesh, scene) {
-  console.log(item);
   const typeList = itemType[item.type];
   const controls = {};
   if (!typeList || !typeList.length) {
