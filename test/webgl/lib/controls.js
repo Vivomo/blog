@@ -279,13 +279,13 @@ export default function initControls(item, camera, mesh, scene) {
     const child = basicType[typeList[i]];
     if (child) {
       // controls[typeList[i]] = child.getValue(item, camera, mesh.pointer);
-      controls[typeList[i]] = child.getValue(item);
+      controls[typeList[i]] = child.getValue(item, camera);
 
       const childExtends = child.extends || [];
 
       gui[child.method || 'add'](controls, typeList[i], ...childExtends).onChange((value) => {
         // child.setValue(item, value, camera, mesh, scene, controls);
-        child.setValue(item, value);
+        child.setValue(item, value, camera);
       });
     }
   }
