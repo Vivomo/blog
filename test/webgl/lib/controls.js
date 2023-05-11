@@ -1,4 +1,5 @@
 import dat from './dat.gui.module.js';
+import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.152.2/three.module.min.js';
 
 const basicType = {
   color: {
@@ -34,11 +35,17 @@ const basicType = {
   opacity: {
     extends: [0,1],
     getValue: item => item.opacity,
-    setValue: (item, value) => item.opacity = +value,
+    setValue: (item, value) => {
+      console.log(value, item);
+      item.opacity = +value
+    },
   },
   transparent: {
     getValue: item => item.transparent,
-    setValue: (item, value) => item.transparent = value,
+    setValue: (item, value) => {
+      console.log(value);
+      item.transparent = value
+    },
   },
   wireframe: {
     getValue: item => item.wireframe,
@@ -285,6 +292,7 @@ export default function initControls(item, camera, mesh, scene) {
 
       gui[child.method || 'add'](controls, typeList[i], ...childExtends).onChange((value) => {
         // child.setValue(item, value, camera, mesh, scene, controls);
+        item.needsUpdate = true
         child.setValue(item, value, camera);
       });
     }
