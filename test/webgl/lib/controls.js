@@ -265,6 +265,7 @@ const itemType = {
   PlaneGeometry: ['width', 'height', 'widthSegments', 'heightSegments'],
   PlaneBufferGeometry: ['width', 'height', 'widthSegments', 'heightSegments'],
   CircleGeometry: ['radius', 'segments', 'thetaStart', 'thetaLength'],
+  CircleBufferGeometry: ['radius', 'segments', 'thetaStart', 'thetaLength'],
   BoxGeometry: ['width', 'height', 'depth', 'widthSegments', 'heightSegments', 'depthSegments'],
   SphereGeometry: ['radius', 'widthSegments', 'heightSegments', 'phiStart', 'phiLength', 'thetaStart', 'thetaLength'],
   CylinderGeometry: ['radiusTop', 'radiusBottom', 'height', 'radialSegments', 'heightSegments', 'openEnded'],
