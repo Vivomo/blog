@@ -1,5 +1,6 @@
 import dat from './dat.gui.module.js';
 import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.152.2/three.module.min.js';
+import { createMultiMaterialObject } from 'three/addons/utils/SceneUtils.js';
 
 const basicType = {
   color: {
@@ -173,7 +174,7 @@ function createMaterial(geometry) {
   const lambert = new THREE.MeshLambertMaterial({ color: 0xff0000 })
   const basic = new THREE.MeshBasicMaterial({ wireframe: true })
 
-  return THREE.SceneUtils.createMultiMaterialObject(geometry, [
+  return createMultiMaterialObject(geometry, [
     lambert,
     basic
   ])
@@ -287,15 +288,15 @@ export default function initControls(item, camera, mesh, scene) {
   for (let i = 0; i < typeList.length; i++) {
     const child = basicType[typeList[i]];
     if (child) {
-      // controls[typeList[i]] = child.getValue(item, camera, mesh.pointer);
-      controls[typeList[i]] = child.getValue(item, camera);
+      controls[typeList[i]] = child.getValue(item, camera, mesh?.pointer);
+      // controls[typeList[i]] = child.getValue(item, camera);
 
       const childExtends = child.extends || [];
 
       gui[child.method || 'add'](controls, typeList[i], ...childExtends).onChange((value) => {
-        // child.setValue(item, value, camera, mesh, scene, controls);
         item.needsUpdate = true
-        child.setValue(item, value, camera);
+        child.setValue(item, value, camera, mesh, scene, controls);
+        // child.setValue(item, value, camera);
       });
     }
   }
