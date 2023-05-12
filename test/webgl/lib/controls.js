@@ -1,6 +1,7 @@
 import dat from './dat.gui.module.js';
 import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/0.152.2/three.module.min.js';
 import { createMultiMaterialObject } from 'three/addons/utils/SceneUtils.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
 const basicType = {
   color: {
@@ -179,11 +180,11 @@ function createMaterial(geometry) {
   ])
 }
 
-const textOptions = {
+export const textOptions = {
   size: 1,
   height: 1,
   weight: 'normal',
-  font: 'helvetiker',
+  // font: 'helvetiker',
   bevelThickness: 1,
   bevelSize: 1,
   bevelEnabled: false,
@@ -230,7 +231,7 @@ function removeAndAdd(item, value, camera, mesh, scene, controls) {
   }
 
   if (isFont(item)) {
-    mesh.pointer = createMaterial(new THREE[item.type]('THREE', Object.assign(textOptions, controls)))
+    mesh.pointer = createMaterial(new TextGeometry('THREE', Object.assign(item.parameters.options, controls)))
   } else {
     mesh.pointer = createMaterial(new THREE[item.type](...arg))
   }
