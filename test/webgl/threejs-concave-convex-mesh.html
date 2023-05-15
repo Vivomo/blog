@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>threejs 凹凸纹理 </title>
+    <link rel="stylesheet" href="./style/common.css">
+</head>
+<body>
+
+</body>
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.152.2/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.152.2/examples/jsm/"
+    }
+  }
+</script>
+<script type="module">
+  import initControls from './lib/controls.js';
+  import * as THREE from 'three';
+  import { createMultiMaterialObject } from 'three/addons/utils/SceneUtils.js';
+  // 创建一个场景
+  const scene = new THREE.Scene();
+
+  // 创建一个相机 视点
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+  // 设置相机的位置
+  camera.position.set(0,0,20);
+
+  // 创建一个渲染器
+  const renderer = new THREE.WebGLRenderer();
+  // 设置渲染器尺寸
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  document.body.appendChild(renderer.domElement);
+
+  // 添加一个立方体
+  // 定义了一个立方体的对象
+  const geometry = new THREE.BoxGeometry(6, 6, 3);
+
+  // 创建一个纹理加载器
+  const loader = new THREE.TextureLoader()
+  loader.load('./assets/wall.jpg', (texture) => {
+    // 创建材质
+    const lambert = new THREE.MeshPhongMaterial({
+      map: texture
+    })
+
+    const mesh = new THREE.Mesh(geometry, lambert);
+    mesh.rotation.y = -0.1;
+    mesh.position.x = -4;
+
+    // 添加到场景里
+    scene.add(mesh);
+  });
+  renderer.setClearColor(0xffffff)
+  loader.load('./assets/wall.jpg', (texture) => {
+    loader.load('./assets/wall-bump.jpg', (bump) => {
+      // 创建材质
+      const lambert = new THREE.MeshPhongMaterial({
+        map: texture,
+        bumpMap: bump,
+        bumpScale: 0.2,
+      })
+
+      const mesh = new THREE.Mesh(geometry, lambert);
+      mesh.rotation.y = -0.5;
+      mesh.position.x = 4;
+
+      // 添加到场景里
+      scene.add(mesh);
+    });
+  });
+
+  // 添加灯光
+  const spotLight = new THREE.SpotLight(0xffffff);
+  spotLight.position.set(-10,10,90);
+  scene.add(spotLight);
+
+  const animation = () => {
+    // 渲染
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(animation);
+  }
+  animation()
+</script>
+</html>
