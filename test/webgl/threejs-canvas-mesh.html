@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>threejs canvas 贴图 </title>
+    <link rel="stylesheet" href="./style/common.css">
+</head>
+<body>
+
+</body>
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.152.2/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.152.2/examples/jsm/"
+    }
+  }
+</script>
+<script type="module">
+  import * as THREE from 'three';
+  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+  const clock = new THREE.Clock()
+  // 创建一个场景
+  const scene = new THREE.Scene();
+
+  // 创建一个相机 视点
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+  // 设置相机的位置
+  camera.position.set(100,100,0);
+  camera.lookAt(new THREE.Vector3(0,0,0));
+
+  // 创建一个渲染器
+  const renderer = new THREE.WebGLRenderer();
+  // 设置渲染器尺寸
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  document.body.appendChild(renderer.domElement);
+
+  const controls = new OrbitControls(camera, renderer.domElement)
+  controls.minDistance = 1;
+  controls.maxDistance = 50;
+
+  renderer.setClearColor(0xffffff);
+  // 添加灯光
+  const spotLight = new THREE.SpotLight(0xffffff);
+  spotLight.position.set(2000,8000,4000);
+  scene.add(spotLight);
+
+  function getSprite() {
+    const canvas = document.createElement('canvas')
+    canvas.width = 160;
+    canvas.height = 160;
+
+    const c = canvas.getContext('2d')
+
+    c.fillStyle = 'red';
+    c.arc(80, 80, 32, 0, Math.PI * 2);
+    c.fill();
+
+    const texture = new THREE.Texture(canvas);
+    texture.needsUpdate = true;
+    return texture;
+  }
+
+  // 创建一个球体 和一个立方体
+  const cubeGeometry = new THREE.BoxGeometry(5,5,5);
+
+  // 立方体贴图是和环境一致， 球体是跟随当前环境
+  const cubeMaterial = new THREE.MeshBasicMaterial({ map: getSprite() })
+
+  const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+
+  scene.add(cube)
+
+  const animation = () => {
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+    controls.update(clock.getDelta());
+    // 渲染
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(animation);
+  }
+  animation()
+</script>
+</html>
