@@ -22,7 +22,7 @@ export default class Snow {
         position.speedY = Math.random() + 0.6;
         position.speedZ = Math.random() - 0.5;
       },
-      url: '../../src/assets/snow.png',
+      url: '/assets/snow.png',
     })
   }
 

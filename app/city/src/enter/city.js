@@ -83,7 +83,7 @@ export default class City {
   }
 
   load() {
-    loadFBX('/src/assets/model/beijing.fbx').then((obj) => {
+    loadFBX('/assets/model/beijing.fbx').then((obj) => {
       obj.traverse((child) => {
         if (child.isMesh) {
           new SurroundLine(this.scene, child, this.height, this.time)
