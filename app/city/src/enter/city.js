@@ -15,6 +15,7 @@ import Snow from '../effect/snow.js';
 import Rain from '../effect/rain.js';
 import Smoke from '../effect/smoke.js';
 
+
 export default class City {
   constructor (scene, camera, clock) {
     this.scene = scene;
@@ -82,7 +83,7 @@ export default class City {
   }
 
   load() {
-    loadFBX('/src/model/beijing.fbx').then((obj) => {
+    loadFBX('/src/assets/model/beijing.fbx').then((obj) => {
       obj.traverse((child) => {
         if (child.isMesh) {
           new SurroundLine(this.scene, child, this.height, this.time)
