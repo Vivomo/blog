@@ -1,9 +1,10 @@
 import * as THREE from 'three';
+import { formatUrl } from '../utils/index.js';
 
 export default class Background {
   constructor (scene) {
     this.scene = scene;
-    this.url = '/assets/black-bg.png';
+    this.url = formatUrl('/assets/black-bg.png');
     this.init();
   }
 

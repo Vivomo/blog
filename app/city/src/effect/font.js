@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
+import { formatUrl } from '../utils/index.js';
 
 export default class Font{
   constructor(scene) {
@@ -11,7 +12,7 @@ export default class Font{
   }
   init() {
     const loader = new FontLoader()
-    loader.load('/font.json', (font) => {
+    loader.load(formatUrl('/assets/font.json'), (font) => {
       this.font = font;
 
       // 创建字体几何体了

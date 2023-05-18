@@ -10,3 +10,12 @@ export const loadFBX = (url) => {
     })
   })
 }
+
+const online = window.location.href.includes('weimu.xyz');
+
+export const formatUrl = (url) => {
+  if (online) {
+    return `/app/city/dist${url}`
+  }
+  return url;
+}

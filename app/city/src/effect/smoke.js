@@ -1,5 +1,6 @@
 // 烟雾预警 粒子
 import * as THREE from 'three'
+import { formatUrl } from '../utils/index.js';
 
 export default class Smoke{
   constructor(scene) {
@@ -16,7 +17,7 @@ export default class Smoke{
 
     this.material = new THREE.PointsMaterial({
       size: 50,
-      map: new THREE.TextureLoader().load('/assets/smoke.png'),
+      map: new THREE.TextureLoader().load(formatUrl('/assets/smoke.png')),
       transparent: true,
       depthWrite: false, // 禁止深度写入
     })

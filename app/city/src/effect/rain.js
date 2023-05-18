@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { Points } from './points'
+import { formatUrl } from '../utils/index.js';
 
 export default class Rain{
   constructor(scene) {
@@ -20,7 +21,7 @@ export default class Rain{
       setPosition(position) {
         position.speedY = 12
       },
-      url: '/assets/rain.png',
+      url: formatUrl('/assets/rain.png'),
     })
     // this.scene = scene;
     //
@@ -38,7 +39,7 @@ export default class Rain{
     // 创建粒子
     this.material = new THREE.PointsMaterial({
       size: 10,
-      map: new THREE.TextureLoader().load('/assets/rain.png'),
+      map: new THREE.TextureLoader().load(formatUrl('/assets/rain.png')),
       transparent: true,
       opacity: 0.4,
       depthTest: false,

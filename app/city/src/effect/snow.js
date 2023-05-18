@@ -1,4 +1,5 @@
 import { Points } from './points'
+import { formatUrl } from '../utils/index.js';
 
 export default class Snow {
   constructor(scene) {
@@ -22,7 +23,7 @@ export default class Snow {
         position.speedY = Math.random() + 0.6;
         position.speedZ = Math.random() - 0.5;
       },
-      url: '/assets/snow.png',
+      url: formatUrl('/assets/snow.png'),
     })
   }
 

@@ -1,4 +1,4 @@
-import { loadFBX } from '../utils/index.js';
+import { formatUrl, loadFBX } from '../utils/index.js';
 import SurroundLine from '../effect/surroundLine.js';
 import Background from '../effect/background.js';
 import Wall from '../effect/wall.js';
@@ -83,7 +83,7 @@ export default class City {
   }
 
   load() {
-    loadFBX('/assets/model/beijing.fbx').then((obj) => {
+    loadFBX(formatUrl('/assets/model/beijing.fbx')).then((obj) => {
       obj.traverse((child) => {
         if (child.isMesh) {
           new SurroundLine(this.scene, child, this.height, this.time)
