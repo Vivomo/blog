@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>单人棋</title>
+    <title>孔明棋</title>
     <style>
         * {
             margin: 0;
@@ -18,11 +18,23 @@
             background: #462507;
         }
         .wrap {
+            position: relative;
             display: flex;
             justify-content: space-around;
             align-items: center;
             border-radius: 50%;
             background: #775433;
+        }
+        .score {
+            position: absolute;
+            padding: 0 6px;
+            left: 0;
+            top: 0;
+            z-index: 1;
+            font-size: 48px;
+            color: #d35417;
+            background: #A88462;
+            border-radius: 6px;
         }
         .container {
             display: flex;
@@ -77,6 +89,7 @@
 </head>
 <body>
 <div class="wrap" id="wrap">
+    <div class="score" id="score">分数：0</div>
     <div class="container" id="container"></div>
 </div>
 <script>
@@ -84,6 +97,15 @@
 
     const Game = {
       activeBall: null,
+      scoreElem: document.getElementById('score'),
+      _score: 0,
+      set score(num) {
+        this._score = num;
+        this.scoreElem.innerText = '分数：' + num;
+      },
+      get score() {
+        return this._score;
+      },
       initHtml() {
         const arr = new Array(7).fill(0);
         const minSize = Math.min(document.body.clientWidth, document.body.clientHeight) * 0.9;
@@ -120,7 +142,11 @@
               const middleItem = this.getItem(middleItemData);
               this.getItem(this.activeBall).classList.remove('ball', 'active');
               middleItem.classList.remove('ball');
-              classList.add('ball')
+              classList.add('ball');
+              this.score++;
+              if (this.isWin()) {
+                alert('OHHHHHHHHHHHHHHHHHHHH!');
+              }
             }
           }
         });
@@ -151,8 +177,16 @@
       isValid(middleItemData) {
         return middleItemData && this.getItem(middleItemData).classList.contains('ball');
       },
+      initData() {
+        this.score = 0;
+        this.activeBall = null;
+      },
+      isWin() {
+        return this.getItem({ row: 3, col: 3}).classList.contains('ball') && document.querySelectorAll('.ball').length === 1;
+      },
       init() {
         this.initHtml();
+        this.initData();
         this.initEvent();
       }
     }
