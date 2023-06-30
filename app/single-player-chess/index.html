@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
     <title>孔明棋</title>
     <style>
         * {
@@ -85,6 +86,11 @@
             visibility: hidden;
             pointer-events: none;
         }
+        @media screen and (max-width: 1024px) {
+            .score {
+                font-size: 18px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -93,8 +99,6 @@
     <div class="container" id="container"></div>
 </div>
 <script>
-
-
     const Game = {
       activeBall: null,
       scoreElem: document.getElementById('score'),
@@ -190,9 +194,7 @@
         this.initEvent();
       }
     }
-
     Game.init();
-
 </script>
 </body>
 </html>
