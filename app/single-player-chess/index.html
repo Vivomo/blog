@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>单人棋</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            background: #462507;
+        }
+        .wrap {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-radius: 50%;
+            background: #775433;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: column;
+            width: 80%;
+            height: 80%;
+        }
+        .wrap .row{
+            display: flex;
+            width: 100%;
+            min-height: 12%;
+            justify-content: space-around;
+        }
+        .wrap .item {
+            position: relative;
+            min-width: 12%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .item::before {
+            content: '';
+            position: absolute;
+            left: 25%;
+            top: 25%;
+            width: 50%;
+            height: 50%;
+            border-radius: 50%;
+            background: radial-gradient(#543B24FF, #775433);
+        }
+        .item.ball::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40%, #fff, rgb(211, 84, 23));
+        }
+        .item.ball::before {
+            visibility: hidden;
+        }
+        .item.active {
+            box-shadow: 0 0 15px #eb3808;
+        }
+        .hidden {
+            visibility: hidden;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+    <div class="container" id="container"></div>
+</div>
+<script>
+
+
+    const Game = {
+      activeBall: null,
+      initHtml() {
+        const arr = new Array(7).fill(0);
+        const minSize = Math.min(document.body.clientWidth, document.body.clientHeight) * 0.9;
+        const wrap = document.getElementById('wrap');
+        const container = this.container = document.getElementById('container');
+        wrap.style.width = minSize + 'px';
+        wrap.style.height = minSize + 'px';
+        container.innerHTML = arr.map((_, rIndex) => {
+          return `<div class="row" >${arr.map((_, index) => {
+            const hidden = [0, 1, 5, 6].includes(rIndex) && [0, 1, 5, 6].includes(index);
+            return `<div class="${hidden ? 'hidden' : 'ball'} item" data-col="${index}" data-row="${rIndex}"></div>`
+          }).join('')}</div>`;
+        }).join('');
+        this.getItem({ row: 3, col: 3}).classList.remove('ball');
+      },
+      initEvent() {
+        this.container.addEventListener('click', (e) => {
+          const target = e.target;
+          const classList = target.classList;
+          if (!classList.contains('item')) {
+            return;
+          }
+          if (classList.contains('ball')) {
+            if (this.activeBall) {
+              this.getItem(this.activeBall).classList.remove('active');
+            }
+            this.activeBall = target.dataset;
+            this.getItem(target.dataset).classList.add('active');
+            return;
+          }
+          if (this.activeBall) {
+            const middleItemData = this.getMiddleItemData(this.activeBall, target.dataset);
+            if (this.isValid(middleItemData)) {
+              const middleItem = this.getItem(middleItemData);
+              this.getItem(this.activeBall).classList.remove('ball', 'active');
+              middleItem.classList.remove('ball');
+              classList.add('ball')
+            }
+          }
+        });
+      },
+      getItem(data) {
+        return document.querySelector(`[data-row="${data.row}"][data-col="${data.col}"]`);
+      },
+      getMiddleItemData(ballData, blankData) {
+        const {row: ballRow, col: ballCol} = this.formatData(ballData);
+        const {row: blankRow, col: blankCol} = this.formatData(blankData);
+        if (ballRow === blankRow) {
+          if (Math.abs(ballCol - blankCol) === 2) {
+            return { row: ballRow, col: (ballCol + blankCol) / 2}
+          }
+        } else if (ballCol === blankCol) {
+          if (Math.abs(ballRow - blankRow) === 2) {
+            return { row: (ballRow + blankRow) / 2, col: blankCol}
+          }
+        }
+        return null;
+      },
+      formatData(data) {
+        return {
+          row: Number(data.row),
+          col: Number(data.col),
+        }
+      },
+      isValid(middleItemData) {
+        return middleItemData && this.getItem(middleItemData).classList.contains('ball');
+      },
+      init() {
+        this.initHtml();
+        this.initEvent();
+      }
+    }
+
+    Game.init();
+
+</script>
+</body>
+</html>
