@@ -45,7 +45,7 @@
         const ctx = this.ctx = canvas.getContext('2d');
         ctx.fillStyle = EMPTY_COLOR;
         ctx.strokeStyle = BORDER_COLOR;
-        ctx.lineWidth = 1;
+        ctx.lineWidth = BORDER_WIDTH;
       },
       drawBg() {
         this.loop((x, y) => {
@@ -53,7 +53,6 @@
         })
       },
       drawSquare(x, y, sth) {
-        const squareInnerWidth = SQUARE_WIDTH - BORDER_WIDTH * 2;
         this.ctx.fillStyle = sth === LIFE ? LIFE_COLOR : EMPTY_COLOR;
         this.ctx.fillRect(x * SQUARE_WIDTH, y * SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_WIDTH);
         this.ctx.strokeRect(x * SQUARE_WIDTH, y * SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_WIDTH);
