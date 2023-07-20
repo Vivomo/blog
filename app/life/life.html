@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Life</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #000;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <button id="start">start</button>
+    <button id="stop">stop</button>
+</div>
+<canvas id="map" width="2000" height="2000"></canvas>
+<script>
+    const SQUARE_WIDTH = 20;
+    const BORDER_WIDTH = 1;
+    const MAX_X = 100;
+    const MAX_Y = 100;
+    const EMPTY = 0;
+    const LIFE = 1;
+    const CORPSE = 2;
+    const LIFE_COLOR = '#009900';
+    const EMPTY_COLOR = '#000000';
+    const BORDER_COLOR = '#666666'
+
+    const App = {
+      running: false,
+      initCanvas() {
+        const canvas = this.canvas = document.getElementById('map');
+        const ctx = this.ctx = canvas.getContext('2d');
+        ctx.fillStyle = EMPTY_COLOR;
+        ctx.strokeStyle = BORDER_COLOR;
+        ctx.lineWidth = 1;
+      },
+      drawBg() {
+        this.loop((x, y) => {
+          this.drawSquare(x, y, EMPTY);
+        })
+      },
+      drawSquare(x, y, sth) {
+        const squareInnerWidth = SQUARE_WIDTH - BORDER_WIDTH * 2;
+        this.ctx.fillStyle = sth === LIFE ? LIFE_COLOR : EMPTY_COLOR;
+        this.ctx.fillRect(x * SQUARE_WIDTH, y * SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_WIDTH);
+        this.ctx.strokeRect(x * SQUARE_WIDTH, y * SQUARE_WIDTH, SQUARE_WIDTH, SQUARE_WIDTH);
+      },
+      initEvent() {
+        let cur = {};
+        const pointMove = (e) => {
+          const {x, y} = this.formatOffset(e);
+          if (x === cur.x && y === cur.y) {
+            return;
+          }
+          cur.x = x;
+          cur.y = y;
+          this.data[cur.x][cur.y] = this.data[cur.x][cur.y] === EMPTY ? LIFE : EMPTY;
+          this.drawSquare(x, y, this.data[cur.x][cur.y]);
+        };
+        this.canvas.addEventListener('pointerdown', (e) => {
+          if (this.running) {
+            return;
+          }
+          cur = this.formatOffset(e);
+          this.data[cur.x][cur.y] = this.data[cur.x][cur.y] === EMPTY ? LIFE : EMPTY;
+          this.drawSquare(cur.x, cur.y, this.data[cur.x][cur.y]);
+          this.canvas.addEventListener('pointermove', pointMove);
+        });
+        this.canvas.addEventListener('pointerup', () => {
+          this.canvas.removeEventListener('pointermove', pointMove);
+        })
+
+        document.getElementById('start').addEventListener(('click'), () => {
+          this.running = true;
+          this.run();
+        });
+
+        document.getElementById('stop').addEventListener('click', () => {
+          clearInterval(this.interval);
+          this.running = false;
+        });
+
+      },
+      formatOffset(e) {
+        return {
+          x: ~~(e.offsetX / SQUARE_WIDTH),
+          y: ~~(e.offsetY / SQUARE_WIDTH)
+        }
+      },
+      initData() {
+        this.data = Array(MAX_X).fill(0).map(_ => Array(MAX_Y).fill(EMPTY));
+      },
+
+      run() {
+        this.interval = setInterval(() => {
+          this.evolve();
+        }, 1000);
+      },
+      loop(fn) {
+        for (let x = 0; x < MAX_X; x++) {
+          for (let y = 0; y < MAX_Y; y++) {
+            fn(x, y);
+          }
+        }
+      },
+      /**
+       * “人口过少”：任何活细胞如果活邻居少于2个，则死掉。
+       * “正常”：任何活细胞如果活邻居为2个或3个，则继续活。
+       * “人口过多”：任何活细胞如果活邻居大于3个，则死掉。
+       * “繁殖”：任何死细胞如果活邻居正好是3个，则活过来。
+       */
+      evolve() {
+        this.loop((x, y) => {
+          const ceil = this.data[x][y];
+          const lifeCount = this.getAroundLifeCount(x, y);
+          if (ceil === LIFE) {
+            if (lifeCount < 2 || lifeCount > 3) {
+              setTimeout(() => {
+                this.data[x][y] = EMPTY;
+                this.drawSquare(x, y, EMPTY);
+              })
+            }
+          } else {
+            if (lifeCount === 3) {
+              setTimeout(() => {
+                this.data[x][y] = LIFE;
+                this.drawSquare(x, y, LIFE);
+              })
+            }
+          }
+        });
+      },
+      getAroundLifeCount(x, y) {
+        let count = 0;
+        for (let i = -1; i < 2; i++) {
+          for (let j = -1; j < 2; j++) {
+            count += (this.data[x + i]?.[y + j] ?? EMPTY) % 2;
+          }
+        }
+        return this.data[x][y] === LIFE ? (count - 1) : count;
+      },
+      init() {
+        this.initData();
+        this.initCanvas();
+        this.drawBg();
+        this.initEvent();
+      }
+    }
+
+    App.init();
+
+</script>
+
+</body>
+</html>
