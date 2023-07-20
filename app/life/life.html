@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Life</title>
+    <script>
+      if (window.innerWidth < 1200) {
+        document.write(`<meta name="viewport" content=" target-densitydpi=device-dpi, width=750,shrink-to-fit=no, maximum-scale=2, user-scalable=no">`)
+      } else {
+        document.write(`<meta name="viewport" content="width=device-width, initial-scale=1.0">`);
+      }
+    </script>
     <style>
         * {
             margin: 0;
@@ -13,6 +20,12 @@
         }
         canvas {
             display: block;
+            margin: 0 auto;
+        }
+        .opt {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 20px;
         }
         button {
             padding: 12px;
@@ -20,20 +33,20 @@
     </style>
 </head>
 <body>
-<div>
+<div class="opt">
     <button id="start">start</button>
-    <button id="stop">stop</button>
     <button id="next">next</button>
+    <button id="stop">stop</button>
 </div>
-<canvas id="map" width="2000" height="2000"></canvas>
+<canvas id="map"></canvas>
 <script>
-    const SQUARE_WIDTH = 20;
+    const MOBILE_SCREEN = window.innerWidth < 1200;
+    const SQUARE_WIDTH = MOBILE_SCREEN ? 30 : 20;
     const BORDER_WIDTH = 1;
-    const MAX_X = 100;
-    const MAX_Y = 100;
+    const MAX_X = MOBILE_SCREEN ? 24 : 100;
+    const MAX_Y = MOBILE_SCREEN ? 30 : 100;
     const EMPTY = 0;
     const LIFE = 1;
-    const CORPSE = 2;
     const LIFE_COLOR = '#009900';
     const EMPTY_COLOR = '#000000';
     const BORDER_COLOR = '#666666'
@@ -43,6 +56,8 @@
       initCanvas() {
         const canvas = this.canvas = document.getElementById('map');
         const ctx = this.ctx = canvas.getContext('2d');
+        canvas.width = MAX_X * SQUARE_WIDTH;
+        canvas.height = MAX_Y * SQUARE_WIDTH;
         ctx.fillStyle = EMPTY_COLOR;
         ctx.strokeStyle = BORDER_COLOR;
         ctx.lineWidth = BORDER_WIDTH;
@@ -60,6 +75,7 @@
       initEvent() {
         let cur = {};
         const pointMove = (e) => {
+          e.preventDefault();
           const {x, y} = this.formatOffset(e);
           if (x === cur.x && y === cur.y) {
             return;
@@ -88,13 +104,19 @@
         });
 
         document.getElementById('next').addEventListener(('click'), () => {
-          this.evolve();
+          if (!this.running) {
+            this.evolve();
+          }
         });
 
         document.getElementById('stop').addEventListener('click', () => {
           clearInterval(this.interval);
           this.running = false;
         });
+
+        document.body.addEventListener('touchmove', (e) => {
+          e.preventDefault();
+        }, { passive: false })
 
       },
       formatOffset(e) {
@@ -147,13 +169,13 @@
         });
       },
       getAroundLifeCount(x, y) {
-        let count = 0;
-        for (let i = -1; i < 2; i++) {
-          for (let j = -1; j < 2; j++) {
-            count += (this.data[x + i]?.[y + j] ?? EMPTY) % 2;
+        let count = this.data[x][y] === LIFE ? -1 : 0;
+        for (let i = Math.max(0, x - 1), maxX = Math.min(x + 2, MAX_X); i < maxX; i++) {
+          for (let j = Math.max(0, y - 1), maxY = Math.min(y + 2, MAX_Y); j < maxY; j++) {
+            count += this.data[i][j];
           }
         }
-        return this.data[x][y] === LIFE ? (count - 1) : count;
+        return count;
       },
       init() {
         this.initData();
