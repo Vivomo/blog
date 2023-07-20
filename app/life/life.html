@@ -14,12 +14,16 @@
         canvas {
             display: block;
         }
+        button {
+            padding: 12px;
+        }
     </style>
 </head>
 <body>
 <div>
     <button id="start">start</button>
     <button id="stop">stop</button>
+    <button id="next">next</button>
 </div>
 <canvas id="map" width="2000" height="2000"></canvas>
 <script>
@@ -82,6 +86,10 @@
         document.getElementById('start').addEventListener(('click'), () => {
           this.running = true;
           this.run();
+        });
+
+        document.getElementById('next').addEventListener(('click'), () => {
+          this.evolve();
         });
 
         document.getElementById('stop').addEventListener('click', () => {
