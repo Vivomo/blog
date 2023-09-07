@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b13cd4bb.css",
+    "main.js": "/static/js/main.6bb7248b.js",
+    "static/media/stone.png": "/static/media/stone.b90441db73c9df46e57d.png",
+    "static/media/wall.png": "/static/media/wall.8d01272715bc3edc8c3b.png",
+    "static/media/water.png": "/static/media/water.8d2580de8ac3570098a1.png",
+    "static/media/hole.png": "/static/media/hole.a25116a50bce26bbf30f.png",
+    "static/media/grass.png": "/static/media/grass.b035c0942627c98bca16.png",
+    "static/media/earth.png": "/static/media/earth.e34e83cd44787e67ce91.png",
+    "index.html": "/index.html",
+    "main.b13cd4bb.css.map": "/static/css/main.b13cd4bb.css.map",
+    "main.6bb7248b.js.map": "/static/js/main.6bb7248b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b13cd4bb.css",
+    "static/js/main.6bb7248b.js"
+  ]
+}
