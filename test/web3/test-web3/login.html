@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Insert title here</title>
+<script src="web3.min.js"></script>
+<script src="tether.js"></script>
+<script src="owner.js"></script>
+<style>
+body{ 
+	background-color:#5544aa;
+	background-image:url('images/b9.jpg');
+	text-align:center;
+} 
+ 
+.div{ 
+	margin:0 auto; 
+ 
+	border:1px solid #F00;
+	position: absolute;   
+    top: 50%;   
+    left: 40%;   
+	} 
+.button {
+    background-color: #4CAF50; /* Green */
+    border: 3px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    margin: 4px 2px;
+    cursor: pointer;
+    align: center;
+}
+
+</style>
+</head>
+<body>
+
+	<script type="text/javascript">
+	var myaccounts;
+		window.addEventListener('load', function() {
+	        if (!window.web3) {//用来判断你是否安装了metamask
+	          window.alert('Please install MetaMask first.');
+	          return;
+	        }
+	      	if (window.ethereum) {
+                      ethereum.enable().then(function (accounts) {
+					
+                      	myaccounts = accounts;
+                          window.web3 = new Web3(ethereum);
+                        // window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+	                
+
+                      })
+                    .catch(function (error) {
+                                  // Handle error. Likely the user rejected the login
+                          console.error(error)
+                    });
+ 			 
+		      
+	        }
+
+		});
+
+        function getOwner(){
+			var contractAddress = "0xe17685D7950649028FF07b9b905DDf84fDa45e81";
+
+			var ZombieFactory = new web3.eth.Contract(owner_abi,contractAddress);
+		   ZombieFactory.methods.getOwner().call(function (err, res) {
+					 if (err) {
+						console.log("An error occured", err)
+						return
+					  }
+					  alert("The owner is: " + res)
+			});
+       
+
+        }
+	
+        function changeOwner(){
+		
+        	var newowner = document.getElementById("newowner").value;
+			var contractAddress = "0xe17685D7950649028FF07b9b905DDf84fDa45e81";
+
+			var ZombieFactory = new web3.eth.Contract(owner_abi,contractAddress);
+			var me = myaccounts[0];
+		   var trans = ZombieFactory.methods.changeOwner(newowner);
+			trans.send({from:me}).on('transactionHash', function(hash){
+                console.log(hash);
+			})
+			.on('receipt', function(receipt){
+			   console.log(receipt);
+			})
+			.on('confirmation', function(confirmationNumber, receipt){
+				  console.log(confirmationNumber);
+			})
+			.on('error', function(error, receipt) {
+				console.log(error);
+			});
+
+        } 
+		function sign(){
+			var myDate = new Date();
+		    var timestamp = myDate.getTime();
+			web3.eth.getCoinbase().then(function(coinbase, error){
+				var data = web3.utils.fromUtf8(timestamp + coinbase);
+				data = web3.utils.sha3(data);
+	        			web3.eth.sign(data, coinbase).then(function(sig){alert(sig);});
+			}).catch(function (error) {
+                         console.error(error)
+             });
+			
+		}
+
+
+
+	</script>
+	<div class="div"> 
+		<input type="button" onclick="javascropt:sign()" class="button" value="签名"></input>
+		<input type="button" onclick="javascropt:getOwner()" class="button" value="读合约数据"></input><br/>
+ 		<input type="button" onclick="javascropt:changeOwner()" class="button" value="改变owner"></input>
+		<input type="text" id="newowner"></input>
+ 
+ 	</div> 
+</body>
+</html>
