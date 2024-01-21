@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas Image Joiner</title>
+    <script>
+      // 用于存储图片对象的数组
+      let images = [];
+      // 记录总宽度
+      let totalWidth = 0;
+      // 假设所有图片高度一致
+      let commonHeight = 0;
+
+      function handleFiles(files) {
+        // 重置图片数组和总宽度
+        images = [];
+        totalWidth = 0;
+        commonHeight = 0;
+
+        let loadedCount = 0;
+
+        console.log(files);
+
+        // 将FileList转换成数组进行处理
+        Array.from(files).sort((a, b) => {
+          return Number(a.name.match(/\d+/)[0]) - Number(b.name.match(/\d+/)[0]);
+        }).forEach((file, index) => {
+          if (!file.type.startsWith('image/')){ return }
+
+          let img = new Image();
+          img.src = URL.createObjectURL(file);
+          img.onload = () => {
+            URL.revokeObjectURL(img.src);  // 图片加载后释放对象URL
+            commonHeight = Math.max(commonHeight, img.height);
+            totalWidth += img.width;
+
+            images[index] = img;  // 图片加载后存储到数组
+            loadedCount++;
+            if (loadedCount === files.length) {
+              drawCanvas();  // 所有图片加载后，绘制Canvas
+            }
+          };
+        });
+      }
+
+      function drawCanvas() {
+        let canvas = document.getElementById('imageCanvas');
+        canvas.width = totalWidth;
+        canvas.height = commonHeight;
+
+        let ctx = canvas.getContext('2d');
+        let currentWidth = 0;
+
+        images.forEach(img => {
+          ctx.drawImage(img, currentWidth, 0, img.width, img.height);
+          currentWidth += img.width;
+        });
+      }
+
+      function downloadCanvas() {
+        let canvas = document.getElementById('imageCanvas');
+        let image = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+        let link = document.createElement('a');
+        link.download = 'joined_image.png';
+        link.href = image;
+        link.click();
+      }
+    </script>
+</head>
+<body>
+<input type="file" id="imageLoader" name="imageLoader[]" multiple="true" accept="image/*" onchange="handleFiles(this.files)">
+<button onclick="downloadCanvas()">确定</button>
+<canvas id="imageCanvas"></canvas>
+</body>
+</html>
