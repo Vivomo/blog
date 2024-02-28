@@ -1,6 +1,7 @@
 import './style.css'
 
 import * as PIXI from 'pixi.js';
+import HeroController from './src/controller/hero.js';
 
 const init = () => {
   const app = new PIXI.Application({
@@ -12,15 +13,17 @@ const init = () => {
 
   // Create a Graphics object, set a fill color, draw a rectangle
   let obj = new PIXI.Graphics();
-  obj.beginFill(0xff0000);
-  obj.drawCircle(500, 500, 100);
+  obj.beginFill(0x990000);
+  obj.drawCircle(500, 500, 50);
+
+  HeroController.init(app, obj)
 
 // Add it to the stage to render
   app.stage.addChild(obj);
 
-  app.ticker.add(() => {
-    obj.x += 0.3
-  })
+  // app.ticker.add(() => {
+  //   obj.x += 0.3
+  // })
 }
 
 init();
