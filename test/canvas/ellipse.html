@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="myCanvas" width="1000" height="600"></canvas>
+<script>
+  var canvas = document.getElementById('myCanvas');
+  var ctx = canvas.getContext('2d');
+
+  // 创建渐变
+  var gradient = ctx.createRadialGradient(75, 50, 5, 90, 60, 100);
+  gradient.addColorStop(0, 'red');
+  gradient.addColorStop(1, 'blue');
+
+  // 绘制椭圆
+  ctx.beginPath();
+  ctx.ellipse(100, 90, 50, 35, 0, 0, 2 * Math.PI);
+  ctx.fillStyle = gradient;
+  ctx.fill();
+  ctx.stroke();
+</script>
+</body>
+</html>
