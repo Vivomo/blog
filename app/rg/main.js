@@ -2,28 +2,20 @@ import './style.css'
 
 import * as PIXI from 'pixi.js';
 import HeroController from './src/controller/hero.js';
+import Hero from './src/components/hero.js';
+import App from './src/app.js';
+import BasicGun from './src/weapons/basicGun.js';
 
 const init = () => {
-  const app = new PIXI.Application({
-    background: '#1099bb',
-    resizeTo: window,
-  });
 
-  document.querySelector('#app').appendChild(app.view);
+  document.querySelector('#app').appendChild(App.view);
 
-  // Create a Graphics object, set a fill color, draw a rectangle
-  let obj = new PIXI.Graphics();
-  obj.beginFill(0x990000);
-  obj.drawCircle(500, 500, 50);
+  let hero = new Hero({}, App);
+  HeroController.init(App, hero)
 
-  HeroController.init(app, obj)
+  App.stage.addChild(hero.graph);
 
-// Add it to the stage to render
-  app.stage.addChild(obj);
-
-  // app.ticker.add(() => {
-  //   obj.x += 0.3
-  // })
+  hero.weapons.push(new BasicGun(hero));
 }
 
 init();

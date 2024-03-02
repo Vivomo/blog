@@ -1,5 +1,6 @@
 const HeroController = {
   init(app, hero) {
+    const graph = hero.graph;
     const keyState = {
       ArrowUp: false,
       ArrowDown: false,
@@ -28,25 +29,25 @@ const HeroController = {
       const moveDistance = 3;
 
       if (keyState.ArrowUp && keyState.ArrowLeft) {
-        hero.x -= moveDistance;
-        hero.y -= moveDistance;
+        graph.x -= moveDistance;
+        graph.y -= moveDistance;
       } else if (keyState.ArrowUp && keyState.ArrowRight) {
-        hero.x += moveDistance;
-        hero.y -= moveDistance;
+        graph.x += moveDistance;
+        graph.y -= moveDistance;
       } else if (keyState.ArrowDown && keyState.ArrowLeft) {
-        hero.x -= moveDistance;
-        hero.y += moveDistance;
+        graph.x -= moveDistance;
+        graph.y += moveDistance;
       } else if (keyState.ArrowDown && keyState.ArrowRight) {
-        hero.x += moveDistance;
-        hero.y += moveDistance;
+        graph.x += moveDistance;
+        graph.y += moveDistance;
       } else if (keyState.ArrowUp) {
-        hero.y -= moveDistance;
+        graph.y -= moveDistance;
       } else if (keyState.ArrowDown) {
-        hero.y += moveDistance;
+        graph.y += moveDistance;
       } else if (keyState.ArrowLeft) {
-        hero.x -= moveDistance;
+        graph.x -= moveDistance;
       } else if (keyState.ArrowRight) {
-        hero.x += moveDistance;
+        graph.x += moveDistance;
       }
     }
 
