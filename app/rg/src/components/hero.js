@@ -20,6 +20,7 @@ export default class Hero {
     this.app = app;
 
     this.weapons = [];
+    // this.bullets = [];
     return createGraphProxy(this);
   }
 
@@ -31,4 +32,8 @@ export default class Hero {
   get bullets() {
     return this.weapons.map(weapon => weapon.bullets).flat();
   }
+
+  // set bullets(bullets) {
+  //   this._bullets = bullets;
+  // }
 }

@@ -1,7 +1,7 @@
 export const createGraphProxy = (obj) => {
   return new Proxy(obj, {
     get(target, prop) {
-      if (target.hasOwnProperty(prop)) {
+      if (prop in target) {
         return target[prop];
       } else if (prop in target.graph) {
         return target.graph[prop];
@@ -10,7 +10,7 @@ export const createGraphProxy = (obj) => {
       }
     },
     set(target, prop, value) {
-      if (target.hasOwnProperty(prop)) {
+      if (prop in target) {
         target[prop] = value;
       } else if (prop in target.graph) {
         target.graph[prop] = value;

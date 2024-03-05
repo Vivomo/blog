@@ -20,6 +20,7 @@ export default class Bat {
     graph.x = cfg.x;
     graph.y = cfg.y;
     this.speed = cfg.speed;
+    this.radius = cfg.radius;
     this.graph = graph;
 
     return createGraphProxy(this);

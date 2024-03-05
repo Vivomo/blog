@@ -39,10 +39,14 @@ const MonsterController = {
   },
 
   update() {
-    this.monsters.forEach((monster) => {
+    this.monsters = this.monsters.filter((monster) => {
+      if (monster.destroyed) {
+        return false;
+      }
       const pointer = getMovePointer(monster, this.hero, monster.speed);
       monster.x = pointer.x;
       monster.y = pointer.y;
+      return true;
     });
   }
 }

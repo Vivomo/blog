@@ -7,11 +7,14 @@ const HeroController = {
       ArrowLeft: false,
       ArrowRight: false,
     };
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', (e) => {
+      handleKeyDown(e);
+      // updatePosition();
+    });
     window.addEventListener('keyup', handleKeyUp);
 
     app.ticker.add(() => {
-      updatePosition();
+       updatePosition();
     })
 
     function handleKeyDown(event) {
@@ -26,7 +29,7 @@ const HeroController = {
 
 
     function updatePosition() {
-      const moveDistance = 3;
+      const moveDistance = 2;
 
       if (keyState.ArrowUp && keyState.ArrowLeft) {
         graph.x -= moveDistance;

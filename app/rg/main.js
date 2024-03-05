@@ -7,6 +7,7 @@ import App from './src/app.js';
 import BasicGun from './src/weapons/basicGun.js';
 import MonsterController from './src/controller/monster.js';
 import Bat from './src/monster/bat.js';
+import CollisionListener from "./src/listener/collisionListener.js";
 
 const init = () => {
 
@@ -20,6 +21,8 @@ const init = () => {
   App.stage.addChild(hero.graph);
 
   hero.weapons.push(new BasicGun(hero));
+
+  CollisionListener.init(MonsterController, hero);
 
   window.hero = hero;
 }

@@ -1,3 +1,5 @@
+import {GridSize} from "../contants/index.js";
+
 export const getMovePointer = (p1, p2, d) => {
   const directionX = p2.x - p1.x;
   const directionY = p2.y - p1.y;
@@ -25,4 +27,18 @@ export const checkCollision = (p1, p2) => {
 
 export const isOutOfBoundaries = (point, app) => {
   return point.x < 0 || point.y < 0 || point.x > app.renderer.width || point.y > app.renderer.height;
+}
+
+export const createGrid = (items, { width, height }) => {
+  const grid = new Array(GridSize * GridSize).fill(0).map(_ => []);
+  const wSize = width / GridSize;
+  const hSize = height / GridSize;
+  items.forEach((item) => {
+    if (item.destroyed) {
+      return;
+    }
+    const index = ~~(item.x / wSize) + ~~(item.y / hSize) * GridSize;
+    grid[index] && grid[index].push(item);
+  });
+  return grid;
 }
