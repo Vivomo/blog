@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import {isOutOfBoundaries} from "../utils/coordinate.js";
 
 export default class BasicGun {
   constructor (hero) {
@@ -6,6 +7,7 @@ export default class BasicGun {
     this.app = hero.app;
     this.level = 1;
     this.bullets = [];
+    this.speed = 2;
     this.shoot();
     setInterval(() => {
       this.shoot();
@@ -20,17 +22,17 @@ export default class BasicGun {
   }
 
   shoot() {
-    const directions = ['up', 'down', 'left', 'right'];
+    const angles = [0, Math.PI / 2, Math.PI, Math.PI * 1.5];
     const app = this.app;
-    directions.forEach((dir) => {
+    angles.forEach((angle) => {
       for (let i = 0; i < 3; i++) {
         const bullet = new PIXI.Graphics();
         bullet.beginFill(0xffffff);
-        bullet.drawRect(0, 0, 5, 10); // 子弹大小
+        bullet.drawRect(0, 0, 10, 5);
         bullet.endFill();
         bullet.x = this.hero.x;
         bullet.y = this.hero.y;
-        bullet.direction = dir; // 记录子弹的方向
+        bullet.rotation = angle;
         this.bullets.push(bullet);
         app.stage.addChild(bullet);
       }
@@ -38,33 +40,16 @@ export default class BasicGun {
   }
 
   update() {
-    this.bullets.forEach((bullet) => {
-      switch (bullet.direction) {
-        case 'up':
-          bullet.y -= 10;
-          break;
-        case 'down':
-          bullet.y += 10;
-          break;
-        case 'left':
-          bullet.x -= 10;
-          break;
-        case 'right':
-          bullet.x += 10;
-          break;
-        default:
-          break;
-      }
+    this.bullets = this.bullets.filter((bullet) => {
+      bullet.x += Math.cos(bullet.rotation) * this.speed;
+      bullet.y += Math.sin(bullet.rotation) * this.speed;
 
-      // 如果子弹超出屏幕，移除它
-      if (
-        bullet.x < 0 ||
-        bullet.x > this.app.renderer.width ||
-        bullet.y < 0 ||
-        bullet.y > this.app.renderer.height
-      ) {
+      if (isOutOfBoundaries(bullet, this.app)) {
         this.app.stage.removeChild(bullet);
+        return false;
       }
+      return true;
     });
+
   }
 }

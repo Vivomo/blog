@@ -27,4 +27,8 @@ export default class Hero {
   start () {
 
   }
+
+  get bullets() {
+    return this.weapons.map(weapon => weapon.bullets).flat();
+  }
 }

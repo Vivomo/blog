@@ -22,3 +22,7 @@ export const checkCollision = (p1, p2) => {
   const distance = getDistance(p1, p2);
   return distance <= p1.radius + p2.radius;
 }
+
+export const isOutOfBoundaries = (point, app) => {
+  return point.x < 0 || point.y < 0 || point.x > app.renderer.width || point.y > app.renderer.height;
+}

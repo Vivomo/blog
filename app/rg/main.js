@@ -20,6 +20,8 @@ const init = () => {
   App.stage.addChild(hero.graph);
 
   hero.weapons.push(new BasicGun(hero));
+
+  window.hero = hero;
 }
 
 init();
