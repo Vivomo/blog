@@ -16,3 +16,9 @@ export const getMovePointer = (p1, p2, d) => {
 export const getDistance = (p1, p2) => {
   return Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
 }
+
+
+export const checkCollision = (p1, p2) => {
+  const distance = getDistance(p1, p2);
+  return distance <= p1.radius + p2.radius;
+}

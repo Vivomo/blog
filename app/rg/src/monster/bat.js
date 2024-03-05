@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import { createGraphProxy } from '../utils/proxy.js';
 
 const defaultCfg = {
   x: 500,
@@ -21,21 +22,7 @@ export default class Bat {
     this.speed = cfg.speed;
     this.graph = graph;
 
+    return createGraphProxy(this);
   }
 
-  get x() {
-    return this.graph.x;
-  }
-
-  get y() {
-    return this.graph.y;
-  }
-
-  set x(x) {
-    this.graph.x = x;
-  }
-
-  set y(y) {
-    this.graph.y = y;
-  }
 }

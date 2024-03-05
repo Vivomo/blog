@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import { createGraphProxy } from '../utils/proxy.js';
 
 const defaultCfg = {
   x: 500,
@@ -19,15 +20,9 @@ export default class Hero {
     this.app = app;
 
     this.weapons = [];
+    return createGraphProxy(this);
   }
 
-  get x() {
-    return this.graph ? this.graph.x : null;
-  }
-
-  get y() {
-    return this.graph ? this.graph.y : null;
-  }
 
   start () {
 
