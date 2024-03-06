@@ -1,11 +1,11 @@
 import { getDistance, getMovePointer } from '../utils/coordinate.js';
 import { SafeDistance } from '../contants/index.js';
 
-const MonsterController = {
+const EnemyController = {
   init(app, hero) {
     this.app = app;
     this.hero = hero;
-    this.monsters = [];
+    this.enemies = [];
     this.categories = [];
 
     setInterval(() => {
@@ -22,7 +22,7 @@ const MonsterController = {
   },
 
   create() {
-    this.categories.forEach((Monster) => {
+    this.categories.forEach((enemy) => {
       let x, y, distance;
       do {
         x = ~~(this.app.renderer.width * Math.random());
@@ -30,25 +30,25 @@ const MonsterController = {
         distance = getDistance({ x, y }, this.hero);
       } while (distance < SafeDistance);
 
-      const item = new Monster();
+      const item = new enemy();
       item.x = x;
       item.y = y;
-      this.monsters.push(item);
+      this.enemies.push(item);
       this.app.stage.addChild(item.graph);
     });
   },
 
   update() {
-    this.monsters = this.monsters.filter((monster) => {
-      if (monster.destroyed) {
+    this.enemies = this.enemies.filter((enemy) => {
+      if (enemy.destroyed) {
         return false;
       }
-      const pointer = getMovePointer(monster, this.hero, monster.speed);
-      monster.x = pointer.x;
-      monster.y = pointer.y;
+      const pointer = getMovePointer(enemy, this.hero, enemy.speed);
+      enemy.x = pointer.x;
+      enemy.y = pointer.y;
       return true;
     });
   }
 }
 
-export default MonsterController;
+export default EnemyController;

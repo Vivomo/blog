@@ -24,7 +24,6 @@ export default class BasicGun {
 
   shoot() {
     const angles = [0, Math.PI / 2, Math.PI, Math.PI * 1.5];
-    // const angles = [0];
     const app = this.app;
     angles.forEach((angle) => {
       // for (let i = 0; i < 3; i++) {
