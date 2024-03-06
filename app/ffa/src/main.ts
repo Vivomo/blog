@@ -7,6 +7,7 @@ import EnemyController from './controller/enemyController';
 import Bat from './enemy/bat.js';
 import CollisionListener from "./listener/collisionListener";
 import Wand from "./weapons/wand";
+import Fireball from "./weapons/fireball";
 
 const init = async () => {
 
@@ -32,6 +33,7 @@ const init = async () => {
 
   hero.weapons.push(new BasicGun(hero));
   hero.weapons.push(new Wand(hero));
+  hero.weapons.push(new Fireball(hero));
 
   CollisionListener.init(enemyController, hero);
 

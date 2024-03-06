@@ -19,13 +19,20 @@ export default class BaseWeapon {
     this.hero = hero;
     this.app = hero.app;
     this.bullets = [];
-    setInterval(() => {
-      this.attack();
-    }, this.cd);
+
+    setTimeout(() => {
+      this.start();
+    }, 500)
 
     this.app.ticker.add(() => {
       this.update();
-    })
+    });
+  }
+
+  start() {
+    setInterval(() => {
+      this.attack();
+    }, this.cd);
   }
 
   attack() {

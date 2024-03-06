@@ -1,4 +1,4 @@
-import {GridSize} from "../contants/index.ts";
+import {GridSize} from "../contants";
 
 export const getMovePointer = (p1, p2, d) => {
   const directionX = p2.x - p1.x;
