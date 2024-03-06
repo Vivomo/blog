@@ -1,29 +1,20 @@
 import * as PIXI from 'pixi.js';
 import {isOutOfBoundaries} from "../utils/coordinate.js";
 import Bullet from "../components/bullet.js";
+import BaseWeapon from "./baseWeapon.js";
 
-export default class BasicGun {
+export default class BasicGun extends BaseWeapon {
   constructor (hero) {
-    this.hero = hero;
-    this.app = hero.app;
-    this.level = 1;
+    super(hero);
     this.bullets = [];
     this.speed = 5;
-    this.shoot();
-    setInterval(() => {
-      this.shoot();
-    }, 1000)
-    this.app.ticker.add(() => {
-      this.update();
-    });
-  }
-
-  fire () {
+    this.attack();
 
   }
 
-  shoot() {
-    const angles = [0, Math.PI / 2, Math.PI, Math.PI * 1.5];
+
+  attack() {
+    const angles = [Math.PI / 4, Math.PI * 0.75, Math.PI * 1.25, Math.PI * 1.75];
     const app = this.app;
     angles.forEach((angle) => {
       // for (let i = 0; i < 3; i++) {

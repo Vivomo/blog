@@ -2,8 +2,8 @@ import { getDistance, getMovePointer } from '../utils/coordinate.js';
 import { SafeDistance } from '../contants/index.js';
 
 const EnemyController = {
-  init(app, hero) {
-    this.app = app;
+  init(hero) {
+    this.app = hero.app;
     this.hero = hero;
     this.enemies = [];
     this.categories = [];

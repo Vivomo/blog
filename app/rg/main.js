@@ -15,7 +15,7 @@ const init = () => {
 
   let hero = new Hero({}, App);
   HeroController.init(App, hero);
-  EnemyController.init(App, hero);
+  EnemyController.init(hero);
   EnemyController.add(Bat);
 
   App.stage.addChild(hero.graph);
