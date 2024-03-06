@@ -5,17 +5,18 @@ const defaultCfg = {
   x: 500,
   y: 500,
   radius: 20,
-  fillColor: 0x000000
+  fillColor: '0x000000'
 }
 
 export default class Hero {
   constructor (param = {}, app) {
     const cfg = Object.assign({}, defaultCfg, param);
-    let graph = new PIXI.Graphics();
-    graph.beginFill(cfg.fillColor);
-    graph.drawCircle(0, 0, cfg.radius);
+    let graph = new PIXI.Graphics()
+      .fill(cfg.fillColor)
+      .circle(0, 0, cfg.radius);
     graph.x = cfg.x;
     graph.y = cfg.y;
+    graph.fill(cfg.fillColor);
     this.graph = graph;
     this.app = app;
     this.enemyController = null;
