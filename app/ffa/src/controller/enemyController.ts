@@ -18,7 +18,7 @@ export default class EnemyController {
 
     setInterval(() => {
       this.create();
-    }, 3000);
+    }, 500);
 
     setInterval(() => {
       this.update();

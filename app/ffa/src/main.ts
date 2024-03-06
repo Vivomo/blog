@@ -37,7 +37,8 @@ const init = async () => {
 
   CollisionListener.init(enemyController, hero);
 
-  // window.hero = hero;
+  // @ts-ignore
+  window.hero = hero;
 }
 
 init();

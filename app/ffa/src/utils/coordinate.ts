@@ -47,6 +47,9 @@ export const getNearestItem = (target, items) => {
   let result = -1;
   let minDistance = Number.MAX_SAFE_INTEGER;
   items.forEach((item, index) => {
+    if (item.destroyed) {
+      return;
+    }
     const distance = getDistance(target, item);
     if (distance < minDistance) {
       minDistance = distance;

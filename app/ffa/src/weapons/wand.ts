@@ -5,7 +5,7 @@ import Bullet from "../components/bullet";
 export default class Wand extends BaseWeapon {
   constructor(hero) {
     super(hero);
-
+    this.speed = 4;
   }
 
   attack() {
