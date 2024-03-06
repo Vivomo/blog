@@ -42,3 +42,16 @@ export const createGrid = (items, { width, height }) => {
   });
   return grid;
 }
+
+export const getNearestItem = (target, items) => {
+  let result = -1;
+  let minDistance = Number.MAX_SAFE_INTEGER;
+  items.forEach((item, index) => {
+    const distance = getDistance(target, item);
+    if (distance < minDistance) {
+      minDistance = distance;
+      result = index;
+    }
+  });
+  return items[result];
+}
