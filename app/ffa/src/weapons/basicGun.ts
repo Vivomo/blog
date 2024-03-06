@@ -4,9 +4,9 @@ import Bullet from "../components/bullet.ts";
 import BaseWeapon from "./baseWeapon.ts";
 
 export default class BasicGun extends BaseWeapon {
+
   constructor (hero) {
     super(hero);
-    this.bullets = [];
     this.speed = 5;
     this.attack();
 
@@ -30,21 +30,21 @@ export default class BasicGun extends BaseWeapon {
     });
   }
 
-  update() {
-    this.bullets = this.bullets.filter((bullet) => {
-      if (bullet.destroyed) {
-        return false;
-      }
-      bullet.x += Math.cos(bullet.rotation) * this.speed;
-      bullet.y += Math.sin(bullet.rotation) * this.speed;
-
-      if (isOutOfBoundaries(bullet, this.app)) {
-        this.app.stage.removeChild(bullet.graph);
-        bullet.destroy();
-        return false;
-      }
-      return true;
-    });
-
-  }
+  // update() {
+  //   this.bullets = this.bullets.filter((bullet) => {
+  //     if (bullet.destroyed) {
+  //       return false;
+  //     }
+  //     bullet.x += Math.cos(bullet.rotation) * this.speed;
+  //     bullet.y += Math.sin(bullet.rotation) * this.speed;
+  //
+  //     if (isOutOfBoundaries(bullet, this.app)) {
+  //       this.app.stage.removeChild(bullet.graph);
+  //       bullet.destroy();
+  //       return false;
+  //     }
+  //     return true;
+  //   });
+  //
+  // }
 }

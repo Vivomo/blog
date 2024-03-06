@@ -1,34 +1,39 @@
-
-import * as PIXI from 'pixi.js';
+import { Application } from 'pixi.js';
 import HeroController from './controller/hero';
 import Hero from './components/hero';
 // import App from './components/app';
 import BasicGun from './weapons/basicGun';
-import EnemyController from './controller/enemy';
+import EnemyController from './controller/enemyController';
 import Bat from './enemy/bat.js';
 import CollisionListener from "./listener/collisionListener";
+import Wand from "./weapons/wand";
 
 const init = async () => {
 
-  const App = new PIXI.Application();
+  const App = new Application();
 
+  // @ts-ignore
   await App.init({
     background: '#1099bb',
     resizeTo: window,
-  })
+  });
 
   document.querySelector('#app').appendChild(App.canvas);
 
   let hero = new Hero({}, App);
+
+  const enemyController = new EnemyController(hero);
+  enemyController.add(Bat);
+  hero.enemyController = enemyController;
+
   HeroController.init(App, hero);
-  EnemyController.init(hero);
-  EnemyController.add(Bat);
 
   App.stage.addChild(hero.graph);
 
   hero.weapons.push(new BasicGun(hero));
+  hero.weapons.push(new Wand(hero));
 
-  CollisionListener.init(EnemyController, hero);
+  CollisionListener.init(enemyController, hero);
 
   // window.hero = hero;
 }

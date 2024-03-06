@@ -1,4 +1,13 @@
+import Hero from "../components/hero";
+import Bullet from "../components/bullet";
+import {isOutOfBoundaries} from "../utils/coordinate";
+
 export default class BaseWeapon {
+
+  hero: Hero;
+  app: PixiMixins.Application;
+  bullets: Bullet[];
+
   cd = 1000;
   lv = 1;
   maxLv = 8;
@@ -9,6 +18,7 @@ export default class BaseWeapon {
   constructor(hero) {
     this.hero = hero;
     this.app = hero.app;
+    this.bullets = [];
     setInterval(() => {
       this.attack();
     }, this.cd);
@@ -23,6 +33,19 @@ export default class BaseWeapon {
   }
 
   update() {
+    this.bullets = this.bullets.filter((bullet) => {
+      if (bullet.destroyed) {
+        return false;
+      }
+      bullet.x += Math.cos(bullet.rotation) * this.speed;
+      bullet.y += Math.sin(bullet.rotation) * this.speed;
 
+      if (isOutOfBoundaries(bullet, this.app)) {
+        this.app.stage.removeChild(bullet.graph);
+        bullet.destroy();
+        return false;
+      }
+      return true;
+    });
   }
 }

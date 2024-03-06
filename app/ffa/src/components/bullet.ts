@@ -1,10 +1,16 @@
-import * as PIXI from "pixi.js";
+import {
+  Graphics
+} from "pixi.js";
 import {createGraphProxy} from "../utils/proxy.js";
 
 export default class Bullet {
+
+  graph: Graphics;
+  radius: number;
+
   constructor(cfg) {
-    const graph = new PIXI.Graphics();
-    graph.fill(0xffffff);
+    const graph = new Graphics();
+    graph.fill(cfg.fill || 0xffffff);
     graph.rect(0, 0, 10, 6);
     graph.fill();
     graph.x = cfg.x;

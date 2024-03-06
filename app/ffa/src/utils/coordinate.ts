@@ -55,3 +55,12 @@ export const getNearestItem = (target, items) => {
   });
   return items[result];
 }
+
+
+
+export const calculateAngle = (p1, p2) => {
+  const deltaX = p2.x - p1.x;
+  const deltaY = p2.y - p1.y;
+
+  return Math.atan2(deltaY, deltaX);
+}

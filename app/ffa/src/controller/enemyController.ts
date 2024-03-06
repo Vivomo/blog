@@ -1,8 +1,16 @@
 import { getDistance, getMovePointer } from '../utils/coordinate.js';
 import { SafeDistance } from '../contants';
+import Hero from "../components/hero";
+import {EnemyType} from "../type";
 
-const EnemyController = {
-  init(hero) {
+export default class EnemyController {
+
+  app: PixiMixins.Application;
+  hero: Hero;
+  enemies: EnemyType[];
+  categories: EnemyType[];
+
+  constructor(hero: Hero) {
     this.app = hero.app;
     this.hero = hero;
     this.enemies = [];
@@ -15,11 +23,11 @@ const EnemyController = {
     setInterval(() => {
       this.update();
     }, 500)
-  },
+  }
 
   add(category) {
     this.categories.push(category);
-  },
+  }
 
   create() {
     this.categories.forEach((enemy) => {
@@ -36,7 +44,7 @@ const EnemyController = {
       this.enemies.push(item);
       this.app.stage.addChild(item.graph);
     });
-  },
+  }
 
   update() {
     this.enemies = this.enemies.filter((enemy) => {
@@ -51,4 +59,4 @@ const EnemyController = {
   }
 }
 
-export default EnemyController;
+
