@@ -22,11 +22,9 @@ export default class Bullet {
     if (cfg.texture) {
       graph = Sprite.from(cfg.texture);
       graph.anchor.set(0.5);
-      graph.width = this.radius * 2;
-      graph.height = this.radius * 2;
-      // graph.position.x = 0.5;
-      // graph.position.y = 0.5;
-
+      graph.width = cfg.width || this.radius * 2;
+      graph.height = cfg.height || this.radius * 2;
+      graph.rotation = cfg.rotation || 0;
     } else if (cfg.type === 'circle') {
       graph.circle(0, 0, this.radius);
       graph.fill();

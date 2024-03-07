@@ -8,8 +8,7 @@ export default class BasicGun extends BaseWeapon {
   constructor (hero) {
     super(hero);
     this.speed = 5;
-    this.attack();
-
+    this.textureName = 'arrow';
   }
 
 
@@ -21,7 +20,11 @@ export default class BasicGun extends BaseWeapon {
         const bullet = new Bullet({
           x: this.hero.x,
           y: this.hero.y,
-          rotation: angle
+          direction: angle,
+          rotation: angle,
+          width: 26,
+          height: 10,
+          texture: this.texture,
         });
 
         this.bullets.push(bullet);

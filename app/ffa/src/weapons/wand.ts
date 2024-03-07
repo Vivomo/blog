@@ -6,6 +6,7 @@ export default class Wand extends BaseWeapon {
   constructor(hero) {
     super(hero);
     this.speed = 4;
+    this.textureName = 'ice-spike';
   }
 
   attack() {
@@ -17,8 +18,11 @@ export default class Wand extends BaseWeapon {
     const bullet = new Bullet({
       x: this.hero.x,
       y: this.hero.y,
+      width: 24,
+      height: 16,
       rotation: angle,
-      fill: 0x000088
+      direction: angle,
+      texture: this.texture
     });
 
     this.bullets.push(bullet);

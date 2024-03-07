@@ -32,9 +32,9 @@ const init = async () => {
 
   App.stage.addChild(hero.graph);
 
-  // hero.weapons.push(new BasicGun(hero));
-  // hero.weapons.push(new Wand(hero));
-  // hero.weapons.push(new Fireball(hero));
+  hero.weapons.push(new BasicGun(hero));
+  hero.weapons.push(new Wand(hero));
+  hero.weapons.push(new Fireball(hero));
   hero.weapons.push(new Dart(hero));
 
   CollisionListener.init(enemyController, hero);

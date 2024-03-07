@@ -9,6 +9,8 @@ export default class Fireball extends BaseWeapon {
     super(hero);
     this.speed = 3;
     this.cd = 4000;
+    this.radius = 20;
+    this.textureName = 'fireball'
   }
 
   attack() {
@@ -18,10 +20,12 @@ export default class Fireball extends BaseWeapon {
       const bullet = new Bullet({
         x: this.hero.x,
         y: this.hero.y,
+        direction: angle + Math.PI / 10 * i,
         rotation: angle + Math.PI / 10 * i,
-        fill: 0xee5c23,
-        radius: 10,
-        type: 'circle'
+        width: 26,
+        height: 18,
+        radius: this.radius,
+        texture: this.texture
       });
 
       this.bullets.push(bullet);
