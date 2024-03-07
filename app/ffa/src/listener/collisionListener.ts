@@ -16,7 +16,7 @@ const CollisionListener = {
             if (result) {
               if (bullet.bounces > 0) {
                 bullet.bounces--;
-                bullet.rotation = calculateReflectedAngle(enemy, bullet, bullet.rotation)
+                bullet.direction = calculateReflectedAngle(enemy, bullet, bullet.direction)
               } else {
                 bullet.graph.destroy();
               }

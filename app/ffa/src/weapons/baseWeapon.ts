@@ -1,6 +1,8 @@
 import Hero from "../components/hero";
 import Bullet from "../components/bullet";
 import {isOutOfBoundaries} from "../utils/coordinate";
+import {Assets} from "pixi.js";
+import {WeaponAssetsBathPath} from "../contants";
 
 export default class BaseWeapon {
 
@@ -22,13 +24,20 @@ export default class BaseWeapon {
     this.app = hero.app;
     this.bullets = [];
 
-    setTimeout(() => {
+    setTimeout(async () => {
+      await this.loader();
       this.start();
     }, 500)
 
     this.app.ticker.add(() => {
       this.update();
     });
+  }
+
+  async loader() {
+    if (this.textureName) {
+      this.texture = await Assets.load(`${WeaponAssetsBathPath}${this.textureName}.png`)
+    }
   }
 
   start() {
@@ -46,8 +55,8 @@ export default class BaseWeapon {
       if (bullet.destroyed) {
         return false;
       }
-      bullet.x += Math.cos(bullet.rotation) * this.speed;
-      bullet.y += Math.sin(bullet.rotation) * this.speed;
+      bullet.x += Math.cos(bullet.direction) * this.speed;
+      bullet.y += Math.sin(bullet.direction) * this.speed;
 
       if (isOutOfBoundaries(bullet, this.app)) {
         this.app.stage.removeChild(bullet.graph);
