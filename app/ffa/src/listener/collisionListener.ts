@@ -1,4 +1,4 @@
-import {checkCollision, createGrid} from "../utils/coordinate.js";
+import {calculateReflectedAngle, checkCollision, createGrid} from "../utils/coordinate.js";
 
 const CollisionListener = {
   init(enemyController, hero) {
@@ -14,9 +14,14 @@ const CollisionListener = {
             }
             const result = checkCollision(enemy, bullet);
             if (result) {
-              // hero.app.stage.removeChild(enemy.graph, bullet.graph)
+              if (bullet.bounces > 0) {
+                bullet.bounces--;
+                bullet.rotation = calculateReflectedAngle(enemy, bullet, bullet.rotation)
+              } else {
+                bullet.graph.destroy();
+              }
               enemy.graph.destroy();
-              bullet.graph.destroy();
+
             }
           })
         })

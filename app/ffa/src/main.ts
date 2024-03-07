@@ -8,6 +8,7 @@ import Bat from './enemy/bat.js';
 import CollisionListener from "./listener/collisionListener";
 import Wand from "./weapons/wand";
 import Fireball from "./weapons/fireball";
+import Dart from "./weapons/dart";
 
 const init = async () => {
 
@@ -31,9 +32,10 @@ const init = async () => {
 
   App.stage.addChild(hero.graph);
 
-  hero.weapons.push(new BasicGun(hero));
-  hero.weapons.push(new Wand(hero));
-  hero.weapons.push(new Fireball(hero));
+  // hero.weapons.push(new BasicGun(hero));
+  // hero.weapons.push(new Wand(hero));
+  // hero.weapons.push(new Fireball(hero));
+  hero.weapons.push(new Dart(hero));
 
   CollisionListener.init(enemyController, hero);
 

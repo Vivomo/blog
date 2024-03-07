@@ -67,3 +67,33 @@ export const calculateAngle = (p1, p2) => {
 
   return Math.atan2(deltaY, deltaX);
 }
+
+export const calculateReflectedAngle = (p1, p2, angle) => {
+  // 计算镜子的斜率
+  const mirrorSlope = (p2.y - p1.y) / (p2.x - p1.x);
+
+  // 计算镜子的角度
+  const mirrorAngle = Math.atan(mirrorSlope);
+
+  // 计算光线与镜子的角度差
+  // const angleDiff = Math.abs(angle - mirrorAngle);
+  const angleDiff = angle - mirrorAngle;
+
+  // 计算反射角度
+  let reflectedAngle = angle;
+  if (angle < mirrorAngle) {
+    reflectedAngle = mirrorAngle + angleDiff;
+  } else {
+    reflectedAngle = mirrorAngle - angleDiff;
+  }
+
+  // // 调整反射角度为0到2π之间
+  // if (reflectedAngle < 0) {
+  //   reflectedAngle += 2 * Math.PI;
+  // } else if (reflectedAngle > 2 * Math.PI) {
+  //   reflectedAngle -= 2 * Math.PI;
+  // }
+
+  return reflectedAngle;
+};
+

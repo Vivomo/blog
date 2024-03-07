@@ -20,9 +20,9 @@ export default class EnemyController {
       this.create();
     }, 500);
 
-    setInterval(() => {
+    this.app.ticker.add(() => {
       this.update();
-    }, 500)
+    })
   }
 
   add(category) {

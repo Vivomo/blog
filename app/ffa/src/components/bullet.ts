@@ -8,10 +8,11 @@ export default class Bullet {
   graph: Graphics;
   radius: number;
 
-  speed: 3;
+  speed = 3;
 
   constructor(cfg) {
     this.radius = cfg.radius || 5;
+    this.bounces = cfg.bounces || 0;
 
     const graph = new Graphics();
     graph.fill(cfg.fill || 0xffffff);

@@ -6,7 +6,7 @@ const defaultCfg = {
   y: 500,
   radius: 10,
   fillColor: 0x880000,
-  speed: 3,
+  speed: 0.1,
 }
 
 export default class Bat {

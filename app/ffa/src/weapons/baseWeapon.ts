@@ -14,6 +14,8 @@ export default class BaseWeapon {
   damage = 10;
   speed = 10;
   name = '';
+  penetration = 0;
+  bounces = 0;
 
   constructor(hero) {
     this.hero = hero;
