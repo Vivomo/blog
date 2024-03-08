@@ -1,6 +1,5 @@
-import * as PIXI from 'pixi.js';
+import {Graphics, Application} from 'pixi.js';
 import { createGraphProxy } from '../utils/proxy.js';
-import {Graphics} from "pixi.js/lib/scene/graphics/shared/Graphics";
 import EnemyController from "../controller/enemyController";
 import {WeaponType} from "../type";
 
@@ -14,17 +13,17 @@ const defaultCfg = {
 export default class Hero {
 
   graph: Graphics;
-  app: PIXI;
+  app: Application;
   enemyController?: EnemyController;
   weapons: WeaponType[];
 
-  moving: false;
+  moving = false;
   direction = 0;
   speed = 2;
 
-  constructor (param = {}, app) {
+  constructor (param = {}, app: Application) {
     const cfg = Object.assign({}, defaultCfg, param);
-    let graph = new PIXI.Graphics()
+    let graph = new Graphics()
       .fill(cfg.fillColor)
       .circle(0, 0, cfg.radius);
     graph.x = cfg.x;

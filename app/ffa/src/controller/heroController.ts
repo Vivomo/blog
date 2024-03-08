@@ -2,15 +2,15 @@ import { Graphics } from "pixi.js";
 import Hero from "../components/hero";
 import {calculateAngle} from "../utils/coordinate";
 
-const HeroController = {
+export default class HeroController {
 
-  hero: Hero,
+  hero: Hero;
 
-  init(hero: Hero) {
+  constructor(hero: Hero) {
     this.hero = hero;
     this.initUI();
     this.initEvent();
-  },
+  }
 
   initUI() {
     const hero = this.hero;
@@ -35,10 +35,10 @@ const HeroController = {
       hero.direction = calculateAngle(controllerPosition, e)
     })
 
-    graph2.on('pointerenter', (e) => {
+    graph2.on('pointerenter', () => {
       hero.moving = true;
     });
-    graph2.on('pointerleave', (e) => {
+    graph2.on('pointerleave', () => {
       hero.moving = false;
     });
 
@@ -60,5 +60,3 @@ const HeroController = {
 
   }
 }
-
-export default HeroController;

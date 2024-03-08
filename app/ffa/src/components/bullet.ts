@@ -1,12 +1,14 @@
 import {
-  Graphics, Sprite, Texture, Assets, Container
+  Sprite
 } from "pixi.js";
 import {createGraphProxy} from "../utils/proxy.js";
 
 export default class Bullet {
 
-  graph: Graphics | Sprite;
+  graph: Sprite;
   radius: number;
+  direction: number;
+  bounces: number;
 
   speed = 3;
 
@@ -15,30 +17,18 @@ export default class Bullet {
     this.bounces = cfg.bounces || 0;
     this.direction = cfg.direction;
 
-    let graph = new Graphics();
-    // let container = new Container();
 
-    graph.fill(cfg.fill || 0xffffff);
     if (cfg.texture) {
-      graph = Sprite.from(cfg.texture);
+      const graph = Sprite.from(cfg.texture);
       graph.anchor.set(0.5);
       graph.width = cfg.width || this.radius * 2;
       graph.height = cfg.height || this.radius * 2;
       graph.rotation = cfg.rotation || 0;
-    } else if (cfg.type === 'circle') {
-      graph.circle(0, 0, this.radius);
-      graph.fill();
-    } else {
-      graph.rect(0, 0, 10, 6);
-      graph.fill();
+      graph.x = cfg.x;
+      graph.y = cfg.y;
+      this.graph = graph;
     }
 
-    graph.x = cfg.x;
-    graph.y = cfg.y;
-
-    // container.rotation = cfg.rotation;
-    // container.addChild(graph);
-    this.graph = graph;
 
     return createGraphProxy(this);
   }

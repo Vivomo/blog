@@ -1,7 +1,6 @@
 import { Application } from 'pixi.js';
 import HeroController from './controller/heroController';
 import Hero from './components/hero';
-// import App from './components/app';
 import BasicGun from './weapons/basicGun';
 import EnemyController from './controller/enemyController';
 import Bat from './enemy/bat.js';
@@ -15,13 +14,12 @@ const init = async () => {
 
   const App = new Application();
 
-  // @ts-ignore
   await App.init({
     background: '#1099bb',
     resizeTo: window,
   });
 
-  document.querySelector('#app').appendChild(App.canvas);
+  document.querySelector('#app')!.appendChild(App.canvas);
 
   const gameMap = new GameMap();
   const mapSprite = await gameMap.load();
@@ -39,9 +37,7 @@ const init = async () => {
   });
 
   hero.enemyController = enemyController;
-
-  HeroController.init(hero);
-
+  new HeroController(hero);
   App.stage.addChild(hero.graph);
 
   hero.weapons.push(new BasicGun(hero));
