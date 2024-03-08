@@ -18,6 +18,10 @@ export default class Hero {
   enemyController?: EnemyController;
   weapons: WeaponType[];
 
+  moving: false;
+  direction = 0;
+  speed = 2;
+
   constructor (param = {}, app) {
     const cfg = Object.assign({}, defaultCfg, param);
     let graph = new PIXI.Graphics()

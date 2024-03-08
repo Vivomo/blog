@@ -1,5 +1,5 @@
 import { Application } from 'pixi.js';
-import HeroController from './controller/hero';
+import HeroController from './controller/heroController';
 import Hero from './components/hero';
 // import App from './components/app';
 import BasicGun from './weapons/basicGun';
@@ -40,7 +40,7 @@ const init = async () => {
 
   hero.enemyController = enemyController;
 
-  HeroController.init(App, hero);
+  HeroController.init(hero);
 
   App.stage.addChild(hero.graph);
 
