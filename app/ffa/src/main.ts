@@ -9,6 +9,7 @@ import CollisionListener from "./listener/collisionListener";
 import Wand from "./weapons/wand";
 import Fireball from "./weapons/fireball";
 import Dart from "./weapons/dart";
+import GameMap from "./components/map";
 
 const init = async () => {
 
@@ -22,10 +23,21 @@ const init = async () => {
 
   document.querySelector('#app').appendChild(App.canvas);
 
+  const gameMap = new GameMap();
+  const mapSprite = await gameMap.load();
+  mapSprite.width = App.renderer.width;
+  mapSprite.height = App.renderer.height;
+
+  App.stage.addChild(mapSprite);
+
   let hero = new Hero({}, App);
 
   const enemyController = new EnemyController(hero);
-  enemyController.add(Bat);
+
+  Bat.load().then(() => {
+    enemyController.add(Bat);
+  });
+
   hero.enemyController = enemyController;
 
   HeroController.init(App, hero);

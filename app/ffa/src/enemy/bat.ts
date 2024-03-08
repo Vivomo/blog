@@ -1,5 +1,8 @@
-import * as PIXI from 'pixi.js';
+import {
+  Assets, Sprite
+} from 'pixi.js';
 import { createGraphProxy } from '../utils/proxy.js';
+import {EnemyAssetsBathPath} from "../contants";
 
 const defaultCfg = {
   x: 500,
@@ -10,21 +13,37 @@ const defaultCfg = {
 }
 
 export default class Bat {
-  constructor (param = {}, app, hero) {
+
+  // textureName = 'bat';
+
+  static async load() {
+    Bat.texture = await Assets.load(`${EnemyAssetsBathPath}bat.png`);
+  }
+
+  constructor (param = {}) {
     this.level = 1;
     this.hp = 1;
     const cfg = Object.assign({}, defaultCfg, param);
-    let graph = new PIXI.Graphics();
-    graph.fill(cfg.fillColor);
-    graph.circle(0, 0, cfg.radius);
-    graph.x = cfg.x;
-    graph.y = cfg.y;
-    graph.fill(cfg.fillColor);
+
+    this.setStyle(cfg);
     this.speed = cfg.speed;
     this.radius = cfg.radius;
-    this.graph = graph;
-
     return createGraphProxy(this);
+  }
+
+  async loader() {
+    const texture = await Assets.load(`${EnemyAssetsBathPath}${this.textureName}.png`);
+    Bat.texture = texture;
+  }
+
+  setStyle(cfg) {
+    const sprite = Sprite.from(Bat.texture);
+    sprite.width = 20;
+    sprite.height = 20;
+    sprite.x = cfg.x;
+    sprite.y = cfg.y;
+    this.graph = sprite;
+    this.loaded = true;
   }
 
 }

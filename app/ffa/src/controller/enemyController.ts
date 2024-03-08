@@ -31,6 +31,9 @@ export default class EnemyController {
 
   create() {
     this.categories.forEach((enemy) => {
+      if (!enemy.texture) {
+        return;
+      }
       let x, y, distance;
       do {
         x = ~~(this.app.renderer.width * Math.random());
@@ -39,6 +42,9 @@ export default class EnemyController {
       } while (distance < SafeDistance);
 
       const item = new enemy();
+      if (!item.loaded) {
+        return;
+      }
       item.x = x;
       item.y = y;
       this.enemies.push(item);
