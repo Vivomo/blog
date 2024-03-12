@@ -21,13 +21,13 @@ export default class HeroController {
       y: app.renderer.height - 150
     }
     graph.circle(controllerPosition.x, controllerPosition.y, 50)
-      .fill(0xffffff, 0.2);
+      .fill({ color: 0xffffff, alpha: 0.2 });
 
     graph.interactive = true;
 
     const graph2 = new Graphics();
     graph2.circle(controllerPosition.x, controllerPosition.y, 150)
-      .fill(0xffffff, 0.2);
+      .fill({ color: 0xffffff, alpha: 0.2 });
 
     graph2.interactive = true;
     graph2.on('pointermove', (e) => {
