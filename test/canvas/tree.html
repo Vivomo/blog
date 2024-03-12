@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+
+<script>
+  function drawTree(ctx, startX, startY, length, angle, depth, branchWidth) {
+    var rand = Math.random,
+      newLength, newAngle, newDepth, maxBranch = 3,
+      endX, endY, maxAngle = 2 * Math.PI / 4,
+      subBranches, lenShrink;
+
+    // 终止条件
+    if (depth <= 0) {
+      return;
+    }
+
+    // 绘制树枝
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+    endX = startX + length * Math.cos(angle);
+    endY = startY + length * Math.sin(angle);
+    ctx.lineCap = 'round';
+    ctx.lineWidth = branchWidth;
+    ctx.lineTo(endX, endY);
+
+    // 随机生成树枝颜色
+    if (depth <= 2) {
+      ctx.strokeStyle = 'rgb(0,' + (((rand() * 64) + 128) >> 0) + ',0)';
+    } else {
+      ctx.strokeStyle = 'rgb(' + (((rand() * 64) + 64) >> 0) + ',50,25)';
+    }
+    ctx.stroke();
+
+    // 递归绘制子树枝
+    newDepth = depth - 1;
+    subBranches = (rand() * (maxBranch - 1)) + 1;
+    branchWidth *= 0.7;
+    for (var i = 0; i < subBranches; i++) {
+      newAngle = angle + rand() * maxAngle - maxAngle * 0.5;
+      newLength = length * (0.7 + rand() * 0.3);
+      drawTree(ctx, endX, endY, newLength, newAngle, newDepth, branchWidth);
+    }
+  }
+
+  // 初始化canvas
+  var canvas = document.getElementById('canvas'),
+    ctx = canvas.getContext('2d');
+
+  // 设置canvas大小
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  // 绘制树
+  drawTree(ctx, canvas.width / 2, canvas.height - 80, 120, -Math.PI / 2, 12, 10);
+
+</script>
+</body>
+</html>
