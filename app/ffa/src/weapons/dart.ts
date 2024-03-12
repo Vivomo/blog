@@ -1,9 +1,10 @@
 import BaseWeapon from "./baseWeapon";
 import Bullet from "../components/bullet";
 import {isOutOfBoundaries} from "../utils/coordinate";
+import Hero from "../components/hero.ts";
 
 export default class Dart extends BaseWeapon {
-  constructor(hero) {
+  constructor(hero: Hero) {
     super(hero);
     this.bounces = 3;
     this.speed = 4;
@@ -15,7 +16,7 @@ export default class Dart extends BaseWeapon {
     const bullet = new Bullet({
       x: this.hero.x,
       y: this.hero.y,
-      direction: Math.PI * 2 * Math.random(),
+      direction: this.hero.direction,
       radius: this.radius,
       bounces: this.bounces,
       texture: this.texture

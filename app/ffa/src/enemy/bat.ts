@@ -3,6 +3,7 @@ import {
 } from 'pixi.js';
 import { createGraphProxy } from '../utils/proxy.js';
 import {EnemyAssetsBathPath} from "../contants";
+import {GlowFilter} from "@pixi/filter-glow";
 
 const defaultCfg = {
   x: 500,
@@ -11,6 +12,14 @@ const defaultCfg = {
   fillColor: 0x880000,
   speed: 0.1,
 }
+
+// const glowFilter = new GlowFilter({
+//   color: 0x6666FF, // 光晕的颜色
+//   distance: 15, // 光晕的扩散距离
+//   outerStrength: 2.5, // 光晕的外部强度
+//   quality: 0.5, // 渲染质量
+//   knockout: true
+// });
 
 export default class Bat {
 
@@ -42,6 +51,7 @@ export default class Bat {
     sprite.height = 20;
     sprite.x = cfg.x;
     sprite.y = cfg.y;
+    // sprite.filters = [glowFilter];
     this.graph = sprite;
     this.loaded = true;
   }

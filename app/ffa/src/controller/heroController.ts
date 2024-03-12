@@ -31,7 +31,6 @@ export default class HeroController {
 
     graph2.interactive = true;
     graph2.on('pointermove', (e) => {
-      console.log('move2');
       hero.direction = calculateAngle(controllerPosition, e)
     })
 
@@ -44,7 +43,7 @@ export default class HeroController {
 
     app.stage.addChild(graph2);
     app.stage.addChild(graph);
-  },
+  }
 
   initEvent() {
     const hero = this.hero;
