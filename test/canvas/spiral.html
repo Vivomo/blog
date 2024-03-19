@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Julia Set</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block;  }
+    </style>
+</head>
+<body>
+<!--<canvas id="canvas"></canvas>-->
+<script>
+  // 创建一个画布
+  const canvas = document.createElement("canvas");
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext("2d");
+
+  // 设置画布大小
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+
+  // 定义朱利亚集合的参数
+  const cReal = -0.7; // 实部
+  const cImaginary = 0.27015; // 虚部
+  const maxIterations = 1000; // 最大迭代次数
+
+  // 绘制朱利亚集合
+  function drawJuliaSet(x, y) {
+    if (x >= width) {
+      return
+    }
+
+    requestAnimationFrame(() => {
+      for (let y = 0; y < height; y++) {
+        let zx = (x - width / 2) * 4 / width;
+        let zy = (y - height / 2) * 4 / height;
+
+        let i = 0;
+        for (; i < maxIterations; i++) {
+          const xtemp = zx * zx - zy * zy + cReal;
+          zy = 2 * zx * zy + cImaginary;
+          zx = xtemp;
+
+          if (zx * zx + zy * zy > 10) break; // 超出边界
+        }
+
+          // 根据迭代次数着色
+        const brightness = i / maxIterations;
+        const color = `hsl(180, 100%, ${brightness * 100}%)`;
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, 1, 1);
+      }
+
+      drawJuliaSet(x + 1);
+    });
+  }
+
+  // 绘制朱利亚集合
+  drawJuliaSet(0, 0);
+
+</script>
+</body>
+</html>
