@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function RollerShutterCalc() {
   const [calcType, setCalcType] = useState<string>("1");
@@ -20,6 +21,9 @@ export default function RollerShutterCalc() {
     1.5: 16,
   };
 
+  let validArea = width > 0 && height > 0;
+
+
   const calculatedValues = useMemo(() => {
     let curtainWidth = calcType === "1" ? width + 0.16 : width - 0.11;
     let curtainHeight = calcType === "1" ? height + 0.6 : height + 0.2;
@@ -27,6 +31,7 @@ export default function RollerShutterCalc() {
     let curtainWeight = parseFloat((curtainArea * thicknessOptions[thickness]).toFixed(2));
     let motorType: string;
     let motorPrice: number;
+
 
     if (curtainWeight < 250) {
       motorType = "600型号";
@@ -55,34 +60,88 @@ export default function RollerShutterCalc() {
 
   return (
     <Card className="p-6 max-w-md mx-auto mt-10 shadow-lg">
-      <CardContent>
+      <CardContent className="gap-y-2 flex flex-col">
         <h2 className="text-xl font-bold mb-4">卷闸门报价计算器</h2>
-        <Select value={calcType} onValueChange={setCalcType}>
-          <SelectTrigger>选择计算方式</SelectTrigger>
-          <SelectContent>
-            <SelectItem value="1">情况1（按洞口尺寸）</SelectItem>
-            <SelectItem value="2">情况2（按总尺寸）</SelectItem>
-          </SelectContent>
-        </Select>
-        <Input type="number" placeholder="宽度 (m)" onChange={(e) => setWidth(parseFloat(e.target.value) || 0)} />
-        <Input type="number" placeholder="高度 (m)" onChange={(e) => setHeight(parseFloat(e.target.value) || 0)} />
-        <Select value={thickness.toString()} onValueChange={(value) => setThickness(parseFloat(value))}>
-          <SelectTrigger>选择帘片厚度</SelectTrigger>
-          <SelectContent>
-            <SelectItem value="0.8">0.8mm</SelectItem>
-            <SelectItem value="1.0">1.0mm</SelectItem>
-            <SelectItem value="1.2">1.2mm</SelectItem>
-            <SelectItem value="1.5">1.5mm</SelectItem>
-          </SelectContent>
-        </Select>
-        <p>帘片尺寸: {calculatedValues.curtainWidth.toFixed(2)} x {calculatedValues.curtainHeight.toFixed(2)} m</p>
-        <p>帘片面积: {calculatedValues.curtainArea} ㎡</p>
-        <p>帘片重量: {calculatedValues.curtainWeight} kg</p>
-        <p>电机型号: {calculatedValues.motorType}</p>
-        <Input type="number" placeholder="帘片单价 (元/㎡)" onChange={(e) => setCurtainPrice(parseFloat(e.target.value) || 0)} />
-        <Input type="number" placeholder="传动轴单价 (元/m)" onChange={(e) => setShaftPrice(parseFloat(e.target.value) || 0)} />
-        <Input type="number" placeholder="滑道单价 (元/m)" onChange={(e) => setTrackPrice(parseFloat(e.target.value) || 0)} />
-        <h3 className="text-lg font-bold mt-4">总价格: {calculatedValues.totalCost} 元</h3>
+        <div className="flex items-center gap-2">
+          <Label>尺寸</Label>
+          <Select value={calcType} onValueChange={setCalcType}>
+            <SelectTrigger>{calcType === "1" ? "按洞口尺寸" : "按总尺寸"}</SelectTrigger>
+            <SelectContent>
+              <SelectItem value="1">按洞口尺寸</SelectItem>
+              <SelectItem value="2">按总尺寸</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex items-center gap-2">
+          <Label>宽度 (m)</Label>
+          <Input type="number" onChange={(e) => setWidth(parseFloat(e.target.value) || 0)}/>
+        </div>
+        <div className="flex items-center gap-2">
+          <Label>高度 (m)</Label>
+          <Input type="number" onChange={(e) => setHeight(parseFloat(e.target.value) || 0)}/>
+        </div>
+        <div className="flex items-center gap-2">
+          <Label>帘片厚度</Label>
+          <Select value={thickness.toString()} onValueChange={(value) => setThickness(parseFloat(value))}>
+            <SelectTrigger>{thickness}mm</SelectTrigger>
+            <SelectContent>
+              <SelectItem value="0.8">0.8mm</SelectItem>
+              <SelectItem value="1.0">1.0mm</SelectItem>
+              <SelectItem value="1.2">1.2mm</SelectItem>
+              <SelectItem value="1.5">1.5mm</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex items-center gap-2">
+          <Label>帘片尺寸</Label>
+          <span>
+            {
+              validArea ? `${calculatedValues.curtainWidth.toFixed(2)} x ${calculatedValues.curtainHeight.toFixed(2)} m` : ''
+            }
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Label>帘片面积</Label>
+          <span>
+            {
+              validArea ? `${calculatedValues.curtainArea} ㎡` : ''
+            }
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Label>帘片重量</Label>
+          <span>
+            {
+              validArea ? `${calculatedValues.curtainWeight} kg` : ''
+            }
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Label>电机型号</Label>
+          <span>
+            {
+              validArea ? `${calculatedValues.motorType} kg` : ''
+            }
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Label>帘片单价 (元/㎡)</Label>
+          <Input type="number" onChange={(e) => setCurtainPrice(parseFloat(e.target.value) || 0)}/>
+        </div>
+        <div className="flex items-center gap-2">
+          <Label>传动轴单价 (元/m)</Label>
+          <Input type="number" onChange={(e) => setShaftPrice(parseFloat(e.target.value) || 0)}/>
+        </div>
+        <div className="flex items-center gap-2">
+          <Label>滑道单价 (元/m)</Label>
+          <Input type="number" onChange={(e) => setTrackPrice(parseFloat(e.target.value) || 0)}/>
+        </div>
+        <h3 className="text-lg font-bold mt-4">总价格:
+          {
+            validArea ? `${calculatedValues.totalCost} 元` : ''
+          }
+        </h3>
       </CardContent>
     </Card>
   );
