@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自然闪电效果</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0a0a1a;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            display: block;
+            cursor: pointer;
+        }
+        .info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #fff;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="info">点击画布生成闪电</div>
+    
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // 设置画布大小
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // 闪电类
+        class Lightning {
+            constructor(startX, startY, endX, endY) {
+                this.segments = [];
+                this.branches = [];
+                this.opacity = 1;
+                this.phase = 'flash'; // flash, flicker, fade
+                this.flickerCount = 0;
+                this.maxFlickers = Math.random() * 3 + 3; // 3-6次闪烁，增加闪烁次数
+                this.fadeSpeed = 0.02; // 减慢消散速度，从0.05降到0.02
+                this.flickerTimer = 0;
+                this.backgroundGlow = 0;
+                
+                this.generateLightning(startX, startY, endX, endY, 8, 0);
+            }
+            
+            // 递归生成闪电分支
+            generateLightning(x1, y1, x2, y2, thickness, depth) {
+                if (depth > 6 || thickness < 0.5) return;
+                
+                const segments = [];
+                const distance = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+                const segmentCount = Math.floor(distance / 15) + 1;
+                
+                let currentX = x1;
+                let currentY = y1;
+                
+                for (let i = 0; i <= segmentCount; i++) {
+                    const progress = i / segmentCount;
+                    let targetX = x1 + (x2 - x1) * progress;
+                    let targetY = y1 + (y2 - y1) * progress;
+                    
+                    // 添加随机偏移，但保持大体向下的趋势
+                    if (i > 0 && i < segmentCount) {
+                        const maxOffset = thickness * 2;
+                        targetX += (Math.random() - 0.5) * maxOffset;
+                        targetY += Math.random() * maxOffset * 0.3; // 向下偏移更多
+                    }
+                    
+                    segments.push({
+                        x: targetX,
+                        y: targetY,
+                        thickness: thickness * (1 - depth * 0.15)
+                    });
+                    
+                    // 生成分支
+                    if (i > 0 && Math.random() < 0.3 - depth * 0.05) {
+                        // 改进分支角度分布，确保左右均匀，增大扩散角度
+                        const side = Math.random() < 0.5 ? -1 : 1; // 随机选择左侧或右侧
+                        const branchAngle = side * (Math.PI * 0.15 + Math.random() * Math.PI * 0.6); // 27-153度范围，更大扩散
+                        const branchLength = distance * (0.3 + Math.random() * 0.4) * (1 - depth * 0.2);
+                        const branchEndX = targetX + Math.cos(branchAngle) * branchLength;
+                        const branchEndY = targetY + Math.abs(Math.sin(branchAngle)) * branchLength + Math.random() * 20;
+                        
+                        this.generateLightning(
+                            targetX, targetY,
+                            branchEndX, branchEndY,
+                            thickness * 0.6,
+                            depth + 1
+                        );
+                    }
+                    
+                    currentX = targetX;
+                    currentY = targetY;
+                }
+                
+                this.segments.push({
+                    points: segments,
+                    thickness: thickness,
+                    depth: depth
+                });
+            }
+            
+            // 更新闪电状态
+            update() {
+                switch (this.phase) {
+                    case 'flash':
+                        this.backgroundGlow = 0.3;
+                        this.opacity = 1;
+                        this.phase = 'flicker';
+                        this.flickerTimer = 0;
+                        break;
+                        
+                    case 'flicker':
+                        this.flickerTimer += 0.1;
+                        if (this.flickerTimer > 0.15) { // 增加闪烁间隔，从0.1秒到0.15秒
+                            this.opacity = Math.random() > 0.5 ? 0.8 : 0.2;
+                            this.backgroundGlow = this.opacity * 0.2;
+                            this.flickerTimer = 0;
+                            this.flickerCount++;
+                            
+                            if (this.flickerCount >= this.maxFlickers) {
+                                this.phase = 'fade';
+                            }
+                        }
+                        break;
+                        
+                    case 'fade':
+                        this.opacity -= this.fadeSpeed;
+                        this.backgroundGlow *= 0.95;
+                        if (this.opacity <= 0) {
+                            this.opacity = 0;
+                            this.backgroundGlow = 0;
+                            return false; // 标记为可删除
+                        }
+                        break;
+                }
+                return true;
+            }
+            
+            // 绘制闪电
+            draw() {
+                if (this.opacity <= 0) return;
+                
+                // 绘制背景光晕
+                if (this.backgroundGlow > 0) {
+                    ctx.save();
+                    ctx.globalAlpha = this.backgroundGlow;
+                    ctx.fillStyle = '#1a1a3a';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.restore();
+                }
+                
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                
+                // 绘制每个线段
+                this.segments.forEach(segment => {
+                    const { points, thickness, depth } = segment;
+                    
+                    // 根据深度设置颜色
+                    const intensity = 1 - depth * 0.15;
+                    const r = Math.floor(255 * intensity);
+                    const g = Math.floor(255 * intensity);
+                    const b = Math.floor(255 * (0.7 + intensity * 0.3));
+                    
+                    // 绘制外层光晕
+                    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.3)`;
+                    ctx.lineWidth = thickness * 3;
+                    ctx.beginPath();
+                    ctx.moveTo(points[0].x, points[0].y);
+                    for (let i = 1; i < points.length; i++) {
+                        ctx.lineTo(points[i].x, points[i].y);
+                    }
+                    ctx.stroke();
+                    
+                    // 绘制中层
+                    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.6)`;
+                    ctx.lineWidth = thickness * 1.5;
+                    ctx.beginPath();
+                    ctx.moveTo(points[0].x, points[0].y);
+                    for (let i = 1; i < points.length; i++) {
+                        ctx.lineTo(points[i].x, points[i].y);
+                    }
+                    ctx.stroke();
+                    
+                    // 绘制核心
+                    ctx.strokeStyle = `rgba(255, 255, 255, 0.9)`;
+                    ctx.lineWidth = thickness * 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(points[0].x, points[0].y);
+                    for (let i = 1; i < points.length; i++) {
+                        ctx.lineTo(points[i].x, points[i].y);
+                    }
+                    ctx.stroke();
+                });
+                
+                ctx.restore();
+            }
+        }
+        
+        // 闪电管理器
+        class LightningManager {
+            constructor() {
+                this.lightnings = [];
+                this.autoGenerate = false;
+                this.lastAutoTime = 0;
+            }
+            
+            addLightning(x, y) {
+                // 主干基本垂直向下，只有轻微的随机偏移
+                const endX = x + (Math.random() - 0.5) * 60;
+                const endY = canvas.height - Math.random() * 150 - 50;
+                this.lightnings.push(new Lightning(x, y, endX, endY));
+            }
+            
+            update() {
+                // 更新所有闪电
+                this.lightnings = this.lightnings.filter(lightning => lightning.update());
+                
+                // 自动生成闪电
+                if (this.autoGenerate) {
+                    const now = Date.now();
+                    if (now - this.lastAutoTime > 3000 + Math.random() * 5000) {
+                        const x = Math.random() * canvas.width;
+                        const y = Math.random() * 100;
+                        this.addLightning(x, y);
+                        this.lastAutoTime = now;
+                    }
+                }
+            }
+            
+            draw() {
+                // 清空画布
+                ctx.fillStyle = '#0a0a1a';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // 绘制所有闪电
+                this.lightnings.forEach(lightning => lightning.draw());
+            }
+        }
+        
+        // 初始化
+        const lightningManager = new LightningManager();
+        
+        // 点击事件
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            lightningManager.addLightning(x, Math.max(0, y - 50));
+        });
+        
+        // 键盘事件
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                lightningManager.autoGenerate = !lightningManager.autoGenerate;
+                if (lightningManager.autoGenerate) {
+                    lightningManager.lastAutoTime = Date.now();
+                }
+            }
+        });
+        
+        // 动画循环
+        function animate() {
+            lightningManager.update();
+            lightningManager.draw();
+            requestAnimationFrame(animate);
+        }
+        
+        // 启动动画
+        animate();
+        
+        // 初始演示
+        setTimeout(() => {
+            lightningManager.addLightning(canvas.width * 0.3, 50);
+        }, 500);
+        
+        setTimeout(() => {
+            lightningManager.addLightning(canvas.width * 0.7, 30);
+        }, 2000);
+    </script>
+</body>
+</html>

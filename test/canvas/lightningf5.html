@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas 自然闪电</title>
+  <style>
+    html, body { margin: 0; padding: 0; overflow: hidden; background: #02030a; }
+    canvas { display: block; }
+    #panel {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      width: 260px;
+      max-height: calc(100vh - 24px);
+      overflow-y: auto;
+      background: rgba(10, 14, 35, 0.82);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(120, 150, 255, 0.25);
+      border-radius: 10px;
+      padding: 10px 14px 14px;
+      font: 12px/1.5 "Segoe UI", "Microsoft YaHei", sans-serif;
+      color: #c7d2ff;
+      user-select: none;
+      z-index: 10;
+    }
+    #panel h3 {
+      margin: 0 0 4px;
+      font-size: 13px;
+      color: #eef2ff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    #panel h3 span { font-size: 11px; color: #8fa0d8; }
+    #panel.collapsed .row, #panel.collapsed .actions { display: none; }
+    #panel .row { margin-top: 8px; }
+    #panel .row label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2px;
+    }
+    #panel .row label b { font-weight: normal; color: #aebbff; }
+    #panel input[type="range"] {
+      width: 100%;
+      accent-color: #7c9aff;
+      cursor: pointer;
+    }
+    #panel input[type="color"] {
+      width: 100%;
+      height: 26px;
+      border: none;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+    }
+    #panel .actions { margin-top: 12px; display: flex; gap: 8px; }
+    #panel button {
+      flex: 1;
+      padding: 6px 0;
+      border: 1px solid rgba(140, 165, 255, 0.4);
+      border-radius: 6px;
+      background: rgba(90, 120, 230, 0.25);
+      color: #dfe6ff;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    #panel button:hover { background: rgba(110, 140, 250, 0.4); }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="panel">
+    <h3 id="panelTitle">闪电参数 <span id="panelToggle">收起</span></h3>
+  </div>
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    const cfg = {
+      baseWidth: 5.5,
+      depth: 6,
+      branchLen: 1,
+      branchiness: 1,
+      angleJitter: 0.45,
+      kinkChance: 0.15,
+      pull: 0.12,
+      glowBlur: 10,
+      haloWidth: 2,
+      growDur: 210,
+      interval: 2.4,
+      color: '#8caaff'
+    };
+
+    const PARAMS = [
+      { key: 'baseWidth', label: '主干粗细', min: 1, max: 12, step: 0.1 },
+      { key: 'depth', label: '分支深度', min: 1, max: 9, step: 1 },
+      { key: 'branchLen', label: '分支长度', min: 0.2, max: 1.6, step: 0.05 },
+      { key: 'branchiness', label: '分叉密度', min: 0, max: 2.5, step: 0.05 },
+      { key: 'angleJitter', label: '转向幅度', min: 0.05, max: 1, step: 0.05 },
+      { key: 'kinkChance', label: '急转概率', min: 0, max: 0.5, step: 0.01 },
+      { key: 'pull', label: '向下拉力', min: 0, max: 0.4, step: 0.01 },
+      { key: 'glowBlur', label: '辉光强度', min: 0, max: 40, step: 1 },
+      { key: 'haloWidth', label: '光晕宽度', min: 0, max: 5, step: 0.1 },
+      { key: 'growDur', label: '生长时长(ms)', min: 50, max: 1200, step: 10 },
+      { key: 'interval', label: '闪电间隔(s)', min: 0.3, max: 8, step: 0.1 }
+    ];
+
+    let glowRgb = { r: 140, g: 170, b: 255 };
+
+    function hexToRgb(hex) {
+      const n = parseInt(hex.slice(1), 16);
+      return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+    }
+
+    function buildPanel() {
+      const panel = document.getElementById('panel');
+
+      for (const p of PARAMS) {
+        const row = document.createElement('div');
+        row.className = 'row';
+        const label = document.createElement('label');
+        const name = document.createElement('span');
+        name.textContent = p.label;
+        const val = document.createElement('b');
+        val.textContent = cfg[p.key];
+        label.appendChild(name);
+        label.appendChild(val);
+
+        const input = document.createElement('input');
+        input.type = 'range';
+        input.min = p.min;
+        input.max = p.max;
+        input.step = p.step;
+        input.value = cfg[p.key];
+        input.addEventListener('input', () => {
+          cfg[p.key] = parseFloat(input.value);
+          val.textContent = input.value;
+        });
+
+        row.appendChild(label);
+        row.appendChild(input);
+        panel.appendChild(row);
+      }
+
+      const colorRow = document.createElement('div');
+      colorRow.className = 'row';
+      const colorLabel = document.createElement('label');
+      colorLabel.innerHTML = '<span>闪电颜色</span>';
+      const colorInput = document.createElement('input');
+      colorInput.type = 'color';
+      colorInput.value = cfg.color;
+      colorInput.addEventListener('input', () => {
+        cfg.color = colorInput.value;
+        glowRgb = hexToRgb(cfg.color);
+      });
+      colorRow.appendChild(colorLabel);
+      colorRow.appendChild(colorInput);
+      panel.appendChild(colorRow);
+
+      const actions = document.createElement('div');
+      actions.className = 'actions';
+      const strikeBtn = document.createElement('button');
+      strikeBtn.textContent = '立即放电';
+      strikeBtn.addEventListener('click', () => {
+        bolt = null;
+        nextBoltTime = 0;
+      });
+      actions.appendChild(strikeBtn);
+      panel.appendChild(actions);
+
+      document.getElementById('panelTitle').addEventListener('click', () => {
+        panel.classList.toggle('collapsed');
+        document.getElementById('panelToggle').textContent =
+          panel.classList.contains('collapsed') ? '展开' : '收起';
+      });
+    }
+
+    let W, H;
+    let stars = [];
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      // makeStars();
+    }
+    window.addEventListener('resize', resize);
+
+    function makeStars() {
+      stars = [];
+      const count = Math.floor(W * H / 6000);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          r: Math.random() * 1.2 + 0.2,
+          a: Math.random() * 0.6 + 0.2,
+          tw: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function rand(min, max) {
+      return min + Math.random() * (max - min);
+    }
+
+    function buildBranch(x, y, angle, length, width, alpha, depth, branches, t0) {
+      if (depth <= 0 || length < 6 || alpha < 0.04) return;
+
+      const steps = Math.max(4, Math.floor(length / 10));
+      const stepLen = length / steps;
+      let cx = x, cy = y, ca = angle, ct = t0;
+
+      const points = [{ x: cx, y: cy, t: ct }];
+
+      for (let i = 0; i < steps; i++) {
+        ca += rand(-cfg.angleJitter, cfg.angleJitter);
+        if (Math.random() < cfg.kinkChance) {
+          ca += (Math.random() < 0.5 ? -1 : 1) * rand(0.5, 0.9);
+        }
+        const pull = Math.PI / 2 - ca;
+        ca += pull * cfg.pull;
+
+        const nx = cx + Math.cos(ca) * stepLen;
+        const ny = cy + Math.sin(ca) * stepLen;
+        ct += stepLen;
+
+        points.push({ x: nx, y: ny, t: ct });
+
+        if (Math.random() < (0.084 * depth / 5 + 0.042) * cfg.branchiness) {
+          const side = Math.random() < 0.5 ? -1 : 1;
+          const branchAngle = ca + side * rand(0.3, 1.0);
+          buildBranch(
+            nx, ny,
+            branchAngle,
+            length * rand(0.35, 0.6) * cfg.branchLen,
+            width * rand(0.4, 0.6),
+            alpha * rand(0.45, 0.65),
+            depth - 1,
+            branches,
+            ct
+          );
+        }
+
+        cx = nx;
+        cy = ny;
+      }
+
+      branches.push({ points: points, width: width, alpha: alpha });
+    }
+
+    function createBolt() {
+      const branches = [];
+      const startX = rand(W * 0.25, W * 0.75);
+      buildBranch(
+        startX, -10,
+        Math.PI / 2 + rand(-0.25, 0.25),
+        H * rand(0.85, 1.05),
+        cfg.baseWidth * rand(0.85, 1.15),
+        1,
+        Math.round(cfg.depth),
+        branches,
+        0
+      );
+      let maxT = 0;
+      for (const b of branches) {
+        const last = b.points[b.points.length - 1];
+        if (last.t > maxT) maxT = last.t;
+      }
+      return { branches: branches, maxT: maxT, growDur: cfg.growDur * rand(0.8, 1.2) };
+    }
+
+    let bolt = null;
+    let boltStart = 0;
+    let flickerPlan = [];
+    let nextBoltTime = performance.now() + 800;
+
+    function planFlicker() {
+      flickerPlan = [];
+      const flickers = 2 + Math.floor(Math.random() * 2);
+      let t = 0;
+      flickerPlan.push({ start: t, end: t + 90, level: 1 });
+      t += 90;
+      for (let i = 0; i < flickers; i++) {
+        const gap = rand(40, 110);
+        const on = rand(50, 100);
+        t += gap;
+        flickerPlan.push({ start: t, end: t + on, level: rand(0.55, 0.9) });
+        t += on;
+      }
+      const fadeDur = rand(180, 300);
+      flickerPlan.push({ start: t, end: t + fadeDur, level: -1 });
+    }
+
+    function boltIntensity(elapsed) {
+      for (const p of flickerPlan) {
+        if (elapsed >= p.start && elapsed < p.end) {
+          if (p.level === -1) {
+            const k = 1 - (elapsed - p.start) / (p.end - p.start);
+            return 0.5 * k * k;
+          }
+          const k = (elapsed - p.start) / (p.end - p.start);
+          return p.level * (1 - k * 0.25);
+        }
+      }
+      return elapsed >= flickerPlan[flickerPlan.length - 1].end ? -1 : 0;
+    }
+
+    function drawNightSky(now, glow) {
+      const grad = ctx.createLinearGradient(0, 0, 0, H);
+      grad.addColorStop(0, '#04061a');
+      grad.addColorStop(0.6, '#070b22');
+      grad.addColorStop(1, '#0b1030');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+
+      for (const s of stars) {
+        const tw = 0.7 + 0.3 * Math.sin(now / 700 + s.tw);
+        ctx.globalAlpha = s.a * tw;
+        ctx.fillStyle = '#dde6ff';
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      if (glow > 0.01) {
+        ctx.fillStyle = `rgba(${glowRgb.r}, ${glowRgb.g}, ${glowRgb.b}, ${glow * 0.18})`;
+        ctx.fillRect(0, 0, W, H);
+        const sky = ctx.createRadialGradient(W / 2, 0, 0, W / 2, 0, H * 0.9);
+        sky.addColorStop(0, `rgba(${glowRgb.r}, ${glowRgb.g}, ${glowRgb.b}, ${glow * 0.25})`);
+        sky.addColorStop(1, `rgba(${glowRgb.r}, ${glowRgb.g}, ${glowRgb.b}, 0)`);
+        ctx.fillStyle = sky;
+        ctx.fillRect(0, 0, W, H);
+      }
+    }
+
+    function visiblePoints(points, progress) {
+      if (points[0].t > progress) return null;
+      const last = points[points.length - 1];
+      if (last.t <= progress) return points;
+
+      const vis = [points[0]];
+      for (let i = 1; i < points.length; i++) {
+        const p = points[i];
+        if (p.t <= progress) {
+          vis.push(p);
+        } else {
+          const prev = points[i - 1];
+          const k = (progress - prev.t) / (p.t - prev.t);
+          vis.push({
+            x: prev.x + (p.x - prev.x) * k,
+            y: prev.y + (p.y - prev.y) * k
+          });
+          break;
+        }
+      }
+      return vis.length > 1 ? vis : null;
+    }
+
+    function tracePath(points) {
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      for (let i = 1; i < points.length; i++) {
+        ctx.lineTo(points[i].x, points[i].y);
+      }
+    }
+
+    function drawBolt(bolt, intensity, progress) {
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'miter';
+      ctx.miterLimit = 3;
+
+      const visible = [];
+      for (const b of bolt.branches) {
+        const pts = progress >= bolt.maxT ? b.points : visiblePoints(b.points, progress);
+        if (pts) visible.push({ pts: pts, width: b.width, alpha: b.alpha });
+      }
+
+      ctx.save();
+      ctx.shadowColor = `rgba(${glowRgb.r}, ${glowRgb.g}, ${glowRgb.b}, 0.9)`;
+      ctx.shadowBlur = cfg.glowBlur * intensity;
+      for (const v of visible) {
+        ctx.strokeStyle = `rgba(${glowRgb.r}, ${glowRgb.g}, ${glowRgb.b}, ${v.alpha * intensity * 0.35})`;
+        ctx.lineWidth = v.width * cfg.haloWidth;
+        tracePath(v.pts);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      for (const v of visible) {
+        const t = Math.min(1, v.alpha);
+        const mix = 0.55 + 0.45 * t;
+        const r = Math.floor(glowRgb.r + (255 - glowRgb.r) * mix);
+        const g = Math.floor(glowRgb.g + (255 - glowRgb.g) * mix);
+        const bch = Math.floor(glowRgb.b + (255 - glowRgb.b) * mix);
+        ctx.strokeStyle = `rgba(${r}, ${g}, ${bch}, ${Math.min(1, v.alpha * 1.2) * intensity})`;
+        ctx.lineWidth = Math.max(0.4, v.width * 0.8 * intensity);
+        tracePath(v.pts);
+        ctx.stroke();
+      }
+    }
+
+    function loop(now) {
+      let glow = 0;
+      let intensity = 0;
+      let progress = 0;
+
+      if (!bolt && now >= nextBoltTime) {
+        bolt = createBolt();
+        boltStart = now;
+        planFlicker();
+      }
+
+      if (bolt) {
+        const elapsed = now - boltStart;
+        if (elapsed < bolt.growDur) {
+          const k = elapsed / bolt.growDur;
+          progress = k * k * bolt.maxT;
+          intensity = 0.4 + Math.random() * 0.15;
+          glow = intensity * 0.3;
+        } else {
+          progress = bolt.maxT;
+          intensity = boltIntensity(elapsed - bolt.growDur);
+          if (intensity === -1) {
+            bolt = null;
+            nextBoltTime = now + cfg.interval * 1000 * rand(0.6, 1.4);
+            intensity = 0;
+          } else {
+            glow = intensity;
+          }
+        }
+      }
+
+      drawNightSky(now, glow);
+      if (bolt && intensity > 0) drawBolt(bolt, intensity, progress);
+
+      requestAnimationFrame(loop);
+    }
+
+    glowRgb = hexToRgb(cfg.color);
+    buildPanel();
+    resize();
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>闪电动画</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<canvas id="lightning"></canvas>
+
+<script>
+const canvas = document.getElementById("lightning");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// 背景亮度，用来模拟雷电照亮天空
+let bgBrightness = 0;
+
+// 随机生成闪电主干和分支
+function createLightning(x, y, length, angle, branchWidth, depth) {
+  if (depth <= 0) return;
+
+  const xEnd = x + length * Math.cos(angle);
+  const yEnd = y + length * Math.sin(angle);
+
+  // 画主干/分支（更粗更亮）
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(xEnd, yEnd);
+  ctx.strokeStyle = `rgba(255,255,255,${0.95 * (depth/6)})`;
+  ctx.lineWidth = branchWidth;
+  ctx.shadowBlur = 30;
+  ctx.shadowColor = "rgba(180,220,255,1)";
+  ctx.stroke();
+
+  // 递归分支（分支更密集）
+  if (Math.random() < 0.9) {
+    const newAngle = angle + (Math.random() * 0.6 - 0.3);
+    createLightning(
+      xEnd, yEnd,
+      length * (0.7 + Math.random() * 0.3),
+      newAngle,
+      branchWidth * 0.7,
+      depth - 1
+    );
+  }
+
+  // 可能产生一个额外分支
+  if (Math.random() < 0.4) {
+    const newAngle = angle + (Math.random() * 0.8 - 0.4);
+    createLightning(
+      xEnd, yEnd,
+      length * (0.5 + Math.random() * 0.3),
+      newAngle,
+      branchWidth * 0.5,
+      depth - 1
+    );
+  }
+}
+
+// 生成一次闪电
+function lightningStrike() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const startX = Math.random() * canvas.width;
+  const startY = 0;
+
+  createLightning(
+    startX,
+    startY,
+    canvas.height * 0.8,
+    Math.PI / 2 + (Math.random() - 0.5) * 0.3,
+    5,  // 主干更粗
+    7   // 层级稍微加深
+  );
+
+  // 闪烁效果
+  let flashes = 0;
+  const flashInterval = setInterval(() => {
+    ctx.globalCompositeOperation = "source-over";
+    ctx.fillStyle = `rgba(255,255,255,${Math.random()*0.15})`; // 降低闪光亮度
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    flashes++;
+    if (flashes > 3) clearInterval(flashInterval);
+  }, 80);
+
+  // 雷电照亮背景（降低亮度，避免压过电流）
+  bgBrightness = 0.6;
+}
+
+// 绘制背景
+function drawBackground() {
+  // 黑夜 + 短暂亮度
+  const brightness = Math.max(0, bgBrightness);
+  ctx.fillStyle = `rgba(${30 + brightness*150}, ${30 + brightness*150}, ${30 + brightness*180}, 1)`;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // 逐渐暗下来
+  bgBrightness -= 0.03;
+}
+
+// 主循环
+function animate() {
+  drawBackground();
+  requestAnimationFrame(animate);
+}
+animate();
+
+// 定时触发闪电
+setInterval(() => {
+  lightningStrike();
+}, 2000 + Math.random()*2000);
+
+// 窗口大小调整
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+</body>
+</html>
