@@ -8,3 +8,4 @@ webpack-test/dist/
 exportToHTML/
 **/node_modules/
 **/ignore/
+.history/
