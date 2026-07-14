@@ -1,184 +1,227 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-}
-
-.hero {
+.app {
   position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+  height: 100%;
 }
 
-#center {
+.stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+/* —— 顶栏 —— */
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px;
+  pointer-events: none;
 }
 
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+.header h1 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
-  padding: 0;
+.steps {
   display: flex;
   gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+  font-size: 13px;
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+.steps span {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(232, 226, 217, 0.45);
+  transition: all 0.25s;
 }
 
-.ticks {
-  position: relative;
-  width: 100%;
+.steps span.on {
+  background: rgba(240, 177, 90, 0.18);
+  border-color: rgba(240, 177, 90, 0.6);
+  color: #f0b15a;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
+.steps span.done {
+  color: rgba(232, 226, 217, 0.8);
+}
+
+/* —— 左侧面板 —— */
+.panel {
+  position: absolute;
+  top: 84px;
+  left: 24px;
+  width: 300px;
+  max-height: calc(100% - 140px);
+  overflow-y: auto;
+  padding: 22px;
+  border-radius: 18px;
+  background: rgba(20, 15, 28, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+.panel h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.hint {
+  font-size: 13px;
+  color: rgba(232, 226, 217, 0.6);
+  margin-bottom: 14px;
+}
+
+/* 杯子卡片 */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+  padding: 13px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  transition:
+    transform 0.15s,
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.card:hover {
+  transform: translateX(4px);
+  background: rgba(240, 177, 90, 0.1);
+  border-color: rgba(240, 177, 90, 0.5);
+}
+
+.card strong {
+  font-size: 14px;
+}
+
+.card small {
+  font-size: 12px;
+  color: rgba(232, 226, 217, 0.55);
+}
+
+/* 饮品网格 */
+.drinks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.drink {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  font-size: 13px;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.drink:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.drink i {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* 操作按钮 */
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.actions button {
+  flex: 1;
+  padding: 11px 10px;
+  border-radius: 11px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+
+.actions button:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.13);
+}
+
+.actions .primary {
+  background: linear-gradient(135deg, #f0b15a, #d97b3f);
+  border-color: transparent;
+  color: #22150a;
+  font-weight: 600;
+}
+
+.actions .primary:not(:disabled):hover {
+  filter: brightness(1.1);
+}
+
+.link {
+  font-size: 13px;
+  color: rgba(232, 226, 217, 0.5);
+  padding: 4px 0;
+}
+
+.link:hover {
+  color: #f0b15a;
+}
+
+/* —— 底部提示 —— */
+.footer {
+  position: absolute;
+  bottom: 14px;
+  right: 24px;
+  font-size: 12px;
+  color: rgba(232, 226, 217, 0.35);
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .panel {
+    left: 12px;
+    right: 12px;
+    width: auto;
+    top: auto;
+    bottom: 12px;
+    max-height: 46%;
   }
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
+  .footer {
+    display: none;
   }
 }
