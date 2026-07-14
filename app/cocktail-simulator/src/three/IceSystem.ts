@@ -10,6 +10,52 @@ interface IceCube {
   size: number
 }
 
+/** 通透湿润的冰块材质(折射 + 清漆高光,避免雾面塑料感) */
+function createIceMaterial(): THREE.MeshPhysicalMaterial {
+  const size = 128
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')!
+  // 中性灰底 → 法线默认朝外
+  ctx.fillStyle = '#8080ff'
+  ctx.fillRect(0, 0, size, size)
+  // 稀疏裂纹/晶面微起伏
+  for (let i = 0; i < 28; i++) {
+    const x0 = Math.random() * size
+    const y0 = Math.random() * size
+    ctx.strokeStyle = `rgba(${110 + Math.random() * 40},${110 + Math.random() * 40},${200 + Math.random() * 40},${0.35})`
+    ctx.lineWidth = 1 + Math.random()
+    ctx.beginPath()
+    ctx.moveTo(x0, y0)
+    ctx.lineTo(x0 + (Math.random() - 0.5) * 50, y0 + (Math.random() - 0.5) * 50)
+    ctx.stroke()
+  }
+  const normalMap = new THREE.CanvasTexture(canvas)
+  normalMap.wrapS = normalMap.wrapT = THREE.RepeatWrapping
+
+  return new THREE.MeshPhysicalMaterial({
+    color: 0xf7fcff,
+    metalness: 0,
+    roughness: 0.06,
+    transmission: 0.97,
+    thickness: 1.6,
+    ior: 1.31,
+    reflectivity: 0.9,
+    specularIntensity: 1,
+    envMapIntensity: 1.45,
+    clearcoat: 1,
+    clearcoatRoughness: 0.04,
+    attenuationColor: new THREE.Color(0xeaf6ff),
+    attenuationDistance: 18,
+    normalMap,
+    normalScale: new THREE.Vector2(0.22, 0.22),
+    transparent: true,
+    opacity: 1,
+    depthWrite: true,
+  })
+}
+
 /**
  * 冰块系统:
  *  - cannon-es 负责重力与冰块间碰撞;
@@ -44,18 +90,8 @@ export class IceSystem {
       }),
     )
 
-    this.geometry = new RoundedBoxGeometry(1, 1, 1, 3, 0.16)
-    this.material = new THREE.MeshPhysicalMaterial({
-      color: 0xf4fbff,
-      metalness: 0,
-      roughness: 0.32,
-      transmission: 0.92,
-      thickness: 1.2,
-      ior: 1.31,
-      envMapIntensity: 0.9,
-      attenuationColor: new THREE.Color(0xcfeaff),
-      attenuationDistance: 6,
-    })
+    this.geometry = new RoundedBoxGeometry(1, 1, 1, 4, 0.18)
+    this.material = createIceMaterial()
   }
 
   get count(): number {
@@ -293,6 +329,7 @@ export class IceSystem {
   dispose(): void {
     this.clear()
     this.geometry.dispose()
+    this.material.normalMap?.dispose()
     this.material.dispose()
   }
 }

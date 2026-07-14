@@ -14,6 +14,55 @@ import { setupEnvironment } from './environment'
 /** 加满时距杯口保留的空间(占碗腔高度比例) */
 const HEADSPACE_RATIO = 0.12
 
+/** 程序化暖色木纹,贴近卡通风酒吧柜台 */
+function createBarWoodMaterial(): THREE.MeshPhysicalMaterial {
+  const size = 512
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')!
+  ctx.fillStyle = '#a56a3a'
+  ctx.fillRect(0, 0, size, size)
+
+  for (let i = 0; i < 48; i++) {
+    const y = (i / 48) * size + Math.sin(i * 1.7) * 10
+    ctx.strokeStyle = `rgba(72, 36, 14, ${0.06 + (i % 5) * 0.025})`
+    ctx.lineWidth = 1.5 + (i % 3)
+    ctx.beginPath()
+    ctx.moveTo(0, y)
+    for (let x = 0; x <= size; x += 16) {
+      ctx.lineTo(x, y + Math.sin(x * 0.04 + i) * 4)
+    }
+    ctx.stroke()
+  }
+
+  for (let i = 0; i < 10; i++) {
+    const x = 40 + i * 48
+    ctx.strokeStyle = `rgba(40, 20, 8, ${0.04 + (i % 3) * 0.02})`
+    ctx.lineWidth = 8
+    ctx.beginPath()
+    ctx.moveTo(x, 0)
+    ctx.bezierCurveTo(x + 20, size * 0.35, x - 16, size * 0.65, x + 8, size)
+    ctx.stroke()
+  }
+
+  const map = new THREE.CanvasTexture(canvas)
+  map.colorSpace = THREE.SRGBColorSpace
+  map.wrapS = map.wrapT = THREE.RepeatWrapping
+  map.repeat.set(2.4, 2.4)
+  map.anisotropy = 8
+
+  return new THREE.MeshPhysicalMaterial({
+    map,
+    color: 0xe0a56a,
+    roughness: 0.28,
+    metalness: 0.04,
+    clearcoat: 0.6,
+    clearcoatRoughness: 0.18,
+    envMapIntensity: 0.9,
+  })
+}
+
 /**
  * 三维场景编排:持有渲染器与当前杯子的全部子系统。
  * React 侧只通过公开方法交互(选杯 / 加冰 / 倒酒 / 搅拌 / 重置)。
@@ -47,34 +96,35 @@ export class SimulatorApp {
     this.scene.background = null
 
     this.camera = new THREE.PerspectiveCamera(38, 1, 0.1, 500)
-    this.camera.position.set(0, 14, 34)
+    // 视角压低:少占画面下半的桌面,多露出酒吧环境
+    this.camera.position.set(0, 8.5, 38)
 
     this.controls = new OrbitControls(this.camera, canvas)
     this.controls.enableDamping = true
     this.controls.dampingFactor = 0.08
     this.controls.minDistance = 14
     this.controls.maxDistance = 70
-    this.controls.maxPolarAngle = Math.PI * 0.55
-    this.controls.target.set(0, 6, 0)
+    this.controls.maxPolarAngle = Math.PI * 0.52
+    this.controls.target.set(0, 3.2, 0)
     this.controls.enablePan = false
 
-    // 灯光
-    const key = new THREE.DirectionalLight(0xffffff, 1.6)
-    key.position.set(10, 24, 14)
-    const rim = new THREE.DirectionalLight(0xbcd8ff, 0.7)
-    rim.position.set(-14, 10, -10)
-    const amb = new THREE.AmbientLight(0xffffff, 0.35)
+    // 灯光(偏暖,贴合酒吧柜台氛围)
+    const key = new THREE.DirectionalLight(0xffe2c4, 1.45)
+    key.position.set(10, 22, 14)
+    const rim = new THREE.DirectionalLight(0xffc98a, 0.55)
+    rim.position.set(-12, 8, -10)
+    const amb = new THREE.AmbientLight(0xffe8d2, 0.4)
     this.scene.add(key, rim, amb)
 
-    // 桌面
+    // 桌面:暖色抛光木纹,呼应环境图里的吧台
     const table = new THREE.Mesh(
       new THREE.CylinderGeometry(26, 26, 1.2, 64),
-      new THREE.MeshStandardMaterial({ color: 0x2b2320, roughness: 0.55, metalness: 0.1 }),
+      createBarWoodMaterial(),
     )
     table.position.y = -0.6
     this.scene.add(table)
 
-    // 环境贴图(占位:public/env/environment.hdr 存在时自动使用)
+    // 环境贴图(public/env/environment.hdr|.png|.jpg)
     void setupEnvironment(this.renderer, this.scene)
 
     this.resize()
@@ -158,10 +208,10 @@ export class SimulatorApp {
       this.stirRod.group,
     )
 
-    // 相机对准杯子中部
-    const focusY = config.height * 0.45
+    // 相机对准杯子中下部,俯角更平,桌面不会顶到画面中部
+    const focusY = config.height * 0.38
     this.controls.target.set(0, focusY, 0)
-    this.camera.position.set(0, focusY + 8, config.height * 2.4 + 12)
+    this.camera.position.set(0, focusY + 3.6, config.height * 2.4 + 16)
   }
 
   private clearGlass(): void {
